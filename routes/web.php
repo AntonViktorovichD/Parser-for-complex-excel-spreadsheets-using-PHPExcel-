@@ -17,6 +17,6 @@ use App\Http\Controllers\NewController;
 
 Route::get('/', [NewController::class, 'excelToArray']);
 
-use App\Http\Controllers\JSONController;
+use App\Http\Controllers\jsonController;
 
-Route::get('/json', [JSONController::class, 'arrayToJSON']);
+Route::get('/json', [jsonController::class, 'arrayToJson']);

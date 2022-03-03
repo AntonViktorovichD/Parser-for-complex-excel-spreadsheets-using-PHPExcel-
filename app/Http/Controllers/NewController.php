@@ -157,7 +157,7 @@ class NewController extends Controller {
 
         echo $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
-//        DB::insert('insert into tables (json_val, created_at) values (?, ?)', [$json, $date]);
+//        DB::insert('insert into tables (json_val, created_at, highest_row, highest_column_index) values (?, ?, ?, ?)', [$json, $date, $highestRow, $highestColumnIndex]);
 
 //        echo '<table border="1">' . PHP_EOL;
 //        for ($i = 1; $i < $highestRow; $i++) {
