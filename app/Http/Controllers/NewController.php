@@ -122,7 +122,7 @@ class NewController extends Controller {
 
         $arrCell = $arr;
 
-        for ($row = 0; $row < $highestRow; $row++) {
+        for ($row = 1; $row < $highestRow; $row++) {
 
             $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
 
