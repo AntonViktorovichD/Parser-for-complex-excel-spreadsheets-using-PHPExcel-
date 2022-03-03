@@ -109,7 +109,7 @@ class NewController extends Controller {
                 }
 
                 if (isset($arr[$row][$col]['title'])) {
-                    $arr[$row][$col]['id'] = $counter - ($highestColumnIndex * 2) + 1;
+                    $arr[$row][$col]['id'] = $counter - $highestColumnIndex;
                 } else {
                     $arr[$row][$col]['title'] = NULL;
                     $arr[$row][$col]['rowStart'] = NULL;
@@ -156,7 +156,7 @@ class NewController extends Controller {
 //        echo '</pre>';
 
 
-        echo json_encode($arrCell, JSON_UNESCAPED_UNICODE) . '<br />';
+        $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
         echo '<table border="1">' . PHP_EOL;
         for ($i = 1; $i < $highestRow; $i++) {
@@ -164,7 +164,7 @@ class NewController extends Controller {
             for ($k = 0; $k < $highestColumnIndex - 1; $k++) {
                 echo '<td>' . $arrCell[$i][$k]['title'] . '<br/>'
                     . 'col' . ':' . $arrCell[$i][$k]['colStart'] . ':'
-                    . $arrCell[$i][$k]['colEnd'] .  '<br />'
+                    . $arrCell[$i][$k]['colEnd'] . '<br />'
                     . 'colspan: ' . $arrCell[$i][$k]['colSpan'] . '<br />'
                     . 'row' . ':' . $arrCell[$i][$k]['rowStart'] . ':'
                     . $arrCell[$i][$k]['rowEnd'] . '<br/>'
