@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use PHPExcel;
 use PHPExcel_IOFactory;
 use PHPExcel_Cell;
@@ -11,6 +12,7 @@ use function Symfony\Component\String\b;
 class NewController extends Controller {
     public function excelToArray() {
 
+        date_default_timezone_set('Europe/Moscow');
         $excel = PHPExcel_IOFactory::load(base_path() . '\Examples\test3.xls');
         $worksheet = $excel->getActiveSheet();
         $mergeCells[] = $worksheet->getMergeCells();
@@ -151,29 +153,28 @@ class NewController extends Controller {
             }
         }
 
-//                echo '<pre>';
-//        var_dump($arrCell);
-//        echo '</pre>';
+        $date = date('Y-m-d H:i:s');
 
+        echo $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
-        $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
+//        DB::insert('insert into tables (json_val, created_at) values (?, ?)', [$json, $date]);
 
-        echo '<table border="1">' . PHP_EOL;
-        for ($i = 1; $i < $highestRow; $i++) {
-            echo '<tr>' . PHP_EOL;
-            for ($k = 0; $k < $highestColumnIndex - 1; $k++) {
-                echo '<td>' . $arrCell[$i][$k]['title'] . '<br/>'
-                    . 'col' . ':' . $arrCell[$i][$k]['colStart'] . ':'
-                    . $arrCell[$i][$k]['colEnd'] . '<br />'
-                    . 'colspan: ' . $arrCell[$i][$k]['colSpan'] . '<br />'
-                    . 'row' . ':' . $arrCell[$i][$k]['rowStart'] . ':'
-                    . $arrCell[$i][$k]['rowEnd'] . '<br/>'
-                    . 'rowspan: ' . $arrCell[$i][$k]['rowSpan'] . '<br />'
-                    . 'id' . ':' . $arrCell[$i][$k]['id']
-                    . '</td>' . PHP_EOL;
-            }
-            echo '</tr>' . PHP_EOL;
-        }
-        echo '</table>' . PHP_EOL;
+//        echo '<table border="1">' . PHP_EOL;
+//        for ($i = 1; $i < $highestRow; $i++) {
+//            echo '<tr>' . PHP_EOL;
+//            for ($k = 0; $k < $highestColumnIndex - 1; $k++) {
+//                echo '<td>' . $arrCell[$i][$k]['title'] . '<br/>'
+//                    . 'col' . ':' . $arrCell[$i][$k]['colStart'] . ':'
+//                    . $arrCell[$i][$k]['colEnd'] . '<br />'
+//                    . 'colspan: ' . $arrCell[$i][$k]['colSpan'] . '<br />'
+//                    . 'row' . ':' . $arrCell[$i][$k]['rowStart'] . ':'
+//                    . $arrCell[$i][$k]['rowEnd'] . '<br/>'
+//                    . 'rowspan: ' . $arrCell[$i][$k]['rowSpan'] . '<br />'
+//                    . 'id' . ':' . $arrCell[$i][$k]['id']
+//                    . '</td>' . PHP_EOL;
+//            }
+//            echo '</tr>' . PHP_EOL;
+//        }
+//        echo '</table>' . PHP_EOL;
     }
 }
