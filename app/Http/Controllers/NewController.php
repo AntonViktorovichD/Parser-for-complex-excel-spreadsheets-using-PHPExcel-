@@ -13,7 +13,7 @@ class NewController extends Controller {
     public function excelToArray() {
 
         date_default_timezone_set('Europe/Moscow');
-        $excel = PHPExcel_IOFactory::load(base_path() . '\Examples\test5.xls');
+        $excel = PHPExcel_IOFactory::load(base_path() . '\Examples\test4.xls');
         $worksheet = $excel->getActiveSheet();
         $mergeCells[] = $worksheet->getMergeCells();
         $highestRow = $worksheet->getHighestRow();
@@ -141,12 +141,6 @@ class NewController extends Controller {
                     $arr[$row][$col]['colSpan'] = $arr[$row][$col]['colEnd'] - $arr[$row][$col]['colStart'] + 1;
                     $arr[$row][$col]['rowSpan'] = $arr[$row][$col]['rowEnd'] - $arr[$row][$col]['rowStart'] + 1;
                     $arrCell[$row][$col]['cell'] = '<td rowspan= ' . $arr[$row][$col]["rowSpan"] . ' colspan= ' . $arr[$row][$col]["colSpan"] . '>' . $arrCell[$row][$col]['title'] . '</td>';
-//                    if ($arrCell[$row][$col]['colSpan'] == 1) {
-//                        $arrCell[$row][$col]['colSpan'] = NULL;
-//                    }
-//                    if ($arrCell[$row][$col]['rowSpan'] == 1) {
-//                        $arrCell[$row][$col]['rowSpan'] = NULL;
-//                    }
                 } else {
                     $arrCell[$row][$col] = NULL;
                 }
