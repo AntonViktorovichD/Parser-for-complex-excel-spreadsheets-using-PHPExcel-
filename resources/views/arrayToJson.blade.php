@@ -11,6 +11,7 @@
         border-collapse: collapse;
         border: 1px solid black;
     }
+
     th, td {
         border: 1px solid black;
         padding: 5px;
@@ -27,15 +28,10 @@
     for ($i = 1; $i < $highestRow; $i++) {
         echo '<tr>' . PHP_EOL;
         for ($k = 0; $k < $highestColumnIndex - 1; $k++) {
-            echo '<td>' . $arrCell[$i][$k]['title'] . '<br/>'
-                . 'col' . ':' . $arrCell[$i][$k]['colStart'] . ':'
-                . $arrCell[$i][$k]['colEnd'] . '<br />'
-                . 'colspan: ' . $arrCell[$i][$k]['colSpan'] . '<br />'
-                . 'row' . ':' . $arrCell[$i][$k]['rowStart'] . ':'
-                . $arrCell[$i][$k]['rowEnd'] . '<br/>'
-                . 'rowspan: ' . $arrCell[$i][$k]['rowSpan'] . '<br />'
-                . 'id' . ':' . $arrCell[$i][$k]['id']
+                    echo '<td rowspan=' . $arrCell[$i][$k]["rowSpan"] . ' colspan=' . $arrCell[$i][$k]["colSpan"] .' > ' . $arrCell[$i][$k]['title'] . '<br/>'
+
                 . '</td>' . PHP_EOL;
+
         }
         echo '</tr>' . PHP_EOL;
     }

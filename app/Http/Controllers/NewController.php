@@ -142,20 +142,45 @@ class NewController extends Controller {
                     $arrCell[$row][$col]['rowSpan'] = $arrCell[$row][$col]['rowEnd'] - $arrCell[$row][$col]['rowStart'] + 1;
                     if ($arrCell[$row][$col]['colSpan'] == 1) {
                         $arrCell[$row][$col]['colSpan'] = NULL;
+                    } else {
+                         $arrCell[$row][$col]['colSpan'] = 'colspan="' . $arrCell[$row][$col]['colSpan'] . '"';
                     }
                     if ($arrCell[$row][$col]['rowSpan'] == 1) {
                         $arrCell[$row][$col]['rowSpan'] = NULL;
                     }
-
                 } else {
                     $arrCell[$row][$col] = NULL;
                 }
             }
         }
 
-        $date = date('Y-m-d H:i:s');
+//        $date = date('Y-m-d H:i:s');
+//
+//        $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
-        echo $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
+        echo
+
+            '<style>
+                table {
+                        border-collapse: collapse;
+                        border: 1px solid black;
+                      }
+                th, td {
+                    border: 1px solid black;
+                    padding: 5px;
+                }
+            </style>'
+            . '<table>' . PHP_EOL;
+        for ($i = 1; $i < $highestRow; $i++) {
+            echo '<tr>' . PHP_EOL;
+            for ($k = 0; $k < $highestColumnIndex - 1; $k++) {
+                echo '<td>' . $arrCell[$i][$k]['title'] . '</td>' . PHP_EOL;
+//                echo '<td ' . $arrCell[$i][$k]["colSpan"] . '>' . $arrCell[$i][$k]['title'] . '</td>' . PHP_EOL;
+//                rowspan=' . $arrCell[$i][$k]['rowSpan"] . ' ' . 'colspan=' . $arrCell[$i][$k]["colSpan"] . ' ' . '
+            }
+            echo '</tr>' . PHP_EOL;
+        }
+        echo '</table>' . PHP_EOL;
 
 //        DB::insert('insert into tables (json_val, created_at, highest_row, highest_column_index) values (?, ?, ?, ?)', [$json, $date, $highestRow, $highestColumnIndex]);
 
