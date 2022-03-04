@@ -17,5 +17,6 @@ class jsonController extends Controller {
 //        var_dump(json_decode(json_decode($highest_column_index, true)[0]['highest_column_index']));
 
         return view('arrayToJson', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index]);
+
     }
 }
