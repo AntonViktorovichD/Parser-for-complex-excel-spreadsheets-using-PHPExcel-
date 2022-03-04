@@ -13,7 +13,7 @@ class NewController extends Controller {
     public function excelToArray() {
 
         date_default_timezone_set('Europe/Moscow');
-        $excel = PHPExcel_IOFactory::load(base_path() . '\Examples\test3.xls');
+        $excel = PHPExcel_IOFactory::load(base_path() . '\Examples\test5.xls');
         $worksheet = $excel->getActiveSheet();
         $mergeCells[] = $worksheet->getMergeCells();
         $highestRow = $worksheet->getHighestRow();
@@ -135,19 +135,18 @@ class NewController extends Controller {
                     foreach ($colStart as $cs) {
                         $ce = explode(':', $cs);
 
-                        $arrCell[$row][$col]['colEnd'] = $ce[0];
-                        $arrCell[$row][$col]['rowEnd'] = $ce[1];
+                        $arr[$row][$col]['colEnd'] = $ce[0];
+                        $arr[$row][$col]['rowEnd'] = $ce[1];
                     }
-                    $arrCell[$row][$col]['colSpan'] = $arrCell[$row][$col]['colEnd'] - $arrCell[$row][$col]['colStart'] + 1;
-                    $arrCell[$row][$col]['rowSpan'] = $arrCell[$row][$col]['rowEnd'] - $arrCell[$row][$col]['rowStart'] + 1;
-                    if ($arrCell[$row][$col]['colSpan'] == 1) {
-                        $arrCell[$row][$col]['colSpan'] = NULL;
-                    } else {
-                         $arrCell[$row][$col]['colSpan'] = 'colspan="' . $arrCell[$row][$col]['colSpan'] . '"';
-                    }
-                    if ($arrCell[$row][$col]['rowSpan'] == 1) {
-                        $arrCell[$row][$col]['rowSpan'] = NULL;
-                    }
+                    $arr[$row][$col]['colSpan'] = $arr[$row][$col]['colEnd'] - $arr[$row][$col]['colStart'] + 1;
+                    $arr[$row][$col]['rowSpan'] = $arr[$row][$col]['rowEnd'] - $arr[$row][$col]['rowStart'] + 1;
+                    $arrCell[$row][$col]['cell'] = '<td rowspan= ' . $arr[$row][$col]["rowSpan"] . ' colspan= ' . $arr[$row][$col]["colSpan"] . '>' . $arrCell[$row][$col]['title'] . '</td>';
+//                    if ($arrCell[$row][$col]['colSpan'] == 1) {
+//                        $arrCell[$row][$col]['colSpan'] = NULL;
+//                    }
+//                    if ($arrCell[$row][$col]['rowSpan'] == 1) {
+//                        $arrCell[$row][$col]['rowSpan'] = NULL;
+//                    }
                 } else {
                     $arrCell[$row][$col] = NULL;
                 }
@@ -174,7 +173,8 @@ class NewController extends Controller {
         for ($i = 1; $i < $highestRow; $i++) {
             echo '<tr>' . PHP_EOL;
             for ($k = 0; $k < $highestColumnIndex - 1; $k++) {
-                echo '<td>' . $arrCell[$i][$k]['title'] . '</td>' . PHP_EOL;
+                echo $arrCell[$i][$k]['cell'];
+//                echo '<td>' . $arrCell[$i][$k]['title'] . '</td>' . PHP_EOL;
 //                echo '<td ' . $arrCell[$i][$k]["colSpan"] . '>' . $arrCell[$i][$k]['title'] . '</td>' . PHP_EOL;
 //                rowspan=' . $arrCell[$i][$k]['rowSpan"] . ' ' . 'colspan=' . $arrCell[$i][$k]["colSpan"] . ' ' . '
             }
@@ -184,22 +184,5 @@ class NewController extends Controller {
 
 //        DB::insert('insert into tables (json_val, created_at, highest_row, highest_column_index) values (?, ?, ?, ?)', [$json, $date, $highestRow, $highestColumnIndex]);
 
-//        echo '<table border="1">' . PHP_EOL;
-//        for ($i = 1; $i < $highestRow; $i++) {
-//            echo '<tr>' . PHP_EOL;
-//            for ($k = 0; $k < $highestColumnIndex - 1; $k++) {
-//                echo '<td>' . $arrCell[$i][$k]['title'] . '<br/>'
-//                    . 'col' . ':' . $arrCell[$i][$k]['colStart'] . ':'
-//                    . $arrCell[$i][$k]['colEnd'] . '<br />'
-//                    . 'colspan: ' . $arrCell[$i][$k]['colSpan'] . '<br />'
-//                    . 'row' . ':' . $arrCell[$i][$k]['rowStart'] . ':'
-//                    . $arrCell[$i][$k]['rowEnd'] . '<br/>'
-//                    . 'rowspan: ' . $arrCell[$i][$k]['rowSpan'] . '<br />'
-//                    . 'id' . ':' . $arrCell[$i][$k]['id']
-//                    . '</td>' . PHP_EOL;
-//            }
-//            echo '</tr>' . PHP_EOL;
-//        }
-//        echo '</table>' . PHP_EOL;
     }
 }
