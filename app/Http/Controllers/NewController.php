@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\DB;
 use PHPExcel;
 use PHPExcel_IOFactory;
 use PHPExcel_Cell;
+use PhpParser\Node\Stmt\If_;
 use function Symfony\Component\String\b;
 
 class NewController extends Controller {
     public function excelToArray() {
 
         date_default_timezone_set('Europe/Moscow');
-        $excel = PHPExcel_IOFactory::load(base_path() . '\Examples\test4.xls');
+        $excel = PHPExcel_IOFactory::load(base_path() . '\Examples\test7.xls');
         $worksheet = $excel->getActiveSheet();
         $mergeCells[] = $worksheet->getMergeCells();
         $highestRow = $worksheet->getHighestRow();
@@ -94,7 +95,7 @@ class NewController extends Controller {
 
             $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
 
-            for ($col = 0; $col < $highestColumnIndex - 1; $col++) {
+            for ($col = 0; $col < $highestColumnIndex; $col++) {
                 $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
 
                 $counter++;
@@ -108,19 +109,28 @@ class NewController extends Controller {
                     $arr[$row][$col]['colEnd'] = $col + 1;
                 } elseif (isset($arr[$row][$col])) {
                     $arr[$row][$colCounter]['colEnd'] = $col;
+                } elseif (empty($arr[1][1]['title'])) {
+                    $arr[$row][$col]['rowStart'] = $row;
+                    $arr[$row][$col]['colStart'] = $col + 1;
                 }
 
                 if (isset($arr[$row][$col]['title'])) {
                     $arr[$row][$col]['id'] = $counter - $highestColumnIndex;
+                } elseif (empty($arr[1][1]['title'])) {
+                    $arr[$row][$col]['title'] = 'empty';
+                    $arr[$row][$col]['rowStart'] = $row;
+                    $arr[$row][$col]['colStart'] = $col + 1;
+                    $arr[$row][$col]['rowEnd'] = $row;
+                    $arr[$row][$col]['colEnd'] = $col + 1;
                 } else {
-                    $arr[$row][$col]['title'] = NULL;
-                    $arr[$row][$col]['rowStart'] = NULL;
-                    $arr[$row][$col]['rowEnd'] = NULL;
-                    $arr[$row][$col]['colStart'] = NULL;
-                    $arr[$row][$col]['colEnd'] = NULL;
+                    unset($arr[$row][$col]);
                 }
             }
         }
+
+//        echo '<pre>';
+//        var_dump($arr);
+//        echo '</pre>';
 
         $arrCell = $arr;
 
@@ -130,7 +140,12 @@ class NewController extends Controller {
 
             for ($col = 0; $col < $highestColumnIndex; $col++) {
 
+//                var_dump(array_slice(explode(',', $arr[1][0]['title']), 0, count($arr)));
+
                 if (isset($arr[$row][$col]['title'])) {
+//                    if ($arr[$row][$col]['title'] == 'empty') {
+//                        $arrCell[1][0]['title'] = NULL;
+//                    }
                     $colStart = array_keys($arrCoord, $arr[$row][$col]['colStart'] . ':' . $arr[$row][$col]['rowStart']);
                     foreach ($colStart as $cs) {
                         $ce = explode(':', $cs);
@@ -146,13 +161,15 @@ class NewController extends Controller {
                 }
             }
         }
-
 //        $date = date('Y-m-d H:i:s');
 //
 //        $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
-        echo
+//        echo '<pre>';
+//        var_dump($arrCell);
+//        echo '</pre>';
 
+        echo
             '<style>
                 table {
                         border-collapse: collapse;
@@ -161,12 +178,13 @@ class NewController extends Controller {
                 th, td {
                     border: 1px solid black;
                     padding: 5px;
+                    min-width: 30px;
                 }
             </style>'
             . '<table>' . PHP_EOL;
         for ($i = 1; $i < $highestRow; $i++) {
             echo '<tr>' . PHP_EOL;
-            for ($k = 0; $k < $highestColumnIndex - 1; $k++) {
+            for ($k = 0; $k < $highestColumnIndex; $k++) {
                 echo $arrCell[$i][$k]['cell'];
 //                echo '<td>' . $arrCell[$i][$k]['title'] . '</td>' . PHP_EOL;
 //                echo '<td ' . $arrCell[$i][$k]["colSpan"] . '>' . $arrCell[$i][$k]['title'] . '</td>' . PHP_EOL;
