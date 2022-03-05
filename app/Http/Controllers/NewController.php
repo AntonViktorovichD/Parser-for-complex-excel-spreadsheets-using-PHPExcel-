@@ -109,14 +109,14 @@ class NewController extends Controller {
                     $arr[$row][$col]['colEnd'] = $col + 1;
                 } elseif (isset($arr[$row][$col])) {
                     $arr[$row][$colCounter]['colEnd'] = $col;
-                } elseif (empty($arr[1][1]['title'])) {
+                } elseif (empty($arr[1][0]['title'])) {
                     $arr[$row][$col]['rowStart'] = $row;
                     $arr[$row][$col]['colStart'] = $col + 1;
                 }
 
                 if (isset($arr[$row][$col]['title'])) {
                     $arr[$row][$col]['id'] = $counter - $highestColumnIndex;
-                } elseif (empty($arr[1][1]['title'])) {
+                } elseif (empty($arr[1][0]['title'])) {
                     $arr[$row][$col]['title'] = 'empty';
                     $arr[$row][$col]['rowStart'] = $row;
                     $arr[$row][$col]['colStart'] = $col + 1;
@@ -127,10 +127,6 @@ class NewController extends Controller {
                 }
             }
         }
-
-//        echo '<pre>';
-//        var_dump($arr);
-//        echo '</pre>';
 
         $arrCell = $arr;
 
