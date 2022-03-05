@@ -143,9 +143,9 @@ class NewController extends Controller {
 //                var_dump(array_slice(explode(',', $arr[1][0]['title']), 0, count($arr)));
 
                 if (isset($arr[$row][$col]['title'])) {
-//                    if ($arr[$row][$col]['title'] == 'empty') {
-//                        $arrCell[1][0]['title'] = NULL;
-//                    }
+                    if ($arr[$row][$col]['title'] == 'empty') {
+                        $arrCell[1][0]['title'] = NULL;
+                    }
                     $colStart = array_keys($arrCoord, $arr[$row][$col]['colStart'] . ':' . $arr[$row][$col]['rowStart']);
                     foreach ($colStart as $cs) {
                         $ce = explode(':', $cs);
