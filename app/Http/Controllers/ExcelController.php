@@ -10,7 +10,7 @@ use PHPExcel_Cell;
 use PhpParser\Node\Stmt\If_;
 use function Symfony\Component\String\b;
 
-class NewController extends Controller {
+class ExcelController extends Controller {
     public function excelToArray() {
 
         date_default_timezone_set('Europe/Moscow');
@@ -163,27 +163,27 @@ class NewController extends Controller {
 //        var_dump($arrCell);
 //        echo '</pre>';
 
-//        echo
-//            '<style>
-//                table {
-//                        border-collapse: collapse;
-//                        border: 1px solid black;
-//                      }
-//                th, td {
-//                    border: 1px solid black;
-//                    padding: 5px;
-//                    min-width: 30px;
-//                }
-//            </style>'
-//            . '<table>' . PHP_EOL;
-//        for ($i = 1; $i < $highestRow; $i++) {
-//            echo '<tr>' . PHP_EOL;
-//            for ($k = 0; $k < $highestColumnIndex; $k++) {
-//                echo $arrCell[$i][$k]['cell'];
-//            }
-//            echo '</tr>' . PHP_EOL;
-//        }
-//        echo '</table>' . PHP_EOL;
+        echo
+            '<style>
+                table {
+                        border-collapse: collapse;
+                        border: 1px solid black;
+                      }
+                th, td {
+                    border: 1px solid black;
+                    padding: 5px;
+                    min-width: 30px;
+                }
+            </style>'
+            . '<table>' . PHP_EOL;
+        for ($i = 1; $i < $highestRow; $i++) {
+            echo '<tr>' . PHP_EOL;
+            for ($k = 0; $k < $highestColumnIndex; $k++) {
+                echo $arrCell[$i][$k]['cell'];
+            }
+            echo '</tr>' . PHP_EOL;
+        }
+        echo '</table>' . PHP_EOL;
 
 //        DB::insert('insert into tables (json_val, created_at, highest_row, highest_column_index) values (?, ?, ?, ?)', [$json, $date, $highestRow, $highestColumnIndex]);
 

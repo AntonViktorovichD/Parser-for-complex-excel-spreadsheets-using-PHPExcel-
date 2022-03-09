@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 //
-use App\Http\Controllers\NewController;
+use App\Http\Controllers\ExcelController;
 
-Route::get('/', [NewController::class, 'excelToArray']);
+Route::get('/', [ExcelController::class, 'excelToArray']);
 
 use App\Http\Controllers\jsonController;
 
