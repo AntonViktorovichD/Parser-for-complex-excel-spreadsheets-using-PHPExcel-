@@ -136,8 +136,6 @@ class NewController extends Controller {
 
             for ($col = 0; $col < $highestColumnIndex; $col++) {
 
-//                var_dump(array_slice(explode(',', $arr[1][0]['title']), 0, count($arr)));
-
                 if (isset($arr[$row][$col]['title'])) {
                     if ($arr[$row][$col]['title'] == 'empty') {
                         $arrCell[1][0]['title'] = NULL;
@@ -157,38 +155,35 @@ class NewController extends Controller {
                 }
             }
         }
-//        $date = date('Y-m-d H:i:s');
-//
-//        $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
+        $date = date('Y-m-d H:i:s');
+
+        $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
 //        echo '<pre>';
 //        var_dump($arrCell);
 //        echo '</pre>';
 
-        echo
-            '<style>
-                table {
-                        border-collapse: collapse;
-                        border: 1px solid black;
-                      }
-                th, td {
-                    border: 1px solid black;
-                    padding: 5px;
-                    min-width: 30px;
-                }
-            </style>'
-            . '<table>' . PHP_EOL;
-        for ($i = 1; $i < $highestRow; $i++) {
-            echo '<tr>' . PHP_EOL;
-            for ($k = 0; $k < $highestColumnIndex; $k++) {
-                echo $arrCell[$i][$k]['cell'];
-//                echo '<td>' . $arrCell[$i][$k]['title'] . '</td>' . PHP_EOL;
-//                echo '<td ' . $arrCell[$i][$k]["colSpan"] . '>' . $arrCell[$i][$k]['title'] . '</td>' . PHP_EOL;
-//                rowspan=' . $arrCell[$i][$k]['rowSpan"] . ' ' . 'colspan=' . $arrCell[$i][$k]["colSpan"] . ' ' . '
-            }
-            echo '</tr>' . PHP_EOL;
-        }
-        echo '</table>' . PHP_EOL;
+//        echo
+//            '<style>
+//                table {
+//                        border-collapse: collapse;
+//                        border: 1px solid black;
+//                      }
+//                th, td {
+//                    border: 1px solid black;
+//                    padding: 5px;
+//                    min-width: 30px;
+//                }
+//            </style>'
+//            . '<table>' . PHP_EOL;
+//        for ($i = 1; $i < $highestRow; $i++) {
+//            echo '<tr>' . PHP_EOL;
+//            for ($k = 0; $k < $highestColumnIndex; $k++) {
+//                echo $arrCell[$i][$k]['cell'];
+//            }
+//            echo '</tr>' . PHP_EOL;
+//        }
+//        echo '</table>' . PHP_EOL;
 
 //        DB::insert('insert into tables (json_val, created_at, highest_row, highest_column_index) values (?, ?, ?, ?)', [$json, $date, $highestRow, $highestColumnIndex]);
 

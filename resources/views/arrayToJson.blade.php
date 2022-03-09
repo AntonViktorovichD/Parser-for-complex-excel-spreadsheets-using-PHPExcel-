@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+            min-width: 30px;
+        }
+    </style>
 </head>
 <body>
 
-<style>
-    table {
-        border-collapse: collapse;
-        border: 1px solid black;
-    }
 
-    th, td {
-        border: 1px solid black;
-        padding: 5px;
-    }
-</style>
 
 @php
 
@@ -28,10 +29,7 @@
     for ($i = 1; $i < $highestRow; $i++) {
         echo '<tr>' . PHP_EOL;
         for ($k = 0; $k < $highestColumnIndex - 1; $k++) {
-                    echo '<td rowspan=' . $arrCell[$i][$k]["rowSpan"] . ' colspan=' . $arrCell[$i][$k]["colSpan"] .' > ' . $arrCell[$i][$k]['title'] . '<br/>'
-
-                . '</td>' . PHP_EOL;
-
+           echo $arrCell[$i][$k]['cell'];
         }
         echo '</tr>' . PHP_EOL;
     }
