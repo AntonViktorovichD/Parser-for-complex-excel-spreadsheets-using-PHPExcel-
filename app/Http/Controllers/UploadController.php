@@ -170,8 +170,10 @@ class UploadController extends Controller {
                 }
             }
         }
-        echo '<pre>';
-        var_dump($arrCell);
-        echo '</pre>';
+        $date = date('Y-m-d H:i:s');
+
+        $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
+
+//        DB::insert('insert into tables (json_val, created_at, highest_row, highest_column_index) values (?, ?, ?, ?)', [$json, $date, $highestRow, $highestColumnIndex]);
     }
 }

@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form method="post" action="/re" enctype="multipart/form-data">
+<form method="post" action="/ul" enctype="multipart/form-data">
     @csrf
     <input type="file" name="userfile">
     <input type="submit">
