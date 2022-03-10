@@ -16,3 +16,4 @@ Route::post('/ul', [UploadController::class, 'upload']);
 use App\Http\Controllers\jsonController;
 
 Route::get('/json', [jsonController::class, 'arrayToJson']);
+Route::get('/db', [jsonController::class, 'tables']);
