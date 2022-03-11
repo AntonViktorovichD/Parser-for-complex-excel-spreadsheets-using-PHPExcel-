@@ -7,7 +7,6 @@ use App\Http\Controllers\UploadController;
 
 Route::get('/', [UploadController::class, 'form']);
 Route::post('/ul', [UploadController::class, 'upload']);
-Route::get('/ldb', [UploadController::class, 'loadDB']);
 
 use App\Http\Controllers\jsonController;
 

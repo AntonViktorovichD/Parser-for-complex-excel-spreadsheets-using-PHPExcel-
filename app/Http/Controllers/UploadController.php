@@ -186,10 +186,6 @@ class UploadController extends Controller {
 
         DB::insert('insert into tables (json_val, table_name, created_at, highest_row, highest_column_index) values (?, ?, ?, ?, ?)', [$json, $filename, $date, $highestRow, $highestColumnIndex]);
 
-        return redirect()->action([UploadController::class, 'loadDB']);
-    }
-
-    public function loadDB() {
-        return view('data');
+        return redirect()->action([jsonController::class, 'arrayToJson']);
     }
 }
