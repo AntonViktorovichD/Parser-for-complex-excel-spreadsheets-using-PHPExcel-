@@ -7,11 +7,6 @@ use App\Http\Controllers\UploadController;
 
 Route::get('/', [UploadController::class, 'form']);
 Route::post('/ul', [UploadController::class, 'upload']);
-//Route::get('/re', [UploadController::class, 'excelToArray']);
-
-//use App\Http\Controllers\ExcelController;
-//
-//Route::get('/re', [ExcelController::class, 'excelToArray']);
 
 use App\Http\Controllers\jsonController;
 

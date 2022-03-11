@@ -20,16 +20,26 @@ class UploadController extends Controller {
 
     public function upload(Request $request) {
 
+        date_default_timezone_set('Europe/Moscow');
+        $date = date('Y_m_d_H_i_s_');
+
         if ($request->isMethod('post') && $request->file('userfile')) {
 
             $file = $request->file('userfile');
-            $upload_folder = 'public/folder';
-            $filename = $file->getClientOriginalName();
-            Storage::putFileAs($upload_folder, $file, $filename);
+            $extension = $file->extension();
+            $allowedfileExtensions = ['xls', 'xlsx'];
+            if (in_array($extension, $allowedfileExtensions)) {
+                $upload_folder = 'public/folder';
+                $filename = $file->getClientOriginalName();
+                $newFileName = $date . $filename;
+                Storage::putFileAs($upload_folder, $file, $newFileName);
+            } else {
+                return redirect()->action([UploadController::class, 'form']);
+            }
         }
 
-        date_default_timezone_set('Europe/Moscow');
-        $excel = PHPExcel_IOFactory::load(base_path() . '/storage/app/' . $upload_folder . '/' . $filename);
+
+        $excel = PHPExcel_IOFactory::load(base_path() . '/storage/app/public/folder' . '/' . $newFileName);
         $worksheet = $excel->getActiveSheet();
         $mergeCells[] = $worksheet->getMergeCells();
         $highestRow = $worksheet->getHighestRow();
@@ -170,10 +180,13 @@ class UploadController extends Controller {
                 }
             }
         }
-        $date = date('Y-m-d H:i:s');
+
+        var_dump($arrCell);
+
+        $date = date('Y:m:d H:i:s');
 
         $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
-//        DB::insert('insert into tables (json_val, created_at, highest_row, highest_column_index) values (?, ?, ?, ?)', [$json, $date, $highestRow, $highestColumnIndex]);
+        DB::insert('insert into tables (json_val, table_name, created_at, highest_row, highest_column_index) values (?, ?, ?, ?, ?)', [$json, $filename, $date, $highestRow, $highestColumnIndex]);
     }
 }
