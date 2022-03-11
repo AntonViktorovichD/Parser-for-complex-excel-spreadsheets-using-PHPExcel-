@@ -3,38 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Table</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            border: 1px solid black;
-        }
+    {{--    <style>--}}
+    {{--        table {--}}
+    {{--            border-collapse: collapse;--}}
+    {{--            border: 1px solid black;--}}
+    {{--        }--}}
 
-        th, td {
-            border: 1px solid black;
-            padding: 5px;
-            min-width: 30px;
-        }
-    </style>
+    {{--        th, td {--}}
+    {{--            border: 1px solid black;--}}
+    {{--            padding: 5px;--}}
+    {{--            min-width: 30px;--}}
+    {{--        }--}}
+    {{--    </style>--}}
 </head>
 <body>
-
 @php
-
-    $highestRow = json_decode(json_decode($highest_row, true)[0]['highest_row']);
-    $highestColumnIndex = json_decode(json_decode($highest_column_index, true)[0]['highest_column_index']);
-    $arrCell = json_decode(json_decode($json, true)[0]['json_val'], true);
-
-    echo '<table>' . PHP_EOL;
-    for ($i = 1; $i < $highestRow; $i++) {
-        echo '<tr>' . PHP_EOL;
-        for ($k = 0; $k < $highestColumnIndex - 1; $k++) {
-           echo $arrCell[$i][$k]['cell'];
-        }
-        echo '</tr>' . PHP_EOL;
+    $arrs = json_decode($arr);
+    echo '<ul>'. PHP_EOL;
+    foreach ($arrs as $arr) {
+        echo '<li><a href="/tables/'. $arr->table_name .'">' . $arr->table_name . '</a></li>';
     }
-    echo '</table>' . PHP_EOL;
-
+    echo '</ul>'. PHP_EOL;
 @endphp
+{{--echo '<pre>';--}}
+{{--var_dump($arr);--}}
+{{--echo '</pre>';--}}
+
+{{--    $highestRow = json_decode(json_decode($highest_row, true)[0]['highest_row']);--}}
+{{--    $highestColumnIndex = json_decode(json_decode($highest_column_index, true)[0]['highest_column_index']);--}}
+{{--    $arrCell = json_decode(json_decode($json, true)[0]['json_val'], true);--}}
+
+{{--    echo '<table>' . PHP_EOL;--}}
+{{--    for ($i = 1; $i < $highestRow; $i++) {--}}
+{{--        echo '<tr>' . PHP_EOL;--}}
+{{--        for ($k = 0; $k < $highestColumnIndex - 1; $k++) {--}}
+{{--           echo $arrCell[$i][$k]['cell'];--}}
+{{--        }--}}
+{{--        echo '</tr>' . PHP_EOL;--}}
+{{--    }--}}
+{{--    echo '</table>' . PHP_EOL;--}}
+
+{{--@endphp--}}
 
 </body>
 </html>

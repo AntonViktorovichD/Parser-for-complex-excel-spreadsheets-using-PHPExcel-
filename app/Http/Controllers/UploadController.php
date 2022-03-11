@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use PHPExcel;
-use PHPExcel_IOFactory;
 use PHPExcel_Cell;
-use PhpParser\Node\Stmt\If_;
-use function Symfony\Component\String\b;
+use PHPExcel_IOFactory;
 
 class UploadController extends Controller {
 
@@ -25,19 +21,22 @@ class UploadController extends Controller {
 
         if ($request->isMethod('post') && $request->file('userfile')) {
 
+            $names = DB::select('select table_name from tables');
+            $namesArr = [];
+            foreach ($names as $name) {
+                $namesArr[] = $name->table_name;
+            }
+
             $file = $request->file('userfile');
-            $extension = $file->extension();
-            $allowedfileExtensions = ['xls', 'xlsx'];
-            if (in_array($extension, $allowedfileExtensions)) {
+            $filename = $file->getClientOriginalName();
+            if (in_array($file->extension(), ['xls', 'xlsx']) && ($file->getSize() < 5242880) && !(in_array($filename, $namesArr))) {
                 $upload_folder = 'public/folder';
-                $filename = $file->getClientOriginalName();
                 $newFileName = $date . $filename;
                 Storage::putFileAs($upload_folder, $file, $newFileName);
             } else {
                 return redirect()->action([UploadController::class, 'form']);
             }
         }
-
 
         $excel = PHPExcel_IOFactory::load(base_path() . '/storage/app/public/folder' . '/' . $newFileName);
         $worksheet = $excel->getActiveSheet();
@@ -181,12 +180,16 @@ class UploadController extends Controller {
             }
         }
 
-        var_dump($arrCell);
-
         $date = date('Y:m:d H:i:s');
 
         $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
         DB::insert('insert into tables (json_val, table_name, created_at, highest_row, highest_column_index) values (?, ?, ?, ?, ?)', [$json, $filename, $date, $highestRow, $highestColumnIndex]);
+
+        return redirect()->action([UploadController::class, 'loadDB']);
+    }
+
+    public function loadDB() {
+        return view('data');
     }
 }

@@ -6,8 +6,11 @@
 </head>
 <body>
 
-@foreach ($tables as $table)
-    <p>This is user {{ $table->created_at }}</p>
-@endforeach
+{{$tables_creat}}
+
+{{--@foreach ($tables as $table)--}}
+{{--    <p>This is table {{ $table->table_name }} {{ $table -> created_at }}</p>--}}
+{{--@endforeach--}}
+
 </body>
 </html>
