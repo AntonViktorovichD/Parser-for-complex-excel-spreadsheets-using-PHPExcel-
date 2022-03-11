@@ -12,10 +12,10 @@ class jsonController extends Controller {
     }
 
     public function tables($name) {
-        $val = json_encode(DB::table('tables')->where('table_name', $name)->value('json_val'));
-        $colind = DB::table('tables')->where('table_name', $name)->value('highest_column_index');
-        $highrow = DB::table('tables')->where('table_name', $name)->value('highest_row');
-        return view('table', ['json' => $val, 'highest_row' => $highrow, 'highest_column_index' => $colind]);
+        $json = json_encode(DB::table('tables')->where('table_name', $name)->value('json_val'));
+        $highest_column_index = DB::table('tables')->where('table_name', $name)->value('highest_column_index');
+        $highest_row = DB::table('tables')->where('table_name', $name)->value('highest_row');
+        return view('table', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index]);
     }
 }
 
