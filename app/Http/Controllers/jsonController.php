@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 class jsonController extends Controller {
     public function arrayToJson() {
         $arr = json_encode(DB::select('select * from tables'));
-        return view('arrayToJson', ['arr' => $arr]);
+        return view('arrayToJson', ['arr' => $arr, 'tableload' => '']);
     }
 
     public function tables($name) {

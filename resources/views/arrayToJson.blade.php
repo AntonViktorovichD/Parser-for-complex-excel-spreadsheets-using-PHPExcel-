@@ -5,6 +5,9 @@
     <title>Table</title>
 </head>
 <body>
+
+{{ $tableload }}
+
 @php
     $arrs = json_decode($arr);
     echo '<ul>'. PHP_EOL;

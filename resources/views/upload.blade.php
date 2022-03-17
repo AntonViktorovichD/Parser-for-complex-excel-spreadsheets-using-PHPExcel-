@@ -6,10 +6,12 @@
 </head>
 <body>
 
+{{ $ulerror }}
+
 <form method="post" action="/ul" enctype="multipart/form-data">
     @csrf
     <input type="file" name="userfile">
-    <input type="text">
+    <input type="text" name="filename">
     <input type="submit">
 </form>
 

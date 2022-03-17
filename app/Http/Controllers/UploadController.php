@@ -11,12 +11,8 @@ use PHPExcel_IOFactory;
 class UploadController extends Controller {
 
     public function form() {
-        return view('upload');
+        return view('upload', ['ulerror' => '']);
     }
-
-//    public function uploadError() {
-//        return view('uploadError');
-//    }
 
     public function upload(Request $request) {
 
@@ -32,21 +28,24 @@ class UploadController extends Controller {
             }
 
             $file = $request->file('userfile');
-            $filename = $file->getClientOriginalName();
+            $filename = $request->input('filename');
             if (in_array($file->extension(), ['xls', 'xlsx'])) {
                 if ($file->getSize() < 5242880) {
-                    if (!(in_array($filename, $namesArr))) {
+                    if (preg_match("/^[а-я А-Я]+$/u", $filename)) {
                         $upload_folder = 'public/folder';
                         $newFileName = $date . $filename;
                         Storage::putFileAs($upload_folder, $file, $newFileName);
                     } else {
-                        return view('uploadError', ['uploadError' => "Таблица уже загружена"]);
+                        sleep(0);
+                        return view('upload', ['ulerror' => 'Введите название файла']);
                     }
                 } else {
-                    return view('uploadError', ['uploadError' => "Таблица превышает размер 5мб"]);
+                    sleep(0);
+                    return view('upload', ['ulerror' => 'Таблица превышает размер 5мб']);
                 }
             } else {
-                return view('uploadError', ['uploadError' => "Загрузите файл с расширением 'xls' или 'xlsx'"]);
+                sleep(0);
+                return view('upload', ['ulerror' => 'Загрузите файл с расширением xls или xlsx']);
             }
         }
 
@@ -201,5 +200,6 @@ class UploadController extends Controller {
         DB::insert('insert into tables (json_val, table_name, created_at, highest_row, highest_column_index) values (?, ?, ?, ?, ?)', [$json, $filename, $date, $highestRow, $highestColumnIndex]);
 
         return redirect()->action([jsonController::class, 'arrayToJson']);
+//        return view('arrayToJson', ['arr' => $json, 'tableload' => 'Таблица успешно загружена']);
     }
 }
