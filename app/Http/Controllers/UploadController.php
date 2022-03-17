@@ -19,6 +19,8 @@ class UploadController extends Controller {
         date_default_timezone_set('Europe/Moscow');
         $date = date('Y_m_d_H_i_s_');
 
+        $arrCell = [];
+
         if ($request->isMethod('post') && $request->file('userfile')) {
 
             $names = DB::select('select table_name from tables');
@@ -47,15 +49,15 @@ class UploadController extends Controller {
                 sleep(0);
                 return view('upload', ['ulerror' => 'Загрузите файл с расширением xls или xlsx']);
             }
-        }
 
-        $excel = PHPExcel_IOFactory::load(base_path() . '/storage/app/public/folder' . '/' . $newFileName);
-        $worksheet = $excel->getActiveSheet();
-        $mergeCells[] = $worksheet->getMergeCells();
-        $highestRow = $worksheet->getHighestRow();
-        $highestColumn = $worksheet->getHighestColumn();
-        $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
-        $highestColumn++;
+
+            $excel = PHPExcel_IOFactory::load(base_path() . '/storage/app/public/folder' . '/' . $newFileName);
+            $worksheet = $excel->getActiveSheet();
+            $mergeCells[] = $worksheet->getMergeCells();
+            $highestRow = $worksheet->getHighestRow();
+            $highestColumn = $worksheet->getHighestColumn();
+            $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+            $highestColumn++;
             $counter = 1;
             $arrKeys = [];
             $arrVals = [];
@@ -127,70 +129,71 @@ class UploadController extends Controller {
 
             $arrCoord = array_combine($arrEnd, $arrStart);
 
-        if (!empty($arrCoord)) {
+            if (!empty($arrCoord)) {
 
-            for ($row = 1; $row < $highestRow; $row++) {
-                $colCounter = 1;
+                for ($row = 1; $row < $highestRow; $row++) {
+                    $colCounter = 1;
 
-                $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+                    $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
 
-                for ($col = 0; $col < $highestColumnIndex; $col++) {
-                    $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                    for ($col = 0; $col < $highestColumnIndex; $col++) {
+                        $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
 
-                    $counter++;
+                        $counter++;
 
-                    if (isset($value)) {
-                        $colCounter = $col;
-                        $arr[$row][$col]['title'] = $value;
-                        $arr[$row][$col]['rowStart'] = $row;
-                        $arr[$row][$col]['rowEnd'] = $row;
-                        $arr[$row][$col]['colStart'] = $col + 1;
-                        $arr[$row][$col]['colEnd'] = $col + 1;
-                    } elseif (isset($arr[$row][$col])) {
-                        $arr[$row][$colCounter]['colEnd'] = $col;
-                    } elseif (empty($arr[1][0]['title'])) {
-                        $arr[$row][$col]['rowStart'] = $row;
-                        $arr[$row][$col]['colStart'] = $col + 1;
-                    }
+                        if (isset($value)) {
+                            $colCounter = $col;
+                            $arr[$row][$col]['title'] = $value;
+                            $arr[$row][$col]['rowStart'] = $row;
+                            $arr[$row][$col]['rowEnd'] = $row;
+                            $arr[$row][$col]['colStart'] = $col + 1;
+                            $arr[$row][$col]['colEnd'] = $col + 1;
+                        } elseif (isset($arr[$row][$col])) {
+                            $arr[$row][$colCounter]['colEnd'] = $col;
+                        } elseif (empty($arr[1][0]['title'])) {
+                            $arr[$row][$col]['rowStart'] = $row;
+                            $arr[$row][$col]['colStart'] = $col + 1;
+                        }
 
-                    if (isset($arr[$row][$col]['title'])) {
-                        $arr[$row][$col]['id'] = $counter - $highestColumnIndex;
-                    } elseif (empty($arr[1][0]['title'])) {
-                        $arr[$row][$col]['title'] = 'empty';
-                        $arr[$row][$col]['rowStart'] = $row;
-                        $arr[$row][$col]['colStart'] = $col + 1;
-                        $arr[$row][$col]['rowEnd'] = $row;
-                        $arr[$row][$col]['colEnd'] = $col + 1;
-                    } else {
-                        unset($arr[$row][$col]);
+                        if (isset($arr[$row][$col]['title'])) {
+                            $arr[$row][$col]['id'] = $counter - $highestColumnIndex;
+                        } elseif (empty($arr[1][0]['title'])) {
+                            $arr[$row][$col]['title'] = 'empty';
+                            $arr[$row][$col]['rowStart'] = $row;
+                            $arr[$row][$col]['colStart'] = $col + 1;
+                            $arr[$row][$col]['rowEnd'] = $row;
+                            $arr[$row][$col]['colEnd'] = $col + 1;
+                        } else {
+                            unset($arr[$row][$col]);
+                        }
                     }
                 }
-            }
 
-            $arrCell = $arr;
+                $arrCell = $arr;
 
-            for ($row = 1; $row < $highestRow; $row++) {
+                for ($row = 1; $row < $highestRow; $row++) {
 
-                $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+                    $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
 
-                for ($col = 0; $col < $highestColumnIndex; $col++) {
+                    for ($col = 0; $col < $highestColumnIndex; $col++) {
 
-                    if (isset($arr[$row][$col]['title'])) {
-                        if ($arr[$row][$col]['title'] == 'empty') {
-                            $arrCell[1][0]['title'] = NULL;
+                        if (isset($arr[$row][$col]['title'])) {
+                            if ($arr[$row][$col]['title'] == 'empty') {
+                                $arrCell[1][0]['title'] = NULL;
+                            }
+                            $colStart = array_keys($arrCoord, $arr[$row][$col]['colStart'] . ':' . $arr[$row][$col]['rowStart']);
+                            foreach ($colStart as $cs) {
+                                $ce = explode(':', $cs);
+
+                                $arr[$row][$col]['colEnd'] = $ce[0];
+                                $arr[$row][$col]['rowEnd'] = $ce[1];
+                            }
+                            $arr[$row][$col]['colSpan'] = $arr[$row][$col]['colEnd'] - $arr[$row][$col]['colStart'] + 1;
+                            $arr[$row][$col]['rowSpan'] = $arr[$row][$col]['rowEnd'] - $arr[$row][$col]['rowStart'] + 1;
+                            $arrCell[$row][$col]['cell'] = '<td rowspan= ' . $arr[$row][$col]["rowSpan"] . ' colspan= ' . $arr[$row][$col]["colSpan"] . '>' . $arrCell[$row][$col]['title'] . '</td>';
+                        } else {
+                            $arrCell[$row][$col] = NULL;
                         }
-                        $colStart = array_keys($arrCoord, $arr[$row][$col]['colStart'] . ':' . $arr[$row][$col]['rowStart']);
-                        foreach ($colStart as $cs) {
-                            $ce = explode(':', $cs);
-
-                            $arr[$row][$col]['colEnd'] = $ce[0];
-                            $arr[$row][$col]['rowEnd'] = $ce[1];
-                        }
-                        $arr[$row][$col]['colSpan'] = $arr[$row][$col]['colEnd'] - $arr[$row][$col]['colStart'] + 1;
-                        $arr[$row][$col]['rowSpan'] = $arr[$row][$col]['rowEnd'] - $arr[$row][$col]['rowStart'] + 1;
-                        $arrCell[$row][$col]['cell'] = '<td rowspan= ' . $arr[$row][$col]["rowSpan"] . ' colspan= ' . $arr[$row][$col]["colSpan"] . '>' . $arrCell[$row][$col]['title'] . '</td>';
-                    } else {
-                        $arrCell[$row][$col] = NULL;
                     }
                 }
             }
