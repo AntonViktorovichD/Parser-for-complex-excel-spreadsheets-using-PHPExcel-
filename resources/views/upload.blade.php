@@ -9,6 +9,7 @@
 <form method="post" action="/ul" enctype="multipart/form-data">
     @csrf
     <input type="file" name="userfile">
+    <input type="text">
     <input type="submit">
 </form>
 

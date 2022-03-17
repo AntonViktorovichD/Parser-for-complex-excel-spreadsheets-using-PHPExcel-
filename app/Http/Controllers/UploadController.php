@@ -14,6 +14,10 @@ class UploadController extends Controller {
         return view('upload');
     }
 
+//    public function uploadError() {
+//        return view('uploadError');
+//    }
+
     public function upload(Request $request) {
 
         date_default_timezone_set('Europe/Moscow');
@@ -29,12 +33,20 @@ class UploadController extends Controller {
 
             $file = $request->file('userfile');
             $filename = $file->getClientOriginalName();
-            if (in_array($file->extension(), ['xls', 'xlsx']) && ($file->getSize() < 5242880) && !(in_array($filename, $namesArr))) {
-                $upload_folder = 'public/folder';
-                $newFileName = $date . $filename;
-                Storage::putFileAs($upload_folder, $file, $newFileName);
+            if (in_array($file->extension(), ['xls', 'xlsx'])) {
+                if ($file->getSize() < 5242880) {
+                    if (!(in_array($filename, $namesArr))) {
+                        $upload_folder = 'public/folder';
+                        $newFileName = $date . $filename;
+                        Storage::putFileAs($upload_folder, $file, $newFileName);
+                    } else {
+                        return view('uploadError', ['uploadError' => "Таблица уже загружена"]);
+                    }
+                } else {
+                    return view('uploadError', ['uploadError' => "Таблица превышает размер 5мб"]);
+                }
             } else {
-                return redirect()->action([UploadController::class, 'form']);
+                return view('uploadError', ['uploadError' => "Загрузите файл с расширением 'xls' или 'xlsx'"]);
             }
         }
 
@@ -59,7 +71,9 @@ class UploadController extends Controller {
         $arrRowEnd = [];
         $arrEnd = [];
 
-        for ($column = 'A'; $column != $highestColumn; $column++) {
+        for ($column = 'A';
+             $column != $highestColumn;
+             $column++) {
             $arrKeys[] = $column;
             $arrVals[] = $counter++;
         }
