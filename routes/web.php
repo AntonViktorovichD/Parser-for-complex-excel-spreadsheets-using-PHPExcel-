@@ -11,3 +11,6 @@ use App\Http\Controllers\jsonController;
 
 Route::get('/json', [jsonController::class, 'arrayToJson']);
 Route::get('/tables/{name}', [jsonController::class, 'tables']);
+
+use App\Http\Controllers\ExceptionController;
+Route::get('exception/index', [ExceptionController::class, 'index']);
