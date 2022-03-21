@@ -37,7 +37,7 @@ class UploadController extends Controller {
                 $filename = $request->input('filename');
                 if (in_array($file->extension(), ['xls', 'xlsx'])) {
                     if ($file->getSize() < 5242880) {
-                        if (preg_match("/^[а-я А-Я]+$/u", $filename)) {
+                        if (preg_match("/^[а-я А-Я0-9]+$/u", $filename)) {
                             $upload_folder = 'public/folder';
                             $newFileName = $date . $filename . '.tmp';
                             Storage::putFileAs($upload_folder, $file, $newFileName);
@@ -196,6 +196,10 @@ class UploadController extends Controller {
                                 $arr[$row][$col]['colSpan'] = $arr[$row][$col]['colEnd'] - $arr[$row][$col]['colStart'] + 1;
                                 $arr[$row][$col]['rowSpan'] = $arr[$row][$col]['rowEnd'] - $arr[$row][$col]['rowStart'] + 1;
                                 $arrCell[$row][$col]['cell'] = '<td rowspan= ' . $arr[$row][$col]["rowSpan"] . ' colspan= ' . $arr[$row][$col]["colSpan"] . '>' . $arrCell[$row][$col]['title'] . '</td>';
+                                $arrCell[$row][$col]['colStartView'] = $arr[$row][$col]['colStart'];
+                                $arrCell[$row][$col]['rowStartView'] = $arr[$row][$col]['rowStart'];
+                                $arrCell[$row][$col]['colEndView'] = $arr[$row][$col]['colEnd'];
+                                $arrCell[$row][$col]['rowEndView'] = $arr[$row][$col]['rowEnd'];
                             } else {
                                 $arrCell[$row][$col] = NULL;
                             }

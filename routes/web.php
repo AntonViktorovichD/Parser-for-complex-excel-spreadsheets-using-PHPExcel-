@@ -12,3 +12,6 @@ use App\Http\Controllers\jsonController;
 Route::get('/json', [jsonController::class, 'arrayToJson']);
 Route::get('/tables/{name}', [jsonController::class, 'tables']);
 
+use App\Http\Controllers\EditController;
+
+Route::get('/edit/{name}', [EditController::class, 'edit']);

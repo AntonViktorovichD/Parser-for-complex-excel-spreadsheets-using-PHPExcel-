@@ -13,6 +13,7 @@
     echo '<ul>'. PHP_EOL;
     foreach ($arrs as $arr) {
         echo '<li><a href="/tables/'. $arr->table_name .'">' . $arr->table_name . '</a></li>';
+        echo '<a href="/edit/'. $arr->table_name .'"> Редактировать </a>';
     }
     echo '</ul>'. PHP_EOL;
 @endphp
