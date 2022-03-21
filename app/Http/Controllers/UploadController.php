@@ -39,7 +39,7 @@ class UploadController extends Controller {
                     if ($file->getSize() < 5242880) {
                         if (preg_match("/^[а-я А-Я]+$/u", $filename)) {
                             $upload_folder = 'public/folder';
-                            $newFileName = $date . $filename;
+                            $newFileName = $date . $filename . '.tmp';
                             Storage::putFileAs($upload_folder, $file, $newFileName);
                         } else {
                             sleep(0);
@@ -54,8 +54,10 @@ class UploadController extends Controller {
                     return view('upload', ['ulerror' => 'Загрузите файл с расширением xls или xlsx']);
                 }
 
+                $tmpPath = base_path() . '/storage/app/public/folder' . '/' . $newFileName;
 
-                $excel = PHPExcel_IOFactory::load(base_path() . '/storage/app/public/folder' . '/' . $newFileName);
+
+                $excel = PHPExcel_IOFactory::load($tmpPath);
                 $worksheet = $excel->getActiveSheet();
                 $mergeCells[] = $worksheet->getMergeCells();
                 $highestRow = $worksheet->getHighestRow();
@@ -188,7 +190,6 @@ class UploadController extends Controller {
                                 $colStart = array_keys($arrCoord, $arr[$row][$col]['colStart'] . ':' . $arr[$row][$col]['rowStart']);
                                 foreach ($colStart as $cs) {
                                     $ce = explode(':', $cs);
-
                                     $arr[$row][$col]['colEnd'] = $ce[0];
                                     $arr[$row][$col]['rowEnd'] = $ce[1];
                                 }
@@ -201,20 +202,22 @@ class UploadController extends Controller {
                         }
                     }
                 }
+
                 $date = date('Y:m:d H:i:s');
 
                 $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
                 DB::insert('insert into tables (json_val, table_name, created_at, highest_row, highest_column_index) values (?, ?, ?, ?, ?)', [$json, $filename, $date, $highestRow, $highestColumnIndex]);
 
+                unlink($tmpPath);
 
                 return redirect()->action([jsonController::class, 'arrayToJson']);
+
             } else {
                 return view('upload', ['ulerror' => 'Таблица пуста']);
             }
         } catch (\Exception $e) {
             die("Нет подключения к базе данных.");
         }
-
     }
 }
