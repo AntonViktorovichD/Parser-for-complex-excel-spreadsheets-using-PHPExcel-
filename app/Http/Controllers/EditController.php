@@ -18,20 +18,16 @@ class EditController extends Controller {
         $arrLastRowKeys = [];
         for ($i = 1; $i < $highest_row; $i++) {
             for ($k = 0; $k < $highest_column_index; $k++) {
-                if ($arrCell[$i][$k]['rowStartView'] < $arrCell[$i][$k]['rowEndView']) {
-                    if ($arrCell[$i][$k]['rowEndView'] == $highest_row - 2) {
+                if ($arrCell[$i][$k]['rowEndView'] == $highest_row - 2) {
+                    if ($arrCell[$i][$k]['rowStartView'] < $arrCell[$i][$k]['rowEndView']) {
 //                        echo 'Merged by row: ' . $arrCell[$i][$k]['title'] . '<br />';
                         $arrLastRow[] = $arrCell[$i][$k]['id'];
                         $arrLastRowKeys[] = $arrCell[$i][$k]['colStartView'];
-                    }
-                }
-                if ($arrCell[$i][$k]['rowEndView'] == $highest_row - 2) {
-                    if ($arrCell[$i][$k]['colEndView'] - $arrCell[$i][$k]['colStartView'] == 0) {
+                    } else if ($arrCell[$i][$k]['colEndView'] - $arrCell[$i][$k]['colStartView'] == 0) {
 //                        echo 'Not merged: ' . $arrCell[$i][$k]['title'] . '<br />';
                         $arrLastRow[] = $arrCell[$i][$k]['id'];
                         $arrLastRowKeys[] = $arrCell[$i][$k]['colStartView'];
                     } else {
-                        $span = $arrCell[$i][$k]['colEndView'] - $arrCell[$i][$k]['colStartView'] + 1;
 //                        echo 'Merged by col: ' . $arrCell[$i][$k]['title'] . '<br />';
                         $arrLastRow[] = $arrCell[$i][$k]['id'];
                         $arrLastRowKeys[] = $arrCell[$i][$k]['colStartView'];
