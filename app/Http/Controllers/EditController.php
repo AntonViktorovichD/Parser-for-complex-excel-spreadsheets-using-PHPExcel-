@@ -33,9 +33,11 @@ class EditController extends Controller {
             }
         }
         $arrLR = array_unique(array_combine($arrLastRowId, $arrLastRowKeys));
-        echo '<pre>';
-        var_dump(($arrLR));
-        echo '</pre>';
-        return view('table', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index]);
+        asort($arrLR);
+        $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
+//        echo '<pre>';
+//        var_dump($arrLR);
+//        echo '</pre>';
+        return view('edit', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr]);
     }
 }

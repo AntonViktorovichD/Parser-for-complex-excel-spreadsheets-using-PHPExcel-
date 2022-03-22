@@ -15,3 +15,5 @@ Route::get('/tables/{name}', [jsonController::class, 'tables']);
 use App\Http\Controllers\EditController;
 
 Route::get('/edit/{name}', [EditController::class, 'edit']);
+
+
