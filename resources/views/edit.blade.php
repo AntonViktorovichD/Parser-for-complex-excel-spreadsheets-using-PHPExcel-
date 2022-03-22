@@ -57,7 +57,7 @@ foreach ($arrCol as $key => $colnum) {
     if ($colnum == 1 && isset($arrAddRow[$key])) {
        echo '<td>' . $arrAddRow[$key] . '</td>';
     } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-        echo '<td colspan="' . $colnum . '" ' . $arrAddRow[$key] . '</td>';
+        echo '<td colspan="' . $colnum . '">' . $arrAddRow[$key] . '</td>';
     }
 }
 echo '</tr>' . PHP_EOL;
