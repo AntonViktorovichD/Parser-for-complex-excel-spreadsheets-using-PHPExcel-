@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-<?php
+@php
 $arrCell = json_decode(json_decode($json), true);
 $arrAddRow = array_flip(json_decode($addRowArr, true));
 
@@ -43,6 +43,9 @@ $arrCol = [];
 
 //try {
 echo '<form method="post" action="/user_upload">';
+@endphp
+@csrf
+@php
 echo '<table>' . PHP_EOL;
 for ($i = 1; $i < $highest_row - 1; $i++) {
     echo '<tr>' . PHP_EOL;
@@ -65,9 +68,9 @@ unset($arrCol[0]);
 echo '<tr>' . PHP_EOL;
 foreach ($arrCol as $key => $colnum) {
     if ($colnum == 1 && isset($arrAddRow[$key])) {
-        echo '<td><input type="text" name="' . $arrAddRow[$key] . '"></td>';
+        echo '<td><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
     } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-        echo '<td colspan="' . $colnum . '"><input type="text" name="' . $arrAddRow[$key] . '"></td>';
+        echo '<td colspan="' . $colnum . '"><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
     }
 }
 echo '</tr>' . PHP_EOL;
@@ -77,8 +80,7 @@ echo '</form>';
 //} catch (\Exception $e) {
 //    die("Ошибка таблицы.");
 //}
-?>
-
+@endphp
 </body>
 </html>
 
