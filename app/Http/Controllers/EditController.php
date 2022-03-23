@@ -17,15 +17,12 @@ class EditController extends Controller {
             for ($k = 0; $k < $highest_column_index; $k++) {
                 if ($arrCell[$i][$k]['rowEndView'] == $highest_row - 2) {
                     if ($arrCell[$i][$k]['rowStartView'] < $arrCell[$i][$k]['rowEndView']) {
-//                        echo 'Merged by row: ' . $arrCell[$i][$k]['title'] . '<br />';
                         $arrLastRowId[] = $arrCell[$i][$k]['id'];
                         $arrLastRowKeys[] = $arrCell[$i][$k]['colStartView'];
                     } else if ($arrCell[$i][$k]['colEndView'] - $arrCell[$i][$k]['colStartView'] == 0) {
-//                        echo 'Not merged: ' . $arrCell[$i][$k]['title'] . '<br />';
                         $arrLastRowId[] = $arrCell[$i][$k]['id'];
                         $arrLastRowKeys[] = $arrCell[$i][$k]['colStartView'];
                     } else {
-//                        echo 'Merged by col: ' . $arrCell[$i][$k]['title'] . '<br />';
                         $arrLastRowId[] = $arrCell[$i][$k]['id'];
                         $arrLastRowKeys[] = $arrCell[$i][$k]['colStartView'];
                     }
@@ -35,9 +32,6 @@ class EditController extends Controller {
         $arrLR = array_unique(array_combine($arrLastRowId, $arrLastRowKeys));
         asort($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-//        echo '<pre>';
-//        var_dump($arrLR);
-//        echo '</pre>';
         return view('edit', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr]);
     }
 }

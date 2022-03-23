@@ -14,7 +14,6 @@ class UploadController extends Controller {
         return view('upload', ['ulerror' => '']);
     }
 
-
     public function upload(Request $request) {
 
         date_default_timezone_set('Europe/Moscow');

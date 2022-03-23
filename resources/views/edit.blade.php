@@ -14,6 +14,18 @@
             padding: 10px;
         }
 
+        input {
+            outline: none;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .btn {
+            width: 100px;
+            height: 35px;
+        }
+
     </style>
 </head>
 <body>
@@ -21,17 +33,18 @@
 $arrCell = json_decode(json_decode($json), true);
 $arrAddRow = array_flip(json_decode($addRowArr, true));
 
-echo '<pre>';
-var_dump($arrAddRow);
-echo '</pre>';
+//echo '<pre>';
+//var_dump($arrAddRow);
+//echo '</pre>';
 $j = 0;
 $colnum = 1;
 $arrCol = [];
 
 
 //try {
+echo '<form method="post" action="/user_upload">';
 echo '<table>' . PHP_EOL;
-for ($i = 1; $i < $highest_row; $i++) {
+for ($i = 1; $i < $highest_row - 1; $i++) {
     echo '<tr>' . PHP_EOL;
     for ($k = 0; $k < $highest_column_index; $k++) {
         echo $arrCell[$i][$k]['cell'];
@@ -40,8 +53,6 @@ for ($i = 1; $i < $highest_row; $i++) {
 }
 
 for ($k = 1; $k <= $highest_column_index; $k++) {
-//    $colnum = (isset($arrAddRow[$k])) ? 1 : $colnum + 1;
-
     if (isset($arrAddRow[$k])) {
         $colnum = 1;
     } elseif (empty($arrAddRow[$k]) && $k != $highest_column_index) {
@@ -53,15 +64,16 @@ for ($k = 1; $k <= $highest_column_index; $k++) {
 unset($arrCol[0]);
 echo '<tr>' . PHP_EOL;
 foreach ($arrCol as $key => $colnum) {
-//    echo $colnum . '-' . $key . '<br />';
     if ($colnum == 1 && isset($arrAddRow[$key])) {
-       echo '<td>' . $arrAddRow[$key] . '</td>';
+        echo '<td><input type="text" name="' . $arrAddRow[$key] . '"></td>';
     } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-        echo '<td colspan="' . $colnum . '">' . $arrAddRow[$key] . '</td>';
+        echo '<td colspan="' . $colnum . '"><input type="text" name="' . $arrAddRow[$key] . '"></td>';
     }
 }
 echo '</tr>' . PHP_EOL;
 echo '<table>' . PHP_EOL;
+echo '<input class="btn" type="submit">';
+echo '</form>';
 //} catch (\Exception $e) {
 //    die("Ошибка таблицы.");
 //}
