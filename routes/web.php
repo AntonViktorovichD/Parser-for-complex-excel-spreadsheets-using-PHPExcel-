@@ -18,3 +18,4 @@ Route::get('/edit/{name}', [EditController::class, 'edit']);
 
 use App\Http\Controllers\UserUploadController;
 Route::post('/user_upload', [UserUploadController::class, 'user_upload']);
+

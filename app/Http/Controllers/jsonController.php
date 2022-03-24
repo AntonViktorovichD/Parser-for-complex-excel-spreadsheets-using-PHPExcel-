@@ -15,7 +15,8 @@ class jsonController extends Controller {
         return view('arrayToJson', ['arr' => $arr, 'tableload' => '']);
     }
 
-    public function tables($name) {
+    public function tables($name, $table_uuid)
+    {
         $json = json_encode(DB::table('tables')->where('table_name', $name)->value('json_val'));
         $highest_column_index = DB::table('tables')->where('table_name', $name)->value('highest_column_index');
         $highest_row = DB::table('tables')->where('table_name', $name)->value('highest_row');

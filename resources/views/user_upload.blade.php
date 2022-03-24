@@ -5,5 +5,9 @@
     <title>Table</title>
 </head>
 <body>
+{{ $alert }}
+<script>
+    setTimeout(() => window.location.href = 'json', 3000);
+</script>
 </body>
 </html>

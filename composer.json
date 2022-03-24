@@ -13,7 +13,8 @@
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpexcel": "^1.8",
-        "phpoffice/phpspreadsheet": "^1.21"
+        "phpoffice/phpspreadsheet": "^1.21",
+        "ramsey/uuid": "^4.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -37,8 +37,6 @@
     $colnum = 1;
     $arrCol = [];
 
-  //  echo $name;
-
     echo '<form method="post" action="/user_upload">';
 @endphp
 @csrf
@@ -70,7 +68,8 @@
             echo '<td colspan="' . $colnum . '"><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
         }
     }
-    echo '<input type="hidden" name="table_name" value="' . $name . '"';
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid;
+    echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '<table>' . PHP_EOL;
     echo '<input class="btn" type="submit">';

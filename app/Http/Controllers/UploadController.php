@@ -206,11 +206,13 @@ class UploadController extends Controller {
                     }
                 }
 
+                $table_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
+
                 $date = date('Y:m:d H:i:s');
 
                 $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
-                DB::insert('insert into tables (json_val, table_name, created_at, highest_row, highest_column_index) values (?, ?, ?, ?, ?)', [$json, $filename, $date, $highestRow, $highestColumnIndex]);
+                DB::insert('insert into tables (json_val, table_name, table_uuid, created_at, highest_row, highest_column_index) values (?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $date, $highestRow, $highestColumnIndex]);
 
                 unlink($tmpPath);
 
