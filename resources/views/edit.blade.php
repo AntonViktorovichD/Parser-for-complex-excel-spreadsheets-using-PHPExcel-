@@ -30,56 +30,52 @@
 </head>
 <body>
 @php
-$arrCell = json_decode(json_decode($json), true);
-$arrAddRow = array_flip(json_decode($addRowArr, true));
+    $arrCell = json_decode(json_decode($json), true);
+    $arrAddRow = array_flip(json_decode($addRowArr, true));
 
-//echo '<pre>';
-//var_dump($arrAddRow);
-//echo '</pre>';
-$j = 0;
-$colnum = 1;
-$arrCol = [];
+    $j = 0;
+    $colnum = 1;
+    $arrCol = [];
 
+  //  echo $name;
 
-//try {
-echo '<form method="post" action="/user_upload">';
+    echo '<form method="post" action="/user_upload">';
 @endphp
 @csrf
 @php
-echo '<table>' . PHP_EOL;
-for ($i = 1; $i < $highest_row - 1; $i++) {
+    echo '<table>' . PHP_EOL;
+    for ($i = 1; $i < $highest_row - 1; $i++) {
+        echo '<tr>' . PHP_EOL;
+        for ($k = 0; $k < $highest_column_index; $k++) {
+            echo $arrCell[$i][$k]['cell'];
+        }
+        echo '</tr>' . PHP_EOL;
+    }
+
+    for ($k = 1; $k <= $highest_column_index; $k++) {
+        if (isset($arrAddRow[$k])) {
+            $colnum = 1;
+        } elseif (empty($arrAddRow[$k]) && $k != $highest_column_index) {
+            $colnum++;
+        }
+        $arrCol[] = $colnum;
+    }
+
+    unset($arrCol[0]);
     echo '<tr>' . PHP_EOL;
-    for ($k = 0; $k < $highest_column_index; $k++) {
-        echo $arrCell[$i][$k]['cell'];
+    foreach ($arrCol as $key => $colnum) {
+        if ($colnum == 1 && isset($arrAddRow[$key])) {
+            echo '<td><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
+        } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
+            echo '<td colspan="' . $colnum . '"><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
+        }
     }
+    echo '<input type="hidden" name="table_name" value="' . $name . '"';
     echo '</tr>' . PHP_EOL;
-}
+    echo '<table>' . PHP_EOL;
+    echo '<input class="btn" type="submit">';
+    echo '</form>' . PHP_EOL;
 
-for ($k = 1; $k <= $highest_column_index; $k++) {
-    if (isset($arrAddRow[$k])) {
-        $colnum = 1;
-    } elseif (empty($arrAddRow[$k]) && $k != $highest_column_index) {
-        $colnum++;
-    }
-    $arrCol[] = $colnum;
-}
-
-unset($arrCol[0]);
-echo '<tr>' . PHP_EOL;
-foreach ($arrCol as $key => $colnum) {
-    if ($colnum == 1 && isset($arrAddRow[$key])) {
-        echo '<td><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
-    } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-        echo '<td colspan="' . $colnum . '"><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
-    }
-}
-echo '</tr>' . PHP_EOL;
-echo '<table>' . PHP_EOL;
-echo '<input class="btn" type="submit">';
-echo '</form>';
-//} catch (\Exception $e) {
-//    die("Ошибка таблицы.");
-//}
 @endphp
 </body>
 </html>
