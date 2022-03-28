@@ -21,3 +21,6 @@ Route::post('/user_upload', [UserUploadController::class, 'user_upload']);
 
 use App\Http\Controllers\EditController;
 Route::get('/edit/{name}', [EditController::class, 'edit']);
+
+use App\Http\Controllers\UserUpgradeController;
+Route::post('/user_upgrade', [UserUpgradeController::class, 'user_upgrade']);
