@@ -32,9 +32,12 @@
 $arrCell = json_decode(json_decode($json), true);
 $arrAddRow = array_flip(json_decode($addRowArr, true));
 ksort($arrAddRow);
+$values = json_decode(json_decode($report_value), true);
 $j = 0;
 $colnum = 1;
 $arrCol = [];
+$arrNum = [];
+$arrKeyVal = [];
 echo '<form method="post" action="/user_upload">';
 ?>
 @csrf
@@ -54,17 +57,20 @@ for ($k = 1; $k < $highest_column_index; $k++) {
     if (isset($arrAddRow[$k])) {
         $colnum = 1;
         $qw = $k;
+        $arrNum[] = $qw;
     }
     $arrCol[$qw] = $colnum;
 }
+
+$arrKeyVal = array_combine($arrNum, $values);
 
 unset($arrCol[0]);
 echo '<tr>' . PHP_EOL;
 foreach ($arrCol as $key => $colnum) {
     if ($colnum == 1 && isset($arrAddRow[$key])) {
-        echo '<td><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
+        echo '<td><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '" value="' . $arrKeyVal[$key] . '"></td>';
     } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-        echo '<td colspan="' . $colnum . '"><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
+        echo '<td colspan="' . $colnum . '"><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"value="' . $arrKeyVal[$key] . '"></td>';
     }
 }
 $table_info = $name . ' + ' . $table_uuid;

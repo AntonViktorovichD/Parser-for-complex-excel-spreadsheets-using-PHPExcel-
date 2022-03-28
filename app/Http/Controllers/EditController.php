@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\report_value;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Ramsey\Uuid\Uuid;
@@ -18,7 +19,8 @@ class EditController extends Controller {
         for ($i = 1; $i < $highest_row; $i++) {
             for ($k = 0; $k < $highest_column_index; $k++) {
                 if ($arrCell[$i][$k]['rowEndView'] == $highest_row - 2) {
-                    if ($arrCell[$i][$k]['rowStartView'] < $arrCell[$i][$k]['rowEndView']) {;
+                    if ($arrCell[$i][$k]['rowStartView'] < $arrCell[$i][$k]['rowEndView']) {
+                        ;
                         $arrLastRowId[] = $arrCell[$i][$k]['id'];
                         $arrLastRowKeys[] = $arrCell[$i][$k]['colStartView'];
                     } else if ($arrCell[$i][$k]['colEndView'] - $arrCell[$i][$k]['colStartView'] == 0) {
@@ -31,12 +33,12 @@ class EditController extends Controller {
                 }
             }
         }
+        $report_value = json_encode(DB::table('report_values')->where('table_uuid', $table_uuid)->value('json_val'));
 //        $row = DB::table('report_values')->where('table_uuid', $table_uuid)->value('json_val');
-
+//var_dump($report_value);
         $arrLR = array_unique(array_combine($arrLastRowId, $arrLastRowKeys));
-        asort($arrLR);
-        var_dump($arrLR);
+        asort($arrLR);;
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-        return view('edit', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr, 'name' => $name, 'table_uuid' => $table_uuid]);
+        return view('edit', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr, 'name' => $name, 'table_uuid' => $table_uuid, 'report_value' => $report_value]);
     }
 }
