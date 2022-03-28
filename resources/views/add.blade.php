@@ -67,7 +67,7 @@ foreach ($arrCol as $key => $colnum) {
         echo '<td colspan="' . $colnum . '"><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
     }
 }
-$table_info = $name . ' + ' . $table_uuid;
+$table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid;
 echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
 echo '</tr>' . PHP_EOL;
 echo '<table>' . PHP_EOL;

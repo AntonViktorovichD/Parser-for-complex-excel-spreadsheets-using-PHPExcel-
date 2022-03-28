@@ -9,14 +9,14 @@ class jsonController extends Controller {
     public function arrayToJson() {
         try {
             $arr = json_encode(DB::select('select * from tables'));
+            $arr_rows = json_encode(DB::select('select * from report_values'));
         } catch (\Exception $e) {
             die("Нет подключения к базе данных.");
         }
-        return view('arrayToJson', ['arr' => $arr, 'tableload' => '']);
+        return view('arrayToJson', ['arr' => $arr, 'tableload' => '', 'arr_rows' => $arr_rows]);
     }
 
-    public function tables($name, $table_uuid)
-    {
+    public function tables($name) {
         $json = json_encode(DB::table('tables')->where('table_name', $name)->value('json_val'));
         $highest_column_index = DB::table('tables')->where('table_name', $name)->value('highest_column_index');
         $highest_row = DB::table('tables')->where('table_name', $name)->value('highest_row');

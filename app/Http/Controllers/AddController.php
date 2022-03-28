@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Ramsey\Uuid\Uuid;
 
-class EditController extends Controller {
-    public function edit($name) {
+class AddController extends Controller {
+    public function add($name) {
         $json = json_encode(DB::table('tables')->where('table_name', $name)->value('json_val'));
         $highest_column_index = DB::table('tables')->where('table_name', $name)->value('highest_column_index');
         $highest_row = DB::table('tables')->where('table_name', $name)->value('highest_row');
@@ -18,6 +18,7 @@ class EditController extends Controller {
         for ($i = 1; $i < $highest_row; $i++) {
             for ($k = 0; $k < $highest_column_index; $k++) {
                 if ($arrCell[$i][$k]['rowEndView'] == $highest_row - 2) {
+
                     if ($arrCell[$i][$k]['rowStartView'] < $arrCell[$i][$k]['rowEndView']) {;
                         $arrLastRowId[] = $arrCell[$i][$k]['id'];
                         $arrLastRowKeys[] = $arrCell[$i][$k]['colStartView'];
@@ -31,12 +32,11 @@ class EditController extends Controller {
                 }
             }
         }
-//        $row = DB::table('report_values')->where('table_uuid', $table_uuid)->value('json_val');
+        $row_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
 
         $arrLR = array_unique(array_combine($arrLastRowId, $arrLastRowKeys));
         asort($arrLR);
-        var_dump($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-        return view('edit', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr, 'name' => $name, 'table_uuid' => $table_uuid]);
+        return view('add', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr, 'name' => $name, 'row_uuid' => $row_uuid, 'table_uuid' => $table_uuid]);
     }
 }

@@ -12,10 +12,12 @@ use App\Http\Controllers\jsonController;
 Route::get('/json', [jsonController::class, 'arrayToJson']);
 Route::get('/tables/{name}', [jsonController::class, 'tables']);
 
-use App\Http\Controllers\EditController;
+use App\Http\Controllers\AddController;
 
-Route::get('/edit/{name}', [EditController::class, 'edit']);
+Route::get('/add/{name}', [AddController::class, 'add']);
 
 use App\Http\Controllers\UserUploadController;
 Route::post('/user_upload', [UserUploadController::class, 'user_upload']);
 
+use App\Http\Controllers\EditController;
+Route::get('/edit/{name}', [EditController::class, 'edit']);
