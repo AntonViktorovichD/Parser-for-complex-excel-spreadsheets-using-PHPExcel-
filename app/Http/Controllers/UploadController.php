@@ -21,7 +21,7 @@ class UploadController extends Controller {
 
         $arrCell = [];
 
-        try {
+//        try {
             DB::connection()->getPdo();
 
             if ($request->isMethod('post') && $request->file('userfile')) {
@@ -221,9 +221,9 @@ class UploadController extends Controller {
             } else {
                 return view('upload', ['ulerror' => 'Таблица пуста']);
             }
-        } catch (\Exception $e) {
-            die("Нет подключения к базе данных.");
-        }
+//        } catch (\Exception $e) {
+//            die("Нет подключения к базе данных.");
+//        }
     }
 }
 
