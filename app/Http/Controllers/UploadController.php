@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use PHPExcel_Cell;
 use PHPExcel_IOFactory;
+use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class UploadController extends Controller {
 
@@ -20,6 +22,8 @@ class UploadController extends Controller {
         $date = date('Y_m_d_H_i_s_');
 
         $arrCell = [];
+
+        $user_id = Auth::id();
 
         try {
             DB::connection()->getPdo();
@@ -212,7 +216,7 @@ class UploadController extends Controller {
 
                 $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
-                DB::insert('insert into tables (json_val, table_name, table_uuid, created_at, highest_row, highest_column_index) values (?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $date, $highestRow, $highestColumnIndex]);
+                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, highest_row, highest_column_index) values (?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $date, $highestRow, $highestColumnIndex]);
 
                 unlink($tmpPath);
 
