@@ -13,10 +13,10 @@ class UserUploadController extends Controller {
         try {
             DB::connection()->getPdo();
             $input = $request->all();
-            list($table_name, $table_uuid, $row_uuid) = explode(' + ', $request->input('table_information'));
+            list($table_name, $table_uuid, $row_uuid, $user_id) = explode(' + ', $request->input('table_information'));
             unset($input['_token'], $input['table_information']);
             $json_val = json_encode($input, JSON_UNESCAPED_UNICODE);
-            DB::insert('insert into report_values (table_name, table_uuid, row_uuid, json_val, created_at) values (?, ?, ?, ?, ?)', [$table_name, $table_uuid, $row_uuid, $json_val, $created_at]);
+            DB::insert('insert into report_values (table_name, table_uuid, row_uuid, user_id, json_val, created_at) values (?, ?, ?, ?, ?, ?)', [$table_name, $table_uuid, $row_uuid, $user_id, $json_val, $created_at]);
             return view('user_upload', ['name' => $table_name, 'alert' => 'Запись успешно добавлена']);
         } catch (\Exception $e) {
             die("Нет подключения к базе данных.");

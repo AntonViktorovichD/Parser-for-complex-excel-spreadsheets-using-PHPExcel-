@@ -29,6 +29,7 @@
 </head>
 <body>
 <?php
+$user_id = Auth::user()->id;
 $arrCell = json_decode(json_decode($json), true);
 $arrAddRow = array_flip(json_decode($addRowArr, true));
 ksort($arrAddRow);
@@ -73,7 +74,7 @@ foreach ($arrCol as $key => $colnum) {
         echo '<td colspan="' . $colnum . '"><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"value="' . $arrKeyVal[$key] . '"></td>';
     }
 }
-$table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid;
+$table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id;
 echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
 echo '</tr>' . PHP_EOL;
 echo '<table>' . PHP_EOL;

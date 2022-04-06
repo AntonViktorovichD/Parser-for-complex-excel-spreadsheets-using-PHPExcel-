@@ -1,7 +1,9 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UploadController;
+
 Route::redirect('/', 'admin/home');
 
 Route::get('/add', [UploadController::class, 'form'])->middleware('auth');
@@ -16,13 +18,16 @@ use App\Http\Controllers\AddController;
 
 Route::get('/add/{name}', [AddController::class, 'add'])->middleware('auth');
 
-use App\Http\Controllers\UserUploadController;
-Route::post('/user_upload', [UserUploadController::class, 'user_upload'])->middleware('auth');
-
 use App\Http\Controllers\EditController;
+
 Route::get('/edit/{name}', [EditController::class, 'edit'])->middleware('auth');
 
+use App\Http\Controllers\UserUploadController;
+
+Route::post('/user_upload', [UserUploadController::class, 'user_upload'])->middleware('auth');
+
 use App\Http\Controllers\UserUpgradeController;
+
 Route::post('/user_upgrade', [UserUpgradeController::class, 'user_upgrade'])->middleware('auth');
 
 Auth::routes(['register' => false]);

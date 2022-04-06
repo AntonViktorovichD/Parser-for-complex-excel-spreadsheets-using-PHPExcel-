@@ -14,6 +14,7 @@ class EditController extends Controller {
         $highest_row = DB::table('tables')->where('table_name', $name)->value('highest_row');
         $table_uuid = DB::table('tables')->where('table_name', $name)->value('table_uuid');
         $row_uuid = DB::table('report_values')->where('table_name', $name)->value('row_uuid');
+        $user_id = DB::table('report_values')->where('table_name', $name)->value('user_id');
         $arrCell = json_decode(json_decode($json), true);
         $arrLastRowId = [];
         $arrLastRowKeys = [];
@@ -33,12 +34,10 @@ class EditController extends Controller {
                 }
             }
         }
-        $report_value = json_encode(DB::table('report_values')->where('table_uuid', $table_uuid)->value('json_val'));
-//        $row = DB::table('report_values')->where('table_uuid', $table_uuid)->value('json_val');
-//var_dump($report_value);
+        $report_value = json_encode(DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_id', $table_uuid)->value('json_val'));
         $arrLR = array_unique(array_combine($arrLastRowId, $arrLastRowKeys));
         asort($arrLR);;
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-        return view('edit', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr, 'name' => $name, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'report_value' => $report_value]);
+        return view('edit', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr, 'name' => $name, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'report_value' => $report_value]);
     }
 }

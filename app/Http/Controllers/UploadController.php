@@ -27,7 +27,7 @@ class UploadController extends Controller {
 
         $arrCell = [];
 
-        $user_id = Auth::id();
+        $user_id = Auth::user()->id;
 
         try {
             DB::connection()->getPdo();
