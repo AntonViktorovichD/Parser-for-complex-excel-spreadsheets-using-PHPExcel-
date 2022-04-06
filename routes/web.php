@@ -6,8 +6,8 @@ use App\Http\Controllers\UploadController;
 
 Route::redirect('/', 'admin/home');
 
-Route::get('/add', [UploadController::class, 'form'])->middleware('auth');
-Route::post('/ul', [UploadController::class, 'upload'])->middleware('auth');
+Route::get('/add', [UploadController::class, 'form'])->middleware('checkRole');
+Route::post('/ul', [UploadController::class, 'upload'])->middleware('checkRole');
 
 use App\Http\Controllers\jsonController;
 
