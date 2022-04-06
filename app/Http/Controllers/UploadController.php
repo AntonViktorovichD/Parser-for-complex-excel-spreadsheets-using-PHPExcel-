@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Auth;
 class UploadController extends Controller {
 
     public function form() {
-        return view('upload', ['ulerror' => '']);
+        if (Auth::user()->getRoleNames()[0] != 'user') {
+            return view('upload', ['ulerror' => '']);
+        } else {
+            return view('denied');
+        }
     }
 
     public function upload(Request $request) {
