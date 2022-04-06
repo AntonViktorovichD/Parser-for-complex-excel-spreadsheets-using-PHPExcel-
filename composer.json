@@ -18,7 +18,7 @@
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpexcel": "dev-master",
         "psr/simple-cache": "^1.0",
-        "spatie/laravel-permission": "^3.0"
+        "spatie/laravel-permission": "*"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
