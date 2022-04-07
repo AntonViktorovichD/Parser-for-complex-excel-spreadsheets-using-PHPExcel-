@@ -1,5 +1,24 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        .vue-selector {
+            padding-bottom: 15px;
+        }
+
+        .vue-selector select {
+            height: calc(1.5em + .75rem + 2px);
+            padding: .375rem .75rem;
+            font-size: .875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #5c6873;
+            background-color: #ffffff;
+            background-clip: padding-box;
+            border: 1px solid #e4e7ea;
+            border-radius: .25rem;
+        }
+
+    </style>
 
 <div class="card">
     <div class="card-header">
@@ -45,6 +64,18 @@
                     {{ trans('cruds.user.fields.password_helper') }}
                 </p>
             </div>
+            <div id="v-model-select" class="vue-selector">
+                <label for="name">Участки</label><br>
+                <select v-model="selected">
+                    <option disabled value="">Выберите один из вариантов</option>
+                    <option>А</option>
+                    <option>Б</option>
+                    <option>В</option>
+                </select>
+                @verbatim
+                    <span>Выбрано: {{ selected }}</span>
+                @endverbatim
+            </div>
             <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                 <label for="roles">{{ trans('cruds.user.fields.roles') }}*
                     <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
@@ -67,8 +98,15 @@
                 <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
             </div>
         </form>
-
-
     </div>
 </div>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    selected: ''
+                }
+            }
+        }).mount('#v-model-select')
+    </script>
 @endsection
