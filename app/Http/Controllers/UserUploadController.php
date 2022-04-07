@@ -13,6 +13,7 @@ class UserUploadController extends Controller {
         try {
             DB::connection()->getPdo();
             $input = $request->all();
+
             list($table_name, $table_uuid, $row_uuid, $user_id) = explode(' + ', $request->input('table_information'));
             unset($input['_token'], $input['table_information']);
             $json_val = json_encode($input, JSON_UNESCAPED_UNICODE);

@@ -32,8 +32,6 @@
 $user_id = Auth::user()->id;
 $arrCell = json_decode(json_decode($json), true);
 $arrAddRow = array_flip(json_decode($addRowArr, true));
-ksort($arrAddRow);
-$j = 0;
 $colnum = 1;
 $arrCol = [];
 echo '<form method="post" action="/user_upload">';
@@ -62,10 +60,10 @@ for ($k = 1; $k < $highest_column_index; $k++) {
 unset($arrCol[0]);
 echo '<tr>' . PHP_EOL;
 foreach ($arrCol as $key => $colnum) {
-    if ($colnum == 1 && isset($arrAddRow[$key])) {
-        echo '<td><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
-    } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-        echo '<td colspan="' . $colnum . '"><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
+        if ($colnum == 1 && isset($arrAddRow[$key])) {
+            echo '<td><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
+        } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
+            echo '<td colspan="' . $colnum . '"><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
     }
 }
 $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id;

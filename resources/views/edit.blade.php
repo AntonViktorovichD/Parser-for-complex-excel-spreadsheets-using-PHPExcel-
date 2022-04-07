@@ -34,7 +34,6 @@ $arrCell = json_decode(json_decode($json), true);
 $arrAddRow = array_flip(json_decode($addRowArr, true));
 ksort($arrAddRow);
 $values = json_decode(json_decode($report_value), true);
-$j = 0;
 $colnum = 1;
 $arrCol = [];
 $arrNum = [];
@@ -63,6 +62,10 @@ for ($k = 1; $k < $highest_column_index; $k++) {
     $arrCol[$qw] = $colnum;
 }
 
+foreach ($arrNum as $num) {
+    echo $num;
+}
+var_dump($values);
 $arrKeyVal = array_combine($arrNum, $values);
 
 unset($arrCol[0]);
