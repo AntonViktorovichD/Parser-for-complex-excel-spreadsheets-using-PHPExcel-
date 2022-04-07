@@ -38,7 +38,11 @@ echo '<form method="post" action="/user_upload">';
 ?>
 @csrf
 <?php
+$rowSpan = $highest_row - 1;
 echo '<table>' . PHP_EOL;
+echo '<tr>';
+echo '<td rowspan="' . $rowSpan . '" > ' . '11111' . '</td>';
+echo '</tr>';
 for ($i = 1; $i < $highest_row - 1; $i++) {
     echo '<tr>' . PHP_EOL;
     for ($k = 0; $k < $highest_column_index; $k++) {
@@ -59,6 +63,7 @@ for ($k = 1; $k < $highest_column_index; $k++) {
 
 unset($arrCol[0]);
 echo '<tr>' . PHP_EOL;
+echo '<td>' . '11111' . '</td>';
 foreach ($arrCol as $key => $colnum) {
         if ($colnum == 1 && isset($arrAddRow[$key])) {
             echo '<td><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
