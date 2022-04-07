@@ -62,10 +62,6 @@ for ($k = 1; $k < $highest_column_index; $k++) {
     $arrCol[$qw] = $colnum;
 }
 
-foreach ($arrNum as $num) {
-    echo $num;
-}
-var_dump($values);
 $arrKeyVal = array_combine($arrNum, $values);
 
 unset($arrCol[0]);
