@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <style>
+    <script src="<?php echo e(asset('js/vue.global.js')); ?>"></script>    <style>
         .vue-selector {
             padding-bottom: 15px;
         }
