@@ -9,6 +9,10 @@ Route::redirect('/', 'admin/home');
 Route::get('/add', [UploadController::class, 'form'])->middleware('auth');
 Route::post('/ul', [UploadController::class, 'upload'])->middleware('checkRole');
 
+//use App\Http\Controllers\AddDBController;
+//
+//Route::get('/str', [AddDBController::class, 'edit']);
+
 use App\Http\Controllers\jsonController;
 
 Route::get('/json', [jsonController::class, 'arrayToJson'])->middleware('auth');
