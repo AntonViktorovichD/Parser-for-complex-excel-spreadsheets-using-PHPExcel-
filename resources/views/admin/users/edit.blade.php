@@ -13,7 +13,7 @@
             font-weight: 400;
             line-height: 1.5;
             color: #5c6873;
-            background-color: #fffcc8;
+            background-color: #ffffff;
             background-clip: padding-box;
             border: 1px solid #e4e7ea;
             border-radius: .25rem;
@@ -77,7 +77,7 @@
                         <option>В</option>
                     </select>
                     @verbatim
-                        <span>Выбрано: {{ selected }}</span>
+                        <span>Выбрано: <option value="{{ selected }}"></option></span>
                     @endverbatim
                 </div>
 

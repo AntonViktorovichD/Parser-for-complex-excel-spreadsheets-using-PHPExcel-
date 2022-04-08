@@ -9,9 +9,13 @@ Route::redirect('/', 'admin/home');
 Route::get('/add', [UploadController::class, 'form'])->middleware('auth');
 Route::post('/ul', [UploadController::class, 'upload'])->middleware('checkRole');
 
-use App\Http\Controllers\CreateUserController;
+use App\Http\Controllers\showUserController;
 
-Route::post('/create_user', [CreateUserController::class, 'addUser']);
+Route::post('/show', [showUserController::class, 'showUser']);
+
+use App\Http\Controllers\EditUserController;
+
+Route::put('/edit', [EditUserController::class, 'editUser']);
 
 use App\Http\Controllers\jsonController;
 
