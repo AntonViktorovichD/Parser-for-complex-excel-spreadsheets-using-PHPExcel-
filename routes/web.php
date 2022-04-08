@@ -9,9 +9,9 @@ Route::redirect('/', 'admin/home');
 Route::get('/add', [UploadController::class, 'form'])->middleware('auth');
 Route::post('/ul', [UploadController::class, 'upload'])->middleware('checkRole');
 
-//use App\Http\Controllers\AddDBController;
-//
-//Route::get('/str', [AddDBController::class, 'edit']);
+use App\Http\Controllers\CreateUserController;
+
+Route::post('/create_user', [CreateUserController::class, 'addUser']);
 
 use App\Http\Controllers\jsonController;
 
@@ -36,7 +36,6 @@ Route::post('/user_upgrade', [UserUpgradeController::class, 'user_upgrade'])->mi
 
 Auth::routes(['register' => false]);
 
-// Change Password Routes...
 Route::get('change_password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('auth.change_password')->middleware('auth');
 Route::patch('change_password', 'Auth\ChangePasswordController@changePassword')->name('auth.change_password')->middleware('auth');
 

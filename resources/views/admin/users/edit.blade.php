@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    <script src="<?php echo e(asset('js/vue.global.js')); ?>"></script>    <style>
+    <script src="<?php echo e(asset('js/vue.global.js')); ?>"></script>
+    <style>
         .vue-selector {
             padding-bottom: 15px;
         }
@@ -86,7 +87,8 @@
                         <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
                     <select name="roles[]" id="roles" class="form-control select2" multiple="multiple" required>
                         @foreach($roles as $id => $roles)
-                            <option value="{{ $id }}" {{ (in_array($id, old('roles', [])) || isset($user) && $user->roles()->pluck('name', 'id')->contains($id)) ? 'selected' : '' }}>{{ $roles }}</option>
+                            <option
+                                value="{{ $id }}" {{ (in_array($id, old('roles', [])) || isset($user) && $user->roles()->pluck('name', 'id')->contains($id)) ? 'selected' : '' }}>{{ $roles }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('roles'))
@@ -102,7 +104,6 @@
                     <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
                 </div>
             </form>
-
 
         </div>
     </div>
