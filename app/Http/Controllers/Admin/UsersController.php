@@ -11,14 +11,16 @@ use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
 use Illuminate\Support\Facades\DB;
 
-class UsersController extends Controller {
+class UsersController extends Controller
+{
     /**
      * Display a listing of User.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        if (!Gate::allows('users_manage')) {
+    public function index()
+    {
+        if (! Gate::allows('users_manage')) {
             return abort(401);
         }
 
@@ -32,8 +34,9 @@ class UsersController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
-        if (!Gate::allows('users_manage')) {
+    public function create()
+    {
+        if (! Gate::allows('users_manage')) {
             return abort(401);
         }
         $roles = Role::get()->pluck('name', 'name');
@@ -54,6 +57,10 @@ class UsersController extends Controller {
         $user = User::create($request->all());
         $roles = $request->input('roles') ? $request->input('roles') : [];
         $user->assignRole($roles);
+        $userId = $user->id;
+        $department = $request->get('department');
+
+        DB::table('users')->where('id', $userId)->update(['department' => $department]);
 
         return redirect()->route('admin.users.index');
     }
@@ -88,7 +95,6 @@ class UsersController extends Controller {
         try {
             $user->update($request->all());
             $roles = $request->input('roles') ? $request->input('roles') : [];
-
             $user->syncRoles($roles);
 
             $userId = $user->id;

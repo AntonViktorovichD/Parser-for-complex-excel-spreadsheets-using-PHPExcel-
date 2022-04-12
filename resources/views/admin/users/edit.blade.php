@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-    <script src="<?php echo e(asset('js/vue.global.js')); ?>"></script>
     <style>
         .department select {
             height: calc(1.5em + .75rem + 2px);

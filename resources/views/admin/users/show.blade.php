@@ -43,6 +43,22 @@
                     </tr>
                     <tr>
                         <th>
+                            Creation date
+                        </th>
+                        <td>
+                            {{ $user->created_at }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Upadate date
+                        </th>
+                        <td>
+                            {{ $user->updated_at }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             Roles
                         </th>
                         <td>

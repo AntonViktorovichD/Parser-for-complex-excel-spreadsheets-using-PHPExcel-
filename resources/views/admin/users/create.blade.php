@@ -1,12 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    <script src="<?php echo e(asset('js/vue.global.js')); ?>"></script>
     <style>
-        .vue-selector {
-            padding-bottom: 15px;
-        }
-
-        .vue-selector select {
+        .department select {
             height: calc(1.5em + .75rem + 2px);
             padding: .375rem .75rem;
             font-size: .875rem;
@@ -20,6 +15,10 @@
         }
 
     </style>
+{{--    @php--}}
+{{--        $userId = $user->id;--}}
+{{--        $department = preg_replace('#}\]$#', '', preg_replace('#^\[{"department":#', '', json_encode(DB::table('users')->where('id', '=', $userId)->select('department')->get(), JSON_UNESCAPED_UNICODE)));--}}
+{{--    @endphp--}}
 
     <div class="card">
         <div class="card-header">
@@ -68,17 +67,14 @@
                         {{ trans('cruds.user.fields.password_helper') }}
                     </p>
                 </div>
-                <div class=form-group {{ $errors->has('name') ? 'has-error' : '' }} id='v-model-select' class='vue-selector'>
-                    <label for="name">Участки</label><br>
-                    <select name="department" v-model="selected">
-                        <option disabled value="">Выберите один из вариантов</option>
-                        <option>А</option>
-                        <option>Б</option>
-                        <option>В</option>
-                    </select>
-                    @verbatim
-                        <span>Выбрано: <option value="{{ selected }}"></option></span>
-                    @endverbatim
+                <div class="form-group">
+                    <label for="roles">Участок:
+                        <select name="department" class="department">
+                            <option value="А">Пункт А</option>
+                            <option value="Б">Пункт Б</option>
+                            <option value="В">Пункт В</option>
+                        </select>
+                    </label>
                 </div>
                 <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                     <label for="roles">{{ trans('cruds.user.fields.roles') }}*
@@ -105,13 +101,4 @@
             </form>
         </div>
     </div>
-    <script>
-        Vue.createApp({
-            data() {
-                return {
-                    selected: ''
-                }
-            }
-        }).mount('#v-model-select')
-    </script>
 @endsection

@@ -13,11 +13,13 @@ class CreateUserController extends Controller {
     public function addUser(Request $request) {
         try {
             DB::connection()->getPdo();
+            date_default_timezone_set('Etc/GMT+3');
+            $created_at = date('Y-m-d H:i:s');
             $name = $request->input('name');
             $email = $request->input('email');
-            $department = $request->input('department');
+            $department = $request->get('department');
             $password = password_hash($request->input('password'), PASSWORD_BCRYPT);
-            DB::insert('insert into users (name, email, department, password) values (?, ?, ?, ?)', [$name, $email, $department, $password]);
+            DB::insert('insert into users (name, email, department, password, created_at) values (?, ?, ?, ?, ?)', [$name, $email, $department, $password, $created_at]);
         } catch (\Exception $e) {
             die("Нет подключения к базе данных.");
         }
