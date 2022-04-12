@@ -8,5 +8,9 @@
 
 {{ $user }}
 
+<script>
+    console.log(window.location.href);
+    setTimeout(() => window.location.href = '', 3000);
+</script>
 </body>
 </html>

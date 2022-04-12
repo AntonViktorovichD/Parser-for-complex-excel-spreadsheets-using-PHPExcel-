@@ -7,7 +7,7 @@
 <body>
 {{ $alert }}
 <script>
-    setTimeout(() => window.location.href = 'json', 3000);
+    setTimeout(() => window.location.host = '/', 3000);
 </script>
 </body>
 </html>

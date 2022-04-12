@@ -13,9 +13,9 @@ use App\Http\Controllers\showUserController;
 
 Route::post('/show', [showUserController::class, 'showUser']);
 
-use App\Http\Controllers\EditUserController;
+use App\Http\Controllers\AddInEditController;
 
-Route::put('/edit', [EditUserController::class, 'editUser']);
+Route::get('/edit', [AddInEditController::class, 'addInEdit']);
 
 use App\Http\Controllers\jsonController;
 

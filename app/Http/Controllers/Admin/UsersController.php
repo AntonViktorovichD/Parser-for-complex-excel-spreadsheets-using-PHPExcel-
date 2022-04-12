@@ -101,7 +101,6 @@ class UsersController extends Controller {
             $department = $oldVals[0]->department;
             $password = $oldVals[0]->password;
 
-
             if ($name != $user->name) {
                 $name = $user->name;
             }
