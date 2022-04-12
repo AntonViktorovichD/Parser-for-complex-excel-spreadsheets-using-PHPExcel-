@@ -162,7 +162,7 @@
             },
             columnDefs: [{
                 orderable: false,
-                className: 'select-checkbox',
+                // className: 'select-checkbox',
                 targets: 0
             }, {
                 orderable: false,

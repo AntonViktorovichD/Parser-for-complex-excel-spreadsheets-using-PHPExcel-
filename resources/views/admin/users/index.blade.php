@@ -19,9 +19,6 @@
                 <table class=" table table-bordered table-striped table-hover datatable datatable-User">
                     <thead>
                     <tr>
-                        <th width="10">
-
-                        </th>
                         <th>
                             {{ trans('cruds.user.fields.id') }}
                         </th>
@@ -35,8 +32,26 @@
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
                         <th>
+                            {{ trans('District') }}
+                        </th>
+                        <th>
                             {{ trans('Department') }}
                         </th>
+                        {{--                        <th>--}}
+                        {{--                            {{ trans('Responsible specialist') }}--}}
+                        {{--                        </th>--}}
+                        {{--                        <th>--}}
+                        {{--                            {{ trans('City phone') }}--}}
+                        {{--                        </th>--}}
+                        {{--                        <th>--}}
+                        {{--                            {{ trans('Mobile phone') }}--}}
+                        {{--                        </th>--}}
+                        {{--                        <th>--}}
+                        {{--                            {{ trans('Director') }}--}}
+                        {{--                        </th>--}}
+                        {{--                        <th>--}}
+                        {{--                            {{ trans('Directors phone ') }}--}}
+                        {{--                        </th>--}}
                         <th>
                             {{ trans('Creation date') }}
                         </th>
@@ -50,10 +65,10 @@
                     </thead>
                     <tbody>
                     @foreach($users as $key => $user)
-                        <tr data-entry-id="{{ $user->id }}">
-                            <td>
+                        <tr>
+                            {{--                            <td>--}}
 
-                            </td>
+                            {{--                            </td>--}}
                             <td>
                                 {{ $user->id ?? '' }}
                             </td>
@@ -65,17 +80,35 @@
                             </td>
                             <td>
                                 @foreach($user->roles()->pluck('name') as $role)
-                                    <span class="badge badge-info">{{ $role }}</span>
+                                    <span class="badge badge-info">{{ $role  }}</span>
                                 @endforeach
+                            </td>
+                            <td>
+                                {{ $user->district ?? '' }}
                             </td>
                             <td>
                                 {{ $user->department ?? '' }}
                             </td>
+                            {{--                            <td>--}}
+                            {{--                                {{ $user->responsible_specialist ?? '' }}--}}
+                            {{--                            </td>--}}
+                            {{--                            <td>--}}
+                            {{--                                {{ $user->city_phone ?? '' }}--}}
+                            {{--                            </td>--}}
+                            {{--                            <td>--}}
+                            {{--                                {{ $user->mobile_phone ?? '' }}--}}
+                            {{--                            </td>--}}
+                            {{--                            <td>--}}
+                            {{--                                {{ $user->director ?? '' }}--}}
+                            {{--                            </td>--}}
+                            {{--                            <td>--}}
+                            {{--                                {{ $user-> 	directors_phone ?? '' }}--}}
+                            {{--                            </td>--}}
                             <td>
-                                {{ $user->created_at }}
+                                {{ $user->created_at ?? '' }}
                             </td>
                             <td>
-                                {{ $user->updated_at }}
+                                {{ $user->updated_at ?? '' }}
                             </td>
                             <td>
                                 <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">
