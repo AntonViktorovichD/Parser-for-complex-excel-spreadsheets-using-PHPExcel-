@@ -68,18 +68,23 @@
                         {{ trans('cruds.user.fields.password_helper') }}
                     </p>
                 </div>
-                <div id="v-model-select" class="vue-selector">
-                    <label for="name">Участки</label><br>
-                    <select v-model="selected">
-                        <option disabled value="">Выберите один из вариантов</option>
-                        <option>А</option>
-                        <option>Б</option>
-                        <option>В</option>
-                    </select>
-                    @verbatim
-                        <span>Выбрано: <option value="{{ selected }}"></option></span>
-                    @endverbatim
-                </div>
+                <select name="department">
+                    <option value="А">Пункт А</option>
+                    <option value="Б">Пункт Б</option>
+                    <option value="В">Пункт В</option>
+                </select>
+{{--                <div id="v-model-select" class="vue-selector">--}}
+{{--                    <label for="department">Участки</label><br>--}}
+{{--                    <select v-model="selected">--}}
+{{--                        <option disabled value="">Выберите один из вариантов</option>--}}
+{{--                        <option>А</option>--}}
+{{--                        <option>Б</option>--}}
+{{--                        <option>В</option>--}}
+{{--                    </select>--}}
+{{--                    @verbatim--}}
+{{--                        <span>Выбрано: <option name="department" value="{{ selected }}"></option></span>--}}
+{{--                    @endverbatim--}}
+{{--                </div>--}}
 
                 <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                     <label for="roles">{{ trans('cruds.user.fields.roles') }}*
