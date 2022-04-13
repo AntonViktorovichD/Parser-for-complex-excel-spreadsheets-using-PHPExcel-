@@ -110,11 +110,33 @@ class UsersController extends Controller {
             $userId = $user->id;
 
             $selDep = $request->get('department');
-            $oldVals = DB::table('users')->where('id', '=', $userId)->select('id', 'name', 'email', 'department', 'password')->get();
+            $selDist = $request->get('district');
+            $inpRS = $request->get('responsible_specialist');
+            $inpCP = $request->get('city_phone');
+            $inpMP = $request->get('mobile_phone');
+            $inpDir = $request->get('director');
+            $inpDP = $request->get('directors_phone');
+            $oldVals = DB::table('users')->where('id', '=', $userId)->select(
+                'name',
+                'email',
+                'district',
+                'department',
+                'password',
+                'responsible_specialist',
+                'city_phone',
+                'mobile_phone',
+                'director',
+                'directors_phone')->get();
 
             $name = $oldVals[0]->name;
             $email = $oldVals[0]->email;
+            $district = $oldVals[0]->district;
             $department = $oldVals[0]->department;
+            $responsible_specialist = $oldVals[0]->responsible_specialist;
+            $city_phone = $oldVals[0]->city_phone;
+            $mobile_phone = $oldVals[0]->mobile_phone;
+            $director = $oldVals[0]->director;
+            $directors_phone = $oldVals[0]->directors_phone;
             $password = $oldVals[0]->password;
 
             if ($name != $user->name) {
@@ -123,16 +145,46 @@ class UsersController extends Controller {
             if ($email != $user->email) {
                 $email = $user->email;
             }
+            if ($district != $selDist) {
+                $district = $selDist;
+            }
             if ($department != $selDep) {
                 $department = $selDep;
             }
             if ($password != password_hash($user->password, PASSWORD_BCRYPT)) {
                 $password = $user->password;
             }
+            if ($responsible_specialist != $inpRS) {
+                $responsible_specialist = $inpRS;
+            }
+            if ($city_phone != $inpCP) {
+                $city_phone = $inpCP;
+            }
+            if ($mobile_phone != $inpMP) {
+                $mobile_phone = $inpMP;
+            }
+            if ($director != $inpDir) {
+                $director = $inpDir;
+            }
+            if ($directors_phone != $inpDP) {
+                $directors_phone = $inpDP;
+            }
+
 
             $password = password_hash($password, PASSWORD_BCRYPT);
 
-            DB::table('users')->where('id', $userId)->update(['name' => $name, 'email' => $email, 'department' => $department, 'password' => $password]);
+            DB::table('users')->where('id', $userId)->update([
+                'name' => $name,
+                'email' => $email,
+                'district' => $district,
+                'department' => $department,
+                'password' => $password,
+                'responsible_specialist' => $responsible_specialist,
+                'city_phone' => $city_phone,
+                'mobile_phone' => $mobile_phone,
+                'director' => $director,
+                'directors_phone' => $directors_phone
+            ]);
 
             return view('/edit_user', ['user' => 'Обновление завершено']);
 
