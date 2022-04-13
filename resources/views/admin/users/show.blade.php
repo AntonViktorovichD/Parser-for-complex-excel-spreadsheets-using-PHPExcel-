@@ -19,6 +19,22 @@
                     </tr>
                     <tr>
                         <th>
+                            Creation date
+                        </th>
+                        <td>
+                            {{ $user->created_at }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Upadate date
+                        </th>
+                        <td>
+                            {{ $user->updated_at }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             Name
                         </th>
                         <td>
@@ -99,22 +115,7 @@
                             {{ $user-> directors_phone }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            Creation date
-                        </th>
-                        <td>
-                            {{ $user->created_at }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Upadate date
-                        </th>
-                        <td>
-                            {{ $user->updated_at }}
-                        </td>
-                    </tr>
+
 
                     </tbody>
                 </table>

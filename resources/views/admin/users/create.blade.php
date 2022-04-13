@@ -15,18 +15,13 @@
         }
 
     </style>
-{{--    @php--}}
-{{--        $userId = $user->id;--}}
-{{--        $department = preg_replace('#}\]$#', '', preg_replace('#^\[{"department":#', '', json_encode(DB::table('users')->where('id', '=', $userId)->select('department')->get(), JSON_UNESCAPED_UNICODE)));--}}
-{{--    @endphp--}}
-
     <div class="card">
         <div class="card-header">
             {{ trans('global.create') }} {{ trans('cruds.user.title_singular') }}
         </div>
 
         <div class="card-body">
-{{--            <form action="{{ route("admin.users.store") }}" method="POST" enctype="multipart/form-data">--}}
+            {{--            <form action="{{ route("admin.users.store") }}" method="POST" enctype="multipart/form-data">--}}
             <form action="/admin/users" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
@@ -68,6 +63,15 @@
                     </p>
                 </div>
                 <div class="form-group">
+                    <label for="roles">Район:
+                        <select name="district" class="district">
+                            <option value="А">Пункт А</option>
+                            <option value="Б">Пункт Б</option>
+                            <option value="В">Пункт В</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="form-group">
                     <label for="roles">Участок:
                         <select name="department" class="department">
                             <option value="А">Пункт А</option>
@@ -75,6 +79,67 @@
                             <option value="В">Пункт В</option>
                         </select>
                     </label>
+                </div>
+                <div class="form-group {{ $errors->has('responsible_specialist') ? 'has-error' : '' }}">
+                    <label for="responsible_specialist">Responsible specialist </label>
+                    <input type="responsible_specialist" id="responsible_specialist" name="responsible_specialist"
+                           class="form-control" required>
+                    @if($errors->has('responsible_specialist'))
+                        <em class="invalid-feedback">
+                            {{ $errors->first('responsible_specialist') }}
+                        </em>
+                    @endif
+                    {{--                    <p class="helper-block">--}}
+                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
+                    {{--                    </p>--}}
+                </div>
+                <div class="form-group {{ $errors->has('city_phone') ? 'has-error' : '' }}">
+                    <label for="city_phone">City phone </label>
+                    <input type="city_phone" id="city_phone" name="city_phone" class="form-control" required>
+                    @if($errors->has('city_phone'))
+                        <em class="invalid-feedback">
+                            {{ $errors->first('city_phone') }}
+                        </em>
+                    @endif
+                    {{--                    <p class="helper-block">--}}
+                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
+                    {{--                    </p>--}}
+                </div>
+                <div class="form-group {{ $errors->has('mobile_phone') ? 'has-error' : '' }}">
+                    <label for="mobile_phone">Mobile phone</label>
+                    <input type="mobile_phone" id="mobile_phone" name="mobile_phone" class="form-control" required>
+                    @if($errors->has('mobile_phone'))
+                        <em class="invalid-feedback">
+                            {{ $errors->first('mobile_phone') }}
+                        </em>
+                    @endif
+                    {{--                    <p class="helper-block">--}}
+                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
+                    {{--                    </p>--}}
+                </div>
+                <div class="form-group {{ $errors->has('director') ? 'has-error' : '' }}">
+                    <label for="director">Director</label>
+                    <input type="director" id="director" name="director" class="form-control" required>
+                    @if($errors->has('director'))
+                        <em class="invalid-feedback">
+                            {{ $errors->first('director') }}
+                        </em>
+                    @endif
+                    {{--                    <p class="helper-block">--}}
+                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
+                    {{--                    </p>--}}
+                </div>
+                <div class="form-group {{ $errors->has('directors_phone') ? 'has-error' : '' }}">
+                    <label for="directors_phone">Directors phone </label>
+                    <input type="directors_phone" id="directors_phone" name="directors_phone" class="form-control" required>
+                    @if($errors->has('directors_phone'))
+                        <em class="invalid-feedback">
+                            {{ $errors->first('directors_phone') }}
+                        </em>
+                    @endif
+                    {{--                    <p class="helper-block">--}}
+                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
+                    {{--                    </p>--}}
                 </div>
                 <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                     <label for="roles">{{ trans('cruds.user.fields.roles') }}*

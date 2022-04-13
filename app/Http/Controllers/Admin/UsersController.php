@@ -11,16 +11,14 @@ use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
 use Illuminate\Support\Facades\DB;
 
-class UsersController extends Controller
-{
+class UsersController extends Controller {
     /**
      * Display a listing of User.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        if (! Gate::allows('users_manage')) {
+    public function index() {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
 
@@ -34,9 +32,8 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        if (! Gate::allows('users_manage')) {
+    public function create() {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
         $roles = Role::get()->pluck('name', 'name');
@@ -59,8 +56,21 @@ class UsersController extends Controller
         $user->assignRole($roles);
         $userId = $user->id;
         $department = $request->get('department');
+        $district = $request->get('district');
+        $responsible_specialist = $request->input('responsible_specialist');
+        $city_phone = $request->input('city_phone');
+        $mobile_phone = $request->input('mobile_phone');
+        $director = $request->input('director');
+        $directors_phone = $request->input('directors_phone');
 
-        DB::table('users')->where('id', $userId)->update(['department' => $department]);
+        DB::table('users')->where('id', $userId)->update(
+            ['district' => $district,
+                'department' => $department,
+                'responsible_specialist' => $responsible_specialist,
+                'city_phone' => $city_phone,
+                'mobile_phone' => $mobile_phone,
+                'director' => $director,
+                'directors_phone' => $directors_phone]);
 
         return redirect()->route('admin.users.index');
     }
