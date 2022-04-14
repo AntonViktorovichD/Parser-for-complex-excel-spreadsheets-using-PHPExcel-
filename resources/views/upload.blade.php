@@ -9,10 +9,6 @@
             margin: 50px 150px;
 
         }
-
-        .wrap {
-            overflow-wrap: break-word;
-        }
     </style>
 </head>
 <body>
@@ -47,15 +43,17 @@ echo '</div>';
 
 $org_helper = DB::table('org_helper')->pluck('title');
 $org_helper = (json_decode(json_encode($org_helper, JSON_UNESCAPED_UNICODE), true));
+$org_depart_id = DB::table('org_helper')->pluck('depart_id');
+$org_depart_id = (json_decode(json_encode($org_depart_id, JSON_UNESCAPED_UNICODE), true));
+$org_distr_id = DB::table('org_helper')->pluck('distr_id');
+$org_distr_id = (json_decode(json_encode($org_distr_id, JSON_UNESCAPED_UNICODE), true));
 echo '<h3>Учреждения:</h3>';
 echo '<div class="cols">';
 foreach ($org_helper as $counter => $org) {
-    echo '<input class="wrap" type="checkbox" value=" ' . $org . ' ">' . $org . '<br />';
+    echo '<input type="checkbox" class=" ' . $org_depart_id[$counter] . ' class=" ' . $org_distr_id[$counter] . ' " value=" ' . $org . ' ">' . $org . '<br />';
 }
 echo '</div>';
 ?>
-
-
 <script src="/js/app.js"></script>
 </body>
 </html>
