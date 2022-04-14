@@ -10,74 +10,47 @@ use Illuminate\Support\Facades\Auth;
 
 class AddDBController extends Controller {
     public function edit() {
-        $pc = [];
-        $str = 'УСЗН Ардатовского района
-УСЗН Балахнинского района
-УСЗН Богородского района
-УСЗН Большеболдинского района
-УСЗН Большемурашкинского района
-УСЗН Бутурлинского муниципального округа
-УСЗН Вадского муниципального округа
-УСЗН Варнавинского района
-УСЗН Вачского района
-УСЗН Ветлужского района
-УСЗН Вознесенского района
-УСЗН Володарского района
-УСЗН Воротынского района
-УСЗН Воскресенского района
-УСЗН г. Арзамаса
-УСЗН г. Дзержинска
-УСЗН г. Саров
-УСЗН г.о.г. Чкаловск
-УСЗН Гагинского района
-УСЗН Городецкого района
-УСЗН городского округа г. Бор
-УСЗН городского округа г. Выкса
-УСЗН городского округа г. Первомайск
-УСЗН городского округа город Кулебаки
-УСЗН городского округа город Шахунья
-УСЗН городского округа Навашинский
-УСЗН городского округа Перевозский
-УСЗН городского округа Семеновский
-УСЗН городского округа Сокольский
-УСЗН Дальнеконстантиновского района
-УСЗН Дивеевского района
-УСЗН Канавинского района г. Н.Новгорода
-УСЗН Княгининского района
-УСЗН Ковернинского района
-УСЗН Краснобаковского района
-УСЗН Краснооктябрьского района
-УСЗН Кстовского района
-УСЗН Ленинского района города Нижнего Новгорода
-УСЗН Лукояновского района
-УСЗН Лысковского района
-УСЗН Московского района г. Н.Новгорода
-УСЗН Нижегородского района г. Н.Новгорода
-УСЗН Павловского района
-УСЗН Пильнинского района
-УСЗН Починковского района
-УСЗН Приокского района города Нижнего Новгорода
-УСЗН Сергачского района
-УСЗН Сеченовского района
-УСЗН Советского района г. Н.Новгорода
-УСЗН Сормовского района г. Н.Новгорода
-УСЗН Сосновского района
-УСЗН Спасского района
-УСЗН Тонкинского района
-УСЗН Тоншаевского муниципального округа
-УСЗН Уренского муниципального округа
-УСЗН Шарангского района
-УСЗН Шатковского района';
-        $str = preg_replace('#УСЗН#', ',УСЗН', $str);
-        $pc = explode(',', $str);
-        unset($pc[0]);
-        var_dump($pc);
-//        return view('str', ['str' => $str]);
-        foreach ($pc as $item) {
-            DB::insert('insert into departments (title) values (?)', [$item]);
+
+        $distr_helper = DB::table('distr_helper')->pluck('title');
+        $distr_helper = (json_decode(json_encode($distr_helper, JSON_UNESCAPED_UNICODE), true));
+        array_unshift($distr_helper, '');
+        unset($distr_helper[0]);
+        $org_helper = DB::table('org_helper')->pluck('distr_title');
+        $org_helper = (json_decode(json_encode($org_helper, JSON_UNESCAPED_UNICODE), true));
+        array_unshift($org_helper, '');
+        unset($org_helper[0]);
+
+
+
+
+        foreach ($distr_helper as $k => $val) {
+            foreach ($org_helper as $key => $item) {
+                if (rtrim($val) == rtrim($item)) {
+                    DB::table('org_helper')->where(['distr_title' => $val])->update(['distr_id' => $k]);
+                }
+            }
         }
 
+
+        return view('id');
     }
 }
-        ?>
 
+
+//        $distr_title = DB::table('distr_helper')->pluck('title');
+//        $distr_title = (json_decode(json_encode($distr_title, JSON_UNESCAPED_UNICODE), true));
+//        array_unshift($distr_title, '');
+//        unset($distr_title[0]);
+//        $depart_title = DB::table('depart_helper')->pluck('depart_title');
+//        $depart_title = (json_decode(json_encode($depart_title, JSON_UNESCAPED_UNICODE), true));
+//        array_unshift($depart_title, '');
+//        unset($depart_title[0]);
+//        foreach ($distr_title as $k => $val) {
+//            foreach ($depart_title as $key => $item) {
+//                if ($val == $item) {
+//                    DB::table('depart_helper')->where(['depart_title' => $val])->update(['distr_id' => $k]);
+//                }
+//            }
+//        }
+
+?>

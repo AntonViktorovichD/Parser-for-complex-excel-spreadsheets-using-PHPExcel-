@@ -24,6 +24,8 @@ foreach ($arrs as $arr) {
     }
 }
 echo '</ul>' . PHP_EOL;
+
+
 ?>
 </body>
 </html>
