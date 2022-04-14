@@ -23,11 +23,14 @@
 <?php
 $depart_helper = DB::table('depart_helper')->pluck('title');
 $depart_helper = (json_decode(json_encode($depart_helper, JSON_UNESCAPED_UNICODE), true));
+$depart_helper_id = DB::table('depart_helper')->pluck('id');
+$depart_helper_id = (json_decode(json_encode($depart_helper_id, JSON_UNESCAPED_UNICODE), true));
 echo '<h3>Типы Учреждений:</h3>';
-echo '<div class="cols" id="v-model-checkbox">';
+echo '<div class="cols" id="v-model-multiple-checkboxes">';
 foreach ($depart_helper as $counter => $depart) {
-    echo '<input type="checkbox" id="checkbox" v-model="checked" value=" ' . $depart . ' "><label for="checkbox">{{ checked }}' . $depart . '</label><br />';
+    echo '<input type="checkbox" id=" ' . $depart . ' " v-model="checkedNames" value=" ' . $depart_helper_id[$counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
 }
+echo '<span>Отмеченные имена: {{ checkedNames }}</span>';
 echo '</div>';
 
 $distr_helper = DB::table('distr_helper')->pluck('title');
@@ -56,15 +59,26 @@ foreach ($org_helper as $counter => $org) {
 //echo '<label for="checkbox">{{ checked }}</label>';
 //echo '</div >';
 ?>
+{{--<div id="v-model-multiple-checkboxes">--}}
+{{--    <input type="checkbox" id="jack" value="Джек" v-model="checkedNames" />--}}
+{{--    <label for="jack">Джек</label>--}}
+{{--    <input type="checkbox" id="john" value="Джон" v-model="checkedNames" />--}}
+{{--    <label for="john">Джон</label>--}}
+{{--    <input type="checkbox" id="mike" value="Майк" v-model="checkedNames" />--}}
+{{--    <label for="mike">Майк</label>--}}
+{{--    <br />--}}
+{{--    <span>Отмеченные имена: @verbatim{{ checkedNames }}@endverbatim</span>--}}
+{{--</div>--}}
+
 <script src="/js/vue.global.js"></script>
 <script>
     Vue.createApp({
         data() {
             return {
-                checked: false
+                checkedNames: []
             }
         }
-    }).mount('#v-model-checkbox')
+    }).mount('#v-model-multiple-checkboxes')
 </script>
 </body>
 </html>
