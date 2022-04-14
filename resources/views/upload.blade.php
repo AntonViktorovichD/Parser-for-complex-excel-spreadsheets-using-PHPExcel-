@@ -57,7 +57,7 @@ echo '<h3>Учреждения:</h3>';
 echo '<div class="cols" id="v-model-multiple-checkboxes-org">';
 foreach ($org_helper as $counter => $org) {
     $org = preg_replace('#"#', '\'', $org);
-    echo '<input type="checkbox" id=" ' . $org . '" v-model="checkedOrg" value=" ' . $org_helper_id[$counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
+    echo '<input type="checkbox" id=" ' . $org . '" v-model="checkedOrg" class=" ' . $org_depart_id[$counter] . ' " class=" ' . $org_distr_id[$counter] . ' " value=" ' . $org_helper_id[$counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
 }
 echo '<span>Отмеченные имена: {{ checkedOrg }}</span>';
 echo '</div>';
@@ -90,6 +90,6 @@ echo '</div>';
     }).mount('#v-model-multiple-checkboxes-org')
 </script>
 
-{{--class=" ' . $org_depart_id[$counter] . ' " class=" ' . $org_distr_id[$counter] . ' "--}}
+
 </body>
 </html>
