@@ -19,6 +19,7 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
+        "vue": "^3.2.31",
         "watchpack-chokidar2": "^2.0.1"
     }
 }

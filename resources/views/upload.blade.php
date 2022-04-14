@@ -7,7 +7,6 @@
         .cols {
             columns: 3;
             margin: 50px 150px;
-
         }
     </style>
 </head>
@@ -25,10 +24,9 @@
 $depart_helper = DB::table('depart_helper')->pluck('title');
 $depart_helper = (json_decode(json_encode($depart_helper, JSON_UNESCAPED_UNICODE), true));
 echo '<h3>Типы Учреждений:</h3>';
-echo '<div class="cols">';
-
+echo '<div class="cols" id="v-model-checkbox">';
 foreach ($depart_helper as $counter => $depart) {
-    echo '<input class="wrap" type="checkbox" value=" ' . $depart . ' ">' . $depart . '<br />';
+    echo '<input type="checkbox" id="checkbox" v-model="checked" value=" ' . $depart . ' "><label for="checkbox">{{ checked }}' . $depart . '</label><br />';
 }
 echo '</div>';
 
@@ -52,8 +50,21 @@ echo '<div class="cols">';
 foreach ($org_helper as $counter => $org) {
     echo '<input type="checkbox" class=" ' . $org_depart_id[$counter] . ' " class=" ' . $org_distr_id[$counter] . ' " value=" ' . $org . ' ">' . $org . '<br />';
 }
-echo '</div>';
+//echo '</div>';
+//echo '<div id="v-model-checkbox" class="demo">';
+//echo '<input type="checkbox" id="checkbox" v-model="checked" />';
+//echo '<label for="checkbox">{{ checked }}</label>';
+//echo '</div >';
 ?>
-<script src="/js/app.js"></script>
+<script src="/js/vue.global.js"></script>
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                checked: false
+            }
+        }
+    }).mount('#v-model-checkbox')
+</script>
 </body>
 </html>
