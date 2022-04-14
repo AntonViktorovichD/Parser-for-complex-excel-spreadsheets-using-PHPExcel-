@@ -30,9 +30,9 @@ echo '<div class="cols" id="v-model-multiple-checkboxes-depart">';
 foreach ($depart_helper as $counter => $depart) {
     echo '<input type="checkbox" id=" ' . $depart . ' " v-model="checkedDeparts" value=" ' . $depart_helper_id[$counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
 }
-echo '<span>Отмеченные имена: {{ checkedDeparts }}</span>';
+//echo '<span>Отмеченные имена: {{ checkedDeparts }}</span>';
+echo '{{ checkedDeparts }}';
 echo '</div>';
-
 $distr_helper = DB::table('distr_helper')->pluck('title');
 $distr_helper = (json_decode(json_encode($distr_helper, JSON_UNESCAPED_UNICODE), true));
 $distr_helper_id = DB::table('distr_helper')->pluck('id');
@@ -44,7 +44,6 @@ foreach ($distr_helper as $counter => $distr) {
 }
 echo '<span>Отмеченные имена: {{ checkedDistrs }}</span>';
 echo '</div>';
-
 $org_helper = DB::table('org_helper')->pluck('title');
 $org_helper = (json_decode(json_encode($org_helper, JSON_UNESCAPED_UNICODE), true));
 $org_depart_id = DB::table('org_helper')->pluck('depart_id');
@@ -56,7 +55,7 @@ $org_helper_id = (json_decode(json_encode($org_helper_id, JSON_UNESCAPED_UNICODE
 echo '<h3>Учреждения:</h3>';
 echo '<div class="cols" id="v-model-multiple-checkboxes-org">';
 foreach ($org_helper as $counter => $org) {
-    $org = preg_replace('#"#', '\'', $org);
+    $org = preg_replace('#"#', '&quot', $org);
     echo '<input type="checkbox" id=" ' . $org . '" v-model="checkedOrg" class=" ' . $org_depart_id[$counter] . ' " class=" ' . $org_distr_id[$counter] . ' " value=" ' . $org_helper_id[$counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
 }
 echo '<span>Отмеченные имена: {{ checkedOrg }}</span>';
@@ -72,7 +71,6 @@ echo '</div>';
             }
         }
     }).mount('#v-model-multiple-checkboxes-depart');
-
     Vue.createApp({
         data() {
             return {
@@ -80,7 +78,6 @@ echo '</div>';
             }
         }
     }).mount('#v-model-multiple-checkboxes-distr')
-
     Vue.createApp({
         data() {
             return {
@@ -89,7 +86,5 @@ echo '</div>';
         }
     }).mount('#v-model-multiple-checkboxes-org')
 </script>
-
-
 </body>
 </html>
