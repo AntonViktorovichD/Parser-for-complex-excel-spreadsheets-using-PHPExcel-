@@ -50,7 +50,7 @@ $org_distr_id = (json_decode(json_encode($org_distr_id, JSON_UNESCAPED_UNICODE),
 echo '<h3>Учреждения:</h3>';
 echo '<div class="cols">';
 foreach ($org_helper as $counter => $org) {
-    echo '<input type="checkbox" class=" ' . $org_depart_id[$counter] . ' class=" ' . $org_distr_id[$counter] . ' " value=" ' . $org . ' ">' . $org . '<br />';
+    echo '<input type="checkbox" class=" ' . $org_depart_id[$counter] . ' " class=" ' . $org_distr_id[$counter] . ' " value=" ' . $org . ' ">' . $org . '<br />';
 }
 echo '</div>';
 ?>
