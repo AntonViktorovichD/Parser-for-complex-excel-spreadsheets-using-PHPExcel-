@@ -21,14 +21,18 @@
 </form>
 
 <?php
+
 $depart_helper = DB::table('depart_helper')->pluck('title');
 $depart_helper = (json_decode(json_encode($depart_helper, JSON_UNESCAPED_UNICODE), true));
 $depart_helper_id = DB::table('depart_helper')->pluck('id');
 $depart_helper_id = (json_decode(json_encode($depart_helper_id, JSON_UNESCAPED_UNICODE), true));
+
 echo '<h3>Типы Учреждений:</h3>';
-echo '<div class="cols" id="v-model-multiple-checkboxes-depart">';
+echo '<div id="v-model-multiple-checkboxes">';
+echo '<div  class="cols">';
+//echo '<div class="cols" id="v-model-multiple-checkboxes-depart">';
 foreach ($depart_helper as $counter => $depart) {
-    echo '<input type="checkbox" id=" ' . $depart . ' " v-model="checkedDeparts" value=" ' . $depart_helper_id[$counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
+    echo '<input type="checkbox" id=" ' . $depart . ' " v-model="checkedDeparts" data-checker="depart" @change="getStatus($event)" value=" ' . $depart_helper_id[$counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
 }
 //echo '<span>Отмеченные имена: {{ checkedDeparts }}</span>';
 echo '{{ checkedDeparts }}';
@@ -38,9 +42,10 @@ $distr_helper = (json_decode(json_encode($distr_helper, JSON_UNESCAPED_UNICODE),
 $distr_helper_id = DB::table('distr_helper')->pluck('id');
 $distr_helper_id = (json_decode(json_encode($distr_helper_id, JSON_UNESCAPED_UNICODE), true));
 echo '<h3>Районы:</h3>';
-echo '<div class="cols" id="v-model-multiple-checkboxes-distr">';
+echo '<div  class="cols">';
+//echo '<div class="cols" id="v-model-multiple-checkboxes-distr">';
 foreach ($distr_helper as $counter => $distr) {
-    echo '<input type="checkbox" id=" ' . $distr . '" v-model="checkedDistrs" value=" ' . $distr_helper_id[$counter] . ' "><label for="' . $distr . '">' . $distr . '</label><br />';
+    echo '<input type="checkbox" id=" ' . $distr . '" v-model="checkedDistrs" data-checker="distr" @change="getStatus($event)" value=" ' . $distr_helper_id[$counter] . ' "><label for="' . $distr . '">' . $distr . '</label><br />';
 }
 echo '<span>Отмеченные имена: {{ checkedDistrs }}</span>';
 echo '</div>';
@@ -53,10 +58,11 @@ $org_distr_id = (json_decode(json_encode($org_distr_id, JSON_UNESCAPED_UNICODE),
 $org_helper_id = DB::table('org_helper')->pluck('id');
 $org_helper_id = (json_decode(json_encode($org_helper_id, JSON_UNESCAPED_UNICODE), true));
 echo '<h3>Учреждения:</h3>';
-echo '<div class="cols" id="v-model-multiple-checkboxes-org">';
+echo '<div  class="cols">';
+//echo '<div class="cols" id="v-model-multiple-checkboxes-org">';
 foreach ($org_helper as $counter => $org) {
     $org = preg_replace('#"#', '&quot', $org);
-    echo '<input type="checkbox" id=" ' . $org . '" v-model="checkedOrg" class=" ' . $org_depart_id[$counter] . ' " class=" ' . $org_distr_id[$counter] . ' " value=" ' . $org_helper_id[$counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
+    echo '<input type="checkbox" id=" ' . $org . '" v-model="checkedOrg" @change="getStatus($event)" data-checker="org" data-depart-id=" ' . $org_depart_id[$counter] . ' " data-distr-id=" ' . $org_distr_id[$counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
 }
 echo '<span>Отмеченные имена: {{ checkedOrg }}</span>';
 echo '</div>';
@@ -67,24 +73,26 @@ echo '</div>';
     Vue.createApp({
         data() {
             return {
-                checkedDeparts: []
+                checkedDeparts: [],
+                checkedDistrs: [],
+                checkedOrg: [],
+                c: 0
+            }
+        },
+        methods: {
+            getStatus: function (e) {
+                if (e.target.dataset.checker == 'depart'){
+                    console.log(e.target.value);
+                }
+                if (e.target.dataset.checker == 'distr'){
+                    console.log(e.target.value);
+                }if (e.target.dataset.checker == 'org'){
+                    console.log(e);
+                }
             }
         }
-    }).mount('#v-model-multiple-checkboxes-depart');
-    Vue.createApp({
-        data() {
-            return {
-                checkedDistrs: []
-            }
-        }
-    }).mount('#v-model-multiple-checkboxes-distr')
-    Vue.createApp({
-        data() {
-            return {
-                checkedOrg: []
-            }
-        }
-    }).mount('#v-model-multiple-checkboxes-org')
+    }).mount('#v-model-multiple-checkboxes')
+
 </script>
 </body>
 </html>
