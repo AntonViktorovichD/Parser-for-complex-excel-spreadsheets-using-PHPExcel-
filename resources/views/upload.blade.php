@@ -32,7 +32,7 @@ echo '<div id="v-model-multiple-checkboxes">';
 echo '<div  class="cols">';
 //echo '<div class="cols" id="v-model-multiple-checkboxes-depart">';
 foreach ($depart_helper as $counter => $depart) {
-    echo '<input type="checkbox" id=" ' . $depart . ' " v-model="checkedDeparts" data-checker="depart" @change="getStatus($event)" value=" ' . $depart_helper_id[$counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
+    echo '<input type="checkbox" id=" ' . $depart . ' " v-model="checkedDeparts" data-checker="depart" @change="getStatus($event)" value=" ' . $depart_helper_id[$counter] . ' " data-value=" ' . $depart_helper_id[$counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
 }
 //echo '<span>Отмеченные имена: {{ checkedDeparts }}</span>';
 echo '{{ checkedDeparts }}';
@@ -45,7 +45,7 @@ echo '<h3>Районы:</h3>';
 echo '<div  class="cols">';
 //echo '<div class="cols" id="v-model-multiple-checkboxes-distr">';
 foreach ($distr_helper as $counter => $distr) {
-    echo '<input type="checkbox" id=" ' . $distr . '" v-model="checkedDistrs" data-checker="distr" @change="getStatus($event)" value=" ' . $distr_helper_id[$counter] . ' "><label for="' . $distr . '">' . $distr . '</label><br />';
+    echo '<input type="checkbox" id=" ' . $distr . '" v-model="checkedDistrs" data-checker="distr" @change="getStatus($event)" value=" ' . $distr_helper_id[$counter] . ' " data-value=" ' . $distr_helper_id[$counter] . ' "><label for="' . $distr . '">' . $distr . '</label><br />';
 }
 echo '<span>Отмеченные имена: {{ checkedDistrs }}</span>';
 echo '</div>';
@@ -62,7 +62,7 @@ echo '<div  class="cols">';
 //echo '<div class="cols" id="v-model-multiple-checkboxes-org">';
 foreach ($org_helper as $counter => $org) {
     $org = preg_replace('#"#', '&quot', $org);
-    echo '<input type="checkbox" id=" ' . $org . '" v-model="checkedOrg" @change="getStatus($event)" data-checker="org" data-depart-id=" ' . $org_depart_id[$counter] . ' " data-distr-id=" ' . $org_distr_id[$counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
+    echo '<input type="checkbox" class="org" id=" ' . $org . '" v-model="checkedOrg" @change="getStatus($event)" data-checker="org" data-departId=" ' . $org_depart_id[$counter] . ' " data-distrId=" ' . $org_distr_id[$counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
 }
 echo '<span>Отмеченные имена: {{ checkedOrg }}</span>';
 echo '</div>';
@@ -76,18 +76,26 @@ echo '</div>';
                 checkedDeparts: [],
                 checkedDistrs: [],
                 checkedOrg: [],
-                c: 0
             }
         },
         methods: {
+
             getStatus: function (e) {
-                if (e.target.dataset.checker == 'depart'){
-                    console.log(e.target.value);
+                if (e.target.dataset.checker == 'depart') {
+                    departOrg = document.querySelectorAll('.org');
+                    departOrg.forEach(function (depart) {
+                        if (depart.dataset.departid == e.target.dataset.value) {
+                            depart.checked = !depart.checked;
+                        }
+                    })
                 }
-                if (e.target.dataset.checker == 'distr'){
-                    console.log(e.target.value);
-                }if (e.target.dataset.checker == 'org'){
-                    console.log(e);
+                if (e.target.dataset.checker == 'distr') {
+                    distrOrg = document.querySelectorAll('.org');
+                    distrOrg.forEach(function (distr) {
+                        if (distr.dataset.departid == e.target.dataset.value) {
+                            distr.checked = !distr.checked;
+                        }
+                    })
                 }
             }
         }
