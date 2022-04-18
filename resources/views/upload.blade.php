@@ -21,18 +21,16 @@
 </form>
 
 <?php
-
 $depart_helper = DB::table('depart_helper')->pluck('title');
 $depart_helper = (json_decode(json_encode($depart_helper, JSON_UNESCAPED_UNICODE), true));
 $depart_helper_id = DB::table('depart_helper')->pluck('id');
 $depart_helper_id = (json_decode(json_encode($depart_helper_id, JSON_UNESCAPED_UNICODE), true));
-
 echo '<h3>Типы Учреждений:</h3>';
-echo '<div id="v-model-multiple-checkboxes">';
-echo '<div  class="cols">';
+echo '<div id="v-model-multiple-checkboxes" class="cols">';
+//echo '<div  >';
 //echo '<div class="cols" id="v-model-multiple-checkboxes-depart">';
-foreach ($depart_helper as $counter => $depart) {
-    echo '<input type="checkbox" id=" ' . $depart . ' " v-model="checkedDeparts" data-checker="depart" @change="getStatus($event)" value=" ' . $depart_helper_id[$counter] . ' " data-value=" ' . $depart_helper_id[$counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
+foreach ($depart_helper as $depart_counter => $depart) {
+    echo '<input type="checkbox" id=" ' . $depart . ' " v-model="checkedDeparts" data-checker="depart"  @change="getStatus($event)" value=" ' . $depart_helper_id[$depart_counter] . ' " data-value=" ' . $depart_helper_id[$depart_counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
 }
 //echo '<span>Отмеченные имена: {{ checkedDeparts }}</span>';
 echo '{{ checkedDeparts }}';
@@ -70,37 +68,38 @@ echo '</div>';
 
 <script src="/js/vue.global.js"></script>
 <script>
-    Vue.createApp({
+    const depart = Vue.createApp({
         data() {
             return {
                 checkedDeparts: [],
-                checkedDistrs: [],
-                checkedOrg: [],
+                // checkedDistrs: [],
+                // checkedOrg: [],
             }
         },
         methods: {
-
             getStatus: function (e) {
-                if (e.target.dataset.checker == 'depart') {
-                    departOrg = document.querySelectorAll('.org');
-                    departOrg.forEach(function (depart) {
-                        if (depart.dataset.departid == e.target.dataset.value) {
-                            depart.checked = !depart.checked;
-                        }
-                    })
+                for (let i = 0; i <= '<?php echo $depart_counter; ?>'; i++) {
+                    if (e.target.dataset.checker == 'depart') {
+                        departOrg = document.querySelectorAll('.org');
+                        departOrg.forEach(function (depart) {
+                            if (depart.dataset.departid == e.target.dataset.value) {
+                                depart.checked = e.target.checked;
+                            }
+                        })
+                    }
                 }
-                if (e.target.dataset.checker == 'distr') {
-                    distrOrg = document.querySelectorAll('.org');
-                    distrOrg.forEach(function (distr) {
-                        if (distr.dataset.departid == e.target.dataset.value) {
-                            distr.checked = !distr.checked;
-                        }
-                    })
-                }
+                // if (e.target.dataset.checker == 'distr') {
+                //     distrOrg = document.querySelectorAll('.org');
+                //     distrOrg.forEach(function (distr) {
+                //         if (distr.dataset.departid == e.target.dataset.value) {
+                //             distr.checked = !distr.checked;
+                //         }
+                //     })
+                // }
             }
         }
-    }).mount('#v-model-multiple-checkboxes')
-
+    })
+    depart.mount('#v-model-multiple-checkboxes')
 </script>
 </body>
 </html>
