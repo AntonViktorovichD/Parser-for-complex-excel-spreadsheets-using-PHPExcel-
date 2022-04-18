@@ -30,7 +30,6 @@ echo '<div id="depart_checkboxes" class="cols">';
 foreach ($depart_helper as $depart_counter => $depart) {
     echo '<input type="checkbox" id=" ' . $depart . ' " v-model="checkedDeparts" data-checker="depart"  @change="getStatus($event)" value=" ' . $depart_helper_id[$depart_counter] . ' " data-value=" ' . $depart_helper_id[$depart_counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
 }
-echo '{{ checkedDeparts }}';
 echo '</div>';
 $distr_helper = DB::table('distr_helper')->pluck('title');
 $distr_helper = (json_decode(json_encode($distr_helper, JSON_UNESCAPED_UNICODE), true));
@@ -42,7 +41,7 @@ echo '<div id="distr_checkboxes" class="cols">';
 foreach ($distr_helper as $counter => $distr) {
     echo '<input type="checkbox" id=" ' . $distr . '" v-model="checkedDistrs" data-checker="distr" @change="getStatus($event)" value=" ' . $distr_helper_id[$counter] . ' " data-value=" ' . $distr_helper_id[$counter] . ' "><label for="' . $distr . '">' . $distr . '</label><br />';
 }
-echo '<span>Отмеченные имена: {{ checkedDistrs }}</span>';
+//echo '<span>Отмеченные имена: {{ checkedDistrs }}</span>';
 echo '</div>';
 $org_helper = DB::table('org_helper')->pluck('title');
 $org_helper = (json_decode(json_encode($org_helper, JSON_UNESCAPED_UNICODE), true));
@@ -58,7 +57,7 @@ foreach ($org_helper as $counter => $org) {
     $org = preg_replace('#"#', '&quot', $org);
     echo '<input type="checkbox" class="org" id=" ' . $org . '" v-model="checkedOrg" @change="getStatus($event)" data-checker="org" data-departId=" ' . $org_depart_id[$counter] . ' " data-distrId=" ' . $org_distr_id[$counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
 }
-echo '<span>Отмеченные имена: {{ checkedOrg }}</span>';
+//echo '<span>Отмеченные имена: {{ checkedOrg }}</span>';
 echo '</div>';
 ?>
 
@@ -99,7 +98,7 @@ echo '</div>';
                     if (e.target.dataset.checker == 'distr') {
                         departOrg = document.querySelectorAll('.org');
                         departOrg.forEach(function (distr) {
-                            if (distr.dataset.departid == e.target.dataset.value) {
+                            if (distr.dataset.distrid == e.target.dataset.value) {
                                 distr.checked = e.target.checked;
                             }
                         })
