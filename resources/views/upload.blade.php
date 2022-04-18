@@ -20,6 +20,9 @@
     <input type="submit">
 </form>
 
+
+
+
 <?php
 $depart_helper = DB::table('depart_helper')->pluck('title');
 $depart_helper = (json_decode(json_encode($depart_helper, JSON_UNESCAPED_UNICODE), true));
