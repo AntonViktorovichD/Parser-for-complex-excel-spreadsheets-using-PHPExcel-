@@ -50,12 +50,11 @@ $org_distr_id = (json_decode(json_encode($org_distr_id, JSON_UNESCAPED_UNICODE),
 $org_helper_id = DB::table('org_helper')->pluck('id');
 $org_helper_id = (json_decode(json_encode($org_helper_id, JSON_UNESCAPED_UNICODE), true));
 echo '<h3>Учреждения:</h3>';
-echo '<div id="org_checkboxes" class="cols">';
+echo '<div id="org_checkboxes checkboxes" class="cols">';
 foreach ($org_helper as $org_counter => $org) {
     $org = preg_replace('#"#', '&quot', $org);
     echo '<input type="checkbox" class="org" id=" ' . $org . '" v-model="checkedOrg" @change="getStatus($event)" data-checker="org" data-departId=" ' . $org_depart_id[$org_counter] . ' " data-distrId=" ' . $org_distr_id[$org_counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$org_counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
 }
-//echo '<span>Отмеченные имена: {{ checkedOrg }}</span>';
 echo '</div>';
 ?>
 
@@ -97,7 +96,6 @@ echo '</div>';
                         distrOrg.forEach(function (distr) {
                             if (distr.dataset.distrid == e.target.dataset.value) {
                                 distr.checked = e.target.checked;
-
                             }
                         })
                     }
