@@ -91,9 +91,10 @@ echo '</div>';
                             distrs.forEach(function (distr) {
                                 if (depart.checked == true && distr.checked == true) {
                                     orgns.forEach(function (org) {
-                                        org.checked = false;
                                         if (depart.dataset.value == org.dataset.departid && distr.dataset.value == org.dataset.distrid) {
                                             org.checked = true;
+                                        } else {
+                                            org.checked = false;
                                         }
                                     })
                                 }
