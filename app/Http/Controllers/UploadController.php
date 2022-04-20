@@ -27,9 +27,11 @@ class UploadController extends Controller {
 
         $arrCell = [];
 
+        $checkboxes = [];
+
         $user_id = Auth::user()->id;
 
-        try {
+//        try {
             DB::connection()->getPdo();
 
             if ($request->isMethod('post') && $request->file('userfile')) {
@@ -39,7 +41,10 @@ class UploadController extends Controller {
                 foreach ($names as $name) {
                     $namesArr[] = $name->table_name;
                 }
-                $test = \Request::get("org");
+                $check = \Request::get("org");
+                foreach ($check as $checked) {
+                    $checkboxes[] = $checked;
+                }
                 $file = $request->file('userfile');
                 $filename = $request->input('filename');
                 if (in_array($file->extension(), ['xls', 'xlsx'])) {
@@ -219,21 +224,20 @@ class UploadController extends Controller {
                 $date = date('Y:m:d H:i:s');
 
                 $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
-                    var_dump($test);
 
+                $checked = json_encode($checkboxes, JSON_UNESCAPED_UNICODE);
+                var_dump($checked);
+                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, highest_row, highest_column_index, departments) values (?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $date, $highestRow, $highestColumnIndex, $checked]);
 
+                unlink($tmpPath);
 
-//                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, highest_row, highest_column_index, test) values (?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $date, $highestRow, $highestColumnIndex, $test]);
-//
-//                unlink($tmpPath);
-//
-//                return redirect()->action([jsonController::class, 'arrayToJson']);
-//
-//            } else {
-//                return view('upload', ['ulerror' => 'Таблица пуста']);
+                return redirect()->action([jsonController::class, 'arrayToJson']);
+
+            } else {
+                return view('upload', ['ulerror' => 'Таблица пуста']);
             }
-        } catch (\Exception $e) {
-            die("Нет подключения к базе данных.");
-        }
+//        } catch (\Exception $e) {
+//            die("Нет подключения к базе данных.");
+//        }
     }
 }
