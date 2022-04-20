@@ -13,20 +13,34 @@ const event = Vue.createApp({
                 orgns[k].checked = false;
                 this.org = [];
             }
+            if (e.target.dataset.checker === 'org') {
+                orgDepart = document.querySelectorAll('.depart');
+                orgDistr = document.querySelectorAll('.distr');
+                orgDepart.forEach(function (depart_org) {
+                    if (depart_org.dataset.value === e.target.dataset.departid) {
+                        depart_org.checked = e.target.checked;
+                    }
+                })
+                orgDistr.forEach(function (distr_org) {
+                    if (distr_org.dataset.value === e.target.dataset.distrid) {
+                        distr_org.checked = e.target.checked;
+                    }
+                })
+            }
             depart = document.querySelectorAll('.depart');
-            if (e.target.dataset.checker == 'depart') {
+            if (e.target.dataset.checker === 'depart') {
                 this.arr_checked_depart = [];
                 for (let i = 0; i < depart.length; i++) {
-                    if (depart[i].checked == true) {
+                    if (depart[i].checked === true) {
                         this.arr_checked_depart.push(depart[i]);
                     }
                 }
             }
             distr = document.querySelectorAll('.distr');
-            if (e.target.dataset.checker == 'distr') {
+            if (e.target.dataset.checker === 'distr') {
                 this.arr_checked_distr = [];
                 for (let i = 0; i < distr.length; i++) {
-                    if (distr[i].checked == true) {
+                    if (distr[i].checked === true) {
                         this.arr_checked_distr.push(distr[i]);
                     }
                 }
@@ -59,7 +73,7 @@ const event = Vue.createApp({
                 }
             }
             for (let k = 0; k < orgns.length; k++) {
-                if (orgns[k].checked == true) {
+                if (orgns[k].checked === true) {
                     this.org.push(orgns[k]);
                 }
             }
@@ -67,29 +81,4 @@ const event = Vue.createApp({
     }
 })
 event.mount('#checkboxes');
-const orgs = Vue.createApp({
-    data() {
-        return {
-            checkedOrgs: []
-        }
-    },
-    methods: {
-        getStatus: function (e) {
-            if (e.target.dataset.checker == 'org') {
-                orgDepart = document.querySelectorAll('.depart');
-                orgDistr = document.querySelectorAll('.distr');
-                orgDepart.forEach(function (depart_org) {
-                    if (depart_org.dataset.value == e.target.dataset.departid) {
-                        depart_org.checked = e.target.checked;
-                    }
-                })
-                orgDistr.forEach(function (distr_org) {
-                    if (distr_org.dataset.value == e.target.dataset.distrid) {
-                        distr_org.checked = e.target.checked;
-                    }
-                })
-            }
-        }
-    },
-})
-orgs.mount('#org_checkboxes')
+
