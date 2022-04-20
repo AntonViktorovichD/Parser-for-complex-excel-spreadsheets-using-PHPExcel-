@@ -64,43 +64,62 @@ echo '</div>';
 <script src="/js/vue.global.js"></script>
 <script>
     const event = Vue.createApp({
+        data() {
+            return {
+                arr_checked_depart: [],
+                arr_checked_distr: [],
+            }
+        },
         methods: {
             getStatus: function (e) {
-                for (let i = 0; i <= '<?php echo $distr_counter; ?>'; i++) {
-                    if (e.target.dataset.checker == 'depart') {
-                        departOrg = document.querySelectorAll('.org');
-                        departOrg.forEach(function (depart) {
-                            if (depart.dataset.departid == e.target.dataset.value) {
-                                depart.checked = e.target.checked;
-                            }
-                        })
-                    }
-                    if (e.target.dataset.checker == 'distr') {
-                        distrOrg = document.querySelectorAll('.org');
-                        distrOrg.forEach(function (distr) {
-                            if (distr.dataset.distrid == e.target.dataset.value) {
-                                distr.checked = e.target.checked;
-                            }
-                        })
-                    }
-                    departs = document.querySelectorAll('.depart');
-                    distrs = document.querySelectorAll('.distr');
-                    orgns = document.querySelectorAll('.org');
-                    departs.forEach(function (depart) {
-                        if (depart.checked == true) {
-                            distrs.forEach(function (distr) {
-                                if (depart.checked == true && distr.checked == true) {
-                                    orgns.forEach(function (org) {
-                                        if (depart.dataset.value == org.dataset.departid && distr.dataset.value == org.dataset.distrid) {
-                                            org.checked = true;
-                                        } else {
-                                            org.checked = false;
-                                        }
-                                    })
-                                }
-                            })
+                orgns = document.querySelectorAll('.org');
+                for (let k = 0; k < orgns.length; k++) {
+                    orgns[k].checked = false;
+                }
+                depart = document.querySelectorAll('.depart');
+                if (e.target.dataset.checker == 'depart') {
+                    this.arr_checked_depart = [];
+                    for (let i = 0; i < depart.length; i++) {
+                        if (depart[i].checked == true) {
+                            this.arr_checked_depart.push(depart[i]);
                         }
-                    })
+                    }
+                }
+                distr = document.querySelectorAll('.distr');
+                if (e.target.dataset.checker == 'distr') {
+                    this.arr_checked_distr = [];
+                    for (let i = 0; i < distr.length; i++) {
+                        if (distr[i].checked == true) {
+                            this.arr_checked_distr.push(distr[i]);
+                        }
+                    }
+                }
+                if (this.arr_checked_depart.length !== 0 && this.arr_checked_distr.length !== 0) {
+                    for (let i = 0; i < this.arr_checked_depart.length; i++) {
+                        for (let j = 0; j < this.arr_checked_distr.length; j++) {
+                            for (let k = 0; k < orgns.length; k++) {
+                                if (orgns[k].dataset.departid === this.arr_checked_depart[i].value && orgns[k].dataset.distrid === this.arr_checked_distr[j].value) {
+                                    orgns[k].checked = true;
+                                }
+                            }
+                        }
+                    }
+                } else if (this.arr_checked_depart.length !== 0 && this.arr_checked_distr.length === 0) {
+                    for (let i = 0; i < this.arr_checked_depart.length; i++) {
+                        for (let k = 0; k < orgns.length; k++) {
+                            if (orgns[k].dataset.departid === this.arr_checked_depart[i].value) {
+                                orgns[k].checked = true;
+                            }
+                        }
+                    }
+                } else if (this.arr_checked_depart.length === 0 && this.arr_checked_distr.length !== 0) {
+                    for (let j = 0; j < this.arr_checked_distr.length; j++) {
+                        for (let k = 0; k < orgns.length; k++) {
+                            if (orgns[k].dataset.distrid === this.arr_checked_distr[j].value) {
+                                orgns[k].checked = true;
+                            }
+                        }
+                    }
                 }
             }
         }
