@@ -62,8 +62,9 @@
                     </p>
                 </div>
                 <div class="form-group">
-                    <label for="roles">Район:
+                    <label for="districts">Район: {{$district}}
                         <select name="district" id="district" class="district">
+                            <option disabled value="" selected>Выберите один из вариантов</option>
                             @foreach($distrs as $distr)
                                 <option value="{{ $distr->id }}">{{ $distr->title }}</option>
                             @endforeach
@@ -71,12 +72,14 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="roles">Участок:
-                        <select name="department" class="department" id="department">
+                    <label for="departments">Организация: {{$department}}
+                        <select name="department" class="department" hidden>
                             @foreach($orgs as $org)
-                                <option value="{{ $org->id }}">{{ $org->title }}</option>
+                                <option class="orgs" id="{{ $org->id }}" value="{{ $org->distr_id }}"
+                                        label="{{ $org->title }}"></option>
                             @endforeach
                         </select>
+                        <div id="div1"></div>
                     </label>
                 </div>
                 <div class="form-group {{ $errors->has('responsible_specialist') ? 'has-error' : '' }}">
@@ -154,3 +157,5 @@
         </div>
     </div>
 @endsection
+<script src="/js/vanilla.js"></script>
+<script src="/js/create_edit_user.js"></script>

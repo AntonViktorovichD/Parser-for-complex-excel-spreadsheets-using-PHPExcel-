@@ -194,34 +194,5 @@
     </div>
 @endsection
 <script src="/js/vanilla.js"></script>
-<script>
-    window.onload = function () {
-        let district = document.querySelector('#district');
-        let department = document.querySelectorAll('.orgs');
+<script src="/js/create_edit_user.js"></script>
 
-        district.addEventListener('change', function () {
-            let sel = document.getElementById("orgns");
-            if (sel == null) {
-                selector();
-            } else {
-                let parent = document.getElementById('div1');
-                let elem = document.getElementById('orgns');
-                parent.removeChild(elem);
-                selector();
-            }
-            function selector() {
-                let select = document.createElement("select");
-                select.id = "orgns";
-                department.forEach(function (el) {
-                    if (district.value == el.value) {
-                        let label = document.createElement("option");
-                        label.innerHTML = el.label;
-                        select.appendChild(label);
-                        let element = document.getElementById("div1");
-                        element.appendChild(select);
-                    }
-                })
-            }
-        })
-    }
-</script>
