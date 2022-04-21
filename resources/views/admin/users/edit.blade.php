@@ -1,5 +1,7 @@
+<script src="/js/coreui.min.js"></script>
 @extends('layouts.admin')
 @section('content')
+
     <style>
         .department select {
             height: calc(1.5em + .75rem + 2px);
@@ -13,7 +15,6 @@
             border: 1px solid #e4e7ea;
             border-radius: .25rem;
         }
-
     </style>
     @php
         $userId = $user->id;
@@ -73,9 +74,20 @@
                         {{ trans('cruds.user.fields.password_helper') }}
                     </p>
                 </div>
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
                 <div class="form-group">
-                    <label for="roles">Район: {{$district}}
+                    <label for="districts">Район: {{$district}}
                         <select name="district" id="district" class="district">
+                            <option disabled value="" selected>Выберите один из вариантов</option>
                             @foreach($distrs as $distr)
                                 <option value="{{ $distr->id }}">{{ $distr->title }}</option>
                             @endforeach
@@ -83,14 +95,26 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="roles">Участок: {{$department}}
-                        <select name="department" class="department" id="department">
+                    <label for="departments">Организация: {{$department}}
+                        <select name="department" class="department" hidden>
                             @foreach($orgs as $org)
-                                <option value="{{ $org->id }}">{{ $org->title }}</option>
+                                <option class="orgs" id="{{ $org->id }}" value="{{ $org->distr_id }}"
+                                        label="{{ $org->title }}"></option>
                             @endforeach
                         </select>
+                        <div id="div1"></div>
                     </label>
                 </div>
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
                 <div class="form-group {{ $errors->has('responsible_specialist') ? 'has-error' : '' }}">
                     <label for="responsible_specialist">Responsible specialist </label>
                     <input type="text" id="responsible_specialist" name="responsible_specialist"
@@ -113,7 +137,8 @@
                 </div>
                 <div class="form-group {{ $errors->has('mobile_phone') ? 'has-error' : '' }}">
                     <label for="mobile_phone">Mobile phone</label>
-                    <input type="text" id="mobile_phone" name="mobile_phone" class="form-control" value="{{ $mobile_phone }}">
+                    <input type="text" id="mobile_phone" name="mobile_phone" class="form-control"
+                           value="{{ $mobile_phone }}">
                     @if($errors->has('mobile_phone'))
                         <em class="invalid-feedback">
                             {{ $errors->first('mobile_phone') }}
@@ -123,7 +148,7 @@
                 </div>
                 <div class="form-group {{ $errors->has('director') ? 'has-error' : '' }}">
                     <label for="director">Director</label>
-                    <input type="text" id="director" name="director" class="form-control" value="{{ $director }}"}>
+                    <input type="text" id="director" name="director" class="form-control" value="{{ $director }}" }>
                     @if($errors->has('director'))
                         <em class="invalid-feedback">
                             {{ $errors->first('director') }}
@@ -133,7 +158,8 @@
                 </div>
                 <div class="form-group {{ $errors->has('directors_phone') ? 'has-error' : '' }}">
                     <label for="directors_phone">Directors phone </label>
-                    <input type="text" id="directors_phone" name="directors_phone" class="form-control" value="{{ $directors_phone }}">
+                    <input type="text" id="directors_phone" name="directors_phone" class="form-control"
+                           value="{{ $directors_phone }}">
                     @if($errors->has('directors_phone'))
                         <em class="invalid-feedback">
                             {{ $errors->first('directors_phone') }}
@@ -167,3 +193,35 @@
         </div>
     </div>
 @endsection
+<script src="/js/vanilla.js"></script>
+<script>
+    window.onload = function () {
+        let district = document.querySelector('#district');
+        let department = document.querySelectorAll('.orgs');
+
+        district.addEventListener('change', function () {
+            let sel = document.getElementById("orgns");
+            if (sel == null) {
+                selector();
+            } else {
+                let parent = document.getElementById('div1');
+                let elem = document.getElementById('orgns');
+                parent.removeChild(elem);
+                selector();
+            }
+            function selector() {
+                let select = document.createElement("select");
+                select.id = "orgns";
+                department.forEach(function (el) {
+                    if (district.value == el.value) {
+                        let label = document.createElement("option");
+                        label.innerHTML = el.label;
+                        select.appendChild(label);
+                        let element = document.getElementById("div1");
+                        element.appendChild(select);
+                    }
+                })
+            }
+        })
+    }
+</script>
