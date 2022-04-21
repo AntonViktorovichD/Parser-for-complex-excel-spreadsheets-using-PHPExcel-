@@ -75,19 +75,19 @@
                 </div>
                 <div class="form-group">
                     <label for="roles">Район: {{$district}}
-                        <select name="district" class="district">
-                            <option value="А">Пункт А</option>
-                            <option value="Б">Пункт Б</option>
-                            <option value="В">Пункт В</option>
+                        <select name="district" id="district" class="district">
+                            @foreach($distrs as $distr)
+                                <option value="{{ $distr->id }}">{{ $distr->title }}</option>
+                            @endforeach
                         </select>
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="roles">Участок: {{$department}}
-                        <select name="department" class="department">
-                            <option value="А">Пункт А</option>
-                            <option value="Б">Пункт Б</option>
-                            <option value="В">Пункт В</option>
+                        <select name="department" class="department" id="department">
+                            @foreach($orgs as $org)
+                                <option value="{{ $org->id }}">{{ $org->title }}</option>
+                            @endforeach
                         </select>
                     </label>
                 </div>
@@ -100,9 +100,6 @@
                             {{ $errors->first('responsible_specialist') }}
                         </em>
                     @endif
-                    {{--                    <p class="helper-block">--}}
-                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
-                    {{--                    </p>--}}
                 </div>
                 <div class="form-group {{ $errors->has('city_phone') ? 'has-error' : '' }}">
                     <label for="city_phone">City phone </label>
@@ -112,9 +109,7 @@
                             {{ $errors->first('city_phone') }}
                         </em>
                     @endif
-                    {{--                    <p class="helper-block">--}}
-                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
-                    {{--                    </p>--}}
+
                 </div>
                 <div class="form-group {{ $errors->has('mobile_phone') ? 'has-error' : '' }}">
                     <label for="mobile_phone">Mobile phone</label>
@@ -124,9 +119,7 @@
                             {{ $errors->first('mobile_phone') }}
                         </em>
                     @endif
-                    {{--                    <p class="helper-block">--}}
-                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
-                    {{--                    </p>--}}
+
                 </div>
                 <div class="form-group {{ $errors->has('director') ? 'has-error' : '' }}">
                     <label for="director">Director</label>
@@ -136,9 +129,7 @@
                             {{ $errors->first('director') }}
                         </em>
                     @endif
-                    {{--                    <p class="helper-block">--}}
-                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
-                    {{--                    </p>--}}
+
                 </div>
                 <div class="form-group {{ $errors->has('directors_phone') ? 'has-error' : '' }}">
                     <label for="directors_phone">Directors phone </label>
@@ -148,9 +139,6 @@
                             {{ $errors->first('directors_phone') }}
                         </em>
                     @endif
-                    {{--                    <p class="helper-block">--}}
-                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
-                    {{--                    </p>--}}
                 </div>
                 <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                     <label for="roles">{{ trans('cruds.user.fields.roles') }}*

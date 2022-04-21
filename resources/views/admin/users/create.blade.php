@@ -21,7 +21,6 @@
         </div>
 
         <div class="card-body">
-            {{--            <form action="{{ route("admin.users.store") }}" method="POST" enctype="multipart/form-data">--}}
             <form action="/admin/users" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
@@ -64,19 +63,19 @@
                 </div>
                 <div class="form-group">
                     <label for="roles">Район:
-                        <select name="district" class="district">
-                            <option value="А">Пункт А</option>
-                            <option value="Б">Пункт Б</option>
-                            <option value="В">Пункт В</option>
+                        <select name="district" id="district" class="district">
+                            @foreach($distrs as $distr)
+                                <option value="{{ $distr->id }}">{{ $distr->title }}</option>
+                            @endforeach
                         </select>
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="roles">Участок:
-                        <select name="department" class="department">
-                            <option value="А">Пункт А</option>
-                            <option value="Б">Пункт Б</option>
-                            <option value="В">Пункт В</option>
+                        <select name="department" class="department" id="department">
+                            @foreach($orgs as $org)
+                                <option value="{{ $org->id }}">{{ $org->title }}</option>
+                            @endforeach
                         </select>
                     </label>
                 </div>
@@ -89,9 +88,6 @@
                             {{ $errors->first('responsible_specialist') }}
                         </em>
                     @endif
-                    {{--                    <p class="helper-block">--}}
-                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
-                    {{--                    </p>--}}
                 </div>
                 <div class="form-group {{ $errors->has('city_phone') ? 'has-error' : '' }}">
                     <label for="city_phone">City phone </label>
@@ -101,9 +97,6 @@
                             {{ $errors->first('city_phone') }}
                         </em>
                     @endif
-                    {{--                    <p class="helper-block">--}}
-                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
-                    {{--                    </p>--}}
                 </div>
                 <div class="form-group {{ $errors->has('mobile_phone') ? 'has-error' : '' }}">
                     <label for="mobile_phone">Mobile phone</label>
@@ -113,9 +106,6 @@
                             {{ $errors->first('mobile_phone') }}
                         </em>
                     @endif
-                    {{--                    <p class="helper-block">--}}
-                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
-                    {{--                    </p>--}}
                 </div>
                 <div class="form-group {{ $errors->has('director') ? 'has-error' : '' }}">
                     <label for="director">Director</label>
@@ -125,26 +115,23 @@
                             {{ $errors->first('director') }}
                         </em>
                     @endif
-                    {{--                    <p class="helper-block">--}}
-                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
-                    {{--                    </p>--}}
                 </div>
                 <div class="form-group {{ $errors->has('directors_phone') ? 'has-error' : '' }}">
                     <label for="directors_phone">Directors phone </label>
-                    <input type="directors_phone" id="directors_phone" name="directors_phone" class="form-control" required>
+                    <input type="directors_phone" id="directors_phone" name="directors_phone" class="form-control"
+                           required>
                     @if($errors->has('directors_phone'))
                         <em class="invalid-feedback">
                             {{ $errors->first('directors_phone') }}
                         </em>
                     @endif
-                    {{--                    <p class="helper-block">--}}
-                    {{--                        {{ trans('cruds.user.fields.password_helper') }}--}}
-                    {{--                    </p>--}}
+
                 </div>
                 <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                     <label for="roles">{{ trans('cruds.user.fields.roles') }}*
                         <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
-                        <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
+                        <span
+                            class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
                     <select name="roles[]" id="roles" class="form-control select2" multiple="multiple" required>
                         @foreach($roles as $id => $roles)
                             <option

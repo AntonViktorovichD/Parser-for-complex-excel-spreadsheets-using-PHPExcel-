@@ -37,8 +37,10 @@ class UsersController extends Controller {
             return abort(401);
         }
         $roles = Role::get()->pluck('name', 'name');
+        $distrs = DB::table('distr_helper')->get();
+        $orgs = DB::table('org_helper')->get();
 
-        return view('admin.users.create', compact('roles'));
+        return view('admin.users.create', compact('roles', 'distrs', 'orgs'));
     }
 
     /**
@@ -87,8 +89,10 @@ class UsersController extends Controller {
             return abort(401);
         }
         $roles = Role::get()->pluck('name', 'name');
+        $distrs = DB::table('distr_helper')->get();
+        $orgs = DB::table('org_helper')->get();
 
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('admin.users.edit', compact('user', 'roles', 'distrs', 'orgs'));
     }
 
     /**
