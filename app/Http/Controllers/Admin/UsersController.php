@@ -196,7 +196,7 @@ class UsersController extends Controller {
             die("Нет подключения к базе данных.");
         }
 
-//        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index');
     }
 
     public function show(User $user) {

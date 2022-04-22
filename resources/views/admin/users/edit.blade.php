@@ -18,13 +18,14 @@
     </style>
     @php
         $userId = $user->id;
-        $department = preg_replace('#}\]$#', '', preg_replace('#^\[{"department":#', '', json_encode(DB::table('users')->where('id', '=', $userId)->select('department')->get(), JSON_UNESCAPED_UNICODE)));
-        $district = preg_replace('#}\]$#', '', preg_replace('#^\[{"district":#', '', json_encode(DB::table('users')->where('id', '=', $userId)->select('district')->get(), JSON_UNESCAPED_UNICODE)));
+        $department = preg_replace('#"}\]$#', '', preg_replace('#^\[{"department":"#', '', json_encode(DB::table('users')->where('id', '=', $userId)->select('department')->get(), JSON_UNESCAPED_UNICODE)));
+        $district = preg_replace('#"}\]$#', '', preg_replace('#^\[{"district":"#', '', json_encode(DB::table('users')->where('id', '=', $userId)->select('district')->get(), JSON_UNESCAPED_UNICODE)));
         $responsible_specialist = preg_replace('#"}\]$#', '', preg_replace('#^\[{"responsible_specialist":"#', '', json_encode(DB::table('users')->where('id', '=', $userId)->select('responsible_specialist')->get(), JSON_UNESCAPED_UNICODE)));
         $city_phone = preg_replace('#"}\]$#', '', preg_replace('#^\[{"city_phone":"#', '', json_encode(DB::table('users')->where('id', '=', $userId)->select('city_phone')->get(), JSON_UNESCAPED_UNICODE)));
         $mobile_phone = preg_replace('#"}\]$#', '', preg_replace('#^\[{"mobile_phone":"#', '', json_encode(DB::table('users')->where('id', '=', $userId)->select('mobile_phone')->get(), JSON_UNESCAPED_UNICODE)));
         $director = preg_replace('#"}\]$#', '', preg_replace('#^\[{"director":"#', '', json_encode(DB::table('users')->where('id', '=', $userId)->select('director')->get(), JSON_UNESCAPED_UNICODE)));
         $directors_phone = preg_replace('#"}\]$#', '', preg_replace('#^\[{"directors_phone":"#', '', json_encode(DB::table('users')->where('id', '=', $userId)->select('directors_phone')->get(), JSON_UNESCAPED_UNICODE)));
+        $org_name = json_decode(json_encode(DB::table('org_helper')->where('id', '=', preg_replace('#^"#', '',preg_replace('#"$#', '', $department)))->select('title')->get(), JSON_UNESCAPED_UNICODE), true)[0]["title"];
     @endphp
 
     <div class="card">
@@ -85,25 +86,24 @@
                 {{--                --}}
                 {{--                --}}
                 <div class="form-group">
-                        <label for="districts">Район:
-                            <select name="district" id="district" class="district">
-                                @foreach($distrs as $distr)
-                                    <option value="{{ $distr->id }}">{{ $distr->title }}</option>
-                                @endforeach
-                            </select>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="departments">Организация: {{$department}}
-                            <select name="department" class="department" hidden>
-                                @foreach($orgs as $org)
-                                    <option class="orgs" id="{{ $org->id }}" value="{{ $org->distr_id }}"
-                                            label="{{ $org->title }}"></option>
-                                @endforeach
-                            </select>
-                            <div id="div1"></div>
-                        </label>
-                    </div>
+                    <label for="districts">Район:
+                        <select name="district" id="district" class="district">
+                            @foreach($distrs as $distr)
+                                <option value="{{ $distr->id }}">{{ $distr->title }}</option>
+                            @endforeach
+                        </select>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="departments" id="label_dep">Организация: {{$org_name}}
+                        <select name="department" class="department" hidden>
+                            @foreach($orgs as $org)
+                                <option class="orgs" id="{{ $org->id }}" value="{{ $org->distr_id }}"
+                                        label="{{ $org->title }}"></option>
+                            @endforeach
+                        </select>
+                        <div id="div1"></div>
+                    </label>
                 </div>
                 {{--                --}}
                 {{--                --}}
@@ -194,15 +194,11 @@
     </div>
 @endsection
 <script src="/js/vanilla.js"></script>
-{{--<script src="/js/create_edit_user.js"></script>--}}
 <script>
     window.onload = function () {
         let district = document.querySelector('#district');
         let department = document.querySelectorAll('.orgs');
-        let prev_distr = document.querySelector('#prev_district');
-
-        console.log(<?php echo $district ?>);
-        district.selectedIndex = <?php echo $district ?> - 1;
+        district.selectedIndex = <?php echo $district ?> -1;
         district.addEventListener('change', function () {
             let sel = document.getElementById("orgns");
             if (sel == null) {
@@ -230,3 +226,4 @@
         })
     }
 </script>
+
