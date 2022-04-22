@@ -13,7 +13,6 @@
             border: 1px solid #e4e7ea;
             border-radius: .25rem;
         }
-
     </style>
     <div class="card">
         <div class="card-header">
@@ -62,7 +61,7 @@
                     </p>
                 </div>
                 <div class="form-group">
-                    <label for="districts">Район: {{$district}}
+                    <label for="districts">Район
                         <select name="district" id="district" class="district">
                             <option disabled value="" selected>Выберите один из вариантов</option>
                             @foreach($distrs as $distr)
@@ -72,7 +71,7 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="departments">Организация: {{$department}}
+                    <label for="departments">Учреждение
                         <select name="department" class="department" hidden>
                             @foreach($orgs as $org)
                                 <option class="orgs" id="{{ $org->id }}" value="{{ $org->distr_id }}"
@@ -80,6 +79,7 @@
                             @endforeach
                         </select>
                         <div id="div1"></div>
+                        <input type="number" id="org" name="org" value="" hidden>
                     </label>
                 </div>
                 <div class="form-group {{ $errors->has('responsible_specialist') ? 'has-error' : '' }}">
@@ -178,13 +178,22 @@
                 department.forEach(function (el) {
                     if (district.value === el.value) {
                         let label = document.createElement("option");
+                        label.value = el.id;
                         label.innerHTML = el.label;
                         select.appendChild(label);
                         let element = document.getElementById("div1");
                         element.appendChild(select);
                     }
                 })
+                let org = document.getElementById("org");
+                let deps = document.getElementById("orgns");
+                console.log(deps);
+                org.setAttribute('value', deps.value);
             }
+            let org = document.getElementById("org");
+            orgns.addEventListener('change', function (e) {
+                org.setAttribute('value', e.target.value);
+            })
         })
     }
 </script>

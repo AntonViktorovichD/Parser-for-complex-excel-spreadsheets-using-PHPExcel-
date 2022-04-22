@@ -40,7 +40,7 @@ class UsersController extends Controller {
         $distrs = DB::table('distr_helper')->get();
         $orgs = DB::table('org_helper')->get();
 
-        return view('admin.users.create', compact('roles', 'distrs', 'orgs'));
+        return view('admin.users.create', compact( 'roles', 'distrs', 'orgs'));
     }
 
     /**
@@ -57,7 +57,7 @@ class UsersController extends Controller {
         $roles = $request->input('roles') ? $request->input('roles') : [];
         $user->assignRole($roles);
         $userId = $user->id;
-        $department = $request->get('department');
+        $department = $request->get('org');
         $district = $request->get('district');
         $responsible_specialist = $request->input('responsible_specialist');
         $city_phone = $request->input('city_phone');

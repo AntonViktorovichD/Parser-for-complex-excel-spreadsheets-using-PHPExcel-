@@ -75,16 +75,11 @@
                         {{ trans('cruds.user.fields.password_helper') }}
                     </p>
                 </div>
-                {{--                --}}
-                {{--                --}}
-                {{--                --}}
-                {{--                --}}
-                {{--                --}}
-                {{--                --}}
-                {{--                --}}
-                {{--                --}}
-                {{--                --}}
-                {{--                --}}
+{{--                --}}
+{{--                --}}
+{{--                --}}
+{{--                --}}
+{{--                --}}
                 <div class="form-group">
                     <label for="districts">Район <br />
                         <select name="district" id="district" class="district">
@@ -106,11 +101,6 @@
                         <input type="number" id="org" name="org" value="" hidden>
                     </label>
                 </div>
-                {{--                --}}
-                {{--                --}}
-                {{--                --}}
-                {{--                --}}
-                {{--                --}}
                 {{--                --}}
                 {{--                --}}
                 {{--                --}}
@@ -215,6 +205,7 @@
                 let select = document.createElement("select");
                 select.id = "orgns";
                 department.forEach(function (el) {
+                    console.log(el);
                     if (district.value === el.value) {
                         let label = document.createElement("option");
                         label.id = "el_id";
@@ -230,18 +221,12 @@
                 let org = document.getElementById("org");
                 let deps = document.getElementById("orgns");
                 org.setAttribute('value', deps.value);
-                orgns.addEventListener('change', function (e) {
-                    org.setAttribute('value', e.target.value);
-                })
             }
             let org = document.getElementById("org");
-            let deps = document.getElementById("orgns");
             orgns.addEventListener('change', function (e) {
                 org.setAttribute('value', e.target.value);
-
             })
         })
     }
-
 </script>
 
