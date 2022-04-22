@@ -85,25 +85,25 @@
                 {{--                --}}
                 {{--                --}}
                 <div class="form-group">
-                    <label for="districts">Район: {{$district}}
-                        <select name="district" id="district" class="district">
-                            <option disabled value="" selected>Выберите один из вариантов</option>
-                            @foreach($distrs as $distr)
-                                <option value="{{ $distr->id }}">{{ $distr->title }}</option>
-                            @endforeach
-                        </select>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="departments">Организация: {{$department}}
-                        <select name="department" class="department" hidden>
-                            @foreach($orgs as $org)
-                                <option class="orgs" id="{{ $org->id }}" value="{{ $org->distr_id }}"
-                                        label="{{ $org->title }}"></option>
-                            @endforeach
-                        </select>
-                        <div id="div1"></div>
-                    </label>
+                        <label for="districts">Район:
+                            <select name="district" id="district" class="district">
+                                @foreach($distrs as $distr)
+                                    <option value="{{ $distr->id }}">{{ $distr->title }}</option>
+                                @endforeach
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="departments">Организация: {{$department}}
+                            <select name="department" class="department" hidden>
+                                @foreach($orgs as $org)
+                                    <option class="orgs" id="{{ $org->id }}" value="{{ $org->distr_id }}"
+                                            label="{{ $org->title }}"></option>
+                                @endforeach
+                            </select>
+                            <div id="div1"></div>
+                        </label>
+                    </div>
                 </div>
                 {{--                --}}
                 {{--                --}}
@@ -194,5 +194,39 @@
     </div>
 @endsection
 <script src="/js/vanilla.js"></script>
-<script src="/js/create_edit_user.js"></script>
+{{--<script src="/js/create_edit_user.js"></script>--}}
+<script>
+    window.onload = function () {
+        let district = document.querySelector('#district');
+        let department = document.querySelectorAll('.orgs');
+        let prev_distr = document.querySelector('#prev_district');
 
+        console.log(<?php echo $district ?>);
+        district.selectedIndex = <?php echo $district ?> - 1;
+        district.addEventListener('change', function () {
+            let sel = document.getElementById("orgns");
+            if (sel == null) {
+                selector();
+            } else {
+                let parent = document.getElementById('div1');
+                let elem = document.getElementById('orgns');
+                parent.removeChild(elem);
+                selector();
+            }
+
+            function selector() {
+                let select = document.createElement("select");
+                select.id = "orgns";
+                department.forEach(function (el) {
+                    if (district.value === el.value) {
+                        let label = document.createElement("option");
+                        label.innerHTML = el.label;
+                        select.appendChild(label);
+                        let element = document.getElementById("div1");
+                        element.appendChild(select);
+                    }
+                })
+            }
+        })
+    }
+</script>
