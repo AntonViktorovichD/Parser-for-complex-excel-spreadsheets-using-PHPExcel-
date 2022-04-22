@@ -86,7 +86,7 @@
                 {{--                --}}
                 {{--                --}}
                 <div class="form-group">
-                    <label for="districts">Район:
+                    <label for="districts">Район <br />
                         <select name="district" id="district" class="district">
                             @foreach($distrs as $distr)
                                 <option value="{{ $distr->id }}">{{ $distr->title }}</option>
@@ -95,7 +95,7 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="departments" id="label_dep">Организация: {{$org_name}}
+                    <label for="departments" id="label_dep">Организация <br /><span id="org_name_hide">{{$org_name}}</span>
                         <select name="department" class="department" hidden>
                             @foreach($orgs as $org)
                                 <option class="orgs" id="{{ $org->id }}" value="{{ $org->distr_id }}"
@@ -103,6 +103,7 @@
                             @endforeach
                         </select>
                         <div id="div1"></div>
+                        <input type="number" id="org" name="org" value="" hidden>
                     </label>
                 </div>
                 {{--                --}}
@@ -195,7 +196,7 @@
 @endsection
 <script src="/js/vanilla.js"></script>
 <script>
-    window.onload = function () {
+    window.onload = () => {
         let district = document.querySelector('#district');
         let department = document.querySelectorAll('.orgs');
         district.selectedIndex = <?php echo $district ?> -1;
@@ -216,14 +217,31 @@
                 department.forEach(function (el) {
                     if (district.value === el.value) {
                         let label = document.createElement("option");
+                        label.id = "el_id";
+                        label.value = el.id;
                         label.innerHTML = el.label;
                         select.appendChild(label);
                         let element = document.getElementById("div1");
                         element.appendChild(select);
                     }
+                   let org_name_hide = document.getElementById('org_name_hide');
+                    org_name_hide.style.display = "none";
+                })
+                let org = document.getElementById("org");
+                let deps = document.getElementById("orgns");
+                org.setAttribute('value', deps.value);
+                orgns.addEventListener('change', function (e) {
+                    org.setAttribute('value', e.target.value);
                 })
             }
+            let org = document.getElementById("org");
+            let deps = document.getElementById("orgns");
+            orgns.addEventListener('change', function (e) {
+                org.setAttribute('value', e.target.value);
+
+            })
         })
     }
+
 </script>
 

@@ -113,7 +113,7 @@ class UsersController extends Controller {
 
             $userId = $user->id;
 
-            $selDep = $request->get('department');
+            $selDep = $request->get('org');
             $selDist = $request->get('district');
             $inpRS = $request->get('responsible_specialist');
             $inpCP = $request->get('city_phone');
