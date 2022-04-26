@@ -31,27 +31,9 @@
                         <th>
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
-{{--                        <th>--}}
-{{--                            {{ trans('District') }}--}}
-{{--                        </th>--}}
                         <th>
                             {{ trans('Department') }}
                         </th>
-                        {{--                        <th>--}}
-                        {{--                            {{ trans('Responsible specialist') }}--}}
-                        {{--                        </th>--}}
-                        {{--                        <th>--}}
-                        {{--                            {{ trans('City phone') }}--}}
-                        {{--                        </th>--}}
-                        {{--                        <th>--}}
-                        {{--                            {{ trans('Mobile phone') }}--}}
-                        {{--                        </th>--}}
-                        {{--                        <th>--}}
-                        {{--                            {{ trans('Director') }}--}}
-                        {{--                        </th>--}}
-                        {{--                        <th>--}}
-                        {{--                            {{ trans('Directors phone ') }}--}}
-                        {{--                        </th>--}}
                         <th>
                             {{ trans('Creation date') }}
                         </th>
@@ -64,11 +46,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($users as $key => $user)
+                    @foreach($users as $user)
                         <tr>
-                            {{--                            <td>--}}
-
-                            {{--                            </td>--}}
                             <td>
                                 {{ $user->id ?? '' }}
                             </td>
@@ -83,27 +62,15 @@
                                     <span class="badge badge-info">{{ $role  }}</span>
                                 @endforeach
                             </td>
-{{--                            <td>--}}
-{{--                                {{ $user->district ?? '' }}--}}
-{{--                            </td>--}}
                             <td>
-                                {{ $user->department ?? '' }}
+                                @php
+                                    foreach ($orgs as $org) {
+                                       if($org->id == $user->department) {
+                                          echo $org->title;
+                                       }
+                                    }
+                                @endphp
                             </td>
-                            {{--                            <td>--}}
-                            {{--                                {{ $user->responsible_specialist ?? '' }}--}}
-                            {{--                            </td>--}}
-                            {{--                            <td>--}}
-                            {{--                                {{ $user->city_phone ?? '' }}--}}
-                            {{--                            </td>--}}
-                            {{--                            <td>--}}
-                            {{--                                {{ $user->mobile_phone ?? '' }}--}}
-                            {{--                            </td>--}}
-                            {{--                            <td>--}}
-                            {{--                                {{ $user->director ?? '' }}--}}
-                            {{--                            </td>--}}
-                            {{--                            <td>--}}
-                            {{--                                {{ $user-> 	directors_phone ?? '' }}--}}
-                            {{--                            </td>--}}
                             <td>
                                 {{ $user->created_at ?? '' }}
                             </td>
@@ -127,16 +94,12 @@
                                     <input type="submit" class="btn btn-xs btn-danger"
                                            value="{{ trans('global.delete') }}">
                                 </form>
-
                             </td>
-
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
-
-
         </div>
     </div>
 @endsection
@@ -177,7 +140,6 @@
             }
             dtButtons.push(deleteButton)
             @endcan
-
             $.extend(true, $.fn.dataTable.defaults, {
                 order: [[1, 'desc']],
                 pageLength: 100,
@@ -188,6 +150,5 @@
                     .columns.adjust();
             });
         })
-
     </script>
 @endsection

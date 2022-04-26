@@ -23,8 +23,9 @@ class UsersController extends Controller {
         }
 
         $users = User::all();
+        $orgs = DB::table('org_helper')->get();
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', compact('users', 'orgs'));
     }
 
     /**
