@@ -31,9 +31,9 @@
                         <th>
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
-                        <th>
-                            {{ trans('District') }}
-                        </th>
+{{--                        <th>--}}
+{{--                            {{ trans('District') }}--}}
+{{--                        </th>--}}
                         <th>
                             {{ trans('Department') }}
                         </th>
@@ -83,9 +83,9 @@
                                     <span class="badge badge-info">{{ $role  }}</span>
                                 @endforeach
                             </td>
-                            <td>
-                                {{ $user->district ?? '' }}
-                            </td>
+{{--                            <td>--}}
+{{--                                {{ $user->district ?? '' }}--}}
+{{--                            </td>--}}
                             <td>
                                 {{ $user->department ?? '' }}
                             </td>
