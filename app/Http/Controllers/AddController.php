@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+
 
 class AddController extends Controller {
     public function add($name) {
@@ -32,10 +34,12 @@ class AddController extends Controller {
                 }
             }
         }
+
+        $user_dep = json_decode(json_encode(DB::table('org_helper')->where('id', '=', Auth::user()->department)->get(), JSON_UNESCAPED_UNICODE),true)[0]['title'];
         $row_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
         $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
         asort($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-        return view('add', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr, 'name' => $name, 'row_uuid' => $row_uuid, 'table_uuid' => $table_uuid]);
+        return view('add', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr, 'name' => $name, 'row_uuid' => $row_uuid, 'table_uuid' => $table_uuid, 'user_dep' => $user_dep]);
     }
 }

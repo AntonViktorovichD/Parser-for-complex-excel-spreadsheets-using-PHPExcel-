@@ -64,7 +64,13 @@
                             Department
                         </th>
                         <td>
-                            {{ $user->department }}
+                            @php
+                                foreach ($orgs as $org) {
+                                   if($org->id == $user->department) {
+                                      echo $org->title;
+                                   }
+                                }
+                            @endphp
                         </td>
                     </tr>
                     <tr>
@@ -72,7 +78,13 @@
                             District
                         </th>
                         <td>
-                            {{ $user->district }}
+                            @php
+                                foreach ($orgs as $org) {
+                                   if($org->id == $user->district) {
+                                      echo $org->distr_title;
+                                   }
+                                }
+                            @endphp
                         </td>
                     </tr>
                     <tr>

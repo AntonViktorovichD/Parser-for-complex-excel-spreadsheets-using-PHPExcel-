@@ -75,11 +75,11 @@
                         {{ trans('cruds.user.fields.password_helper') }}
                     </p>
                 </div>
-{{--                --}}
-{{--                --}}
-{{--                --}}
-{{--                --}}
-{{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
+                {{--                --}}
                 <div class="form-group">
                     <label for="districts">Район <br />
                         <select name="district" id="district" class="district">
@@ -200,7 +200,6 @@
                 parent.removeChild(elem);
                 selector();
             }
-
             function selector() {
                 let select = document.createElement("select");
                 select.id = "orgns";
@@ -215,7 +214,7 @@
                         let element = document.getElementById("div1");
                         element.appendChild(select);
                     }
-                   let org_name_hide = document.getElementById('org_name_hide');
+                    let org_name_hide = document.getElementById('org_name_hide');
                     org_name_hide.style.display = "none";
                 })
                 let org = document.getElementById("org");
@@ -229,4 +228,3 @@
         })
     }
 </script>
-

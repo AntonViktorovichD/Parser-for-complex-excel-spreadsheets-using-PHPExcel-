@@ -206,8 +206,9 @@ class UsersController extends Controller {
         }
 
         $user->load('roles');
+        $orgs = DB::table('org_helper')->get();
 
-        return view('admin.users.show', compact('user'));
+        return view('admin.users.show', compact('user', 'orgs'));
     }
 
     /**
