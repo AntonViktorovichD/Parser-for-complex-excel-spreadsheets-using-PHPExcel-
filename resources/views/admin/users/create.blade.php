@@ -18,7 +18,6 @@
         <div class="card-header">
             {{ trans('global.create') }} {{ trans('cruds.user.title_singular') }}
         </div>
-
         <div class="card-body">
             <form action="/admin/users" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -172,6 +171,7 @@
                 parent.removeChild(elem);
                 selector();
             }
+
             function selector() {
                 let select = document.createElement("select");
                 select.id = "orgns";
@@ -190,6 +190,7 @@
                 console.log(deps);
                 org.setAttribute('value', deps.value);
             }
+
             let org = document.getElementById("org");
             orgns.addEventListener('change', function (e) {
                 org.setAttribute('value', e.target.value);

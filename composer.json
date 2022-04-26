@@ -31,10 +31,13 @@
     },
     "autoload": {
         "classmap": [
+            "app/Models",
             "database"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Modules\\": "Modules/",
+            "Database\\Seeders\\": "database/seeders/"
         },
         "psr-0": {
             "PHPExcel": "Classes/"
