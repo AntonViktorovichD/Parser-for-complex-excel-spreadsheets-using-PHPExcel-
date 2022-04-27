@@ -24,11 +24,12 @@ Route::get('/tables/{name}', [jsonController::class, 'tables'])->middleware('aut
 
 use App\Http\Controllers\AddController;
 
-Route::get('/add/{name}', [AddController::class, 'add'])->middleware('auth');
+Route::get('/add/{name}', [AddController::class, 'add'])->middleware('checkRole');
 
 use App\Http\Controllers\EditController;
 
 Route::get('/edit/{name}', [EditController::class, 'edit'])->middleware('auth');
+Route::get('/admin_edit/{name}', [EditController::class, 'edit'])->middleware('auth');
 
 use App\Http\Controllers\UserUploadController;
 

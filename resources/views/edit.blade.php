@@ -30,7 +30,6 @@
 <body>
 <?php
 $user_id = Auth::user()->id;
-$user_dep = Auth::user()->department;
 $arrCell = json_decode(json_decode($json), true);
 $arrAddRow = array_flip(json_decode($addRowArr, true));
 ksort($arrAddRow);
