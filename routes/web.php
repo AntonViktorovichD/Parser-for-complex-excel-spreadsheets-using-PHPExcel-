@@ -29,7 +29,7 @@ Route::get('/add/{name}', [AddController::class, 'add'])->middleware('checkRole'
 use App\Http\Controllers\EditController;
 
 Route::get('/edit/{name}', [EditController::class, 'edit'])->middleware('auth');
-Route::get('/admin_edit/{name}', [EditController::class, 'edit'])->middleware('auth');
+Route::get('/admin_edit/{name}', [EditController::class, 'edit'])->middleware('checkRole');
 
 use App\Http\Controllers\UserUploadController;
 
@@ -38,6 +38,10 @@ Route::post('/user_upload', [UserUploadController::class, 'user_upload'])->middl
 use App\Http\Controllers\UserUpgradeController;
 
 Route::post('/user_upgrade', [UserUpgradeController::class, 'user_upgrade'])->middleware('auth');
+
+use App\Http\Controllers\AdminUserUpgradeController;
+
+Route::post('/admin_user_upgrade', [AdminUserUpgradeController::class, 'admin_user_upgrade'])->middleware('auth');
 
 Auth::routes(['register' => false]);
 

@@ -12,9 +12,8 @@ class UserUpgradeController extends Controller {
         $created_at = date('Y-m-d, H:i:s');
         try {
             DB::connection()->getPdo();
-            $input = $request->all();
+            $input = $request->except('_token', 'table_information');
             list($table_name, $table_uuid, $row_uuid, $user_id) = explode(' + ', $request->input('table_information'));
-            unset($input['_token'], $input['table_information']);
             $json_val = json_encode($input, JSON_UNESCAPED_UNICODE);
             DB::table('report_values')->where('table_uuid', $table_uuid)->where('row_uuid', $row_uuid)->where('user_id', $user_id)->update(['json_val' => $json_val, 'created_at' => $created_at]);
             return view('user_upgrade', ['name' => $table_name, 'alert' => 'Запись успешно отредактирована']);
