@@ -17,19 +17,27 @@ class AdminUserUpgradeController extends Controller {
         $row_uuid = [];
         $user_id = [];
         $user_dep = [];
-        $counter = 0;
+        $values_arr = [];
+        $val_arr = [];
 
         $input = $request->except('_token', 'table_information');
         $table_info = array_chunk(explode(' + ', $request->input('table_information')), 6);
 
+        $arr_length = $table_info[0][5] - 1;
+        $values_arrs = array_chunk($input, $arr_length);
         for ($i = 0; $i < count($table_info); $i++) {
             $name[] = $table_info[$i][0];
             $table_uuid[] = $table_info[$i][1];
             $row_uuid[] = $table_info[$i][2];
             $user_id[] = $table_info[$i][3];
             $user_dep[] = $table_info[$i][4];
+            $values_arr[] = $values_arrs[$i];
         }
-
+        foreach ($values_arr as $key => $val) {
+            foreach ($val as $j => $item) {
+                $val_arr[$key + 1][$j + 1] = $item;
+            }
+        }
 
 //            list($name, $table_uuid, $row_uuid, $user_id, $user_dep) = explode(' + ', $request->input('table_information'));
 //            unset($input['_token'], $input['table_information']);
