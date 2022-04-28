@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 
-class showUserController extends Controller {
+class ShowUserController extends Controller {
     public function showUser() {
         DB::connection()->getPdo();
         $id = Auth::user()->id;

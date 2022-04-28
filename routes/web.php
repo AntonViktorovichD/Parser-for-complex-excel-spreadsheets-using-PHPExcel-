@@ -9,18 +9,18 @@ Route::redirect('/', 'admin/home');
 Route::get('/add', [UploadController::class, 'form'])->middleware('auth');
 Route::post('/ul', [UploadController::class, 'upload'])->middleware('auth');
 
-use App\Http\Controllers\showUserController;
+use App\Http\Controllers\ShowUserController;
 
-Route::post('/show', [showUserController::class, 'showUser']);
+Route::post('/show', [ShowUserController::class, 'showUser']);
 
 use App\Http\Controllers\AddDBController;
 
 Route::get('/id', [AddDBController::class, 'edit']);
 
-use App\Http\Controllers\jsonController;
+use App\Http\Controllers\JsonController;
 
-Route::get('/json', [jsonController::class, 'arrayToJson'])->middleware('auth');
-Route::get('/tables/{name}', [jsonController::class, 'tables'])->middleware('auth');
+Route::get('/json', [JsonController::class, 'arrayToJson'])->middleware('auth');
+Route::get('/tables/{name}', [JsonController::class, 'tables'])->middleware('auth');
 
 use App\Http\Controllers\AddController;
 

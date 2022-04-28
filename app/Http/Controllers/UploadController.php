@@ -232,7 +232,7 @@ class UploadController extends Controller {
 
                 unlink($tmpPath);
 
-                return redirect()->action([jsonController::class, 'arrayToJson']);
+                return redirect()->action([JsonController::class, 'arrayToJson']);
 
             } else {
                 return view('upload', ['ulerror' => 'Таблица пуста']);

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
-class jsonController extends Controller {
+class JsonController extends Controller {
     public function arrayToJson() {
         try {
             $user_role = Auth::user()->roles->first()->id;
