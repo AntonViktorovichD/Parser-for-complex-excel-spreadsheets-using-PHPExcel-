@@ -14,25 +14,6 @@ use function Symfony\Component\String\b;
 
 class ExcelController extends Controller {
 
-//    public function form() {
-//        return view('excel');
-//    }
-//
-//    public function upload(Request $request) {
-//
-//        if ($request->isMethod('post') && $request->file('userfile')) {
-//
-//            $file = $request->file('userfile');
-//            $upload_folder = 'public/folder';
-//            $filename = $file->getClientOriginalName();
-//
-//            Storage::putFileAs($upload_folder, $file, $filename);
-//
-//            return $filename;
-//
-//        }
-//    }
-
     public function excelToArray() {
         date_default_timezone_set('Europe/Moscow');
         $excel = PHPExcel_IOFactory::load(base_path() . $filename);
@@ -177,43 +158,5 @@ class ExcelController extends Controller {
                 }
             }
         }
-
-        var_dump($filename);
-//        $date = date('Y-m-d H:i:s');
-//
-//        $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
-
-//        return view('excel', ['filename' => $filename]);
-
-//        echo __DIR__;
-
-//        echo '<pre>';
-//        var_dump($arrCell);
-//        echo '</pre>';
-
-//        echo
-//            '<style>
-//                table {
-//                        border-collapse: collapse;
-//                        border: 1px solid black;
-//                      }
-//                th, td {
-//                    border: 1px solid black;
-//                    padding: 5px;
-//                    min-width: 30px;
-//                }
-//            </style>'
-//            . '<table>' . PHP_EOL;
-//        for ($i = 1; $i < $highestRow; $i++) {
-//            echo '<tr>' . PHP_EOL;
-//            for ($k = 0; $k < $highestColumnIndex; $k++) {
-//                echo $arrCell[$i][$k]['cell'];
-//            }
-//            echo '</tr>' . PHP_EOL;
-//        }
-//        echo '</table>' . PHP_EOL;
-
-//        DB::insert('insert into tables (json_val, created_at, highest_row, highest_column_index) values (?, ?, ?, ?)', [$json, $date, $highestRow, $highestColumnIndex]);
-
     }
 }

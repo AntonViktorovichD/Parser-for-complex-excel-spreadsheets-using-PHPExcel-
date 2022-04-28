@@ -14,7 +14,7 @@ class showUserController extends Controller {
         DB::connection()->getPdo();
         $id = Auth::user()->id;
         $user = DB::table('users')->where('id', '$id')->first();
-        return view('show', ['user' => $user]);
+        return view('show', compact('user'));
 
     }
 }

@@ -34,7 +34,7 @@ class UploadController extends Controller {
         try {
             DB::connection()->getPdo();
 
-            if ($request->isMethod('post') && $request->file('userfile')) {
+            if ($request->isMethod('post') && $request->file('userfile') && $request->input('reg_func')) {
 
                 $names = DB::select('select table_name from tables');
                 $namesArr = [];
@@ -46,6 +46,7 @@ class UploadController extends Controller {
                     $checkboxes[] = $checked;
                 }
                 $file = $request->file('userfile');
+                $radio = $request->input('reg_func');
                 $filename = $request->input('filename');
                 if (in_array($file->extension(), ['xls', 'xlsx'])) {
                     if ($file->getSize() < 5242880) {
@@ -227,7 +228,7 @@ class UploadController extends Controller {
 
                 $checked = json_encode($checkboxes, JSON_UNESCAPED_UNICODE);
                 var_dump($checked);
-                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, highest_row, highest_column_index, departments) values (?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $date, $highestRow, $highestColumnIndex, $checked]);
+                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, highest_row, highest_column_index, departments, radio) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $date, $highestRow, $highestColumnIndex, $checked, $radio]);
 
                 unlink($tmpPath);
 

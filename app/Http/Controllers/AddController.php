@@ -13,6 +13,19 @@ class AddController extends Controller {
         $highest_column_index = DB::table('tables')->where('table_name', $name)->value('highest_column_index');
         $highest_row = DB::table('tables')->where('table_name', $name)->value('highest_row');
         $table_uuid = DB::table('tables')->where('table_name', $name)->value('table_uuid');
+        $radio = DB::table('tables')->where('table_name', $name)->value('radio');
+        $pattern = '';
+        $reg_arr = [
+            'v_text' => '[A-Za-zА-Яа-яЁё\s]+',
+            'v_int' => '\s\d+',
+            'v_float' => '\d+(,\d{2})?\s',
+            'v_all' => '^[^\/:*?"<>|+%@#№!=~`.$^&+]+',
+        ];
+        foreach ($reg_arr as $key => $reg) {
+            if ($radio == $key) {
+                $pattern = $reg;
+            }
+        }
         $arrCell = json_decode(json_decode($json), true);
         $arrLastRowId = [];
         $arrLastRowKeys = [];
@@ -35,11 +48,11 @@ class AddController extends Controller {
             }
         }
 
-        $user_dep = json_decode(json_encode(DB::table('org_helper')->where('id', '=', Auth::user()->department)->get(), JSON_UNESCAPED_UNICODE),true)[0]['title'];
+        $user_dep = json_decode(json_encode(DB::table('org_helper')->where('id', '=', Auth::user()->department)->get(), JSON_UNESCAPED_UNICODE), true)[0]['title'];
         $row_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
         $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
         asort($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-        return view('add', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr, 'name' => $name, 'row_uuid' => $row_uuid, 'table_uuid' => $table_uuid, 'user_dep' => $user_dep]);
+        return view('add', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'user_dep', 'pattern'));
     }
 }

@@ -67,9 +67,9 @@ echo '<tr>' . PHP_EOL;
 echo '<td>' . $user_dep . '</td>';
 foreach ($arrCol as $key => $colnum) {
     if ($colnum == 1 && isset($arrAddRow[$key])) {
-        echo '<td><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
+        echo '<td><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '"></td>';
     } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-        echo '<td colspan="' . $colnum . '"><input type="text" pattern="^[ 0-9-]+$" name="' . $arrAddRow[$key] . '"></td>';
+        echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '"></td>';
     }
 }
 $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep;

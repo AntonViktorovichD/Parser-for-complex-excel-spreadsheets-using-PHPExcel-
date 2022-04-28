@@ -16,12 +16,25 @@ class EditController extends Controller {
         $row_uuid = DB::table('report_values')->where('table_name', $name)->get('row_uuid');
         $user_id = DB::table('report_values')->where('table_name', $name)->value('user_id');
         $user_dep = DB::table('report_values')->where('table_name', $name)->value('user_dep');
+        $radio = DB::table('tables')->where('table_name', $name)->value('radio');
+        $pattern = '';
+        $reg_arr = [
+            'v_text' => '[A-Za-zА-Яа-яЁё\s]+',
+            'v_int' => '\s\d+',
+            'v_float' => '\d+(,\d{2})?\s',
+            'v_all' => '^[^\/:*?"<>|+%@#№!=~`.$^&+]+',
+        ];
         $arrCell = json_decode(json_decode($json), true);
         $arrLastRowId = [];
         $arrLastRowKeys = [];
         $rep_value = [];
         $rep_key = [];
         $report_value = [];
+        foreach ($reg_arr as $key => $reg) {
+            if ($radio == $key) {
+                $pattern = $reg;
+            }
+        }
         for ($i = 1; $i < $highest_row; $i++) {
             for ($k = 0; $k < $highest_column_index; $k++) {
                 if ($arrCell[$i][$k]['rowEndView'] == $highest_row - 2) {
@@ -55,10 +68,10 @@ class EditController extends Controller {
                 $rep_value[] = $val;
             }
             $report_value = (json_encode(array_combine($rep_key, $rep_value)));
-            return view('admin_edit', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr, 'name' => $name, 'table_uuid' => $table_uuid, 'user_id' => $user_id, 'report_value' => $report_value, 'user_dep' => $user_dep]);
+            return view('admin_edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'report_value', 'user_dep'));
         } else {
             $report_value = json_encode(DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_id', $user_id)->value('json_val'));
-            return view('edit', ['json' => $json, 'highest_row' => $highest_row, 'highest_column_index' => $highest_column_index, 'addRowArr' => $addRowArr, 'name' => $name, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'report_value' => $report_value, 'user_dep' => $user_dep]);
+            return view('edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'row_uuid', 'user_id', 'report_value', 'user_dep', 'pattern'));
         }
     }
 }
