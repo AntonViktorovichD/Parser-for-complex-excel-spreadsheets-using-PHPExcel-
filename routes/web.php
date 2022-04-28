@@ -7,7 +7,7 @@ use App\Http\Controllers\UploadController;
 Route::redirect('/', 'admin/home');
 
 Route::get('/add', [UploadController::class, 'form'])->middleware('auth');
-Route::post('/ul', [UploadController::class, 'upload'])->middleware('checkRole');
+Route::post('/ul', [UploadController::class, 'upload'])->middleware('auth');
 
 use App\Http\Controllers\showUserController;
 
@@ -24,12 +24,12 @@ Route::get('/tables/{name}', [jsonController::class, 'tables'])->middleware('aut
 
 use App\Http\Controllers\AddController;
 
-Route::get('/add/{name}', [AddController::class, 'add'])->middleware('checkRole');
+Route::get('/add/{name}', [AddController::class, 'add'])->middleware('checkAdmin');
 
 use App\Http\Controllers\EditController;
 
 Route::get('/edit/{name}', [EditController::class, 'edit'])->middleware('auth');
-Route::get('/admin_edit/{name}', [EditController::class, 'edit'])->middleware('checkRole');
+Route::get('/admin_edit/{name}', [EditController::class, 'edit'])->middleware('checkAdmin');
 
 use App\Http\Controllers\UserUploadController;
 
@@ -41,7 +41,7 @@ Route::post('/user_upgrade', [UserUpgradeController::class, 'user_upgrade'])->mi
 
 use App\Http\Controllers\AdminUserUpgradeController;
 
-Route::post('/admin_user_upgrade', [AdminUserUpgradeController::class, 'admin_user_upgrade'])->middleware('auth');
+Route::post('/admin_user_upgrade', [AdminUserUpgradeController::class, 'admin_user_upgrade'])->middleware('checkAdmin');
 
 Auth::routes(['register' => false]);
 

@@ -8,9 +8,9 @@
 
 {{ $user }}
 
+<script src="/public/js/vanilla.js"></script>
 <script>
-    console.log(window.location.href);
-    setTimeout(() => window.location.href = '', 3000);
+    setTimeout(() => window.location.href = '/json', 2000);
 </script>
 </body>
 </html>

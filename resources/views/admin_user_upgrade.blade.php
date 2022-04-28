@@ -6,8 +6,9 @@
 </head>
 <body>
 {{ $alert }}
+<script src="/public/js/vanilla.js"></script>
 <script>
-    setTimeout(() => window.location.host = '/', 2000);
+    setTimeout(() => window.location.href = '/json', 2000);
 </script>
 </body>
 </html>
