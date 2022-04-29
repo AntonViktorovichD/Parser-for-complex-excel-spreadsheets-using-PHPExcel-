@@ -235,7 +235,7 @@ class UploadController extends Controller {
                 return redirect()->action([JsonController::class, 'arrayToJson']);
 
             } else {
-                return view('upload', ['ulerror' => 'Таблица пуста']);
+                return view('upload', ['ulerror' => 'Проверьте правильность введенных данных и наличие таблицы для загрузки']);
             }
         } catch (\Exception $e) {
             die("Нет подключения к базе данных.");
