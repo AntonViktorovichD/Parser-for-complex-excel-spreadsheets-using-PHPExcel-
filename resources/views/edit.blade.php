@@ -34,8 +34,6 @@
     $arrAddRow = array_flip(json_decode($addRowArr, true));
     ksort($arrAddRow);
     $values = json_decode(json_decode($report_value), true);
-        $dep = DB::table('org_helper')->where('id', '=', $user_dep)->value('title');
-
     $colnum = 1;
     $arrCol = [];
     $arrNum = [];
@@ -77,7 +75,7 @@
             echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '"value="' . $arrKeyVal[$key] . '" class="regex"></td>';
         }
     }
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id  . ' + ' . $user_dep;
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id  . ' + ' . $dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '<table>' . PHP_EOL;

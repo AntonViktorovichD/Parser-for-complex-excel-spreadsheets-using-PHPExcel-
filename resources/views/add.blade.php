@@ -33,8 +33,7 @@
     $user_id = Auth::user()->id;
     $arrCell = json_decode(json_decode($json), true);
     $arrAddRow = array_flip(json_decode($addRowArr, true));
-    $dep = DB::table('org_helper')->where('id', '=', $user_dep)->value('title');
-    $colnum = 1;
+        $colnum = 1;
     $arrCol = [];
 echo '<form method="post" action="/user_upload">';
 @endphp

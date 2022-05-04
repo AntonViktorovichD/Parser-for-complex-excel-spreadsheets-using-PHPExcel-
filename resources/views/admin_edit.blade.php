@@ -34,7 +34,6 @@
     $arrAddRow = array_flip(json_decode($addRowArr, true));
     ksort($arrAddRow);
     $arrs = json_decode($report_value, true);
-    $dep = DB::table('org_helper')->where('id', '=', $user_dep)->value('title');
     $colnum = 1;
     $arrCol = [];
     $arrNum = [];
@@ -73,7 +72,7 @@
         $values = $arrs[$key];
         $arrKeyVal = array_combine($arrNum, $values);
         unset($arrCol[0]);
-        $user_dep = DB::table('report_values')->where('row_uuid', $key)->value('user_dep');
+        $dep = DB::table('report_values')->where('row_uuid', $key)->value('user_dep');
         $row_id = DB::table('report_values')->where('row_uuid', $key)->value('id');
         $user_id = DB::table('report_values')->where('row_uuid', $key)->value('user_id');
         $row_uuid = DB::table('report_values')->where('row_uuid', $key)->value('row_uuid');
@@ -86,7 +85,7 @@
                 echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $row_id . '+' . $arrAddRow[$key] . '" value="' . $arrKeyVal[$key] . '" class="regex"></td>';
             }
         }
-        $table[] = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep . ' + ' . $highest_column_index . ' + ';
+        $table[] = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $dep . ' + ' . $highest_column_index . ' + ';
     }
         $table_info = implode($table);
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
