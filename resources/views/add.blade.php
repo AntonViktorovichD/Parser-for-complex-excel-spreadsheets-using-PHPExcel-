@@ -65,9 +65,9 @@ echo '<form method="post" action="/user_upload">';
     echo '<td>' . $user_dep . '</td>';
     foreach ($arrCol as $key => $colnum) {
         if ($colnum == 1 && isset($arrAddRow[$key])) {
-            echo '<td><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '" class="regex"></td>';
+            echo '<td><input type="text" pattern="' . $pattern . '" id="' . $arrAddRow[$key] . '" name="' . $arrAddRow[$key] . '" class="regex"></td>';
         } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-            echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '" class="regex"></td>';
+            echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" id="' . $arrAddRow[$key] . '" name="' . $arrAddRow[$key] . '" class="regex"></td>';
         }
     }
     $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep;
@@ -78,16 +78,38 @@ echo '<form method="post" action="/user_upload">';
     echo '</form>' . PHP_EOL;
 @endphp
 <script>
-    document.addEventListener('keypress', e => {
-        if (e.target.type === 'text') {
-            let regex = new RegExp(e.explicitOriginalTarget.pattern);
-            let key = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-            if (!regex.test(key)) {
-                event.preventDefault();
-                return false;
-            }
+    document.addEventListener('DOMContentLoaded', pInpInit);
+
+    function pInpInit() {
+        let inputs = document.querySelectorAll('.regex');
+        for (let inp of inputs) {
+            inp.addEventListener('input', onPInpInput);
+            inp.addEventListener('click', function () {
+                this.lastCaretPos = this.selectionStart;
+            });
         }
-    })
+    }
+
+    function onPInpInput() {
+        if (!this.value.length) {
+            this.lastValue = '';
+            return;
+        }
+        let regxpr = this.pattern;
+        if (!regxpr)
+            return;
+        regxpr = new RegExp(regxpr, 'i');
+        if (this.value.match(regxpr)) {
+            this.lastValue = this.value;
+            this.lastCaretPos = this.selectionStart;
+        } else {
+            this.value = this.lastValue || '';
+            let pos = this.lastCaretPos || 0;
+            this.setSelectionRange(pos, pos);
+            this.classList.remove('anim');
+            requestAnimationFrame(() => this.classList.add('anim'));
+        }
+    }
 </script>
 </body>
 </html>
