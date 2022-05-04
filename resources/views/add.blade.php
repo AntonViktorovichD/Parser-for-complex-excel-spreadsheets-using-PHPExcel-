@@ -33,6 +33,7 @@
     $user_id = Auth::user()->id;
     $arrCell = json_decode(json_decode($json), true);
     $arrAddRow = array_flip(json_decode($addRowArr, true));
+    $dep = DB::table('org_helper')->where('id', '=', $user_dep)->value('title');
     $colnum = 1;
     $arrCol = [];
 echo '<form method="post" action="/user_upload">';
@@ -62,12 +63,12 @@ echo '<form method="post" action="/user_upload">';
     }
     unset($arrCol[0]);
     echo '<tr>' . PHP_EOL;
-    echo '<td>' . $user_dep . '</td>';
+    echo '<td>' . $dep . '</td>';
     foreach ($arrCol as $key => $colnum) {
         if ($colnum == 1 && isset($arrAddRow[$key])) {
-            echo '<td><input type="text" pattern="' . $pattern . '" id="' . $arrAddRow[$key] . '" name="' . $arrAddRow[$key] . '" class="regex"></td>';
+            echo '<td><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '" class="regex"></td>';
         } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-            echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" id="' . $arrAddRow[$key] . '" name="' . $arrAddRow[$key] . '" class="regex"></td>';
+            echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '" class="regex"></td>';
         }
     }
     $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep;

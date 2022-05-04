@@ -34,6 +34,7 @@
     $arrAddRow = array_flip(json_decode($addRowArr, true));
     ksort($arrAddRow);
     $arrs = json_decode($report_value, true);
+    $dep = DB::table('org_helper')->where('id', '=', $user_dep)->value('title');
     $colnum = 1;
     $arrCol = [];
     $arrNum = [];
@@ -77,12 +78,12 @@
         $user_id = DB::table('report_values')->where('row_uuid', $key)->value('user_id');
         $row_uuid = DB::table('report_values')->where('row_uuid', $key)->value('row_uuid');
         echo '<tr>' . PHP_EOL;
-        echo '<td>' . $user_dep . '</td>';
+        echo '<td>' . $dep . '</td>';
         foreach ($arrCol as $key => $colnum) {
             if ($colnum == 1 && isset($arrAddRow[$key])) {
-                echo '<td><input type="text" pattern="' . $pattern . '" name="' . $row_id . '+' . $arrAddRow[$key] . '" value="' . $arrKeyVal[$key] . '"></td>';
+                echo '<td><input type="text" pattern="' . $pattern . '" name="' . $row_id . '+' . $arrAddRow[$key] . '" value="' . $arrKeyVal[$key] . '" class="regex"></td>';
             } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-                echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $row_id . '+' . $arrAddRow[$key] . '" value="' . $arrKeyVal[$key] . '"></td>';
+                echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $row_id . '+' . $arrAddRow[$key] . '" value="' . $arrKeyVal[$key] . '" class="regex"></td>';
             }
         }
         $table[] = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep . ' + ' . $highest_column_index . ' + ';
@@ -94,5 +95,39 @@
     echo '<input class="btn" type="submit">';
     echo '</form>' . PHP_EOL;
 @endphp
+<script>
+    document.addEventListener('DOMContentLoaded', pInpInit);
+
+    function pInpInit() {
+        let inputs = document.querySelectorAll('.regex');
+        for (let inp of inputs) {
+            inp.addEventListener('input', onPInpInput);
+            inp.addEventListener('click', function () {
+                this.lastCaretPos = this.selectionStart;
+            });
+        }
+    }
+
+    function onPInpInput() {
+        if (!this.value.length) {
+            this.lastValue = '';
+            return;
+        }
+        let regxpr = this.pattern;
+        if (!regxpr)
+            return;
+        regxpr = new RegExp(regxpr, 'i');
+        if (this.value.match(regxpr)) {
+            this.lastValue = this.value;
+            this.lastCaretPos = this.selectionStart;
+        } else {
+            this.value = this.lastValue || '';
+            let pos = this.lastCaretPos || 0;
+            this.setSelectionRange(pos, pos);
+            this.classList.remove('anim');
+            requestAnimationFrame(() => this.classList.add('anim'));
+        }
+    }
+</script>
 </body>
 </html>

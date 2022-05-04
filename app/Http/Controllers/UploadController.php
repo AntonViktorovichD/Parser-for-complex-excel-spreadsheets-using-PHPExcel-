@@ -29,7 +29,7 @@ class UploadController extends Controller {
 
         $checkboxes = [];
 
-        $user_id = Auth::user()->id;
+        $user_id = Auth::id();
 
         try {
             DB::connection()->getPdo();
