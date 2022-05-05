@@ -1,72 +1,52 @@
-@extends('layouts.app')
-@section('content')
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card-group">
-            <div class="card p-4">
-                <div class="card-body">
-                    @if(\Session::has('message'))
-                        <p class="alert alert-info">
-                            {{ \Session::get('message') }}
-                        </p>
-                    @endif
-                    <form method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
-                        <h1>{{ env('APP_NAME', 'Permissions Manager') }}</h1>
-                        <p class="text-muted">Login</p>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fa fa-user"></i>
-                                </span>
-                            </div>
-                            <input name="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autofocus placeholder="Email" value="{{ old('email', null) }}">
-                            @if($errors->has('email'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('email') }}
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-lock"></i></span>
-                            </div>
-                            <input name="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" required placeholder="Password">
-                            @if($errors->has('password'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('password') }}
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="input-group mb-4">
-                            <div class="form-check checkbox">
-                                <input class="form-check-input" name="remember" type="checkbox" id="remember" style="vertical-align: middle;" />
-                                <label class="form-check-label" for="remember" style="vertical-align: middle;">
-                                    Remember me
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-6">
-                                <button type="submit" class="btn btn-primary px-4">
-                                    Login
-                                </button>
-                            </div>
-                            <div class="col-6 text-right">
-                                <a class="btn btn-link px-0" href="{{ route('password.request') }}">
-                                    Forgot your password?
-                                </a>
-
-                            </div>
-                        </div>
-                    </form>
+<link href="/css/bootstrap@5.1.3.css" rel="stylesheet">
+<link href="/css/montserrat.css" rel="stylesheet">
+<link href="/css/auth.css" rel="stylesheet">
+<body>
+<div class="bg">
+    <div id="wrap">
+        <div class="login">
+            <form class="form-validate form-horizontal well" method="POST" action="{{ route('login') }}">
+                {{ csrf_field() }}
+                <h1 class="tm-heading-teaser" style="font-size: 30px;">
+                    <span style="font-size: 20px;">Информационно-аналитический сервис</span><br>
+                    Автоматизированный сбор показателей работы социальных учреждений Нижегородской области
+                </h1><br>
+                <div class="control-group">
+                    <div class="control-label">
+                        <label id="username-lbl" for="username" class="required">
+                            Логин<span class="star">&nbsp;*</span></label>
+                        &nbsp;
+                    </div>
+                    <div class="controls">
+                        <input name="email" type="text"
+                               class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} validate-username required"
+                               required
+                               autofocus value="{{ old('email', null) }}">
+                    </div>
                 </div>
-            </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <label id="password-lbl" for="password" class="required">
+                            Пароль<span class="star">&nbsp;*</span></label>
+                        &nbsp;
+                    </div>
+                    <div class="controls">
+                        <input name="password" type="password" size="25" maxlength="99" aria-required="true"
+                               class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }} validate-password required"
+                               required>
+                    </div>
+                </div>
+                <div class="control-group margin-btn">
+                    <button type="submit" class="btn btn-primary">
+                        Войти
+                    </button>
+                </div>
+            </form>
         </div>
+
+    </div>
+    <div class="tm-footer uk-block uk-block-default">
+        <p>Права защищены © @php echo date("Y") @endphp Министерство социальной политики Нижегородской области</p>
     </div>
 </div>
-@endsection
+</body>

@@ -70,7 +70,7 @@ echo '<form method="post" action="/user_upload">';
             echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '" class="regex"></td>';
         }
     }
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep;
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '<table>' . PHP_EOL;

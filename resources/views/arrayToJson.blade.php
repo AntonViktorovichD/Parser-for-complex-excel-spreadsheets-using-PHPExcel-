@@ -42,18 +42,18 @@
             foreach ($arr_rows as $row) {
             }
             if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
-            if ($arr['table_uuid'] == $row['table_uuid']) {
-                echo '<a href="/admin_edit/' . $arr['table_name'] . '"> Редактировать </a>';
+//                if ($arr['table_uuid'] == $row['table_uuid']) {
+                    echo '<a href="/admin_edit/' . $arr['table_name'] . '"> Редактировать </a>';
+//                } else {
+//                    echo '<a href="/add/' . $arr['table_name'] . '"> Добавить </a>';
+//                }
             } else {
-                echo '<a href="/add/' . $arr['table_name'] . '"> Добавить </a>';
+                   if ($arr['table_uuid'] == $row['table_uuid'] && $user_id == $row['user_id']) {
+                    echo '<a href="/edit/' . $arr['table_name'] . '"> Редактировать </a>';
+                } else {
+                    echo '<a href="/add/' . $arr['table_name'] . '"> Добавить </a>';
+                }
             }
-        } else {
-               if ($arr['table_uuid'] == $row['table_uuid'] && $user_id == $row['user_id']) {
-                echo '<a href="/edit/' . $arr['table_name'] . '"> Редактировать </a>';
-            } else {
-                echo '<a href="/add/' . $arr['table_name'] . '"> Добавить </a>';
-            }
-        }
         }
         echo '</ul>' . PHP_EOL;
         echo '</div>' . PHP_EOL;
