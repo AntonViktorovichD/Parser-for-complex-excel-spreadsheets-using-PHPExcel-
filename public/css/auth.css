@@ -6,19 +6,8 @@
     outline: 0;
     outline-offset: 0;
 }
-body {
-    height: 100%;
-}
 
-#wrap {
-    min-height: 100%;
-}
-footer {
-
-}
-
-.bg {
-    background: #fafafa;
+.container {
     height: 100%;
 }
 
@@ -176,9 +165,20 @@ input, button[type="button"], select {
     padding-bottom: 50px;
 }
 
-.tm-footer {
+.fixed-bottom {
+    position: fixed;
+    bottom: 0 !important;
     margin-left: 35px;
-    bottom: 0;
     margin-top: -80px;
     height: 80px;
+    color: #000000;
 }
+
+/*.tm-footer {*/
+/*    position: relative;*/
+/*    bottom: 0;*/
+/*    margin-left: 35px;*/
+/*    margin-top: -80px;*/
+/*    height: 80px;*/
+/*}*/
+
