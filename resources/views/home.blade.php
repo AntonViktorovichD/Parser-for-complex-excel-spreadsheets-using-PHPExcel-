@@ -34,11 +34,11 @@
             <div class="uk-grid uk-flex-middle uk-hidden-small">
                 <div class="uk-flex-item-1">
                     <ul class="uk-navbar-nav uk-hidden-small">
-                        <li><a href="/index.php?option=com_users&amp;view=login&amp;Itemid=101">Начало
+                        <li><a href="/">Начало
                                 работы</a></li>
-                        <li><a href="/index.php?option=com_fabrik&amp;view=form&amp;formid=1&amp;Itemid=116">Создать
+                        <li><a href="/add">Создать
                                 запрос из таблицы excel</a></li>
-                        <li><a href="/index.php?option=com_content&amp;view=featured&amp;Itemid=154">Результаты
+                        <li><a href="/json">Результаты
                                 заполнения запросов</a></li>
                         <li><a href="/index.php?option=com_wrapper&amp;view=wrapper&amp;Itemid=136">Квартальный
                                 отчёт</a></li>
