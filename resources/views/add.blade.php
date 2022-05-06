@@ -1,33 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Table</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            border: 1px solid black;
-        }
-
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-        }
-
-        input {
-            outline: none;
-            border: none;
-            width: 100%;
-            height: 100%;
-        }
-
-        .btn {
-            width: 100px;
-            height: 35px;
-        }
-    </style>
-</head>
-<body>
+@include('header')
 @php
     $user_role = Auth::user()->roles->first()->id;
     $user_id = Auth::user()->id;
@@ -78,5 +49,4 @@ echo '<form method="post" action="/user_upload">';
     echo '</form>' . PHP_EOL;
 @endphp
 <script src="/js/regexp.js"></script>
-</body>
-</html>
+

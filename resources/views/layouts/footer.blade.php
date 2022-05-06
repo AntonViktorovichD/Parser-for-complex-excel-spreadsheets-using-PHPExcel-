@@ -1,3 +1,5 @@
+</div>
+</div>
 <footer id="tm-footer" class="tm-footer uk-block uk-block-default ">
     <div class="uk-container uk-container-center">
         <div class="uk-flex uk-flex-middle uk-flex-space-between uk-text-center-small">

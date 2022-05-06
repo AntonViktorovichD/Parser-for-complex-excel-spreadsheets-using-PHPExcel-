@@ -29,3 +29,23 @@
         </div>
     </nav>
 </div>
+<script>
+    (function($){
+        var navbar = $('.tm-navbar'),
+            menuItems = navbar.find('.uk-navbar-nav > li'),
+            logo = $('a.tm-logo');
+
+        if (menuItems.length && logo.length) {
+
+            menuItems.filter(function(index) {
+                return index > Math.floor(menuItems.length/2) - 1;
+            }).appendTo('.tm-nav-secondary');
+
+            $('.tm-nav-secondary').removeClass('uk-hidden');
+
+        }
+
+    })(jQuery);
+</script>
+<div class="uk-width-1-1 uk-row-first">
+<div class="uk-panel uk-panel-box">

@@ -8,13 +8,21 @@
     <meta name="robots" content="noindex, nofollow"/>
     <title>Информационно-аналитический сервис &quot;Автоматизированный сбор показателей работы социальных учреждений
         Нижегородской области&quot;</title>
-    <link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
-    <script src="/js/jquery.min.js" type="text/javascript"></script>
-    <script src="/js/jquery-noconflict.js" type="text/javascript"></script>
-    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/calendar-jos.css">
+    <link rel="stylesheet" href="/css/fabrik.css">
+    <link rel="stylesheet" href="/css/slimbox2.css">
     <link rel="stylesheet" href="/css/theme.css">
     <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/bootstrap@5.1.3.css">
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/calendar.js" type="text/javascript"></script>
+    <script src="/js/calendar-setup.js" type="text/javascript"></script>
+    <script src="/js/core.js" type="text/javascript"></script>
+    <script src="/js/mootools-core.js" type="text/javascript"></script>
+    <script src="/js/mootools-more.js" type="text/javascript"></script>
+    <script src="/js/jquery-noconflict.js" type="text/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="/js/uikit.js"></script>
     <script src="/js/autocomplete.js"></script>
     <script src="/js/search.js"></script>
@@ -23,8 +31,6 @@
     <script src="/js/social.js"></script>
     <script src="/js/theme.js"></script>
 </head>
-
 <body class="tm-sidebar-b-right tm-sidebars-1 tm-noblog">
-
 <h1 class="main-header">ИНФОРМАЦИОННО-АНАЛИТИЧЕСКИЙ СЕРВИС "АВТОМАТИЗИРОВАННЫЙ СБОР ПОКАЗАТЕЛЕЙ РАБОТЫ СОЦИАЛЬНЫХ
     УЧРЕЖДЕНИЙ НИЖЕГОРОДСКОЙ ОБЛАСТИ"</h1>

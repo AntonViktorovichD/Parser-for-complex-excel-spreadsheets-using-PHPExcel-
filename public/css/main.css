@@ -7,14 +7,18 @@
     padding-top: 0px !important;
 }
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body * {
     border-radius: 0px !important;
     color: #000;
 }
 
-body div {
-    color: #c0c0c0 !important;
-}
+/*body div {*/
+/*    color: #c0c0c0;*/
+/*}*/
 
 body td {
     font-weight: normal;
@@ -23,9 +27,8 @@ body td {
 input, button[type="button"], select {
     color: #000 !important;
     border: 1px solid #ccc !important;
-    min-height: 35px !important;
     max-height: 35px !important;
-    padding: 0px 5px !important;
+    padding: 5px 10px !important;
     font-size: 15px !important;
 }
 
@@ -33,6 +36,7 @@ button[type="button"] {
     margin-left: -1px !important;
     outline: none !important;
     width: 40px;
+    min-height: 35px !important;
     max-height: 37px !important;
     height: 37px;
 }
@@ -285,7 +289,7 @@ td.fabrik_element, th.heading {
 }
 
 .distr {
-    min-width: 200px;
+    /*min-width: 200px;*/
     font-size: 11px;
     text-align: left !important
 }
@@ -683,4 +687,77 @@ p {
     color: #1f1e20;
     border-color: #e43d3c;
     background-image: none, linear-gradient(156deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+}
+
+label {
+    margin-left: 10px;
+    overflow-wrap: break-word;
+
+}
+
+label, input, button, select, textarea, input[type="radio"] {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 24px;
+}
+
+input {
+    margin-bottom: 10px !important;
+}
+
+legend {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 24px;
+    font-size: 21px;
+    line-height: 48px;
+    margin-top: 40px;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.control-group input {
+    height: 35px;
+    min-height: 35px !important;
+    line-height: 35px;
+}
+
+input, button[type="button"], select {
+
+}
+
+.form-horizontal .control-label {
+    float: left;
+    width: 160px;
+    padding-top: 5px;
+    text-align: right;
+}
+
+.input-xlarge {
+    width: 270px;
+    margin-left: 20px;
+    color: #000 !important;
+    border: 1px solid #ccc !important;
+    min-height: 35px !important;
+    max-height: 35px !important;
+    padding: 0px 5px !important;
+    font-size: 15px !important;
+}
+
+input[type="radio"] {
+    margin-top: 20px;
+    margin-left: 20px;
+
+}
+
+.fabrikLabel {
+    margin-top: 15px;
+    color: #000000 !important;
+}
+
+.input-block-level {
+    box-sizing: border-box;
+    width: calc(100% - 300px);
+    margin: 0 150px;
 }
