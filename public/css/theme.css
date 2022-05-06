@@ -134,6 +134,7 @@ sup {
 sub {
     bottom: -0.25em;
 }
+
 /* Embedded content
  ========================================================================== */
 /*
@@ -1648,14 +1649,14 @@ pre code {
 .uk-block {
     position: relative;
     box-sizing: border-box;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    /*padding-top: 40px;*/
+    /*padding-bottom: 40px;*/
 }
 /* Phone landscape and bigger */
 @media (min-width: 768px) {
     .uk-block {
-        padding-top: 60px;
-        padding-bottom: 60px;
+        /*padding-top: 60px;*/
+        /*padding-bottom: 60px;*/
     }
 }
 /*
@@ -12658,4 +12659,30 @@ p.uk-h2 {
  */
 .tm-grid-shadow img {
     box-shadow: 2px 26px 69px 0 rgba(0, 0, 0, 0);
+}
+
+.cmpl {
+    color: #08c;
+}
+
+.not-cmpl {
+    color: #e43d3c;
+}
+
+.repo {
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.table td span {
+    font-weight: bold;
+}
+
+hr {
+    border-top: 1px solid #969696;
+}
+
+.table {
+    display: flex;
+    overflow: auto;
 }
