@@ -12,13 +12,13 @@
         margin-right: 35px;
     }
 
-        #datetimepicker-f, #datetimepicker-s {
-            margin-top: 15px;
-        }
+    #datetimepicker-f, #datetimepicker-s {
+        margin-top: 15px;
+    }
 
-        textarea {
-            margin-bottom: 50px !important;
-        }
+    textarea {
+        margin-bottom: 50px !important;
+    }
 </style>
 <link rel="stylesheet" href="/css/jquery.datetimepicker.min.css">
 <script src="/js/jquery.js"></script>

@@ -5,7 +5,7 @@
  * Date formatter utility library that allows formatting date/time variables or Date objects using PHP DateTime format.
  * This library is a standalone javascript library and does not depend on other libraries or plugins like jQuery. The
  * library also adds support for Universal Module Definition (UMD).
- * 
+ *
  * @see http://php.net/manual/en/function.date.php
  *
  * For more JQuery plugins visit http://plugins.krajee.com
@@ -1597,109 +1597,109 @@ var datetimepickerFactory = function ($) {
 				input.val(_xdsoft_datetime.str());
 				datetimepicker.trigger('close.xdsoft');
 			});
-			month_picker
-				.find('.xdsoft_today_button')
-				.on('touchend mousedown.xdsoft', function () {
-					datetimepicker.data('changed', true);
-					_xdsoft_datetime.setCurrentTime(0, true);
-					datetimepicker.trigger('afterOpen.xdsoft');
-				}).on('dblclick.xdsoft', function () {
-				var currentDate = _xdsoft_datetime.getCurrentTime(), minDate, maxDate;
-				currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-				minDate = _xdsoft_datetime.strToDate(options.minDate);
-				minDate = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
-				if (currentDate < minDate) {
-					return;
-				}
-				maxDate = _xdsoft_datetime.strToDate(options.maxDate);
-				maxDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
-				if (currentDate > maxDate) {
-					return;
-				}
-				input.val(_xdsoft_datetime.str());
-				input.trigger('change');
-				datetimepicker.trigger('close.xdsoft');
-			});
-			month_picker
-				.find('.xdsoft_prev,.xdsoft_next')
-				.on('touchend mousedown.xdsoft', function () {
-					var $this = $(this),
-						timer = 0,
-						stop = false;
+			// month_picker
+			// 	.find('.xdsoft_today_button')
+			// 	.on('touchend mousedown.xdsoft', function () {
+			// 		datetimepicker.data('changed', true);
+			// 		_xdsoft_datetime.setCurrentTime(0, true);
+			// 		datetimepicker.trigger('afterOpen.xdsoft');
+			// 	}).on('dblclick.xdsoft', function () {
+			// 	var currentDate = _xdsoft_datetime.getCurrentTime(), minDate, maxDate;
+			// 	currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+			// 	minDate = _xdsoft_datetime.strToDate(options.minDate);
+			// 	minDate = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
+			// 	if (currentDate < minDate) {
+			// 		return;
+			// 	}
+			// 	maxDate = _xdsoft_datetime.strToDate(options.maxDate);
+			// 	maxDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
+			// 	if (currentDate > maxDate) {
+			// 		return;
+			// 	}
+			// 	input.val(_xdsoft_datetime.str());
+			// 	input.trigger('change');
+			// 	datetimepicker.trigger('close.xdsoft');
+			// });
+			// month_picker
+			// 	.find('.xdsoft_prev,.xdsoft_next')
+			// 	.on('touchend mousedown.xdsoft', function () {
+			// 		var $this = $(this),
+			// 			timer = 0,
+			// 			stop = false;
+            //
+			// 		(function arguments_callee1(v) {
+			// 			if ($this.hasClass(options.next)) {
+			// 				_xdsoft_datetime.nextMonth();
+			// 			} else if ($this.hasClass(options.prev)) {
+			// 				_xdsoft_datetime.prevMonth();
+			// 			}
+			// 			if (options.monthChangeSpinner) {
+			// 				if (!stop) {
+			// 					timer = setTimeout(arguments_callee1, v || 100);
+			// 				}
+			// 			}
+			// 		}(500));
+            //
+			// 		$([options.ownerDocument.body, options.contentWindow]).on('touchend mouseup.xdsoft', function arguments_callee2() {
+			// 			clearTimeout(timer);
+			// 			stop = true;
+			// 			$([options.ownerDocument.body, options.contentWindow]).off('touchend mouseup.xdsoft', arguments_callee2);
+			// 		});
+			// 	});
 
-					(function arguments_callee1(v) {
-						if ($this.hasClass(options.next)) {
-							_xdsoft_datetime.nextMonth();
-						} else if ($this.hasClass(options.prev)) {
-							_xdsoft_datetime.prevMonth();
-						}
-						if (options.monthChangeSpinner) {
-							if (!stop) {
-								timer = setTimeout(arguments_callee1, v || 100);
-							}
-						}
-					}(500));
-
-					$([options.ownerDocument.body, options.contentWindow]).on('touchend mouseup.xdsoft', function arguments_callee2() {
-						clearTimeout(timer);
-						stop = true;
-						$([options.ownerDocument.body, options.contentWindow]).off('touchend mouseup.xdsoft', arguments_callee2);
-					});
-				});
-
-			timepicker
-				.find('.xdsoft_prev,.xdsoft_next')
-				.on('touchend mousedown.xdsoft', function () {
-					var $this = $(this),
-						timer = 0,
-						stop = false,
-						period = 110;
-					(function arguments_callee4(v) {
-						var pheight = timeboxparent[0].clientHeight,
-							height = timebox[0].offsetHeight,
-							top = Math.abs(parseInt(timebox.css('marginTop'), 10));
-						/**
-						 *  Fixes a bug which happens if:
-						 *  top is < the timeHeightInTimePicker, it will cause the up arrow to stop working
-						 *  same for the down arrow if it's not exactly on the pixel
-						 */
-						if (top < options.timeHeightInTimePicker) {
-							top = options.timeHeightInTimePicker;
-						} else if ($this.hasClass(options.next) && (height - pheight) < top) {
-							timebox.css('marginTop', '-' + height + 'px');
-						}
-
-						if ($this.hasClass(options.next) && (height - pheight) > top) {
-							timebox.css('marginTop', '-' + (top + options.timeHeightInTimePicker) + 'px');
-						} else if ($this.hasClass(options.prev) && top - options.timeHeightInTimePicker >= 0) {
-							timebox.css('marginTop', '-' + (top - options.timeHeightInTimePicker) + 'px');
-						}
-						/**
-						 * Fixed bug:
-						 * When using css3 transition, it will cause a bug that you cannot scroll the timepicker list.
-						 * The reason is that the transition-duration time, if you set it to 0, all things fine, otherwise, this
-						 * would cause a bug when you use jquery.css method.
-						 * Let's say: * { transition: all .5s ease; }
-						 * jquery timebox.css('marginTop') will return the original value which is before you clicking the next/prev button,
-						 * meanwhile the timebox[0].style.marginTop will return the right value which is after you clicking the
-						 * next/prev button.
-						 *
-						 * What we should do:
-						 * Replace timebox.css('marginTop') with timebox[0].style.marginTop.
-						 */
-						timeboxparent.trigger('scroll_element.xdsoft_scroller', [Math.abs(parseInt(timebox[0].style.marginTop, 10) / (height - pheight))]);
-						period = (period > 10) ? 10 : period - 10;
-						if (!stop) {
-							timer = setTimeout(arguments_callee4, v || period);
-						}
-					}(500));
-					$([options.ownerDocument.body, options.contentWindow]).on('touchend mouseup.xdsoft', function arguments_callee5() {
-						clearTimeout(timer);
-						stop = true;
-						$([options.ownerDocument.body, options.contentWindow])
-							.off('touchend mouseup.xdsoft', arguments_callee5);
-					});
-				});
+			// timepicker
+			// 	.find('.xdsoft_prev,.xdsoft_next')
+			// 	.on('touchend mousedown.xdsoft', function () {
+			// 		var $this = $(this),
+			// 			timer = 0,
+			// 			stop = false,
+			// 			period = 110;
+			// 		(function arguments_callee4(v) {
+			// 			var pheight = timeboxparent[0].clientHeight,
+			// 				height = timebox[0].offsetHeight,
+			// 				top = Math.abs(parseInt(timebox.css('marginTop'), 10));
+			// 			/**
+			// 			 *  Fixes a bug which happens if:
+			// 			 *  top is < the timeHeightInTimePicker, it will cause the up arrow to stop working
+			// 			 *  same for the down arrow if it's not exactly on the pixel
+			// 			 */
+			// 			if (top < options.timeHeightInTimePicker) {
+			// 				top = options.timeHeightInTimePicker;
+			// 			} else if ($this.hasClass(options.next) && (height - pheight) < top) {
+			// 				timebox.css('marginTop', '-' + height + 'px');
+			// 			}
+            //
+			// 			if ($this.hasClass(options.next) && (height - pheight) > top) {
+			// 				timebox.css('marginTop', '-' + (top + options.timeHeightInTimePicker) + 'px');
+			// 			} else if ($this.hasClass(options.prev) && top - options.timeHeightInTimePicker >= 0) {
+			// 				timebox.css('marginTop', '-' + (top - options.timeHeightInTimePicker) + 'px');
+			// 			}
+			// 			/**
+			// 			 * Fixed bug:
+			// 			 * When using css3 transition, it will cause a bug that you cannot scroll the timepicker list.
+			// 			 * The reason is that the transition-duration time, if you set it to 0, all things fine, otherwise, this
+			// 			 * would cause a bug when you use jquery.css method.
+			// 			 * Let's say: * { transition: all .5s ease; }
+			// 			 * jquery timebox.css('marginTop') will return the original value which is before you clicking the next/prev button,
+			// 			 * meanwhile the timebox[0].style.marginTop will return the right value which is after you clicking the
+			// 			 * next/prev button.
+			// 			 *
+			// 			 * What we should do:
+			// 			 * Replace timebox.css('marginTop') with timebox[0].style.marginTop.
+			// 			 */
+			// 			timeboxparent.trigger('scroll_element.xdsoft_scroller', [Math.abs(parseInt(timebox[0].style.marginTop, 10) / (height - pheight))]);
+			// 			period = (period > 10) ? 10 : period - 10;
+			// 			if (!stop) {
+			// 				timer = setTimeout(arguments_callee4, v || period);
+			// 			}
+			// 		}(500));
+			// 		$([options.ownerDocument.body, options.contentWindow]).on('touchend mouseup.xdsoft', function arguments_callee5() {
+			// 			clearTimeout(timer);
+			// 			stop = true;
+			// 			$([options.ownerDocument.body, options.contentWindow])
+			// 				.off('touchend mouseup.xdsoft', arguments_callee5);
+			// 		});
+			// 	});
 
 			xchangeTimer = 0;
 			// base handler - generating a calendar and timepicker
