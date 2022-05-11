@@ -19,6 +19,7 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
+        "@coreui/coreui-pro": "^4.2.0-rc.1",
         "watchpack-chokidar2": "^2.0.1"
     }
 }

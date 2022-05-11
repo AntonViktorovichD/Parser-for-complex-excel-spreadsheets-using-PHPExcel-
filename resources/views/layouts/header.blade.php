@@ -16,9 +16,9 @@
     <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="/css/bootstrap@5.1.3.css">
     <script src="/js/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/core.js" type="text/javascript"></script>
     <script src="/js/calendar.js" type="text/javascript"></script>
     <script src="/js/calendar-setup.js" type="text/javascript"></script>
-    <script src="/js/core.js" type="text/javascript"></script>
     <script src="/js/mootools-core.js" type="text/javascript"></script>
     <script src="/js/mootools-more.js" type="text/javascript"></script>
     <script src="/js/jquery-noconflict.js" type="text/javascript"></script>
