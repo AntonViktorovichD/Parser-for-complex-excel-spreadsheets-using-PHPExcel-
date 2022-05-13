@@ -9,11 +9,16 @@ use App\Http\Controllers\Controller;
 class JsonController extends Controller {
     public function arrayToJson() {
         try {
+        $user_names = [];
             $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
             $arr = json_encode(DB::select('select * from tables'));
-            $arr_rows = json_encode(DB::select('select * from report_values'));
-            return view('arrayToJson', ['arr' => $arr, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role]);
+        foreach (DB::table('tables')->pluck('user_id') as $user) {
+            $user_names[] = DB::table('users')->where('id', $user)->first('name')->name;
+            }
+        $table_user = json_encode($user_names);
+              $arr_rows = json_encode(DB::select('select * from report_values'));
+            return view('arrayToJson', ['arr' => $arr, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => 'user_role', 'table_user' => $table_user]);
         } catch (\Exception $e) {
             die("Нет подключения к базе данных.");
         }

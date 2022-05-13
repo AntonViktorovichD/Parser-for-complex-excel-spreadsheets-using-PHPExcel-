@@ -5,17 +5,14 @@
         columns: 3;
         margin: 50px 150px;
     }
-
     .uk-panel-box {
         padding: 40px !important;
         margin-left: 35px;
         margin-right: 35px;
     }
-
     #datetimepicker-f, #datetimepicker-s {
         margin-top: 15px;
     }
-
     textarea {
         margin-bottom: 50px !important;
     }

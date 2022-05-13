@@ -81,4 +81,3 @@ const event = Vue.createApp({
     }
 })
 event.mount('#checkboxes');
-
