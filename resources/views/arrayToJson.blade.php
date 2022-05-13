@@ -53,6 +53,8 @@
         echo '<th>Ответственный</th>' . PHP_EOL;
         echo '<th>Начало сбора</th>' . PHP_EOL;
         echo '<th>Конец сбора</th>' . PHP_EOL;
+        echo '<th>Процент заполнения</th>' . PHP_EOL;
+        echo '<th>Таблицы</th>' . PHP_EOL;
         echo '</tr>' . PHP_EOL;
         foreach ($arrs as $key => $arr) {
            echo '<tr>' . PHP_EOL;

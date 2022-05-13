@@ -1301,6 +1301,8 @@ pre code {
     display: block;
     /* 2 */
     position: relative;
+        min-height: 100% !important;
+
 }
 /*
  * Allow panels to be anchors
@@ -1366,6 +1368,8 @@ pre code {
     border-radius: 0;
     background-image: none;
     box-shadow: 2px 26px 69px 0 rgba(0, 0, 0, 0.1);
+    min-height: 34vw !important;
+
 }
 .uk-panel-box .uk-panel-teaser > .uk-overlay {
     border-radius: 0 0 0 0;
