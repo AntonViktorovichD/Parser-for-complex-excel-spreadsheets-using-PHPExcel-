@@ -1,33 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Table</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            border: 1px solid black;
-        }
+@include('layouts.header')
+@include('layouts.menu')
+<style>
+    table {
+        border-collapse: collapse;
+        border: 1px solid black;
+    }
 
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-        }
+    th, td {
+        border: 1px solid black;
+        padding: 10px;
+    }
 
-        input {
-            outline: none;
-            border: none;
-            width: 100%;
-            height: 100%;
-        }
+    input {
+        outline: none;
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
 
-        .btn {
-            width: 100px;
-            height: 35px;
-        }
-    </style>
-</head>
-<body>
+    .btn {
+        width: 100px;
+        height: 35px;
+    }
+</style>
 @php
     $user_id = Auth::user()->id;
     $arrCell = json_decode(json_decode($json), true);
@@ -78,10 +73,9 @@
     $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id  . ' + ' . $dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
-    echo '<table>' . PHP_EOL;
-    echo '<input class="btn" type="submit">';
+    echo '</table>' . PHP_EOL;
+    echo '<input class="btn-submit-ae" type="submit">';
     echo '</form>' . PHP_EOL;
 @endphp
 <script src="/js/regexp.js"></script>
-</body>
-</html>
+@include('layouts.footer')

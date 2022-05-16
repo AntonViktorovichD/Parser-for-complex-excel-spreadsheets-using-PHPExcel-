@@ -18,32 +18,6 @@ class JsonController extends Controller {
             foreach (DB::table('tables')->pluck('user_id') as $user) {
                 $user_names[] = DB::table('users')->where('id', $user)->first('name')->name;
             }
-
-
-
-
-//            foreach ($table_uuids as $table_uuid) {
-//                foreach ($table_dep as $dep) {
-//                    $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $table_uuid)->where('user_dep', '=', $dep)->pluck('json_val'));
-//                }
-//            }
-////            echo '<pre>';
-////var_dump($rv_ja);
-////            echo '</pre>';
-//            $counter = 0;
-//            foreach ($rv_ja as $isset_arrs) {
-//                if (!empty($isset_arrs)) {
-//                    foreach ($isset_arrs as $isset_arr) {
-//                        foreach (json_decode($isset_arr) as $arr) {
-//                            if (isset($arr)) {
-//                                $counter++;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            $all_deps = substr($counter / (count($rv_ja) * ((DB::table('tables')->where('table_uuid', '=', $table_uuid)->first('highest_column_index')->highest_column_index) - 1)), 0, 4) * 100;
-//            echo $all_deps;
             $arr = json_encode($arrs);
             $table_user = json_encode($user_names);
             $arr_rows = json_encode(DB::select('select * from report_values'));

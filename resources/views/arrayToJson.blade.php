@@ -36,72 +36,83 @@
     }
 </style>
 {{ $tableload }}
-
 @php
-echo '<div class="envelope input-block-level">';
-$row = 0;
-$arrs = json_decode($arr, true);
-$arr_rows = json_decode($arr_rows, true);
-$table_user = json_decode($table_user, true);
-echo '<table>' . PHP_EOL;
-echo '<tr>' . PHP_EOL;
-echo '<th>Номер запроса</th>' . PHP_EOL;
-echo '<th>Название запроса</th>' . PHP_EOL;
-echo '<th>Ответственный</th>' . PHP_EOL;
-echo '<th>Начало сбора</th>' . PHP_EOL;
-echo '<th></th>' . PHP_EOL;
-echo '<th></th>' . PHP_EOL;
-echo '<th>Таблицы</th>' . PHP_EOL;
-echo '</tr>' . PHP_EOL;
-foreach ($arrs as $key => $arr) {
-    $arr_deps = json_decode($arr['departments']);
-    $arr_uuids = $arr['table_uuid'];
-    foreach ($arr_deps as $dep) {
-        $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $arr_uuids)->where('user_dep', '=', $dep)->pluck('json_val'));
-    }
-    $counter = 0;
-    foreach ($rv_ja as $isset_arrs) {
-
-        if (!empty($isset_arrs)) {
-
-            foreach ($isset_arrs as $isset_arr) {
-                foreach (json_decode($isset_arr) as $arr_is) {
-                    if (isset($arr)) {
-                        $counter++;
+    echo '<div class="envelope input-block-level">';
+    $row = 0;
+    $arrs = json_decode($arr, true);
+    $arr_rows = json_decode($arr_rows, true);
+    $table_user = json_decode($table_user, true);
+    echo '<table>' . PHP_EOL;
+    echo '<tr>' . PHP_EOL;
+    echo '<th>Номер запроса</th>' . PHP_EOL;
+    echo '<th>Название запроса</th>' . PHP_EOL;
+    echo '<th>Ответственный</th>' . PHP_EOL;
+    echo '<th>Начало сбора</th>' . PHP_EOL;
+    echo '<th></th>' . PHP_EOL;
+    echo '<th></th>' . PHP_EOL;
+    echo '<th>Таблицы</th>' . PHP_EOL;
+    echo '</tr>' . PHP_EOL;
+    foreach ($arrs as $key => $arr) {
+        $arr_deps = json_decode($arr['departments']);
+        $arr_uuids = $arr['table_uuid'];
+        foreach ($arr_deps as $dep) {
+            $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $arr_uuids)->where('user_dep', '=', $dep)->pluck('json_val'));
+        }
+        $counter = 0;
+        foreach ($rv_ja as $isset_arrs) {
+            if (!empty($isset_arrs)) {
+                foreach ($isset_arrs as $isset_arr) {
+                    foreach (json_decode($isset_arr) as $arr_is) {
+                        if (isset($arr)) {
+                            $counter++;
+                        }
                     }
                 }
             }
         }
-    }
-    $all_deps = substr($counter / (count($rv_ja) * ((DB::table('tables')->where('table_uuid', '=', $arr_uuids)->first('highest_column_index')->highest_column_index) - 1)), 0, 4) * 100;
-    echo '<tr>' . PHP_EOL;
-    echo '<td><a href="/tables/' . $arr['id'] . '">' . $arr['id'] . '</a></td>';
-    echo '<td><a href="/tables/' . $arr['table_name'] . '">' . $arr['table_name'] . '</a></td>';
-    echo '<td><a href="/tables/' . $table_user[$key] . '">' . $table_user[$key] . '</a></td>';
-    echo '<td><a href="/tables/' . $arr['created_at'] . '">' . $arr['created_at'] . '</a></td>';
-    echo '<td><a href="/tables/' . $arr['updated_at'] . '">' . $arr['updated_at'] . '</a></td>';
-    echo '<td><progress min="0" max="100" value="' . $all_deps . '"></progress><i class="prVal">' . $all_deps . '%</i></div></td>';
-    foreach ($arr_rows as $row) {
-    }
-    if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
-//                if ($arr['table_uuid'] == $row['table_uuid']) {
-        echo '<td><a href="/admin_edit/' . $arr['table_name'] . '"> Редактировать </a></td>';
-//                } else {
-//                    echo '<a href="/add/' . $arr['table_name'] . '"> Добавить </a>';
-//                }
-    } else {
-        if ($arr['table_uuid'] == $row['table_uuid'] && $user_id == $row['user_id']) {
-            echo '<td><a href="/edit/' . $arr['table_name'] . '"> Редактировать </a></td>';
+        $all_deps = substr($counter / (count($rv_ja) * ((DB::table('tables')->where('table_uuid', '=', $arr_uuids)->first('highest_column_index')->highest_column_index) - 1)), 0, 4) * 100;
+        echo '<tr>' . PHP_EOL;
+        echo '<td><a href="/tables/' . $arr['id'] . '">' . $arr['id'] . '</a></td>';
+        echo '<td><a href="/tables/' . $arr['table_name'] . '">' . $arr['table_name'] . '</a></td>';
+        echo '<td><a href="/tables/' . $table_user[$key] . '">' . $table_user[$key] . '</a></td>';
+        echo '<td><a href="/tables/' . $arr['created_at'] . '">' . $arr['created_at'] . '</a></td>';
+        echo '<td><a href="/tables/' . $arr['updated_at'] . '">' . $arr['updated_at'] . '</a></td>';
+        echo '<td><progress min="0" max="100" value="' . $all_deps . '"></progress><i class="prVal">' . $all_deps . '%</i></div></td>';
+        foreach ($arr_rows as $row) {
+        if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
+            echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_name'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
         } else {
-            echo '<td><a href="/add/' . $arr['table_name'] . '"> Добавить </a></td>';
+            if ($arr['table_uuid'] == $row['table_uuid'] && $user_id == $row['user_id']) {
+                echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_name'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
+                break;
+            } else {
+                echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_name'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
+                break;
+            }
         }
+        }
+        echo '<td><button type="submit" class="btn btn-primary">Скачать</button></td>';
+        echo '<td><button type="submit" id="read_only" class="btn btn-primary" data-change="disabled" value="'.$arr['table_uuid'].'">Принять запрос</button></td>';
+        echo '</tr>' . PHP_EOL;
     }
-    echo '<td><button type="submit" class="btn btn-primary">Скачать</button></td>';
-    echo '<td><button type="submit" class="btn btn-primary">Принять запрос</button></td>';
-    echo '</tr>' . PHP_EOL;
-}
-
-echo '</table>' . PHP_EOL;
-echo '</div>' . PHP_EOL;
+    echo '</table>' . PHP_EOL;
+    echo '</div>' . PHP_EOL;
 @endphp
 @include('layouts.footer')
+<script>
+    document.addEventListener('click', function (e) {
+        if (e.target.id === 'read_only') {
+            if (e.target.dataset.change === 'disabled') {
+                e.target.dataset.change = 'enabled';
+            } else {
+                e.target.dataset.change = 'disabled';
+            }
+            // let elems = document.querySelectorAll('a');
+            // elems.forEach((el) => {
+            //     if (el.dataset.id == e.target.value) {
+            //         el.pathname = '/add/' + el.name;
+            //     }
+            // })
+        }
+    })
+</script>

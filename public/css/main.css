@@ -713,11 +713,6 @@ label, input, button, select, textarea, input[type="radio"] {
     line-height: 24px;
 }
 
-input {
-    margin-bottom: 10px !important;
-    margin-left: 10px !important;
-}
-
 legend {
     display: block;
     width: 100%;
@@ -779,5 +774,38 @@ input[type="radio"] {
 .prVal {
     padding-left: 10px;
     margin-bottom: 10px;
+}
+
+input.regex {
+    border: none !important;
+    text-decoration: none !important;
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+}
+
+.btn-submit-ae {
+    float: right;
+    margin-top: 100px;
+    text-shadow: none;
+    background: rgba(0, 0, 0, 0);
+    border: 2px solid #e43d3c !important;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 5px 15px !important;
+    margin-bottom: 0;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    max-width: 150px;
+}
+.btn-submit-ae:hover {
+    color: #fff !important;
+    background-color: #e43d3c;
 }
 
