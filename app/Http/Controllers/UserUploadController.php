@@ -12,10 +12,8 @@ class UserUploadController extends Controller {
         $created_at = date('Y-m-d, H:i:s');
         try {
             DB::connection()->getPdo();
-            $input = $request->all();
-
+            $input = $request->except('_token', 'table_information');
             list($table_name, $table_uuid, $row_uuid, $user_id, $user_dep) = explode(' + ', $request->input('table_information'));
-            unset($input['_token'], $input['table_information']);
             $json_val = json_encode($input, JSON_UNESCAPED_UNICODE);
             DB::insert('insert into report_values (table_name, table_uuid, row_uuid, user_id, user_dep, json_val, created_at) values (?, ?, ?, ?, ?, ?, ?)', [$table_name, $table_uuid, $row_uuid, $user_id, $user_dep, $json_val, $created_at]);
             return view('user_upload', ['name' => $table_name, 'alert' => 'Запись успешно добавлена']);

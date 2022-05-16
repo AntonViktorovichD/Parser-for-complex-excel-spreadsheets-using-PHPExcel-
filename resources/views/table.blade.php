@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+@include('layouts.header')
+@include('layouts.menu')
     <meta charset="UTF-8">
     <title>Table</title>
     <style>
         table {
             border-collapse: collapse;
             border: 1px solid black;
+            width: 100%;
         }
 
         th, td {
@@ -15,8 +15,6 @@
             min-width: 30px;
         }
     </style>
-</head>
-<body>
 @php
     try {
       $arrCell = json_decode(json_decode($json), true);
@@ -35,6 +33,4 @@
             }
 
 @endphp
-
-</body>
-</html>
+@include('layouts.footer')

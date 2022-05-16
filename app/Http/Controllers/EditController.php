@@ -23,7 +23,7 @@ class EditController extends Controller {
             'v_text' => '[A-Za-zА-Яа-яЁё\s,.:;-]+',
             'v_int' => '[\s\d]+',
             'v_float' => '^\d+(?:,\d{0,2})?$',
-            'v_all' => '^[^\/*?"<>|+%@#№!=~\'`$^&]+',
+            'v_all' => '^[^\/*?<>|+%@#№!=~\'`$^&]+',
         ];
         foreach ($reg_arr as $key => $reg) {
             if ($radio == $key) {
