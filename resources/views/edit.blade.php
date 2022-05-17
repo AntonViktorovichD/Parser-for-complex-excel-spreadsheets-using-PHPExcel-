@@ -63,18 +63,30 @@
     unset($arrCol[0]);
     echo '<tr>' . PHP_EOL;
     echo '<td>' . $dep . '</td>';
-    foreach ($arrCol as $key => $colnum) {
-        if ($colnum == 1 && isset($arrAddRow[$key])) {
-            echo '<td><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '" value="' . $arrKeyVal[$key] . '" class="regex"></td>';
-        } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-            echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '"value="' . $arrKeyVal[$key] . '" class="regex"></td>';
+    if ($read_only == 'disabled') {
+        foreach ($arrCol as $key => $colnum) {
+            if ($colnum == 1 && isset($arrAddRow[$key])) {
+                echo '<td><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '" value="' . $arrKeyVal[$key] . '" class="regex"></td>';
+            } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
+                echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '"value="' . $arrKeyVal[$key] . '" class="regex"></td>';
+            }
+        }
+    } else {
+        foreach ($arrCol as $key => $colnum) {
+            if ($colnum == 1 && isset($arrAddRow[$key])) {
+                echo '<td>' . $arrAddRow[$key] . '></td>';
+            } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
+                echo '<td colspan="' . $colnum . '">' . $arrAddRow[$key] . '</td>';
+            }
         }
     }
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id  . ' + ' . $dep;
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
-    echo '<input class="btn-submit-ae" type="submit">';
+    if ($read_only == 'disabled') {
+       echo '<input class="btn-submit-ae" type="submit">';
+    }
     echo '</form>' . PHP_EOL;
 @endphp
 <script src="/js/regexp.js"></script>

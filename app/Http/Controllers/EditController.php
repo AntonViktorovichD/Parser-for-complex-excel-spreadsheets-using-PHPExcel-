@@ -18,6 +18,7 @@ class EditController extends Controller {
         $user_dep = DB::table('report_values')->where('table_name', $name)->value('user_dep');
         $dep = DB::table('org_helper')->where('id', '=', $user_dep)->value('title');
         $radio = DB::table('tables')->where('table_name', $name)->value('radio');
+        $read_only = DB::table('tables')->where('table_name', $name)->value('read_only');
         $pattern = '';
         $reg_arr = [
             'v_text' => '[A-Za-zА-Яа-яЁё\s,.:;-]+',
@@ -73,7 +74,7 @@ class EditController extends Controller {
             return view('admin_edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'report_value', 'dep', 'pattern'));
         } else {
             $report_value = json_encode(DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_id', $user_id)->value('json_val'));
-            return view('edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'row_uuid', 'user_id', 'report_value', 'dep', 'pattern'));
+            return view('edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'row_uuid', 'user_id', 'report_value', 'dep', 'pattern', 'read_only'));
         }
     }
 }

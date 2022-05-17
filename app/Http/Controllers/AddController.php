@@ -14,6 +14,7 @@ class AddController extends Controller {
         $highest_row = DB::table('tables')->where('table_name', $name)->value('highest_row');
         $table_uuid = DB::table('tables')->where('table_name', $name)->value('table_uuid');
         $radio = DB::table('tables')->where('table_name', $name)->value('radio');
+        $read_only = DB::table('tables')->where('table_name', $name)->value('read_only');
         $pattern = '';
         $reg_arr = [
             'v_text' => '[A-Za-zА-Яа-яЁё\s,.:;-]+',
@@ -53,6 +54,6 @@ class AddController extends Controller {
         $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
         asort($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-        return view('add', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'dep', 'pattern'));
+        return view('add', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'dep', 'pattern', 'read_only'));
     }
 }
