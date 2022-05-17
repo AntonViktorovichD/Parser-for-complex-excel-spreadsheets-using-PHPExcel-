@@ -228,7 +228,7 @@ class UploadController extends Controller {
 
                 $checked = json_encode($checkboxes, JSON_UNESCAPED_UNICODE);
                 var_dump($checked);
-                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, highest_row, highest_column_index, departments, radio) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $date, $highestRow, $highestColumnIndex, $checked, $radio]);
+                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, highest_row, highest_column_index, departments, radio, read_only) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $date, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled']);
 
                 unlink($tmpPath);
 

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
-
 class AddController extends Controller {
     public function add($name) {
         $json = json_encode(DB::table('tables')->where('table_name', $name)->value('json_val'));

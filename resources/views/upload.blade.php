@@ -50,17 +50,17 @@
                             echo '<input type="radio" name="reg_func" value="v_float">&nbsp float';
                             echo '<input type="radio" name="reg_func" value="v_all">&nbsp all';
                             echo '</div>';
-                            echo '<label for="reestr_table___label" class="fabrikLabel control-label fabrikTip" title="&lt;ul class=&quot;validation-notices&quot; style=&quot;list-style:none&quot;&gt;&lt;li&gt;&lt;i data-isicon=&quot;true&quot; class=&quot;icon- notempty&quot; &gt;&lt;/i&gt; Это обязательное поле&lt;/li&gt;&lt;/ul&gt;">
-                              <i data-isicon="true" class="icon- small " ></i> Начало сбора данных</label>';
-                            echo '<input input-xlarge form-control fabrikinput inputbox text" id="datetimepicker-s" type="text">';
+                            echo '<label for="reestr_table___label" class="fabrikLabel control-label fabrikTip validation-notices">
+                               Начало сбора данных</label>';
+                            echo '<input class="input-xlarge form-control fabrikinput inputbox text" id="datetimepicker-s" type="text">';
                             echo '<div class="row-fluid fabrikLabel">';
                             echo '<label class="control-label">
                               <i data-isicon="true" class="icon- small "></i> Excel файл запроса </label>';
                             echo '<input type="file" name="userfile" accept="..xls,.xlsx">';
                             echo '</div>';
-                            echo '<label for="reestr_table___label" class="fabrikLabel control-label fabrikTip" title="&lt;ul class=&quot;validation-notices&quot; style=&quot;list-style:none&quot;&gt;&lt;li&gt;&lt;i data-isicon=&quot;true&quot; class=&quot;icon- notempty&quot; &gt;&lt;/i&gt; Это обязательное поле&lt;/li&gt;&lt;/ul&gt;">
-                              <i data-isicon="true" class="icon- small " ></i> Конец сбора данных</label>';
-                            echo '<input input-xlarge form-control fabrikinput inputbox text" id="datetimepicker-f" type="text">';
+                            echo '<label for="reestr_table___label" class="fabrikLabel control-label fabrikTip">
+                              Конец сбора данных</label>';
+                            echo '<input class="input-xlarge form-control fabrikinput inputbox text" id="datetimepicker-f" type="text">';
                             $depart_helper = DB::table('depart_helper')->pluck('title');
                             $depart_helper = (json_decode(json_encode($depart_helper, JSON_UNESCAPED_UNICODE), true));
                             $depart_helper_id = DB::table('depart_helper')->pluck('id');
