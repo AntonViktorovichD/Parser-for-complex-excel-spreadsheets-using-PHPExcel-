@@ -36,6 +36,7 @@
     }
 </style>
 {{ $tableload }}
+@csrf
 @php
     echo '<div class="envelope input-block-level">';
     $row = 0;
@@ -81,6 +82,7 @@
         foreach ($arr_rows as $row) {
         if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
             echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_name'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
+            break;
         } else {
             if ($arr['table_uuid'] == $row['table_uuid'] && $user_id == $row['user_id']) {
                 echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_name'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
@@ -92,7 +94,7 @@
         }
         }
         echo '<td><button type="submit" class="btn btn-primary">Скачать</button></td>';
-        echo '<td><button type="submit" id="read_only" class="btn btn-primary" data-change="disabled" value="'.$arr['table_uuid'].'">Принять запрос</button></td>';
+        echo '<td><button type="submit" id="read_only" class="btn btn-primary" data-change="'. $arr['read_only']. '" value="'.$arr['table_uuid'].'">Принять запрос</button></td>';
         echo '</tr>' . PHP_EOL;
     }
     echo '</table>' . PHP_EOL;
@@ -100,19 +102,30 @@
 @endphp
 @include('layouts.footer')
 <script>
+    window.onload = () => {
+        console.log(document.querySelectorAll('#read_only'));
+    }
     document.addEventListener('click', function (e) {
+        let token = document.querySelector("input[name='_token']").value;
         if (e.target.id === 'read_only') {
             if (e.target.dataset.change === 'disabled') {
                 e.target.dataset.change = 'enabled';
-            } else {
+            } else if (e.target.dataset.change === 'enabled') {
                 e.target.dataset.change = 'disabled';
             }
-            // let elems = document.querySelectorAll('a');
-            // elems.forEach((el) => {
-            //     if (el.dataset.id == e.target.value) {
-            //         el.pathname = '/add/' + el.name;
-            //     }
-            // })
+            let formData = new FormData();
+            formData.set('target', e.target.value);
+            formData.set('changer', e.target.dataset.change);
+            let promise = fetch('/handler', {
+                headers: {
+                    'X-CSRF-TOKEN': token
+                },
+                method: 'POST',
+                body: formData,
+            }).then((response) => response.text())
+                .then((text) => {
+                    console.log(text);
+                });
         }
     })
 </script>

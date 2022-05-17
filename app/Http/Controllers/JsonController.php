@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class JsonController extends Controller {
@@ -33,6 +35,12 @@ class JsonController extends Controller {
         $highest_row = DB::table('tables')->where('table_name', $name)->value('highest_row');
         $radio = DB::table('tables')->where('table_name', $name)->value('radio');
         return view('table', compact('json', 'highest_row', 'highest_column_index', 'radio'));
+    }
+
+    public function handler(Request $request) {
+        var_dump($request->target);
+        var_dump($request->changer);
+        DB::table('tables')->where('table_uuid', '=', $request->target)->update(['read_only' => $request->changer]);
     }
 }
 

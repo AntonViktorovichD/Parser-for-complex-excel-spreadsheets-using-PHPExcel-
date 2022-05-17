@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\UploadController;
-
 Route::redirect('/', 'admin/home');
+
+use App\Http\Controllers\UploadController;
 
 Route::get('/add', [UploadController::class, 'form'])->middleware('auth');
 Route::post('/ul', [UploadController::class, 'upload'])->middleware('auth');
@@ -21,6 +21,7 @@ use App\Http\Controllers\JsonController;
 
 Route::get('/json', [JsonController::class, 'arrayToJson'])->middleware('auth');
 Route::get('/tables/{name}', [JsonController::class, 'tables'])->middleware('auth');
+Route::post('/handler', array(JsonController::class, 'handler'));
 
 use App\Http\Controllers\AddController;
 
