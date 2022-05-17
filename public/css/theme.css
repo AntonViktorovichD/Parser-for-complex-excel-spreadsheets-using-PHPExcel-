@@ -397,9 +397,9 @@ summary {
 /*
  * Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
  */
-progress {
-    vertical-align: baseline;
-}
+/*progress {*/
+/*    vertical-align: baseline;*/
+/*}*/
 /*
  * Prevent displaying `audio` without controls in Chrome, Safari and Opera
  */

@@ -61,6 +61,9 @@
         border: 2px solid green;
     }
 
+    progress[value]::-webkit-progress-value, progress[value]::-moz-progress-bar {
+        background: #e43d3c;
+    }
 
 </style>
 {{ $tableload }}
@@ -126,7 +129,6 @@
           if ($arr['read_only'] == 'enabled') {
              echo '<td><span class="enbl">Запрос принят</span></td>';
           }
-
           echo '</tr>' . PHP_EOL;
       }
       echo '</table>' . PHP_EOL;
@@ -134,9 +136,6 @@
 @endphp
 @include('layouts.footer')
 <script>
-    window.onload = () => {
-        console.log(document.querySelectorAll('#read_only'));
-    }
     document.addEventListener('click', function (e) {
         let token = document.querySelector("input[name='_token']").value;
         if (e.target.id === 'read_only') {
