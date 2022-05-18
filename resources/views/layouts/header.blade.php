@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/slimbox2.css">
     <link rel="stylesheet" href="/css/theme.css">
     <link rel="stylesheet" href="/css/custom.css">
-    <link rel="stylesheet" href="/css/bootstrap@5.1.3.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
     <script src="/js/jquery.min.js" type="text/javascript"></script>
     <script src="/js/core.js" type="text/javascript"></script>
     <script src="/js/calendar.js" type="text/javascript"></script>

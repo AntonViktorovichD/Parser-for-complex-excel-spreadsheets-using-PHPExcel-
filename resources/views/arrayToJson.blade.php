@@ -1,73 +1,7 @@
 @include('layouts.header')
 @include('layouts.menu')
-<style>
-    .envelope {
-        margin-left: 30px;
-        margin-top: 20px;
-    }
-
-    a, a:hover, a:active {
-        text-decoration: none;
-        font-size: 17px;
-        color: black;
-        margin-bottom: 10px;
-    }
-
-    table {
-        width: calc(100% + 250px) !important;
-        border-collapse: collapse;
-    }
-
-    table td {
-        padding: 12px 16px;
-    }
-
-    table thead tr {
-        font-weight: bold;
-        border-top: 1px solid #e8e9eb;
-    }
-
-    table tr {
-        border-bottom: 1px solid #e8e9eb;
-    }
-
-    table tbody tr:hover {
-        background: #e8f6ff;
-    }
-
-    .enbl {
-        text-shadow: none;
-        border: 2px solid rgba(150, 150, 150, 0.15);
-        color: #FFFFFF;
-        background: #e43d3c;
-        font-family: 'Open Sans';
-        font-weight: 400;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        display: inline-block;
-        padding: 5px 15px;
-        margin-bottom: 0;
-        font-size: 14px;
-        text-align: center;
-        vertical-align: middle;
-    }
-
-    [data-change='disabled'] {
-        border: 2px solid green;
-    }
-
-    [data-change='disabled']:hover {
-        background: green !important;
-        border: 2px solid green;
-    }
-
-    progress[value]::-webkit-progress-value, progress[value]::-moz-progress-bar {
-        background: #e43d3c;
-    }
-
-</style>
+<link rel="stylesheet" href="/css/arrayToJson.css">
 {{ $tableload }}
-
 @csrf
 @php
     echo '<div class="envelope input-block-level">';
@@ -85,7 +19,10 @@
       echo '<th></th>' . PHP_EOL;
       echo '<th>Таблицы</th>' . PHP_EOL;
       echo '</tr>' . PHP_EOL;
-      foreach ($arrs as $key => $arr) {
+@endphp
+@foreach ($arrs['data'] as $key => $arr)
+@php
+//    foreach ($arrs as $key => $arr) {
           $arr_deps = json_decode($arr['departments']);
           $arr_uuids = $arr['table_uuid'];
           foreach ($arr_deps as $dep) {
@@ -125,16 +62,20 @@
               }
           }
           }
-          echo '<td><button type="submit" class="btn btn-primary">Скачать</button></td>';
+          echo '<td><button type="submit" class="btn btn-dl btn-primary">Скачать</button></td>';
           echo '<td><button type="submit" id="read_only" class="btn btn-primary" data-change="'. $arr['read_only']. '" value="'.$arr['table_uuid'].'">Принять запрос</button></td>';
           if ($arr['read_only'] == 'enabled') {
              echo '<td><span class="enbl">Запрос принят</span></td>';
           }
           echo '</tr>' . PHP_EOL;
-      }
-      echo '</table>' . PHP_EOL;
-      echo '</div>' . PHP_EOL;
+//      }
 @endphp
+@endforeach
+@php
+echo '</table>' . PHP_EOL;
+echo '</div>' . PHP_EOL;
+@endphp
+{{ $pages->links() }}
 @include('layouts.footer')
 <script>
     document.addEventListener('click', function (e) {

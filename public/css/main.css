@@ -61,6 +61,10 @@ input[type="file"] {
     line-height: inherit !important;
 }
 
+.btn-dl {
+    border: 2px solid #e43d3c !important;
+}
+
 .btn [class^="icon-"], .btn [class*=" icon-"] {
     margin: 0;
     vertical-align: middle;
@@ -255,7 +259,7 @@ td.fabrik_element, th.heading {
 
 .main-header {
     text-align: center;
-    padding: 10px 10px 0 10px !important;
+    padding: 30px 10px 0 10px !important;
     font-size: 20px;
     margin: 0px !important;
 }

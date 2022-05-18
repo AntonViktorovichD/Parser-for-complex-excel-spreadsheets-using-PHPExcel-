@@ -11810,7 +11810,7 @@ html {
 .tm-navbar {
     position: relative;
     padding-top: 20px;
-    padding-bottom: 20px;
+    /*padding-bottom: 20px;*/
 }
 /* Navbar bar position */
 .tm-navbar-absolute {
