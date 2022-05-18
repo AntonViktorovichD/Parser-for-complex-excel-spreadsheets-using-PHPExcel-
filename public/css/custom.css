@@ -1,3 +1,12 @@
+
+@font-face {
+font-family: "Fa-solid-900";
+src: url("../fonts/fa-solid-900.woff2") format("truetype");
+src: url("../fonts/fa-solid-900.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
 .ck-editor__editable,
 textarea {
     min-height: 150px;
