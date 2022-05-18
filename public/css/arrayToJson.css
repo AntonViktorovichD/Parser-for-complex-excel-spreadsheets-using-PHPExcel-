@@ -74,3 +74,13 @@ progress[value]::-webkit-progress-value, progress[value]::-moz-progress-bar {
 .page-item .active {
     max-height: 25px !important;
 }
+
+.progress {
+    width: 150px;
+    height: 20px !important;
+    border-radius: 5px !important;
+}
+
+.progress-bar {
+    background: #e43d3c;
+}
