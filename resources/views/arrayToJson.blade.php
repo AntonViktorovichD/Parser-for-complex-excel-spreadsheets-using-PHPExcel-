@@ -67,6 +67,7 @@
 
 </style>
 {{ $tableload }}
+
 @csrf
 @php
     echo '<div class="envelope input-block-level">';

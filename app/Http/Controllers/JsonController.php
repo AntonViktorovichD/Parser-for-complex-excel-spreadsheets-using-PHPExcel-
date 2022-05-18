@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Providers\Paginator;
 
 class JsonController extends Controller {
     public function arrayToJson() {
@@ -16,7 +17,6 @@ class JsonController extends Controller {
             $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
             $arrs = DB::select('select * from tables');
-            $rows = DB::select('select * from report_values');
             foreach (DB::table('tables')->pluck('user_id') as $user) {
                 $user_names[] = DB::table('users')->where('id', $user)->first('name')->name;
             }
