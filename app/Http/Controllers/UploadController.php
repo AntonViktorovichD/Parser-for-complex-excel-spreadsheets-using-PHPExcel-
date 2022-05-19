@@ -222,13 +222,16 @@ class UploadController extends Controller {
 
                 $table_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
 
-                $date = date('Y:m:d H:i:s');
+                $created_at = $request->input('created_at');
+                $updated_at = $request->input('updated_at');
+                $comment = $request->input('comment');
+
 
                 $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
                 $checked = json_encode($checkboxes, JSON_UNESCAPED_UNICODE);
-                var_dump($checked);
-                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, highest_row, highest_column_index, departments, radio, read_only) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $date, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled']);
+
+                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, updated_at, highest_row, highest_column_index, departments, radio, read_only, comment) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $created_at, $updated_at, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled', $comment]);
 
                 unlink($tmpPath);
 

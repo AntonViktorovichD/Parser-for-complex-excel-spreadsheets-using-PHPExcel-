@@ -52,7 +52,7 @@
                             echo '</div>';
                             echo '<label for="reestr_table___label" class="fabrikLabel control-label fabrikTip validation-notices">
                                Начало сбора данных</label>';
-                            echo '<input class="input-xlarge form-control fabrikinput inputbox text" id="datetimepicker-s" type="text">';
+                            echo '<input class="input-xlarge form-control fabrikinput inputbox text" name="created_at" id="datetimepicker-s" type="text">';
                             echo '<div class="row-fluid fabrikLabel">';
                             echo '<label class="control-label">
                               <i data-isicon="true" class="icon- small "></i> Excel файл запроса </label>';
@@ -60,7 +60,7 @@
                             echo '</div>';
                             echo '<label for="reestr_table___label" class="fabrikLabel control-label fabrikTip">
                               Конец сбора данных</label>';
-                            echo '<input class="input-xlarge form-control fabrikinput inputbox text" id="datetimepicker-f" type="text">';
+                            echo '<input class="input-xlarge form-control fabrikinput inputbox text" name="updated_at" id="datetimepicker-f" type="text">';
                             $depart_helper = DB::table('depart_helper')->pluck('title');
                             $depart_helper = (json_decode(json_encode($depart_helper, JSON_UNESCAPED_UNICODE), true));
                             $depart_helper_id = DB::table('depart_helper')->pluck('id');
@@ -103,7 +103,7 @@
                             echo '<p><label class="fabrikLabel control-label"> Комментарий к запросу </label></p>';
                             echo '<div class="controls">';
                             echo '<div class="fabrikElement">';
-                            echo '<textarea class="fabrikinput inputbox input-block-level" cols="40" rows="6"></textarea>';
+                            echo '<textarea class="fabrikinput inputbox input-block-level" name="comment" cols="40" rows="6"></textarea>';
                             echo '</div>';
                             echo '</div>';
                             echo '</div>';
@@ -119,7 +119,7 @@
                         jQuery('#datetimepicker-s, #datetimepicker-f').datetimepicker({
                             defaultDate: new Date(),
                             timepicker: true,
-                            format: 'd/m/Y H:i',
+                            format: 'Y-m-d H:i:s',
                             lang: 'ru',
                             minDate: '-1970/01/01',
                             maxDate: '+1970/01/14',
