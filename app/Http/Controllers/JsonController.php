@@ -15,9 +15,9 @@ class JsonController extends Controller {
             $user_names = [];
             $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
-            $arrs = DB::table('tables')->paginate(20);
-            foreach (DB::table('tables')->pluck('user_id') as $user) {
-                $user_names[] = DB::table('users')->where('id', $user)->first('name')->name;
+            $arrs = DB::table('tables')->orderBy('id', 'desc')->paginate(20);
+            foreach (DB::table('tables')->orderBy('id', 'desc')->pluck('user_id') as $user) {
+                $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->first('name')->name;
             }
             $arr = json_encode($arrs);
             $table_user = json_encode($user_names);

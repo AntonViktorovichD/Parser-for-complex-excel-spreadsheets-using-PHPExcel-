@@ -10,7 +10,7 @@
             list-style-type: none;
         }
 
-        .nav-item {
+        .nav-item-menu {
             font-size: 20px !important;
         }
     </style>
@@ -19,17 +19,17 @@
             <div class="col-lg-12">
                 <li class="admin">
                     <ul class="nav-dropdown-items">
-                        <li class="nav-item">
+                        <li class="nav-item-menu">
                             <a href="{{ route("admin.permissions.index") }}" class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
                                 {{ trans('cruds.permission.title') }}
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item-menu">
                             <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
                                 {{ trans('cruds.role.title') }}
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item-menu">
                             <a href="{{ route("admin.users.index") }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
                                 {{ trans('cruds.user.title') }}
                             </a>

@@ -51,11 +51,11 @@ Route::get('change_password', 'Auth\ChangePasswordController@showChangePasswordF
 Route::patch('change_password', 'Auth\ChangePasswordController@changePassword')->name('auth.change_password')->middleware('checkAdmin');
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'administrator', 'as' => 'admin.'], function () {
-    Route::get('/', 'AdminController@index')->name('home');
-    Route::resource('permissions', 'Admin\PermissionsController');
-    Route::delete('permissions_mass_destroy', 'Admin\PermissionsController@massDestroy')->name('permissions.mass_destroy');
-    Route::resource('roles', 'Admin\RolesController');
-    Route::delete('roles_mass_destroy', 'Admin\RolesController@massDestroy')->name('roles.mass_destroy');
-    Route::resource('users', 'Admin\UsersController');
-    Route::delete('users_mass_destroy', 'Admin\UsersController@massDestroy')->name('users.mass_destroy');
+    Route::get('/', 'AdminController@index')->name('home')->middleware('checkAdmin');;
+    Route::resource('permissions', 'Admin\PermissionsController')->middleware('checkAdmin');;
+    Route::delete('permissions_mass_destroy', 'Admin\PermissionsController@massDestroy')->name('permissions.mass_destroy')->middleware('checkAdmin');;
+    Route::resource('roles', 'Admin\RolesController')->middleware('checkAdmin');;
+    Route::delete('roles_mass_destroy', 'Admin\RolesController@massDestroy')->name('roles.mass_destroy')->middleware('checkAdmin');;
+    Route::resource('users', 'Admin\UsersController')->middleware('checkAdmin');;
+    Route::delete('users_mass_destroy', 'Admin\UsersController@massDestroy')->name('users.mass_destroy')->middleware('checkAdmin');;
 });

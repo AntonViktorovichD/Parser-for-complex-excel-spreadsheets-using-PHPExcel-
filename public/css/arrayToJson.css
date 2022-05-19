@@ -3,7 +3,7 @@
     margin-top: 20px;
 }
 
-a, a:hover, a:active {
+a, a:hover, a:active, span {
     text-decoration: none;
     font-size: 17px;
     color: black;
@@ -26,6 +26,7 @@ table thead tr {
 
 table tr {
     border-bottom: 1px solid #e8e9eb;
+    text-align: center;
 }
 
 table tbody tr:hover {
@@ -83,4 +84,9 @@ progress[value]::-webkit-progress-value, progress[value]::-moz-progress-bar {
 
 .progress-bar {
     background: #e43d3c;
+}
+
+.progress-bar-zero {
+    background: #e43d3c;
+    color: black;
 }
