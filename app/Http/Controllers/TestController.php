@@ -25,15 +25,16 @@ class TestController extends Controller {
         $highestColumn = $worksheet->getHighestColumn();
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
         $arr = [];
+        $arrK = [];
 
         for ($row = $highestRow; $row <= $highestRow; $row++) {
             $colCounter = 0;
-
             for ($col = 0; $col < $highestColumnIndex; $col++) {
                 $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
                 $colCounter++;
                 if (isset($value)) {
                     $arr[$colCounter] = $value;
+                    $arrK[] = $colCounter;
                 } else {
                     $arr[$colCounter] = NULL;
                 }
@@ -66,7 +67,9 @@ class TestController extends Controller {
 
         $arrLetters = explode('|', $strLetters);
         unset($arrLetters[count($arrLetters) - 1]);
-        var_dump($arrLetters);
+        $arrSum = array_combine($arrK, $arrLetters);
+
+        var_dump($arrSum);
 
         $json = json_encode($arr, JSON_UNESCAPED_UNICODE);
         return view('ultest', ['test' => $json, 'highestColumnIndex' => $highestColumnIndex, 'highest_row' => $highestRow]);
