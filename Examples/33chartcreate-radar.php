@@ -116,7 +116,7 @@ $plotArea = new PHPExcel_Chart_PlotArea($layout, array($series));
 //	Set the chart legend
 $legend = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_RIGHT, NULL, false);
 
-$title = new PHPExcel_Chart_Title('Test Radar Chart');
+$title = new PHPExcel_Chart_Title('TestController Radar Chart');
 
 
 //	Create the chart

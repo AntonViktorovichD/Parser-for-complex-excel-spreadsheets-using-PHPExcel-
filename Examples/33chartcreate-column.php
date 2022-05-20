@@ -105,7 +105,7 @@ $plotArea = new PHPExcel_Chart_PlotArea(NULL, array($series));
 //	Set the chart legend
 $legend = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_RIGHT, NULL, false);
 
-$title = new PHPExcel_Chart_Title('Test Column Chart');
+$title = new PHPExcel_Chart_Title('TestController Column Chart');
 $yAxisLabel = new PHPExcel_Chart_Title('Value ($k)');
 
 

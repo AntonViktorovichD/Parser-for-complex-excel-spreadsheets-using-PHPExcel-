@@ -107,7 +107,7 @@ $plotArea = new PHPExcel_Chart_PlotArea(NULL, array($series));
 //	Set the chart legend
 $legend = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_RIGHT, NULL, false);
 
-$title = new PHPExcel_Chart_Title('Test Stock Chart');
+$title = new PHPExcel_Chart_Title('TestController Stock Chart');
 $xAxisLabel = new PHPExcel_Chart_Title('Counts');
 $yAxisLabel = new PHPExcel_Chart_Title('Values');
 

@@ -27,8 +27,8 @@
 
 /** Error reporting */
 error_reporting(E_ALL);
-ini_set('display_errors', TRUE); 
-ini_set('display_startup_errors', TRUE); 
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);
 date_default_timezone_set('Europe/London');
 
 define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
@@ -45,11 +45,11 @@ $objPHPExcel = new PHPExcel();
 echo date('H:i:s') , " Set document properties" , EOL;
 $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
 							 ->setLastModifiedBy("Maarten Balliauw")
-							 ->setTitle("Office 2007 XLSX Test Document")
-							 ->setSubject("Office 2007 XLSX Test Document")
-							 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+							 ->setTitle("Office 2007 XLSX TestController Document")
+							 ->setSubject("Office 2007 XLSX TestController Document")
+							 ->setDescription("TestController document for Office 2007 XLSX, generated using PHP classes.")
 							 ->setKeywords("office 2007 openxml php")
-							 ->setCategory("Test result file");
+							 ->setCategory("TestController result file");
 
 // Set default font
 echo date('H:i:s') , " Set default font" , EOL;

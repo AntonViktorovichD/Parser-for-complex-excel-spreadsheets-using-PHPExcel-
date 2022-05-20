@@ -51,11 +51,11 @@ PHPExcel supports fluent interfaces in most locations. This means that you can e
 ```php
 $objPHPExcel->getProperties()->setCreator("Maarten Balliauw");
 $objPHPExcel->getProperties()->setLastModifiedBy("Maarten Balliauw");
-$objPHPExcel->getProperties()->setTitle("Office 2007 XLSX Test Document");
-$objPHPExcel->getProperties()->setSubject("Office 2007 XLSX Test Document");
-$objPHPExcel->getProperties()->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.");
+$objPHPExcel->getProperties()->setTitle("Office 2007 XLSX TestController Document");
+$objPHPExcel->getProperties()->setSubject("Office 2007 XLSX TestController Document");
+$objPHPExcel->getProperties()->setDescription("TestController document for Office 2007 XLSX, generated using PHP classes.");
 $objPHPExcel->getProperties()->setKeywords("office 2007 openxml php");
-$objPHPExcel->getProperties()->setCategory("Test result file");
+$objPHPExcel->getProperties()->setCategory("TestController result file");
 ```
 
 This can be rewritten as:
@@ -64,11 +64,11 @@ This can be rewritten as:
 $objPHPExcel->getProperties()
     ->setCreator("Maarten Balliauw")
     ->setLastModifiedBy("Maarten Balliauw")
-    ->setTitle("Office 2007 XLSX Test Document")
-    ->setSubject("Office 2007 XLSX Test Document")
-    ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+    ->setTitle("Office 2007 XLSX TestController Document")
+    ->setSubject("Office 2007 XLSX TestController Document")
+    ->setDescription("TestController document for Office 2007 XLSX, generated using PHP classes.")
     ->setKeywords("office 2007 openxml php")
-    ->setCategory("Test result file");
+    ->setCategory("TestController result file");
 ```
 
  > __Using fluent interfaces is not required__  

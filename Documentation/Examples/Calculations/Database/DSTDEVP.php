@@ -67,7 +67,7 @@ var_dump($databaseData);
 echo '<hr />';
 
 
-// Test the formulae
+// TestController the formulae
 echo '<h4>Criteria</h4>';
 
 $criteriaData = $worksheet->rangeToArray('A1:A3',null,true,true,true);

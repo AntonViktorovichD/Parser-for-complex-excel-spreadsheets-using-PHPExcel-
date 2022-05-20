@@ -56,9 +56,9 @@ echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 
 
 
 echo date('H:i:s') , " Adjust properties" , EOL;
-$objPHPExcel->getProperties()->setTitle("Office 2007 XLSX Test Document")
-							 ->setSubject("Office 2007 XLSX Test Document")
-							 ->setDescription("Test XLSX document, generated using PHPExcel")
+$objPHPExcel->getProperties()->setTitle("Office 2007 XLSX TestController Document")
+							 ->setSubject("Office 2007 XLSX TestController Document")
+							 ->setDescription("TestController XLSX document, generated using PHPExcel")
 							 ->setKeywords("office 2007 openxml php");
 
 

@@ -56,7 +56,7 @@
                             echo '<div class="row-fluid fabrikLabel">';
                             echo '<label class="control-label">
                               <i data-isicon="true" class="icon- small "></i> Excel файл запроса </label>';
-                            echo '<input type="file" name="userfile" accept="..xls,.xlsx">';
+                            echo '<input type="file" name="userfile" accept=".xls,.xlsx">';
                             echo '</div>';
                             echo '<label for="reestr_table___label" class="fabrikLabel control-label fabrikTip">
                               Конец сбора данных</label>';

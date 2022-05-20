@@ -64,7 +64,7 @@ var_dump($databaseData);
 echo '<hr />';
 
 
-// Test the formulae
+// TestController the formulae
 echo '<h4>Criteria</h4>';
 
 echo 'ALL' . '<br /><br />';

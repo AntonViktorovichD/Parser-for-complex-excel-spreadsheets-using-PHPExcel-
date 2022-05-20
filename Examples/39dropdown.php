@@ -46,11 +46,11 @@ echo date('H:i:s') , " Set document properties" , EOL;
 $objPHPExcel->getProperties()
     ->setCreator("PHPOffice")
 	->setLastModifiedBy("PHPOffice")
-	->setTitle("PHPExcel Test Document")
-	->setSubject("PHPExcel Test Document")
-	->setDescription("Test document for PHPExcel, generated using PHP classes.")
+	->setTitle("PHPExcel TestController Document")
+	->setSubject("PHPExcel TestController Document")
+	->setDescription("TestController document for PHPExcel, generated using PHP classes.")
 	->setKeywords("Office PHPExcel php")
-	->setCategory("Test result file");
+	->setCategory("TestController result file");
 
 
 function transpose($value) {
@@ -75,7 +75,7 @@ foreach(glob('./data/continents/*') as $key => $filename) {
         ->fromArray($countries, null, $column . '1');
     $objPHPExcel->addNamedRange(
         new PHPExcel_NamedRange(
-            $continent, 
+            $continent,
             $objPHPExcel->getActiveSheet(), $column . '1:' . $column . $countryCount
         )
     );
@@ -96,7 +96,7 @@ $objPHPExcel->getActiveSheet()
 
 $objPHPExcel->addNamedRange(
     new PHPExcel_NamedRange(
-        'Continents', 
+        'Continents',
         $objPHPExcel->getActiveSheet(), $continentColumn . '1:' . $continentColumn . ($key+1)
     )
 );

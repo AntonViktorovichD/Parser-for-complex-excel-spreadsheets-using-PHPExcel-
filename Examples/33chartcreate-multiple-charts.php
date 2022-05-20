@@ -103,7 +103,7 @@ $plotArea1 = new PHPExcel_Chart_PlotArea(NULL, array($series1));
 //	Set the chart legend
 $legend1 = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_TOPRIGHT, NULL, false);
 
-$title1 = new PHPExcel_Chart_Title('Test %age-Stacked Area Chart');
+$title1 = new PHPExcel_Chart_Title('TestController %age-Stacked Area Chart');
 $yAxisLabel1 = new PHPExcel_Chart_Title('Value ($k)');
 
 
@@ -180,7 +180,7 @@ $plotArea2 = new PHPExcel_Chart_PlotArea(NULL, array($series2));
 //	Set the chart legend
 $legend2 = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_RIGHT, NULL, false);
 
-$title2 = new PHPExcel_Chart_Title('Test Column Chart');
+$title2 = new PHPExcel_Chart_Title('TestController Column Chart');
 $yAxisLabel2 = new PHPExcel_Chart_Title('Value ($k)');
 
 

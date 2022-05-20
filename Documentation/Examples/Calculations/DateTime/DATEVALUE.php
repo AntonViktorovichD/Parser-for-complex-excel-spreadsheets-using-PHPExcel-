@@ -53,7 +53,7 @@ $worksheet->getStyle('C1:C'.$testDateCount)
 echo '<hr />';
 
 
-// Test the formulae
+// TestController the formulae
 ?>
 <p><strong>Warning: </strong>The PHPExcel DATEVALUE() function accepts a wider range of date formats than MS Excel's DATEFORMAT() function.</p>
 <table border="1" cellspacing="0">

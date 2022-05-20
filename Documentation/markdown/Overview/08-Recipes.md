@@ -16,13 +16,13 @@ Setting spreadsheet metadata is done as follows:
 $objPHPExcel->getProperties()
     ->setCreator("Maarten Balliauw")
     ->setLastModifiedBy("Maarten Balliauw");
-    ->setTitle("Office 2007 XLSX Test Document")
-    ->setSubject("Office 2007 XLSX Test Document")
+    ->setTitle("Office 2007 XLSX TestController Document")
+    ->setSubject("Office 2007 XLSX TestController Document")
     ->setDescription(
-        "Test document for Office 2007 XLSX, generated using PHP classes."
+        "TestController document for Office 2007 XLSX, generated using PHP classes."
     )
     ->setKeywords("office 2007 openxml php")
-    ->setCategory("Test result file");
+    ->setCategory("TestController result file");
 ```
 
 ### Setting a spreadsheet's active sheet

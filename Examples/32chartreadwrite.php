@@ -61,7 +61,7 @@ foreach($inputFileNames as $inputFileName) {
 		continue;
 	}
 
-	echo date('H:i:s') , " Load Test from $inputFileType file " , $inputFileNameShort , EOL;
+	echo date('H:i:s') , " Load TestController from $inputFileType file " , $inputFileNameShort , EOL;
 
 	$objReader = PHPExcel_IOFactory::createReader($inputFileType);
 	$objReader->setIncludeCharts(TRUE);

@@ -50,7 +50,7 @@ $worksheet->getStyle('C1:C'.$testDateCount)
 echo '<hr />';
 
 
-// Test the formulae
+// TestController the formulae
 ?>
 <table border="1" cellspacing="0">
 	<tr>

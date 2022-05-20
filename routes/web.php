@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', 'home');
 Route::get('/home', 'HomeController@index');
 
+use App\Http\Controllers\TestController;
+Route::get('/test', [TestController::class, 'test']);
+Route::post('/ultest', [TestController::class, 'ultest']);
+
 use App\Http\Controllers\UploadController;
 
 Route::get('/add', [UploadController::class, 'form'])->middleware('auth');

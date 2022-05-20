@@ -46,11 +46,11 @@ $objPHPExcel = new PHPExcel();
 echo date('H:i:s') , " Set document properties" , EOL;
 $objPHPExcel->getProperties()->setCreator("Mark Baker")
 							 ->setLastModifiedBy("Mark Baker")
-							 ->setTitle("Office 2007 XLSX Test Document")
-							 ->setSubject("Office 2007 XLSX Test Document")
-							 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+							 ->setTitle("Office 2007 XLSX TestController Document")
+							 ->setSubject("Office 2007 XLSX TestController Document")
+							 ->setDescription("TestController document for Office 2007 XLSX, generated using PHP classes.")
 							 ->setKeywords("office 2007 openxml php")
-							 ->setCategory("Test result file");
+							 ->setCategory("TestController result file");
 
 
 // Add some data

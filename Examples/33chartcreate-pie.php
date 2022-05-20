@@ -104,7 +104,7 @@ $plotArea1 = new PHPExcel_Chart_PlotArea($layout1, array($series1));
 //	Set the chart legend
 $legend1 = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_RIGHT, NULL, false);
 
-$title1 = new PHPExcel_Chart_Title('Test Pie Chart');
+$title1 = new PHPExcel_Chart_Title('TestController Pie Chart');
 
 
 //	Create the chart
@@ -176,7 +176,7 @@ $layout2->setShowCatName(TRUE);
 //	Set the series in the plot area
 $plotArea2 = new PHPExcel_Chart_PlotArea($layout2, array($series2));
 
-$title2 = new PHPExcel_Chart_Title('Test Donut Chart');
+$title2 = new PHPExcel_Chart_Title('TestController Donut Chart');
 
 
 //	Create the chart

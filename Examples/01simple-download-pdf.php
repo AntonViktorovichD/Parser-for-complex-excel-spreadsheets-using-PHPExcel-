@@ -55,11 +55,11 @@ $objPHPExcel = new PHPExcel();
 // Set document properties
 $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
 							 ->setLastModifiedBy("Maarten Balliauw")
-							 ->setTitle("PDF Test Document")
-							 ->setSubject("PDF Test Document")
-							 ->setDescription("Test document for PDF, generated using PHP classes.")
+							 ->setTitle("PDF TestController Document")
+							 ->setSubject("PDF TestController Document")
+							 ->setDescription("TestController document for PDF, generated using PHP classes.")
 							 ->setKeywords("pdf php")
-							 ->setCategory("Test result file");
+							 ->setCategory("TestController result file");
 
 
 // Add some data
