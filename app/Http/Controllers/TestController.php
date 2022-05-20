@@ -39,7 +39,7 @@ class TestController extends Controller {
                 }
             }
         }
-
+        $arrLetters = [];
         $arrKeys = [];
         for ($i = "A"; $i <= 'Z'; $i++) {
             $arrKeys[] = $i;
@@ -48,8 +48,44 @@ class TestController extends Controller {
         $arrKeys = array_slice($arrKeys, 0, $highestColumnIndex);
         array_unshift($arrKeys, 1);
         unset($arrKeys[0]);
-        var_dump($arrKeys);
+        $arrKeys = array_flip($arrKeys);
 
+        foreach ($arr as $key => $val) {
+            if (isset($val)) {
+                $arrLetters[$key] = preg_replace('#[\d=SUM\(\)]#', '', $val . '|');;
+            }
+        }
+
+        $strLetters = implode($arrLetters);
+
+        for ($i = 0; $i < strlen($strLetters); $i++) {
+            foreach ($arrKeys as $key => $val) {
+                $strLetters = str_replace($key, $val, $strLetters);
+            }
+        }
+
+        $arrLetters = explode('|', $strLetters);
+        unset($arrLetters[count($arrLetters) - 1]);
+        var_dump($arrLetters);
+
+//        $arrStr = [];
+//        $j = 0;
+//        foreach ($arrLetters as $letter) {
+//            for ($i = 0; $i < count(str_split($letter)); $i++) {
+//                $arrStr[] = $letter[$i];
+//            }
+//        }
+//
+//        for ($i = 0; $i < count($arrStr); $i++) {
+//            foreach ($arrKeys as $key => $val) {
+//                if ($arrStr[$i] == $key) {
+//                    $arrDigits[$i] = $val;
+//                } elseif ($arrStr[$i] != $key && ($arrStr[$i] == ',' || $arrStr[$i] == ':' || $arrStr[$i] == ';')) {
+//                    $arrDigits[$i] = $arrStr[$i];
+//                    break;
+//                }
+//            }
+//        }
 //
 //        foreach ($mergeCells as $mergeCell) {
 //            $arrLett = array_slice(preg_split('#\d+:|\d+#', implode(':', $mergeCell)), 0, count($arrLett) - 1);
