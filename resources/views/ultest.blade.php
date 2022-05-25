@@ -1,5 +1,6 @@
 @include('layouts.header')
 @include('layouts.menu')
+<script type="text/javascript" src="/js/vue.global.js"></script>
 <style>
     table {
         border-collapse: collapse;
@@ -13,13 +14,12 @@
         height: 30px;
     }
 </style>
-
 @php
     echo '<table>' . PHP_EOL;
     echo '<tr>' . PHP_EOL;
 var_dump($sum);
 for ($i = 1; $i <= $highestColumnIndex; $i++) {
-   echo '<td id="'. $i. '" class="visible_cell"></td>' . PHP_EOL;
+   echo '<td><input type="number"  id="'. $i. '" class="visible_cell"></td>' . PHP_EOL;
 }
     for ($i = 1; $i <= $highestColumnIndex; $i++) {
         if (isset($sum[$i])) {
@@ -31,26 +31,56 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
 @endphp
+
+
 @include('layouts.footer')
 
 <script>
     window.onload = () => {
         let sum_target_cells = document.querySelectorAll('.sum_cell');
         let tds = document.querySelectorAll('.visible_cell');
-        // console.log(tds);
+        let arr = [];
+        let s = 0;
+        let sum = [];
+        let jsum = <?php echo $jsum ?>;
+        let keys_arr = [];
+        for (const [key, value] of Object.entries(jsum)) {
+            keys_arr[key] = value;
+        }
         for (let i = 0; i < sum_target_cells.length; i++) {
             for (let k = 0; k < sum_target_cells[i].innerHTML.split(',').length; k++) {
                 if (sum_target_cells[i].innerHTML.includes(':')) {
                     sum_target_cells[i].innerHTML;
                 } else {
-                    let span = document.createElement('span');
-                    let parent = tds[sum_target_cells[i].dataset.target - 1];
-                    span.innerHTML = 1111;
-                    parent.appendChild(span);
-                    // console.log(sum_target_cells[i].dataset.target);
+                    sum = sum_target_cells[i].dataset.target;
+                    for (let j = 0; j < sum.length; j++) {
+                        keys_arr.forEach(function (value, key) {
+                            if (key == sum) {
+                                for (let u = 0; u < keys_arr.length; u++) {
+                                    // value.split(',').forEach((dig) => {
+                                    tds[u].addEventListener('keyup', function (e) {
+                                        if (value.includes(e.target.id)) {
+                                            console.log(e.target.id);
+                                        }
+                                    })
+                                }
+                            }
+                        });
+
+                        // tds[sum[j] - 1].addEventListener('keyup', function (e) {
+                        //     console.log(e.target.id);
+                        // })
+                    }
                     break;
                 }
             }
         }
+    }
+    if (!Object.prototype.length) {
+        Object.defineProperty(Object.prototype, 'length', {
+            get: function () {
+                return Object.keys(this).length
+            }
+        })
     }
 </script>

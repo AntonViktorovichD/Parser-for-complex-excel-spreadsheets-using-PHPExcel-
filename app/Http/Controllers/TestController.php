@@ -68,8 +68,8 @@ class TestController extends Controller {
         $arrLetters = explode('|', $strLetters);
         unset($arrLetters[count($arrLetters) - 1]);
         $arrSum = array_combine($arrK, $arrLetters);
-
+        $arrj = json_encode($arrSum);
         $json = json_encode($arr, JSON_UNESCAPED_UNICODE);
-        return view('ultest', ['test' => $json, 'sum' => $arrSum, 'highestColumnIndex' => $highestColumnIndex]);
+        return view('ultest', ['test' => $json, 'jsum' => $arrj, 'sum' => $arrSum, 'highestColumnIndex' => $highestColumnIndex]);
     }
 }
