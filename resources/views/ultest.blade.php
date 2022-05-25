@@ -59,9 +59,11 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                                 for (let u = 0; u < tds.length; u++) {
                                     tds[u].addEventListener('keyup', function (e) {
                                         if (value.includes(e.target.id)) {
-                                            console.log(e);
                                             let target = document.getElementById(keys_arr.indexOf(value));
-                                            target.value = parseInt(e.target.value);
+                                            arr[e.target.id] = parseInt(e.target.value);
+                                            let dig_arr = arr.filter(Boolean)
+                                            dig_arr.forEach((dig) => {
+                                            })
                                         }
                                     })
                                 }
