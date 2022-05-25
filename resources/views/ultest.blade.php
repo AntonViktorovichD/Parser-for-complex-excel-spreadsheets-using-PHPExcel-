@@ -57,10 +57,10 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                         keys_arr.forEach(function (value, key) {
                             if (key == sum) {
                                 for (let u = 0; u < keys_arr.length; u++) {
-                                    // value.split(',').forEach((dig) => {
                                     tds[u].addEventListener('keyup', function (e) {
                                         if (value.includes(e.target.id)) {
-                                            console.log(e.target.id);
+                                             let target = document.getElementById(keys_arr.indexOf(value));
+                                            console.log(target);
                                         }
                                     })
                                 }
