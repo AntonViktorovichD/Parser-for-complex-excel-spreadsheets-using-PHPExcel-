@@ -60,18 +60,14 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                                     tds[u].addEventListener('keyup', function (e) {
                                         if (value.includes(e.target.id)) {
                                             let target = document.getElementById(keys_arr.indexOf(value));
-                                            arr[e.target.id] = parseInt(e.target.value);
-                                            let dig_arr = arr.filter(Boolean)
-                                                target.value = dig_arr.reduce((previousValue, currentValue) => previousValue + currentValue);
+                                            // arr[target.id][e.target.id] = parseInt(e.target.value);
+                                            // let dig_arr = arr.filter(Boolean)
+                                            target.value = parseInt(e.target.value);
                                         }
                                     })
                                 }
                             }
                         });
-
-                        // tds[sum[j] - 1].addEventListener('keyup', function (e) {
-                        //     console.log(e.target.id);
-                        // })
                     }
                     break;
                 }
