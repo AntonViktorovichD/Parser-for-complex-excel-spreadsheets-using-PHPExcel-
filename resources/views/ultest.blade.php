@@ -62,8 +62,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                                             let target = document.getElementById(keys_arr.indexOf(value));
                                             arr[e.target.id] = parseInt(e.target.value);
                                             let dig_arr = arr.filter(Boolean)
-                                            dig_arr.forEach((dig) => {
-                                            })
+                                                target.value = dig_arr.reduce((previousValue, currentValue) => previousValue + currentValue);
                                         }
                                     })
                                 }
