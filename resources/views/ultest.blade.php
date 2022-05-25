@@ -19,7 +19,7 @@
     echo '<tr>' . PHP_EOL;
 var_dump($sum);
 for ($i = 1; $i <= $highestColumnIndex; $i++) {
-   echo '<td><input type="number"  id="'. $i. '" class="visible_cell"></td>' . PHP_EOL;
+   echo '<td><label><input type="number"  id="'. $i. '" class="visible_cell">'. $i. '<label></td>' . PHP_EOL;
 }
     for ($i = 1; $i <= $highestColumnIndex; $i++) {
         if (isset($sum[$i])) {
@@ -56,11 +56,12 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                     for (let j = 0; j < sum.length; j++) {
                         keys_arr.forEach(function (value, key) {
                             if (key == sum) {
-                                for (let u = 0; u < keys_arr.length; u++) {
+                                for (let u = 0; u < tds.length; u++) {
                                     tds[u].addEventListener('keyup', function (e) {
                                         if (value.includes(e.target.id)) {
-                                             let target = document.getElementById(keys_arr.indexOf(value));
-                                            console.log(target);
+                                            console.log(e);
+                                            let target = document.getElementById(keys_arr.indexOf(value));
+                                            target.value = parseInt(e.target.value);
                                         }
                                     })
                                 }
