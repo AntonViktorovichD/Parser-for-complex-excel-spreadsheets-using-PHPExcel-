@@ -39,8 +39,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
     window.onload = () => {
         let sum_target_cells = document.querySelectorAll('.sum_cell');
         let tds = document.querySelectorAll('.visible_cell');
-        let arr = [];
-        let prevTarget = 0
+        let prevTarget = 0;
         let sum = [];
         let jsum = <?php echo $jsum ?>;
         let keys_arr = [];
@@ -60,15 +59,15 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                                     tds[u].addEventListener('keyup', function (e) {
                                         if (value.includes(e.target.id)) {
                                             let target = document.getElementById(keys_arr.indexOf(value));
-                                            let currentTarget = target.id;
-                                            console.log(prevTarget + '     ' + currentTarget);
-                                            // let dig_arr = arr.filter(Boolean);
-                                            if (prevTarget == currentTarget || prevTarget == 0) {
-                                                arr[e.target.id] = parseInt(e.target.value);
-                                                target.value = arr.reduce((previousValue, currentValue) => previousValue + currentValue);
-                                            } else {
-                                                arr = [];
+                                            let vals = 0;
+                                            let digits = value.split(',');
+                                            console.log(digits);
+                                            for (let c = 0; c < digits.length; c++) {
+                                                console.log(parseInt(document.getElementById(digits[c]).value));
+                                                vals += parseInt(document.getElementById(digits[c]).value);
                                             }
+                                            target.value = parseInt(vals);
+
                                             prevTarget = target.id;
                                         }
                                     })
