@@ -59,9 +59,10 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                         if (key == sum) {
                             for (let u = 0; u < tds.length; u++) {
                                 tds[u].addEventListener('keyup', function (e) {
+                                    console.log(value.includes(','));
                                     if (value.includes(':')) {
                                         sum_range(e, value, keys_arr);
-                                    } else {
+                                    } else if (value.includes(',')) {
                                         sum_seriatim(e, value, keys_arr);
                                     }
                                 })
