@@ -39,7 +39,6 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
     window.onload = () => {
         let sum_target_cells = document.querySelectorAll('.sum_cell');
         let tds = document.querySelectorAll('.visible_cell');
-        let prevTarget = 0;
         let sum = [];
         let jsum = <?php echo $jsum ?>;
         let keys_arr = [];
@@ -62,7 +61,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                                             let vals = 0;
                                             let digits = value.split(',');
                                             for (let c = 0; c < digits.length; c++) {
-                                                let dig = parseInt(document.getElementById(digits[c]).value);
+                                                let dig = parseFloat(document.getElementById(digits[c]).value);
                                                 if (isNaN(dig)) {
                                                     dig = 0;
                                                     vals += dig;
@@ -70,9 +69,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                                                     vals += dig;
                                                 }
                                             }
-                                            target.value = parseInt(vals);
-
-                                            prevTarget = target.id;
+                                            target.value = (parseFloat(vals).toFixed(2)).replace('\.00', '');
                                         }
                                     })
                                 }
