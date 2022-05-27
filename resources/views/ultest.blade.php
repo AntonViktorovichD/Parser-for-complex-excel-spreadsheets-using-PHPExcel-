@@ -45,7 +45,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
         let sum_target_cells = document.querySelectorAll('.sum_cell');
         let tds = document.querySelectorAll('.visible_cell');
         let sum = [];
-        let arrRange = [];
+
         let jsum = <?php echo $jsum ?>;
         let keys_arr = [];
         for (const [key, value] of Object.entries(jsum)) {
@@ -60,33 +60,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                             if (key == sum) {
                                 for (let u = 0; u < tds.length; u++) {
                                     tds[u].addEventListener('keyup', function (e) {
-                                        let digits = value.split(':');
-                                        let v = parseInt(digits[0]);
-                                        while(v <= parseInt(digits[1])) {
-                                            arrRange.push(v);
-                                            v++;
-                                        }
-                                        if (arrRange.includes(parseInt(e.target.id))) {
-                                            let target = document.getElementById(keys_arr.indexOf(value));
-                                            let vals = 0;
-                                            let range = [];
-                                            let digits = value.split(':');
-                                            let x = parseInt(digits[0]);
-                                            while(x <= parseInt(digits[1])) {
-                                                range.push(x);
-                                                x++;
-                                            }
-                                            for (let c = 0; c < range.length; c++) {
-                                                let dig = parseFloat(document.getElementById(range[c]).value);
-                                                if (isNaN(dig)) {
-                                                    dig = 0;
-                                                    vals += dig;
-                                                } else {
-                                                    vals += dig;
-                                                }
-                                            }
-                                            target.value = (parseFloat(vals).toFixed(2)).replace('\.00', '');
-                                        }
+                                        sum_range(e, value, keys_arr);
                                     })
                                 }
                             }
@@ -123,6 +97,41 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
             }
         }
     }
+
+    function sum_range(e, value, keys_arr) {
+        let arrRange = [];
+        let digits = value.split(':');
+        let v = parseInt(digits[0]);
+        while (v <= parseInt(digits[1])) {
+            arrRange.push(v);
+            v++;
+        }
+
+        if (arrRange.includes(parseInt(e.target.id))) {
+            let target = document.getElementById(keys_arr.indexOf(value));
+            console.log(target);
+            let vals = 0;
+            let range = [];
+            let digits = value.split(':');
+            let x = parseInt(digits[0]);
+            while (x <= parseInt(digits[1])) {
+                range.push(x);
+                x++;
+            }
+
+            for (let c = 0; c < range.length; c++) {
+                let dig = parseFloat(document.getElementById(range[c]).value);
+                if (isNaN(dig)) {
+                    dig = 0;
+                    vals += dig;
+                } else {
+                    vals += dig;
+                }
+            }
+            target.value = (parseFloat(vals).toFixed(2)).replace('\.00', '');
+        }
+    }
+
     if (!Object.prototype.length) {
         Object.defineProperty(Object.prototype, 'length', {
             get: function () {
