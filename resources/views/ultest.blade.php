@@ -61,10 +61,14 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                                             let target = document.getElementById(keys_arr.indexOf(value));
                                             let vals = 0;
                                             let digits = value.split(',');
-                                            console.log(digits);
                                             for (let c = 0; c < digits.length; c++) {
-                                                console.log(parseInt(document.getElementById(digits[c]).value));
-                                                vals += parseInt(document.getElementById(digits[c]).value);
+                                                let dig = parseInt(document.getElementById(digits[c]).value);
+                                                if (isNaN(dig)) {
+                                                    dig = 0;
+                                                    vals += dig;
+                                                } else {
+                                                    vals += dig;
+                                                }
                                             }
                                             target.value = parseInt(vals);
 
