@@ -12,6 +12,11 @@
         border: 1px solid black;
         padding: 5px;
         height: 30px;
+        max-width: 100px;
+    }
+
+    input {
+        max-width: 70px;
     }
 </style>
 @php
@@ -48,7 +53,48 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
         for (let i = 0; i < sum_target_cells.length; i++) {
             for (let k = 0; k < sum_target_cells[i].innerHTML.split(',').length; k++) {
                 if (sum_target_cells[i].innerHTML.includes(':')) {
-                    sum_target_cells[i].innerHTML;
+                    sum = sum_target_cells[i].dataset.target;
+                    for (let j = 0; j < sum.length; j++) {
+                        keys_arr.forEach(function (value, key) {
+                            if (key == sum) {
+                                for (let u = 0; u < tds.length; u++) {
+                                    tds[u].addEventListener('keyup', function (e) {
+                                        console.log(value);
+                                        if (value.includes(e.target.id)) {
+                                            let target = document.getElementById(keys_arr.indexOf(value));
+                                            let vals = 0;
+                                            let arrRange = [];
+                                            let digits = value.split(':');
+                                            let v = parseInt(digits[0]);
+                                            while(v <= parseInt(digits[1])) {
+                                                arrRange.push(v);
+                                                // let dig = parseFloat(document.getElementById(v).value);
+                                                // console.log(dig);
+                                                // if (isNaN(dig)) {
+                                                //     dig = 0;
+                                                //     vals += dig;
+                                                // } else {
+                                                //     vals += dig;
+                                                // }
+                                                v++;
+                                            }
+                                            for (let c = 0; c < arrRange.length; c++) {
+                                                let dig = parseFloat(document.getElementById(arrRange[c]).value);
+                                                if (isNaN(dig)) {
+                                                    dig = 0;
+                                                    vals += dig;
+                                                } else {
+                                                    vals += dig;
+                                                }
+                                            }
+                                            target.value = (parseFloat(vals).toFixed(2)).replace('\.00', '');
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                    }
+                    break;
                 } else {
                     sum = sum_target_cells[i].dataset.target;
                     for (let j = 0; j < sum.length; j++) {
