@@ -53,46 +53,21 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
         }
         for (let i = 0; i < sum_target_cells.length; i++) {
             for (let k = 0; k < sum_target_cells[i].innerHTML.split(',').length; k++) {
-                if (sum_target_cells[i].innerHTML.includes(':')) {
-                    sum = sum_target_cells[i].dataset.target;
-                    for (let j = 0; j < sum.length; j++) {
-                        keys_arr.forEach(function (value, key) {
-                            if (key == sum) {
-                                for (let u = 0; u < tds.length; u++) {
-                                    tds[u].addEventListener('keyup', function (e) {
+                sum = sum_target_cells[i].dataset.target;
+                for (let j = 0; j < sum.length; j++) {
+                    keys_arr.forEach(function (value, key) {
+                        if (key == sum) {
+                            for (let u = 0; u < tds.length; u++) {
+                                tds[u].addEventListener('keyup', function (e) {
+                                    if (value.includes(':')) {
                                         sum_range(e, value, keys_arr);
-                                    })
-                                }
+                                    } else {
+                                        sum_seriatim(e, value, keys_arr);
+                                    }
+                                })
                             }
-                        })
-                    }
-                } else {
-                    sum = sum_target_cells[i].dataset.target;
-                    for (let j = 0; j < sum.length; j++) {
-                        keys_arr.forEach(function (value, key) {
-                            if (key == sum) {
-                                for (let u = 0; u < tds.length; u++) {
-                                    tds[u].addEventListener('keyup', function (e) {
-                                        if (value.includes(e.target.id)) {
-                                            let target = document.getElementById(keys_arr.indexOf(value));
-                                            let vals = 0;
-                                            let digits = value.split(',');
-                                            for (let c = 0; c < digits.length; c++) {
-                                                let dig = parseFloat(document.getElementById(digits[c]).value);
-                                                if (isNaN(dig)) {
-                                                    dig = 0;
-                                                    vals += dig;
-                                                } else {
-                                                    vals += dig;
-                                                }
-                                            }
-                                            target.value = (parseFloat(vals).toFixed(2)).replace('\.00', '');
-                                        }
-                                    })
-                                }
-                            }
-                        });
-                    }
+                        }
+                    })
                 }
             }
         }
@@ -109,7 +84,6 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
 
         if (arrRange.includes(parseInt(e.target.id))) {
             let target = document.getElementById(keys_arr.indexOf(value));
-            console.log(target);
             let vals = 0;
             let range = [];
             let digits = value.split(':');
@@ -121,6 +95,24 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
 
             for (let c = 0; c < range.length; c++) {
                 let dig = parseFloat(document.getElementById(range[c]).value);
+                if (isNaN(dig)) {
+                    dig = 0;
+                    vals += dig;
+                } else {
+                    vals += dig;
+                }
+            }
+            target.value = (parseFloat(vals).toFixed(2)).replace('\.00', '');
+        }
+    }
+
+    function sum_seriatim(e, value, keys_arr) {
+        if (value.includes(e.target.id)) {
+            let target = document.getElementById(keys_arr.indexOf(value));
+            let vals = 0;
+            let digits = value.split(',');
+            for (let c = 0; c < digits.length; c++) {
+                let dig = parseFloat(document.getElementById(digits[c]).value);
                 if (isNaN(dig)) {
                     dig = 0;
                     vals += dig;
