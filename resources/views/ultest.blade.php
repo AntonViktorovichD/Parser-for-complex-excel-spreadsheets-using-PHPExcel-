@@ -45,6 +45,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
         let sum_target_cells = document.querySelectorAll('.sum_cell');
         let tds = document.querySelectorAll('.visible_cell');
         let sum = [];
+        let arrRange = [];
         let jsum = <?php echo $jsum ?>;
         let keys_arr = [];
         for (const [key, value] of Object.entries(jsum)) {
@@ -59,27 +60,24 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                             if (key == sum) {
                                 for (let u = 0; u < tds.length; u++) {
                                     tds[u].addEventListener('keyup', function (e) {
-                                        console.log(value);
-                                        if (value.includes(e.target.id)) {
+                                        let digits = value.split(':');
+                                        let v = parseInt(digits[0]);
+                                        while(v <= parseInt(digits[1])) {
+                                            arrRange.push(v);
+                                            v++;
+                                        }
+                                        if (arrRange.includes(parseInt(e.target.id))) {
                                             let target = document.getElementById(keys_arr.indexOf(value));
                                             let vals = 0;
-                                            let arrRange = [];
+                                            let range = [];
                                             let digits = value.split(':');
-                                            let v = parseInt(digits[0]);
-                                            while(v <= parseInt(digits[1])) {
-                                                arrRange.push(v);
-                                                // let dig = parseFloat(document.getElementById(v).value);
-                                                // console.log(dig);
-                                                // if (isNaN(dig)) {
-                                                //     dig = 0;
-                                                //     vals += dig;
-                                                // } else {
-                                                //     vals += dig;
-                                                // }
-                                                v++;
+                                            let x = parseInt(digits[0]);
+                                            while(x <= parseInt(digits[1])) {
+                                                range.push(x);
+                                                x++;
                                             }
-                                            for (let c = 0; c < arrRange.length; c++) {
-                                                let dig = parseFloat(document.getElementById(arrRange[c]).value);
+                                            for (let c = 0; c < range.length; c++) {
+                                                let dig = parseFloat(document.getElementById(range[c]).value);
                                                 if (isNaN(dig)) {
                                                     dig = 0;
                                                     vals += dig;
@@ -94,7 +92,6 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                             }
                         })
                     }
-                    break;
                 } else {
                     sum = sum_target_cells[i].dataset.target;
                     for (let j = 0; j < sum.length; j++) {
@@ -122,7 +119,6 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                             }
                         });
                     }
-                    break;
                 }
             }
         }
