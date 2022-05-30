@@ -44,26 +44,45 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
     window.onload = () => {
         let sum_target_cells = document.querySelectorAll('.sum_cell');
         let tds = document.querySelectorAll('.visible_cell');
-        let sum = [];
-
-        let jsum = <?php echo $jsum ?>;
         let keys_arr = [];
-        for (const [key, value] of Object.entries(jsum)) {
+        for (const [key, value] of Object.entries(<?php echo $jsum ?>)) {
             keys_arr[key] = value;
         }
         for (let i = 0; i < sum_target_cells.length; i++) {
             for (let k = 0; k < sum_target_cells[i].innerHTML.split(',').length; k++) {
-                sum = sum_target_cells[i].dataset.target;
-                for (let j = 0; j < sum.length; j++) {
+                for (let j = 0; j < sum_target_cells[i].dataset.target.length; j++) {
                     keys_arr.forEach(function (value, key) {
-                        if (key == sum) {
+                        if (key == sum_target_cells[i].dataset.target) {
                             for (let u = 0; u < tds.length; u++) {
                                 tds[u].addEventListener('keyup', function (e) {
-                                    console.log(value.includes(','));
-                                    if (value.includes(':')) {
-                                        sum_range(e, value, keys_arr);
-                                    } else if (value.includes(',')) {
-                                        sum_seriatim(e, value, keys_arr);
+                                    let arrSum = [];
+                                    let sum_digits = value.split(',');
+                                    sum_digits.forEach(digits => {
+                                        if (digits.includes(':')) {
+                                            let v = parseInt(digits.split(':')[0]);
+                                            while (v <= parseInt(digits.split(':')[1])) {
+                                                arrSum.push(v);
+                                                v++;
+                                            }
+                                        } else {
+                                            arrSum.push(parseInt(digits));
+                                        }
+                                    })
+
+                                    if (arrSum.includes(parseInt(e.target.id))) {
+                                        let target = document.getElementById(keys_arr.indexOf(value));
+                                        let vals = 0;
+
+                                        for (let c = 0; c < arrSum.length; c++) {
+                                            let dig = parseFloat(document.getElementById(arrSum[c]).value);
+                                            if (isNaN(dig)) {
+                                                dig = 0;
+                                                vals += dig;
+                                            } else {
+                                                vals += dig;
+                                            }
+                                        }
+                                        target.value = (parseFloat(vals).toFixed(2)).replace('\.00', '');
                                     }
                                 })
                             }
@@ -73,58 +92,6 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
             }
         }
     }
-
-    function sum_range(e, value, keys_arr) {
-        let arrRange = [];
-        let digits = value.split(':');
-        let v = parseInt(digits[0]);
-        while (v <= parseInt(digits[1])) {
-            arrRange.push(v);
-            v++;
-        }
-
-        if (arrRange.includes(parseInt(e.target.id))) {
-            let target = document.getElementById(keys_arr.indexOf(value));
-            let vals = 0;
-            let range = [];
-            let digits = value.split(':');
-            let x = parseInt(digits[0]);
-            while (x <= parseInt(digits[1])) {
-                range.push(x);
-                x++;
-            }
-
-            for (let c = 0; c < range.length; c++) {
-                let dig = parseFloat(document.getElementById(range[c]).value);
-                if (isNaN(dig)) {
-                    dig = 0;
-                    vals += dig;
-                } else {
-                    vals += dig;
-                }
-            }
-            target.value = (parseFloat(vals).toFixed(2)).replace('\.00', '');
-        }
-    }
-
-    function sum_seriatim(e, value, keys_arr) {
-        if (value.includes(e.target.id)) {
-            let target = document.getElementById(keys_arr.indexOf(value));
-            let vals = 0;
-            let digits = value.split(',');
-            for (let c = 0; c < digits.length; c++) {
-                let dig = parseFloat(document.getElementById(digits[c]).value);
-                if (isNaN(dig)) {
-                    dig = 0;
-                    vals += dig;
-                } else {
-                    vals += dig;
-                }
-            }
-            target.value = (parseFloat(vals).toFixed(2)).replace('\.00', '');
-        }
-    }
-
     if (!Object.prototype.length) {
         Object.defineProperty(Object.prototype, 'length', {
             get: function () {
