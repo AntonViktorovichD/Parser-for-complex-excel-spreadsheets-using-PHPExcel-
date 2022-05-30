@@ -1,6 +1,5 @@
 @include('layouts.header')
 @include('layouts.menu')
-<script type="text/javascript" src="/js/vue.global.js"></script>
 <style>
     table {
         border-collapse: collapse;
@@ -55,13 +54,43 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                         if (key == sum_target_cells[i].dataset.target) {
                             for (let u = 0; u < tds.length; u++) {
                                 tds[u].addEventListener('keyup', function (e) {
-                                    diff(value, keys_arr, e);
+                                    prod(value, keys_arr, e);
+                                    // diff(value, keys_arr, e);
                                     // sum(value, keys_arr, e);
                                 })
                             }
                         }
                     })
                 }
+            }
+        }
+
+        function prod(value, keys_arr, e) {
+            let arrSum = [];
+            let sum_digits = value.split(',');
+            sum_digits.forEach(digits => {
+                if (digits.includes(':')) {
+                    let v = parseInt(digits.split(':')[0]);
+                    while (v <= parseInt(digits.split(':')[1])) {
+                        arrSum.push(v);
+                        v++;
+                    }
+                } else {
+                    arrSum.push(parseInt(digits));
+                }
+            })
+            if (arrSum.includes(parseInt(e.target.id))) {
+                let target = document.getElementById(keys_arr.indexOf(value));
+                let vals = [];
+
+                for (let c = 0; c < arrSum.length; c++) {
+                    let dig = parseFloat(document.getElementById(arrSum[c]).value);
+                    if (!isNaN(dig)) {
+                        vals.push(dig);
+                    }
+                }
+                console.log(vals);
+                target.value = (Math.round(parseFloat(vals.reduce((prev, curr) => prev * curr)) * 100)) / 100;
             }
         }
 
@@ -82,7 +111,6 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                 }
                 target.value = (Math.round(parseFloat(vals) * 100)) / 100;
             }
-
         }
     }
 
