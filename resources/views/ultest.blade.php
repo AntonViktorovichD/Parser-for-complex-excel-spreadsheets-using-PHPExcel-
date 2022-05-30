@@ -82,7 +82,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                                                 vals += dig;
                                             }
                                         }
-                                        target.value = (parseFloat(vals).toFixed(2)).replace('\.00', '');
+                                        target.value = (Math.round(parseFloat(vals)*100))/100;
                                     }
                                 })
                             }
