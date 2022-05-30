@@ -53,7 +53,8 @@ class TestController extends Controller {
 
         foreach ($arr as $key => $val) {
             if (isset($val)) {
-                $arrLetters[$key] = preg_replace('#[\d=SUM\(\)]#', '', $val . '|');;
+//                $arrLetters[$key] = preg_replace('#[\d=SUM\(\)]#', '', $val . '|'); //sum
+                $arrLetters[$key] = preg_replace('#[\d=]#', '', $val . '|'); //diff
             }
         }
 
@@ -70,6 +71,6 @@ class TestController extends Controller {
         $arrSum = array_combine($arrK, $arrLetters);
         $arrj = json_encode($arrSum);
         $json = json_encode($arr, JSON_UNESCAPED_UNICODE);
-        return view('ultest', ['test' => $json, 'jsum' => $arrj, 'sum' => $arrSum, 'highestColumnIndex' => $highestColumnIndex]);
+        return view('testul', ['test' => $json, 'jsum' => $arrj, 'sum' => $arrSum, 'highestColumnIndex' => $highestColumnIndex]);
     }
 }
