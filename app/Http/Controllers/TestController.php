@@ -62,10 +62,13 @@ class TestController extends Controller {
             if (isset($val)) {
                 if (isset($arrTypes[$key])) {
                     $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . ' ' . $arrTypes[$key] . '|')); //rate
+                } else if (is_numeric($val)) {
+                    $arrLetters[$key] = $val . '|'; //rate
+                } else if (strripos($val, 'SUM')) {
+                    $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=SUM\(#', '', $val . ' ' . 'sum' . '|'));
                 } else {
                     $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //rate
                 }
-//                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //rate
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //div
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=PRODUCT\(#', '', $val . '|')); //prod
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=SUM\(#', '', $val . '|')); //sum
