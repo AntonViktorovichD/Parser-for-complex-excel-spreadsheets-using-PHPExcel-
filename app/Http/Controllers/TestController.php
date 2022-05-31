@@ -26,7 +26,7 @@ class TestController extends Controller {
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
         $arr = [];
         $arrK = [];
-
+        $arrTypes = [];
         for ($row = $highestRow; $row <= $highestRow; $row++) {
             $colCounter = 0;
             for ($col = 0; $col < $highestColumnIndex; $col++) {
@@ -45,15 +45,27 @@ class TestController extends Controller {
         for ($i = "A"; $i <= 'Z'; $i++) {
             $arrKeys[] = $i;
         }
+        $cell_type = 0;
 
         $arrKeys = array_slice($arrKeys, 0, $highestColumnIndex);
         array_unshift($arrKeys, 1);
         unset($arrKeys[0]);
+        foreach ($arrKeys as $value) {
+            $cell_type = $worksheet->getCell($value . $highestRow)->getStyle()->getNumberFormat()->getFormatCode();
+            if ($cell_type != 'General') {
+                $dig = array_search($value, $arrKeys);
+                $arrTypes[$dig] = preg_replace('#\w+#', '', $cell_type);
+            }
+        }
         $arrKeys = array_flip($arrKeys);
-
         foreach ($arr as $key => $val) {
             if (isset($val)) {
-                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //div
+                if (isset($arrTypes[$key])) {
+                echo $arrTypes[$key];
+                }
+                $arrLetters[$key] = $val; //rate
+//                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //rate
+//                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //div
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=PRODUCT\(#', '', $val . '|')); //prod
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=SUM\(#', '', $val . '|')); //sum
 //                $arrLetters[$key] = preg_replace('#[\d=]#', '', $val . '|'); //diff
