@@ -54,9 +54,10 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                         if (key == sum_target_cells[i].dataset.target) {
                             for (let u = 0; u < tds.length; u++) {
                                 tds[u].addEventListener('keyup', function (e) {
+                                    divide(value, keys_arr, e);
                                     // prod(value, keys_arr, e);
                                     // diff(value, keys_arr, e);
-                                    sum(value, keys_arr, e);
+                                    // sum(value, keys_arr, e);
                                 })
                             }
                         }
@@ -65,51 +66,65 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
             }
         }
 
-        function prod(value, keys_arr, e) {
-            let arrSum = [];
-            let sum_digits = value.split(',');
-            sum_digits.forEach(digits => {
-                if (digits.includes(':')) {
-                    let v = parseInt(digits.split(':')[0]);
-                    while (v <= parseInt(digits.split(':')[1])) {
-                        arrSum.push(v);
-                        v++;
-                    }
-                } else {
-                    arrSum.push(parseInt(digits));
-                }
-            })
-            if (arrSum.includes(parseInt(e.target.id))) {
-                let target = document.getElementById(keys_arr.indexOf(value));
-                let vals = [];
-
-                for (let c = 0; c < arrSum.length; c++) {
-                    let dig = parseFloat(document.getElementById(arrSum[c]).value);
-                    if (!isNaN(dig)) {
-                        vals.push(dig);
-                    }
-                }
-                target.value = (Math.round(parseFloat(vals.reduce((prev, curr) => prev * curr)) * 100)) / 100;
-            }
-        }
-
-        function diff(value, keys_arr, e) {
+        function divide(value, keys_arr, e) {
             if (value.includes(e.target.id)) {
                 let target = document.getElementById(keys_arr.indexOf(value));
-                let vals = 0;
-                let digits = value.split('-');
-                vals += parseFloat(document.getElementById(digits[0]).value);
-                for (let c = 1; c < digits.length; c++) {
-                    let dig = parseFloat(document.getElementById(digits[c]).value);
-                    if (isNaN(dig)) {
-                        dig = 0;
-                        vals -= dig;
-                    } else {
-                        vals -= dig;
-                    }
+                let digits = value.split('/');
+                let divisible = parseFloat(document.getElementById(digits[0]).value);
+                let divider = parseFloat(document.getElementById(digits[1]).value);
+                if (isNaN(divisible) || isNaN(divider)) {
+                    target.value = 0;
+                } else {
+                    target.value = (Math.round(parseFloat(divisible / divider) * 100)) / 100;
                 }
-                target.value = (Math.round(parseFloat(vals) * 100)) / 100;
             }
+        }
+    }
+
+    function prod(value, keys_arr, e) {
+        let arrSum = [];
+        let sum_digits = value.split(',');
+        sum_digits.forEach(digits => {
+            if (digits.includes(':')) {
+                let v = parseInt(digits.split(':')[0]);
+                while (v <= parseInt(digits.split(':')[1])) {
+                    arrSum.push(v);
+                    v++;
+                }
+            } else {
+                arrSum.push(parseInt(digits));
+            }
+        })
+        if (arrSum.includes(parseInt(e.target.id))) {
+            let target = document.getElementById(keys_arr.indexOf(value));
+            let vals = [];
+
+            for (let c = 0; c < arrSum.length; c++) {
+                let dig = parseFloat(document.getElementById(arrSum[c]).value);
+                if (!isNaN(dig)) {
+                    vals.push(dig);
+                }
+            }
+            target.value = (Math.round(parseFloat(vals.reduce((prev, curr) => prev * curr)) * 100)) / 100;
+        }
+    }
+
+    function diff(value, keys_arr, e) {
+        if (value.includes(e.target.id)) {
+            let target = document.getElementById(keys_arr.indexOf(value));
+            let vals = 0;
+            let digits = value.split('-');
+            vals += parseFloat(document.getElementById(digits[0]).value);
+            for (let c = 1; c < digits.length; c++) {
+                let dig = parseFloat(document.getElementById(digits[c]).value);
+                if (isNaN(dig)) {
+                    dig = 0;
+                    vals -= dig;
+                } else {
+                    vals -= dig;
+                }
+            }
+            target.value = (Math.round(parseFloat(vals) * 100)) / 100;
         }
     }
 

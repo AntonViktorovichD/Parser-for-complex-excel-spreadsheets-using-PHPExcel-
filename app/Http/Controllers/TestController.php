@@ -53,8 +53,9 @@ class TestController extends Controller {
 
         foreach ($arr as $key => $val) {
             if (isset($val)) {
+                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //div
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=PRODUCT\(#', '', $val . '|')); //prod
-                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=SUM\(#', '', $val . '|')); //sum
+//                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=SUM\(#', '', $val . '|')); //sum
 //                $arrLetters[$key] = preg_replace('#[\d=]#', '', $val . '|'); //diff
             }
         }
