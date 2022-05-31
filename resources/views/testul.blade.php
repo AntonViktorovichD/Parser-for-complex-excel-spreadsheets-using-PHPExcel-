@@ -54,9 +54,9 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                         if (key == sum_target_cells[i].dataset.target) {
                             for (let u = 0; u < tds.length; u++) {
                                 tds[u].addEventListener('keyup', function (e) {
-                                    prod(value, keys_arr, e);
+                                    // prod(value, keys_arr, e);
                                     // diff(value, keys_arr, e);
-                                    // sum(value, keys_arr, e);
+                                    sum(value, keys_arr, e);
                                 })
                             }
                         }
@@ -89,7 +89,6 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                         vals.push(dig);
                     }
                 }
-                console.log(vals);
                 target.value = (Math.round(parseFloat(vals.reduce((prev, curr) => prev * curr)) * 100)) / 100;
             }
         }
@@ -130,18 +129,15 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
         })
         if (arrSum.includes(parseInt(e.target.id))) {
             let target = document.getElementById(keys_arr.indexOf(value));
-            let vals = 0;
+            let vals = [];
 
             for (let c = 0; c < arrSum.length; c++) {
                 let dig = parseFloat(document.getElementById(arrSum[c]).value);
-                if (isNaN(dig)) {
-                    dig = 0;
-                    vals += dig;
-                } else {
-                    vals += dig;
+                if (!isNaN(dig)) {
+                    vals.push(dig);
                 }
             }
-            target.value = (Math.round(parseFloat(vals) * 100)) / 100;
+            target.value = (Math.round(parseFloat(vals.reduce((prev, curr) => prev + curr)) * 100)) / 100;
         }
     }
 
