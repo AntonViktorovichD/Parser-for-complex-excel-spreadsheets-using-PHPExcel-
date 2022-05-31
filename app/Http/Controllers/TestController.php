@@ -61,9 +61,10 @@ class TestController extends Controller {
         foreach ($arr as $key => $val) {
             if (isset($val)) {
                 if (isset($arrTypes[$key])) {
-                echo $arrTypes[$key];
+                    $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . ' ' . $arrTypes[$key] . '|')); //rate
+                } else {
+                    $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //rate
                 }
-                $arrLetters[$key] = $val; //rate
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //rate
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //div
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=PRODUCT\(#', '', $val . '|')); //prod
