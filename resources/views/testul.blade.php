@@ -64,7 +64,8 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                             }
                             for (let u = 0; u < tds.length; u++) {
                                 tds[u].addEventListener('input', function (e) {
-                                    sum_rate(value, keys_arr, e)
+                                    crease(value, keys_arr, e)
+                                    // sum_rate(value, keys_arr, e)
                                     // rate(value, keys_arr, e);
                                     // rate(value, keys_arr, e);
                                     // divide(value, keys_arr, e);
@@ -75,6 +76,21 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                             }
                         }
                     })
+                }
+            }
+        }
+
+        function crease(value, keys_arr, e) {
+            if (value.includes(e.target.id)) {
+                let target = document.getElementById(keys_arr.indexOf(value));
+                vals = 0;
+                let digits = value.replace(' %', '').replace('-', '/').split('/');
+                let divisible = parseFloat(document.getElementById(digits[0]).value);
+                let divider = parseFloat(document.getElementById(digits[1]).value);
+                if (isNaN(divisible) || isNaN(divider)) {
+                    target.value = 0;
+                } else {
+                    target.value = Math.round(parseFloat((divisible - divider) / divider) * 100) + '%';
                 }
             }
         }
@@ -94,7 +110,6 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                 }
             })
             let target = document.getElementById(keys_arr.indexOf(value));
-            console.log(value);
             let vals = [];
             if (arrSum.includes(parseInt(e.target.id))) {
                 for (let c = 0; c < arrSum.length; c++) {

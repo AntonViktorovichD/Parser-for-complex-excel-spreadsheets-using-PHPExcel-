@@ -58,23 +58,29 @@ class TestController extends Controller {
             }
         }
         $arrKeys = array_flip($arrKeys);
+
         foreach ($arr as $key => $val) {
             if (isset($val)) {
                 if (isset($arrTypes[$key])) {
-                    $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . ' ' . $arrTypes[$key] . '|')); //rate
-                } else if (is_numeric($val)) {
-                    $arrLetters[$key] = $val . '|'; //rate
-                } else if (strripos($val, 'SUM')) {
-                    $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=SUM\(#', '', $val . ' ' . 'sum' . '|'));
-                } else {
-                    $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //rate
+                    $arrLetters[$key] = preg_replace('#[=\(\)\d]+#', '', $val . ' ' . $arrTypes[$key] . '|'); //crease
                 }
+//                if (isset($arrTypes[$key])) {
+//                    $arrLetters[$key] = preg_replace('#[=\d\)\(]+#', '',$val . ' ' . $arrTypes[$key] . '|'); //rate
+//                } else if (is_numeric($val)) {
+//                    $arrLetters[$key] = $val . '|'; //rate
+//                } else if (strripos($val, 'SUM')) {
+//                    $arrLetters[$key] = preg_replace('#=SUM[\d\)\(]+#', '', $val . ' ' . 'sum' . '|');
+//                } else {
+//                    $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //rate
+//                }
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //div
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=PRODUCT\(#', '', $val . '|')); //prod
 //                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=SUM\(#', '', $val . '|')); //sum
 //                $arrLetters[$key] = preg_replace('#[\d=]#', '', $val . '|'); //diff
             }
         }
+
+//        var_dump($arrLetters);
 
         $strLetters = implode($arrLetters);
 
