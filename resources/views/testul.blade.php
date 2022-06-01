@@ -64,15 +64,13 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                             }
                             for (let u = 0; u < tds.length; u++) {
                                 tds[u].addEventListener('input', function (e) {
-                                    if (value.includes(e.target.id)) {
-                                        sum_rate(value, keys_arr, e)
-                                        // rate(value, keys_arr, e);
-                                        // rate(value, keys_arr, e);
-                                        // divide(value, keys_arr, e);
-                                        // prod(value, keys_arr, e);
-                                        // diff(value, keys_arr, e);
-                                        // sum(value, keys_arr, e);
-                                    }
+                                    sum_rate(value, keys_arr, e)
+                                    // rate(value, keys_arr, e);
+                                    // rate(value, keys_arr, e);
+                                    // divide(value, keys_arr, e);
+                                    // prod(value, keys_arr, e);
+                                    // diff(value, keys_arr, e);
+                                    // sum(value, keys_arr, e);
                                 })
                             }
                         }
@@ -96,6 +94,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                 }
             })
             let target = document.getElementById(keys_arr.indexOf(value));
+            console.log(value);
             let vals = [];
             if (arrSum.includes(parseInt(e.target.id))) {
                 for (let c = 0; c < arrSum.length; c++) {
@@ -128,17 +127,17 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
         }
 
         function divide(value, keys_arr, e) {
-            // if (value.includes(e.target.id)) {
-            let target = document.getElementById(keys_arr.indexOf(value));
-            let digits = value.split('/');
-            let divisible = parseFloat(document.getElementById(digits[0]).value);
-            let divider = parseFloat(document.getElementById(digits[1]).value);
-            if (isNaN(divisible) || isNaN(divider)) {
-                target.value = 0;
-            } else {
-                target.value = (Math.round(parseFloat(divisible / divider) * 100)) / 100;
+            if (value.includes(e.target.id)) {
+                let target = document.getElementById(keys_arr.indexOf(value));
+                let digits = value.split('/');
+                let divisible = parseFloat(document.getElementById(digits[0]).value);
+                let divider = parseFloat(document.getElementById(digits[1]).value);
+                if (isNaN(divisible) || isNaN(divider)) {
+                    target.value = 0;
+                } else {
+                    target.value = (Math.round(parseFloat(divisible / divider) * 100)) / 100;
+                }
             }
-            // }
         }
 
         function prod(value, keys_arr, e) {
@@ -170,22 +169,22 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
         }
 
         function diff(value, keys_arr, e) {
-            // if (value.includes(e.target.id)) {
-            let target = document.getElementById(keys_arr.indexOf(value));
-            let vals = 0;
-            let digits = value.split('-');
-            vals += parseFloat(document.getElementById(digits[0]).value);
-            for (let c = 1; c < digits.length; c++) {
-                let dig = parseFloat(document.getElementById(digits[c]).value);
-                if (isNaN(dig)) {
-                    dig = 0;
-                    vals -= dig;
-                } else {
-                    vals -= dig;
+            if (value.includes(e.target.id)) {
+                let target = document.getElementById(keys_arr.indexOf(value));
+                let vals = 0;
+                let digits = value.split('-');
+                vals += parseFloat(document.getElementById(digits[0]).value);
+                for (let c = 1; c < digits.length; c++) {
+                    let dig = parseFloat(document.getElementById(digits[c]).value);
+                    if (isNaN(dig)) {
+                        dig = 0;
+                        vals -= dig;
+                    } else {
+                        vals -= dig;
+                    }
                 }
+                target.value = (Math.round(parseFloat(vals) * 100)) / 100;
             }
-            target.value = (Math.round(parseFloat(vals) * 100)) / 100;
-            // }
         }
 
         function sum(value, keys_arr, e) {
