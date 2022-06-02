@@ -34,7 +34,6 @@
 @php
     echo '<table>' . PHP_EOL;
     echo '<tr>' . PHP_EOL;
-var_dump($sum);
 for ($i = 1; $i <= $highestColumnIndex; $i++) {
     if (isset($sum[$i])) {
        if(is_numeric($sum[$i])) {
