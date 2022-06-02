@@ -59,29 +59,26 @@ class TestController extends Controller {
         }
         $arrKeys = array_flip($arrKeys);
 
+var_dump($arr);
         foreach ($arr as $key => $val) {
             if (isset($val)) {
-                if (isset($arrTypes[$key])) {
-                    $arrLetters[$key] = preg_replace('#[=\(\)\d]+#', '', $val . ' ' . $arrTypes[$key] . '|'); //crease
+                if (isset($arrTypes[$key]) && !str_contains($val, ')/')) {
+                    $arrLetters[$key] = preg_replace('#[=\d\)\(]+#', '', $val . ' ' . 'rate' . '|'); //rate
+                } else if (is_numeric($val)) {
+                    $arrLetters[$key] = $val . '|'; //rate
+                } elseif (isset($arrTypes[$key]) && str_contains($val, ')/')) {
+                    $arrLetters[$key] = preg_replace('#[=\(\)\d]+#', '', $val . ' ' . 'crease' . '|'); //crease
+                } elseif (str_contains($val, 'SUM')) {
+                    $arrLetters[$key] = preg_replace('#[\(\)\d]+#', '', preg_replace('#=SUM#', '', $val . ' ' . 'sum' . '|')); //sum
+                } elseif (str_contains($val, '-')) {
+                    $arrLetters[$key] = preg_replace('#[\d=]#', '', $val . ' ' . 'diff' . '|'); //diff
+                } elseif (str_contains($val, 'PRODUCT')) {
+                    $arrLetters[$key] = preg_replace('#[\(\)\d]+#', '', preg_replace('#=PRODUCT#', '', $val . ' ' . 'prod' . '|')); //prod
+                } elseif (str_contains($val, '/')) {
+                    $arrLetters[$key] = preg_replace('#[\d=]+#', '', $val . ' ' . 'divide' . '|'); //div
                 }
-//                if (isset($arrTypes[$key])) {
-//                    $arrLetters[$key] = preg_replace('#[=\d\)\(]+#', '',$val . ' ' . $arrTypes[$key] . '|'); //rate
-//                } else if (is_numeric($val)) {
-//                    $arrLetters[$key] = $val . '|'; //rate
-//                } else if (strripos($val, 'SUM')) {
-//                    $arrLetters[$key] = preg_replace('#=SUM[\d\)\(]+#', '', $val . ' ' . 'sum' . '|');
-//                } else {
-//                    $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //rate
-//                }
-//                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=#', '', $val . '|')); //div
-//                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=PRODUCT\(#', '', $val . '|')); //prod
-//                $arrLetters[$key] = preg_replace('#[\d\)]#', '', preg_replace('#=SUM\(#', '', $val . '|')); //sum
-//                $arrLetters[$key] = preg_replace('#[\d=]#', '', $val . '|'); //diff
             }
         }
-
-//        var_dump($arrLetters);
-
         $strLetters = implode($arrLetters);
 
         for ($i = 0; $i < strlen($strLetters); $i++) {

@@ -20,11 +20,11 @@
         border: 1px solid black;
         padding: 5px;
         height: 30px;
-        max-width: 100px;
+        /*max-width: 100px;*/
     }
 
     input {
-        max-width: 70px;
+        max-width: 50px;
     }
 </style>
 @php
@@ -64,14 +64,19 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                             }
                             for (let u = 0; u < tds.length; u++) {
                                 tds[u].addEventListener('input', function (e) {
-                                    crease(value, keys_arr, e)
-                                    // sum_rate(value, keys_arr, e)
-                                    // rate(value, keys_arr, e);
-                                    // rate(value, keys_arr, e);
-                                    // divide(value, keys_arr, e);
-                                    // prod(value, keys_arr, e);
-                                    // diff(value, keys_arr, e);
-                                    // sum(value, keys_arr, e);
+                                    if (value.includes('prod')) {
+                                        prod(value, keys_arr, e);
+                                    } else if (value.includes('sum')) {
+                                        sum(value, keys_arr, e);
+                                    } else if (value.includes('diff')) {
+                                        diff(value, keys_arr, e);
+                                    } else if (value.includes('divide')) {
+                                        divide(value, keys_arr, e);
+                                    } else if (value.includes('rate')) {
+                                        rate(value, keys_arr, e);
+                                    } else if (value.includes('crease')) {
+                                        crease(value, keys_arr, e);
+                                    }
                                 })
                             }
                         }
@@ -84,7 +89,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
             if (value.includes(e.target.id)) {
                 let target = document.getElementById(keys_arr.indexOf(value));
                 vals = 0;
-                let digits = value.replace(' %', '').replace('-', '/').split('/');
+                let digits = value.replace(' crease', '').replace('-', '/').split('/');
                 let divisible = parseFloat(document.getElementById(digits[0]).value);
                 let divider = parseFloat(document.getElementById(digits[1]).value);
                 if (isNaN(divisible) || isNaN(divider)) {
@@ -95,42 +100,8 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
             }
         }
 
-        function sum_rate(value, keys_arr, e) {
-            let arrSum = [];
-            let sum_digits = value.split(',');
-            sum_digits.forEach(digits => {
-                if (digits.includes(':')) {
-                    let v = parseInt(digits.split(':')[0]);
-                    while (v <= parseInt(digits.split(':')[1])) {
-                        arrSum.push(v);
-                        v++;
-                    }
-                } else {
-                    arrSum.push(parseInt(digits));
-                }
-            })
-            let target = document.getElementById(keys_arr.indexOf(value));
-            let vals = [];
-            if (arrSum.includes(parseInt(e.target.id))) {
-                for (let c = 0; c < arrSum.length; c++) {
-                    let dig = parseFloat(document.getElementById(arrSum[c]).value);
-                    if (!isNaN(dig)) {
-                        vals.push(dig);
-                    }
-                }
-            }
-            target.value = (Math.round(parseFloat(vals.reduce((prev, curr) => prev + curr)) * 100)) / 100;
-            for (let value of keys_arr) {
-                if ((typeof value) == 'string') {
-                    if (value.includes(target.id)) {
-                        rate(value, keys_arr, e)
-                    }
-                }
-            }
-        }
-
         function rate(value, keys_arr, e) {
-            let digits = value.replace(' %', '').split('/');
+            let digits = value.replace(' rate', '').split('/');
             let target_cell = document.getElementById(keys_arr.indexOf(value));
             let divisible = parseFloat(document.getElementById(digits[0]).value);
             let divider = parseFloat(document.getElementById(digits[1]).value);
@@ -144,7 +115,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
         function divide(value, keys_arr, e) {
             if (value.includes(e.target.id)) {
                 let target = document.getElementById(keys_arr.indexOf(value));
-                let digits = value.split('/');
+                let digits = value.replace(' divide', '').split('/');
                 let divisible = parseFloat(document.getElementById(digits[0]).value);
                 let divider = parseFloat(document.getElementById(digits[1]).value);
                 if (isNaN(divisible) || isNaN(divider)) {
@@ -156,8 +127,9 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
         }
 
         function prod(value, keys_arr, e) {
+
             let arrSum = [];
-            let sum_digits = value.split(',');
+            let sum_digits = value.replace(' prod', '').split(',');
             sum_digits.forEach(digits => {
                 if (digits.includes(':')) {
                     let v = parseInt(digits.split(':')[0]);
@@ -187,7 +159,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
             if (value.includes(e.target.id)) {
                 let target = document.getElementById(keys_arr.indexOf(value));
                 let vals = 0;
-                let digits = value.split('-');
+                let digits = value.replace(' diff', '').split('-');
                 vals += parseFloat(document.getElementById(digits[0]).value);
                 for (let c = 1; c < digits.length; c++) {
                     let dig = parseFloat(document.getElementById(digits[c]).value);
@@ -204,7 +176,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
 
         function sum(value, keys_arr, e) {
             let arrSum = [];
-            let sum_digits = value.split(',');
+            let sum_digits = value.replace(' sum', '').split(',');
             sum_digits.forEach(digits => {
                 if (digits.includes(':')) {
                     let v = parseInt(digits.split(':')[0]);
