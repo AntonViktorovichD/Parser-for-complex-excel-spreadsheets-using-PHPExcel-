@@ -20,7 +20,11 @@
         border: 1px solid black;
         padding: 5px;
         height: 30px;
-        /*max-width: 100px;*/
+
+    }
+
+    span {
+        width: 150px !important;
     }
 
     input {
@@ -32,7 +36,15 @@
     echo '<tr>' . PHP_EOL;
 var_dump($sum);
 for ($i = 1; $i <= $highestColumnIndex; $i++) {
-   echo '<td><label><input type="text"  id="'. $i. '" class="visible_cell">'. $i. '<label></td>' . PHP_EOL;
+    if (isset($sum[$i])) {
+       if(is_numeric($sum[$i])) {
+          echo '<td><label><span id="'. $i. '" class="visible_cell">' .$sum[$i]. '</span></label></td>' . PHP_EOL;
+       } else {
+         echo '<td><label><span id="'. $i. '" class="visible_cell"></span></label></td>' . PHP_EOL;
+       }
+      } else {
+     echo '<td><label><input type="text"  id="'. $i. '" class="visible_cell">'. $i. '<label></td>' . PHP_EOL;
+   }
 }
     for ($i = 1; $i <= $highestColumnIndex; $i++) {
         if (isset($sum[$i])) {
@@ -90,25 +102,25 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                 let target = document.getElementById(keys_arr.indexOf(value));
                 vals = 0;
                 let digits = value.replace(' crease', '').replace('-', '/').split('/');
-                let divisible = parseFloat(document.getElementById(digits[0]).value);
-                let divider = parseFloat(document.getElementById(digits[1]).value);
+                let divisible = parseFloat(document.getElementById(digits[0]).innerHTML);
+                let divider = parseFloat(document.getElementById(digits[1]).innerHTML);
                 if (isNaN(divisible) || isNaN(divider)) {
-                    target.value = 0;
+                    target.innerHTML = 0;
                 } else {
-                    target.value = Math.round(parseFloat((divisible - divider) / divider) * 100) + '%';
+                    target.innerHTML = Math.round(parseFloat((divisible - divider) / divider) * 100) + '%';
                 }
             }
         }
 
         function rate(value, keys_arr, e) {
             let digits = value.replace(' rate', '').split('/');
-            let target_cell = document.getElementById(keys_arr.indexOf(value));
-            let divisible = parseFloat(document.getElementById(digits[0]).value);
-            let divider = parseFloat(document.getElementById(digits[1]).value);
+            let target = document.getElementById(keys_arr.indexOf(value));
+            let divisible = parseFloat(document.getElementById(digits[0]).innerHTML);
+            let divider = parseFloat(document.getElementById(digits[1]).innerHTML);
             if (isNaN(divisible) || isNaN(divider)) {
-                target_cell.value = 0;
+                target.innerHTML = 0;
             } else {
-                target_cell.value = Math.round(parseFloat(divisible / divider) * 100) + '%';
+                target.innerHTML = Math.round(parseFloat(divisible / divider) * 100) + '%';
             }
         }
 
@@ -116,12 +128,12 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
             if (value.includes(e.target.id)) {
                 let target = document.getElementById(keys_arr.indexOf(value));
                 let digits = value.replace(' divide', '').split('/');
-                let divisible = parseFloat(document.getElementById(digits[0]).value);
-                let divider = parseFloat(document.getElementById(digits[1]).value);
+                let divisible = parseFloat(document.getElementById(digits[0]).innerHTML);
+                let divider = parseFloat(document.getElementById(digits[1]).innerHTML);
                 if (isNaN(divisible) || isNaN(divider)) {
-                    target.value = 0;
+                    target.innerHTML = 0;
                 } else {
-                    target.value = (Math.round(parseFloat(divisible / divider) * 100)) / 100;
+                    target.innerHTML = (Math.round(parseFloat(divisible / divider) * 100)) / 100;
                 }
             }
         }
@@ -146,12 +158,12 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                 let vals = [];
 
                 for (let c = 0; c < arrSum.length; c++) {
-                    let dig = parseFloat(document.getElementById(arrSum[c]).value);
+                    let dig = parseFloat(document.getElementById(arrSum[c]).innerHTML);
                     if (!isNaN(dig)) {
                         vals.push(dig);
                     }
                 }
-                target.value = (Math.round(parseFloat(vals.reduce((prev, curr) => prev * curr)) * 100)) / 100;
+                target.innerHTML = (Math.round(parseFloat(vals.reduce((prev, curr) => prev * curr)) * 100)) / 100;
             }
         }
 
@@ -160,9 +172,9 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                 let target = document.getElementById(keys_arr.indexOf(value));
                 let vals = 0;
                 let digits = value.replace(' diff', '').split('-');
-                vals += parseFloat(document.getElementById(digits[0]).value);
+                vals += parseFloat(document.getElementById(digits[0]).innerHTML);
                 for (let c = 1; c < digits.length; c++) {
-                    let dig = parseFloat(document.getElementById(digits[c]).value);
+                    let dig = parseFloat(document.getElementById(digits[c]).innerHTML);
                     if (isNaN(dig)) {
                         dig = 0;
                         vals -= dig;
@@ -170,7 +182,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                         vals -= dig;
                     }
                 }
-                target.value = (Math.round(parseFloat(vals) * 100)) / 100;
+                target.innerHTML = (Math.round(parseFloat(vals) * 100)) / 100;
             }
         }
 
@@ -198,7 +210,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
                         vals.push(dig);
                     }
                 }
-                target.value = (Math.round(parseFloat(vals.reduce((prev, curr) => prev + curr)) * 100)) / 100;
+                target.innerHTML = (Math.round(parseFloat(vals.reduce((prev, curr) => prev + curr)) * 100)) / 100;
             }
         }
     }

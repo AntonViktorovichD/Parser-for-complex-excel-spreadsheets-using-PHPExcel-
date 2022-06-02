@@ -59,7 +59,6 @@ class TestController extends Controller {
         }
         $arrKeys = array_flip($arrKeys);
 
-var_dump($arr);
         foreach ($arr as $key => $val) {
             if (isset($val)) {
                 if (isset($arrTypes[$key]) && !str_contains($val, ')/')) {
