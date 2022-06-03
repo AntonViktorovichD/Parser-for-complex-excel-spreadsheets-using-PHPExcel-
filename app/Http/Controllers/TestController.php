@@ -47,6 +47,17 @@ class TestController extends Controller {
         }
         $cell_type = 0;
 
+        $mergeCells[] = $worksheet->getMergeCells();
+        $mCells = [];
+
+        for ($i = 0; $i < count($mergeCells); $i++) {
+            foreach ($mergeCells[$i] as $mergeCell) {
+                if (strpos($mergeCell, $highestRow)) {
+                    $mCells[] = $mergeCell;
+                }
+            }
+        }
+
         $arrKeys = array_slice($arrKeys, 0, $highestColumnIndex);
         array_unshift($arrKeys, 1);
         unset($arrKeys[0]);
@@ -78,19 +89,53 @@ class TestController extends Controller {
                 }
             }
         }
-        $strLetters = implode($arrLetters);
+        $strMCells = [];
+        foreach ($mCells as $key => $mCell) {
+            $strMCells[] = preg_replace('#\d+#', '', $mCell . '|');
+        }
 
+        $strMC = implode($strMCells);
+
+        for ($i = 0; $i < strlen($strMC); $i++) {
+            foreach ($arrKeys as $key => $val) {
+                $strMC = str_replace($key, $val, $strMC);
+            }
+        }
+
+        $strMC = explode('|', $strMC);
+        unset($strMC[count($strMC) - 1]);
+
+        $arrMC = [];
+
+        foreach ($strMC as $key => $str) {
+            $arrMC[preg_replace('#:\d+#', '', $str)] = ' | ' . $str . ' merge';
+        }
+
+        $strLetters = implode($arrLetters);
         for ($i = 0; $i < strlen($strLetters); $i++) {
             foreach ($arrKeys as $key => $val) {
                 $strLetters = str_replace($key, $val, $strLetters);
             }
         }
-
         $arrLetters = explode('|', $strLetters);
         unset($arrLetters[count($arrLetters) - 1]);
+
         $arrSum = array_combine($arrK, $arrLetters);
-        $arrj = json_encode($arrSum);
-        $json = json_encode($arr, JSON_UNESCAPED_UNICODE);
-        return view('testul', ['test' => $json, 'jsum' => $arrj, 'sum' => $arrSum, 'highestColumnIndex' => $highestColumnIndex]);
+
+        $finArr = [];
+
+        for ($i = 1; $i <= $highestColumnIndex; $i++) {
+            if (isset($arrSum[$i]) && isset($arrMC[$i])) {
+                $finArr[$i] = $arrSum[$i] . $arrMC[$i];
+            } elseif (isset($arrSum[$i])) {
+                $finArr[$i] = $arrSum[$i];
+            } elseif (isset($arrMC[$i])) {
+                $finArr[$i] = $arrMC[$i];
+            }
+        }
+
+        $arrj = json_encode($finArr);
+        $json_func = json_encode($arr, JSON_UNESCAPED_UNICODE);
+        return view('testul', ['test' => $json_func, 'json_sum' => $arrj, 'highestColumnIndex' => $highestColumnIndex]);
     }
 }

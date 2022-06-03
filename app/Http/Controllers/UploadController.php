@@ -226,12 +226,79 @@ class UploadController extends Controller {
                 $updated_at = $request->input('updated_at');
                 $comment = $request->input('comment');
 
-
                 $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
                 $checked = json_encode($checkboxes, JSON_UNESCAPED_UNICODE);
 
-                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, updated_at, highest_row, highest_column_index, departments, radio, read_only, comment) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $created_at, $updated_at, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled', $comment]);
+                $arr = [];
+                $arrK = [];
+                $arrTypes = [];
+                for ($row = $highestRow; $row <= $highestRow; $row++) {
+                    $colCounter = 0;
+                    for ($col = 0; $col < $highestColumnIndex; $col++) {
+                        $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                        $colCounter++;
+                        if (isset($value)) {
+                            $arr[$colCounter] = $value;
+                            $arrK[] = $colCounter;
+                        } else {
+                            $arr[$colCounter] = NULL;
+                        }
+                    }
+                }
+                $arrLetters = [];
+                $arrKeys = [];
+                for ($i = "A"; $i <= 'Z'; $i++) {
+                    $arrKeys[] = $i;
+                }
+                $cell_type = 0;
+
+                $arrKeys = array_slice($arrKeys, 0, $highestColumnIndex);
+                array_unshift($arrKeys, 1);
+                unset($arrKeys[0]);
+                foreach ($arrKeys as $value) {
+                    $cell_type = $worksheet->getCell($value . $highestRow)->getStyle()->getNumberFormat()->getFormatCode();
+                    if ($cell_type != 'General') {
+                        $dig = array_search($value, $arrKeys);
+                        $arrTypes[$dig] = preg_replace('#\w+#', '', $cell_type);
+                    }
+                }
+                $arrKeys = array_flip($arrKeys);
+
+                foreach ($arr as $key => $val) {
+                    if (isset($val)) {
+                        if (isset($arrTypes[$key]) && !str_contains($val, ')/')) {
+                            $arrLetters[$key] = preg_replace('#[=\d\)\(]+#', '', $val . ' ' . 'rate' . '|'); //rate
+                        } else if (is_numeric($val)) {
+                            $arrLetters[$key] = $val . '|'; //rate
+                        } elseif (isset($arrTypes[$key]) && str_contains($val, ')/')) {
+                            $arrLetters[$key] = preg_replace('#[=\(\)\d]+#', '', $val . ' ' . 'crease' . '|'); //crease
+                        } elseif (str_contains($val, 'SUM')) {
+                            $arrLetters[$key] = preg_replace('#[\(\)\d]+#', '', preg_replace('#=SUM#', '', $val . ' ' . 'sum' . '|')); //sum
+                        } elseif (str_contains($val, '-')) {
+                            $arrLetters[$key] = preg_replace('#[\d=]#', '', $val . ' ' . 'diff' . '|'); //diff
+                        } elseif (str_contains($val, 'PRODUCT')) {
+                            $arrLetters[$key] = preg_replace('#[\(\)\d]+#', '', preg_replace('#=PRODUCT#', '', $val . ' ' . 'prod' . '|')); //prod
+                        } elseif (str_contains($val, '/')) {
+                            $arrLetters[$key] = preg_replace('#[\d=]+#', '', $val . ' ' . 'divide' . '|'); //div
+                        }
+                    }
+                }
+                $strLetters = implode($arrLetters);
+
+                for ($i = 0; $i < strlen($strLetters); $i++) {
+                    foreach ($arrKeys as $key => $val) {
+                        $strLetters = str_replace($key, $val, $strLetters);
+                    }
+                }
+
+                $arrLetters = explode('|', $strLetters);
+                unset($arrLetters[count($arrLetters) - 1]);
+                $arrSum = array_combine($arrK, $arrLetters);
+                $json_sum = json_encode($arrSum);
+                $json_func = json_encode($arr, JSON_UNESCAPED_UNICODE);
+
+                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, updated_at, highest_row, highest_column_index, departments, radio, read_only, comment, json_func, json_sum) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $created_at, $updated_at, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled', $comment, $json_func, $json_sum]);
 
                 unlink($tmpPath);
 

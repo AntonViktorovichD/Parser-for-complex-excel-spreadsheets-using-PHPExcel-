@@ -34,17 +34,28 @@
 @php
     echo '<table>' . PHP_EOL;
     echo '<tr>' . PHP_EOL;
+    $sum = json_decode($json_sum,true);
 for ($i = 1; $i <= $highestColumnIndex; $i++) {
-    if (isset($sum[$i])) {
-       if(is_numeric($sum[$i])) {
-          echo '<td><label><span id="'. $i. '" class="visible_cell">' .$sum[$i]. '</span></label></td>' . PHP_EOL;
-       } else {
-         echo '<td><label><span id="'. $i. '" class="visible_cell"></span></label></td>' . PHP_EOL;
-       }
-      } else {
-     echo '<td><label><input type="text"  id="'. $i. '" class="visible_cell">'. $i. '<label></td>' . PHP_EOL;
+   if (isset($sum[$i])) {
+      if(stripos($sum[$i], 'merge')){
+         $merges = preg_replace('#[\|a-z\s]+#', '', preg_replace('#[\d:\d]+\s\w+\s\|#', '|', $sum[$i]));
+         $merge = explode(':', $merges);
+
+         var_dump($merge[0]);
+      }
+   } else {
+      echo '<td><label><input type="text"  id="'. $i. '" class="visible_cell">'. $i. '<label></td>' . PHP_EOL;
    }
 }
+//    if (isset($sum[$i])) {
+//       if(is_numeric($sum[$i])) {
+//          echo '<td><label><span id="'. $i. '" class="visible_cell">' .$sum[$i]. '</span></label></td>' . PHP_EOL;
+//       } else {
+//         echo '<td><label><span id="'. $i. '" class="visible_cell"></span></label></td>' . PHP_EOL;
+//       }
+//      } else {
+//     echo '<td><label><input type="text"  id="'. $i. '" class="visible_cell">'. $i. '<label></td>' . PHP_EOL;
+//   }
     for ($i = 1; $i <= $highestColumnIndex; $i++) {
         if (isset($sum[$i])) {
             echo '<td hidden><span class="sum_cell" data-target="'. $i. '">' . $sum[$i] . '</span></td>' . PHP_EOL;
@@ -53,7 +64,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
         }
     }
     echo '</tr>' . PHP_EOL;
-    echo '</table>' . PHP_EOL;
+    echo '</table>' . PHP_EOL
 @endphp
 @include('layouts.footer')
 
@@ -62,7 +73,7 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
         let sum_target_cells = document.querySelectorAll('.sum_cell');
         let tds = document.querySelectorAll('.visible_cell');
         let keys_arr = [];
-        for (const [key, value] of Object.entries(<?php echo $jsum ?>)) {
+        for (const [key, value] of Object.entries(<?php echo $json_sum ?>)) {
             keys_arr[key] = value;
         }
         for (let i = 0; i < sum_target_cells.length; i++) {
@@ -221,4 +232,5 @@ for ($i = 1; $i <= $highestColumnIndex; $i++) {
             }
         })
     }
+
 </script>

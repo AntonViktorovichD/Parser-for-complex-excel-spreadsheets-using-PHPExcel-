@@ -40,7 +40,7 @@
                         @csrf
                         @php
                             echo '<div class="row-fluid">';
-                            echo '<label for="reestr_table___label" class="fabrikLabel control-label fabrikTip" title="&lt;ul class=&quot;validation-notices&quot; style=&quot;list-style:none&quot;&gt;&lt;li&gt;&lt;i data-isicon=&quot;true&quot; class=&quot;icon- notempty&quot; &gt;&lt;/i&gt; Это обязательное поле&lt;/li&gt;&lt;/ul&gt;">
+                            echo '<label for="reestr_table___label" class="fabrikLabel control-label fabrikTip">
                                             <i data-isicon="true" class="icon- small " ></i> Название запроса </label>';
                             echo '<input class="input-xlarge form-control fabrikinput inputbox text" type="text" name="filename">';
                             echo '</div>';
