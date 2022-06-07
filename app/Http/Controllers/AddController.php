@@ -26,7 +26,11 @@ class AddController extends Controller {
                 $pattern = $reg;
             }
         }
+
         $arrCell = json_decode(json_decode($json), true);
+        echo '<pre>';
+        var_dump($arrCell);
+        echo '</pre>';
         $arrLastRowId = [];
         $arrLastRowKeys = [];
         $arrFirstRowKeys = [];

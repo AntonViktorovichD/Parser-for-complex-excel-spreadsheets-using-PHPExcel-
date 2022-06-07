@@ -149,7 +149,6 @@ class TestController extends Controller {
         }
 
         $arrj = json_encode($arrFin);
-        $json_func = json_encode($arr, JSON_UNESCAPED_UNICODE);
-        return view('testul', ['test' => $json_func, 'json_sum' => $arrj, 'highestColumnIndex' => $highestColumnIndex]);
+        return view('testul', ['json_sum' => $arrj, 'highestColumnIndex' => $highestColumnIndex]);
     }
 }

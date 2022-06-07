@@ -230,8 +230,11 @@ class UploadController extends Controller {
 
                 $checked = json_encode($checkboxes, JSON_UNESCAPED_UNICODE);
 
+                // EXCEL FUNCTIONS //
+
                 $arr = [];
                 $arrK = [];
+                $arrFin = array_combine(range(1, $highestColumnIndex), array_fill(1, $highestColumnIndex, NULL));
                 $arrTypes = [];
                 for ($row = $highestRow; $row <= $highestRow; $row++) {
                     $colCounter = 0;
@@ -252,6 +255,17 @@ class UploadController extends Controller {
                     $arrKeys[] = $i;
                 }
                 $cell_type = 0;
+
+                $mergeCells[] = $worksheet->getMergeCells();
+                $mCells = [];
+
+                for ($i = 0; $i < count($mergeCells); $i++) {
+                    foreach ($mergeCells[$i] as $mergeCell) {
+                        if (strpos($mergeCell, $highestRow)) {
+                            $mCells[] = $mergeCell;
+                        }
+                    }
+                }
 
                 $arrKeys = array_slice($arrKeys, 0, $highestColumnIndex);
                 array_unshift($arrKeys, 1);
@@ -284,21 +298,67 @@ class UploadController extends Controller {
                         }
                     }
                 }
-                $strLetters = implode($arrLetters);
 
+                $strLetters = implode($arrLetters);
                 for ($i = 0; $i < strlen($strLetters); $i++) {
                     foreach ($arrKeys as $key => $val) {
                         $strLetters = str_replace($key, $val, $strLetters);
                     }
                 }
-
                 $arrLetters = explode('|', $strLetters);
                 unset($arrLetters[count($arrLetters) - 1]);
-                $arrSum = array_combine($arrK, $arrLetters);
-                $json_sum = json_encode($arrSum);
-                $json_func = json_encode($arr, JSON_UNESCAPED_UNICODE);
 
-                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, updated_at, highest_row, highest_column_index, departments, radio, read_only, comment, json_func, json_sum) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $created_at, $updated_at, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled', $comment, $json_func, $json_sum]);
+                $arrSum = array_combine($arrK, $arrLetters);
+
+                $filledArr = [];
+
+                for ($i = 1; $i <= $highestColumnIndex; $i++) {
+                    if (isset($arrSum[$i]) && isset($arrMC[$i])) {
+                        $filledArr[$i] = $arrSum[$i] . $arrMC[$i];
+                    } elseif (isset($arrSum[$i])) {
+                        $filledArr[$i] = $arrSum[$i];
+                    } elseif (isset($arrMC[$i])) {
+                        $filledArr[$i] = $arrMC[$i];
+                    }
+                }
+
+                $strMCells = [];
+                foreach ($mCells as $key => $mCell) {
+                    $strMCells[] = preg_replace('#\d+#', '', $mCell . '|');
+                }
+
+                $strMC = implode($strMCells);
+
+                for ($i = 0; $i < strlen($strMC); $i++) {
+                    foreach ($arrKeys as $key => $val) {
+                        $strMC = str_replace($key, $val, $strMC);
+                    }
+                }
+
+                $strMC = explode('|', $strMC);
+                unset($strMC[count($strMC) - 1]);
+                foreach ($strMC as $val) {
+                    $str = explode(':', $val);
+                    $colspan = ($str[1] - $str[0]) + 1;
+                    if (array_key_exists($str[0], $filledArr)) {
+                        $arrFin[$str[0]] = ' colspan ' . $colspan . ' | ' . $filledArr[$str[0]];
+                    } else {
+                        $arrFin[$str[0]] = 'colspan ' . $colspan;
+                    }
+                    foreach (range(($str[0] + 1), $str[1]) as $el) {
+                        unset($arrFin[$el]);
+                    }
+                }
+
+                for ($i = 1; $i <= count($arrFin); $i++) {
+                    if(isset($filledArr[$i]) && $arrFin[$i] == NULL){
+                        $arrFin[$i] = $filledArr[$i];
+                    }
+                }
+
+                $json_func = json_encode($arrFin);
+
+                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, updated_at, highest_row, highest_column_index, departments, radio, read_only, comment, json_func) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $created_at, $updated_at, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled', $comment, $json_func]);
 
                 unlink($tmpPath);
 
