@@ -30,6 +30,8 @@
     $arrAddRow = array_flip(json_decode($addRowArr, true));
         $colnum = 1;
     $arrCol = [];
+    $json_func =  json_decode($json_func,true);
+
 echo '<form method="post" action="/user_upload">';
 @endphp
 @csrf
@@ -56,25 +58,37 @@ echo '<form method="post" action="/user_upload">';
         $arrCol[$qw] = $colnum;
     }
     unset($arrCol[0]);
+
     echo '<tr>' . PHP_EOL;
     echo '<td>' . $dep . '</td>';
-    if ($read_only == 'disabled') {
-        foreach ($arrCol as $key => $colnum) {
-            if ($colnum == 1 && isset($arrAddRow[$key])) {
-                echo '<td><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '" class="regex"></td>';
-            } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-                echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $arrAddRow[$key] . '" class="regex"></td>';
+      $sum = json_decode($json_func, true);
+    var_dump($sum);
+    $row_arr = [];
+    foreach ($sum as $key => $val) {
+        if (isset($sum[$key])) {
+            if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
+                $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                echo '<td colspan="' . $colspan . '"><label><span id="' . $key . '" class="visible_cell">' . $key . '</span></label></td>' . PHP_EOL;
+            } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
+                echo '<td><label><span id="' . $key . '" class="visible_cell">' . $key . '</span></label></td>' . PHP_EOL;
+            } elseif (str_contains($val, 'colspan')) {
+                $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                echo '<td colspan="' . $colspan . '"><label><input type="text"  id="' . $key . '" class="visible_cell">' . $key . '<label></td>' . PHP_EOL;
+            } elseif (is_numeric($val)) {
+                echo '<td><label><span id="' . $key . '" class="visible_cell">' . $val . '</span></label></td>' . PHP_EOL;
             }
-        }
-    } else {
-        foreach ($arrCol as $key => $colnum) {
-            if ($colnum == 1 && isset($arrAddRow[$key])) {
-                echo '<td>' . $arrAddRow[$key] . '</td>';
-            } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-                echo '<td colspan="' . $colnum . '">' . $pattern . '</td>';
-            }
+        } else {
+            echo '<td><label><input type="text"  id="' . $key . '" class="visible_cell">' . $val . '<label></td>' . PHP_EOL;
         }
     }
+    for ($i = 1; $i <= $highestColumnIndex; $i++) {
+        if (isset($sum[$i])) {
+            echo '<td hidden><span class="sum_cell" data-target="' . $i . '">' . $sum[$i] . '</span></td>' . PHP_EOL;
+        } else {
+            echo '<td hidden></td>' . PHP_EOL;
+        }
+    }
+    echo '</tr>' . PHP_EOL;
     $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;

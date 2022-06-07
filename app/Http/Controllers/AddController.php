@@ -14,6 +14,7 @@ class AddController extends Controller {
         $table_uuid = DB::table('tables')->where('table_name', $name)->value('table_uuid');
         $radio = DB::table('tables')->where('table_name', $name)->value('radio');
         $read_only = DB::table('tables')->where('table_name', $name)->value('read_only');
+        $json_func = DB::table('tables')->where('table_name', $name)->value('json_func');
         $pattern = '';
         $reg_arr = [
             'v_text' => '[A-Za-zА-Яа-яЁё\s,.:;-]+',
@@ -28,9 +29,6 @@ class AddController extends Controller {
         }
 
         $arrCell = json_decode(json_decode($json), true);
-        echo '<pre>';
-        var_dump($arrCell);
-        echo '</pre>';
         $arrLastRowId = [];
         $arrLastRowKeys = [];
         $arrFirstRowKeys = [];
@@ -57,6 +55,6 @@ class AddController extends Controller {
         $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
         asort($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-        return view('add', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'dep', 'pattern', 'read_only'));
+        return view('add', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'dep', 'pattern', 'read_only'));
     }
 }
