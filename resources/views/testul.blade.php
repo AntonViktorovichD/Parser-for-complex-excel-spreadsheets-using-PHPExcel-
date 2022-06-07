@@ -32,48 +32,37 @@
     }
 </style>
 @php
-
-echo '<table>' . PHP_EOL;
-echo '<tr>' . PHP_EOL;
-$sum = json_decode($json_sum, true);
-var_dump($sum);
-$row_arr = [];
-for ($i = 1; $i <= $highestColumnIndex; $i++) {
-    if (isset($sum[$i])) {
-        if (str_contains($sum[$i], 'colspan') && (str_contains($sum[$i], 'rate') || str_contains($sum[$i], 'crease') || str_contains($sum[$i], 'sum') || str_contains($sum[$i], 'diff') || str_contains($sum[$i], 'prod') || str_contains($sum[$i], 'divide'))) {
-            $colspan = preg_replace('#[a-z\s]#', '', explode('|', $sum[$i])[0]);
-            echo '<td colspan="' . $colspan . '"><label><span id="' . $i . '" class="visible_cell">' . $i . '</span></label></td>' . PHP_EOL;
-        } elseif (str_contains($sum[$i], 'rate') || str_contains($sum[$i], 'crease') || str_contains($sum[$i], 'sum') || str_contains($sum[$i], 'diff') || str_contains($sum[$i], 'prod') || str_contains($sum[$i], 'divide')) {
-            $colspan = preg_replace('#[a-z\s]#', '', explode('|', $sum[$i])[0]);
-            echo '<td colspan="' . $colspan . '"><label><span id="' . $i . '" class="visible_cell">' . $i . '</span></label></td>' . PHP_EOL;
-        } elseif (is_numeric($sum[$i])) {
-            echo '<td><label><span id="' . $i . '" class="visible_cell">' . $sum[$i] . '</span></label></td>' . PHP_EOL;
+    echo '<table>' . PHP_EOL;
+    echo '<tr>' . PHP_EOL;
+    $sum = json_decode($json_sum, true);
+    var_dump($sum);
+    $row_arr = [];
+    foreach ($sum as $key => $val) {
+        if (isset($sum[$key])) {
+            if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
+                $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                echo '<td colspan="' . $colspan . '"><label><span id="' . $key . '" class="visible_cell">' . $key . '</span></label></td>' . PHP_EOL;
+            } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
+                echo '<td><label><span id="' . $key . '" class="visible_cell">' . $key . '</span></label></td>' . PHP_EOL;
+            } elseif (str_contains($val, 'colspan')) {
+                $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                echo '<td colspan="' . $colspan . '"><label><input type="text"  id="' . $key . '" class="visible_cell">' . $key . '<label></td>' . PHP_EOL;
+            } elseif (is_numeric($val)) {
+                echo '<td><label><span id="' . $key . '" class="visible_cell">' . $key . '</span></label></td>' . PHP_EOL;
+            }
         } else {
-            echo '<td><label><span id="' . $i . '" class="visible_cell"></span></label></td>' . PHP_EOL;
+            echo '<td><label><input type="text"  id="' . $key . '" class="visible_cell">' . $key . '<label></td>' . PHP_EOL;
         }
-        //} else {
-//            echo '<td><label><input type="text"  id="' . $i . '" class="visible_cell">' . $i . '<label></td>' . PHP_EOL;
     }
-}
-//    if (isset($sum[$i])) {
-//       if(is_numeric($sum[$i])) {
-//          echo '<td><label><span id="'. $i. '" class="visible_cell">' .$sum[$i]. '</span></label></td>' . PHP_EOL;
-//       } else {
-//         echo '<td><label><span id="'. $i. '" class="visible_cell"></span></label></td>' . PHP_EOL;
-//       }
-//      } else {
-//     echo '<td><label><input type="text"  id="'. $i. '" class="visible_cell">'. $i. '<label></td>' . PHP_EOL;
-//   }
-for ($i = 1; $i <= $highestColumnIndex; $i++) {
-    if (isset($sum[$i])) {
-        echo '<td hidden><span class="sum_cell" data-target="' . $i . '">' . $sum[$i] . '</span></td>' . PHP_EOL;
-    } else {
-        echo '<td hidden></td>' . PHP_EOL;
+    for ($i = 1; $i <= $highestColumnIndex; $i++) {
+        if (isset($sum[$i])) {
+            echo '<td hidden><span class="sum_cell" data-target="' . $i . '">' . $sum[$i] . '</span></td>' . PHP_EOL;
+        } else {
+            echo '<td hidden></td>' . PHP_EOL;
+        }
     }
-}
-echo '</tr>' . PHP_EOL;
-echo '</table>' . PHP_EOL
-
+    echo '</tr>' . PHP_EOL;
+    echo '</table>' . PHP_EOL
 @endphp
 @include('layouts.footer')
 
@@ -206,8 +195,9 @@ echo '</table>' . PHP_EOL
         }
 
         function sum(value, keys_arr, e) {
+
             let arrSum = [];
-            let sum_digits = value.replace(' sum', '').split(',');
+            let sum_digits = value.replace(/[a-z\s]+|/g, '').replace(/\d+\|/, '').split(',');
             sum_digits.forEach(digits => {
                 if (digits.includes(':')) {
                     let v = parseInt(digits.split(':')[0]);

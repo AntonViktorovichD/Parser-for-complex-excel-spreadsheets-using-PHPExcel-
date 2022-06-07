@@ -26,7 +26,7 @@ class TestController extends Controller {
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
         $arr = [];
         $arrK = [];
-        $arrFin = array_combine(range(1, $highestColumnIndex), range(1, $highestColumnIndex));
+        $arrFin = array_combine(range(1, $highestColumnIndex), array_fill(1, $highestColumnIndex, NULL));
         $arrTypes = [];
         for ($row = $highestRow; $row <= $highestRow; $row++) {
             $colCounter = 0;
@@ -133,12 +133,18 @@ class TestController extends Controller {
             $str = explode(':', $val);
             $colspan = ($str[1] - $str[0]) + 1;
             if (array_key_exists($str[0], $filledArr)) {
-                $arrFin[$str[0]] =  ' colspan ' . $colspan . ' | ' . $filledArr[$str[0]];
+                $arrFin[$str[0]] = ' colspan ' . $colspan . ' | ' . $filledArr[$str[0]];
             } else {
                 $arrFin[$str[0]] = 'colspan ' . $colspan;
             }
             foreach (range(($str[0] + 1), $str[1]) as $el) {
                 unset($arrFin[$el]);
+            }
+        }
+
+        for ($i = 1; $i <= count($arrFin); $i++) {
+            if(isset($filledArr[$i]) && $arrFin[$i] == NULL){
+                $arrFin[$i] = $filledArr[$i];
             }
         }
 
