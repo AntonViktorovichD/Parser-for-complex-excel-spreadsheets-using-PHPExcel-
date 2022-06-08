@@ -50,7 +50,7 @@ class AddController extends Controller {
             }
         }
         $user_dep = json_decode(json_encode(DB::table('org_helper')->where('id', '=', Auth::user()->department)->get(), JSON_UNESCAPED_UNICODE), true)[0]['id'];
-        $dep = DB::table('org_helper')->where('id', '=', $user_dep)->value('title');
+        $dep = DB::table('org_helper')->where('id', '=', $user_dep)->value('id');
         $row_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
         $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
         asort($arrLR);
