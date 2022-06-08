@@ -28,8 +28,8 @@
     $arrCell = json_decode(json_decode($json), true);
     $arrAddRow = array_flip(json_decode($addRowArr, true));
     ksort($arrAddRow);
-$sum =  json_decode($json_func,true);
-var_dump($sum);
+    $sum =  json_decode($json_func,true);
+    $vals =  json_decode($json_vals,true);
     $dep_name = DB::table('org_helper')->where('id', '=', $dep)->value('title');
     $values = json_decode(json_decode($report_value), true);
     $colnum = 1;
@@ -57,20 +57,21 @@ echo '<td>' . $dep_name . '</td>' . PHP_EOL;
 $row_arr = [];
 if ($read_only == 'disabled') {
     foreach ($sum as $key => $val) {
-        if (isset($val)) {
+       //var_dump(isset($vals[$key]));
+        if (isset($val) && isset($vals[$key])) {
             if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
                 $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
-                echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $vals[$key] . '"' . PHP_EOL;
             } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
-                echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $vals[$key] . '"' . PHP_EOL;
             } elseif (str_contains($val, 'colspan')) {
                 $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
-                echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $vals[$key] . '"' . PHP_EOL;
             } elseif (is_numeric($val)) {
-                echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $vals[$key] . '"' . PHP_EOL;
             }
         } else {
-            echo '<td><input type="text"  id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+            echo '<td><input type="text"  id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $vals[$key] . '"></td>' . PHP_EOL;
         }
     }
 } else {
@@ -101,4 +102,6 @@ echo '</tr>' . PHP_EOL;
     echo '</form>' . PHP_EOL;
 @endphp
 <script src="/js/regexp.js"></script>
+<script src="/js/excel_functions.js" type="text/javascript"></script>
+
 @include('layouts.footer')

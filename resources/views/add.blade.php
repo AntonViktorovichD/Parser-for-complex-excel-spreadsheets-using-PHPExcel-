@@ -109,6 +109,7 @@ if ($read_only == 'disabled') {
 echo '</form>' . PHP_EOL;
 @endphp
 
-<script src="/js/regexp.js"></script>
+<script src="/js/regexp.js" type="text/javascript"></script>
+<script src="/js/excel_functions.js" type="text/javascript"></script>
 
 @include('layouts.footer')
