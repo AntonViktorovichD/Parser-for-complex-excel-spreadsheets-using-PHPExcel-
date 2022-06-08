@@ -234,6 +234,7 @@ class UploadController extends Controller {
 
                 $arr = [];
                 $arrK = [];
+                $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn) - 1;
                 $arrFin = array_combine(range(1, $highestColumnIndex), array_fill(1, $highestColumnIndex, NULL));
                 $arrTypes = [];
                 for ($row = $highestRow; $row <= $highestRow; $row++) {
