@@ -31,20 +31,19 @@
 </style>
 @php
     $user_id = Auth::user()->id;
-      $arrCell = json_decode(json_decode($json), true);
-      $arrAddRow = array_flip(json_decode($addRowArr, true));
-      ksort($arrAddRow);
-      $sum =  json_decode($json_func,true);
-      $vals =  json_decode($json_vals,true);
-      $dep_name = DB::table('org_helper')->where('id', '=', $dep)->value('title');
-      $values = json_decode($report_value, true);
-      $colnum = 1;
-      $arrCol = [];
-      $arrNum = [];
-      $arrKeyVal = [];
-      $row_uuid = $row_uuid[0]->row_uuid;
-
-      echo '<form method="post" action="/admin_user_upgrade">';
+    $arrCell = json_decode(json_decode($json), true);
+    $arrAddRow = array_flip(json_decode($addRowArr, true));
+    ksort($arrAddRow);
+    $sum =  json_decode($json_func,true);
+    $vals =  json_decode($json_vals,true);
+    $dep_name = DB::table('org_helper')->where('id', '=', $dep)->value('title');
+    $values = json_decode($report_value, true);
+    $colnum = 1;
+    $arrCol = [];
+    $arrNum = [];
+    $arrKeyVal = [];
+    $row_uuid = $row_uuid[0]->row_uuid;
+    echo '<form method="post" action="/admin_user_upgrade">';
 @endphp
 @csrf
 @php
@@ -72,11 +71,9 @@
         $arrCol[$qw] = $colnum;
     }
     unset($arrCol[0]);
-
-    var_dump($values);
-foreach($values as $count) {
-echo '<tr>' . PHP_EOL;
-echo '<td>' . $dep_name . '</td>' . PHP_EOL;
+    foreach ($values as $count) {
+        echo '<tr>' . PHP_EOL;
+        echo '<td>' . $dep_name . '</td>' . PHP_EOL;
         foreach ($sum as $key => $val) {
             if (isset($vals[$key])) {
                 if (isset($val)) {
@@ -112,14 +109,14 @@ echo '<td>' . $dep_name . '</td>' . PHP_EOL;
                 }
             }
         }
-    for ($i = 1; $i <= $highest_column_index; $i++) {
-        if (isset($sum[$i])) {
-            echo '<td hidden><span class="sum_cell" data-target="' . $i . '">' . $sum[$i] . '</span></td>' . PHP_EOL;
-        } else {
-            echo '<td hidden></td>' . PHP_EOL;
+        for ($i = 1; $i <= $highest_column_index; $i++) {
+            if (isset($sum[$i])) {
+                echo '<td hidden><span class="sum_cell" data-target="' . $i . '">' . $sum[$i] . '</span></td>' . PHP_EOL;
+            } else {
+                echo '<td hidden></td>' . PHP_EOL;
+            }
         }
-    }
-    echo '</tr>' . PHP_EOL;
+        echo '</tr>' . PHP_EOL;
     }
     $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
@@ -127,7 +124,6 @@ echo '<td>' . $dep_name . '</td>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>

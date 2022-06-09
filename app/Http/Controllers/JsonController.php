@@ -37,8 +37,6 @@ class JsonController extends Controller {
     }
 
     public function handler(Request $request) {
-        var_dump($request->target);
-        var_dump($request->changer);
         DB::table('tables')->where('table_uuid', '=', $request->target)->update(['read_only' => $request->changer]);
     }
 }
