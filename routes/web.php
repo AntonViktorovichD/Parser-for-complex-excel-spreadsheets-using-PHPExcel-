@@ -49,6 +49,10 @@ use App\Http\Controllers\AdminUserUpgradeController;
 
 Route::post('/admin_user_upgrade', [AdminUserUpgradeController::class, 'admin_user_upgrade'])->middleware('checkAdmin');
 
+use App\Http\Controllers\ExportSheetController;
+
+Route::get('/export', [ExportSheetController::class, 'export']);
+
 Auth::routes(['register' => false]);
 
 Route::get('change_password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('auth.change_password')->middleware('checkAdmin');
