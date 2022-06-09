@@ -31,15 +31,20 @@
 </style>
 @php
     $user_id = Auth::user()->id;
-    $arrCell = json_decode(json_decode($json), true);
-    $arrAddRow = array_flip(json_decode($addRowArr, true));
-    ksort($arrAddRow);
-    $arrs = json_decode($report_value, true);
-    $colnum = 1;
-    $arrCol = [];
-    $arrNum = [];
-    $arrKeyVal = [];
-    echo '<form method="post" action="/admin_user_upgrade">';
+      $arrCell = json_decode(json_decode($json), true);
+      $arrAddRow = array_flip(json_decode($addRowArr, true));
+      ksort($arrAddRow);
+      $sum =  json_decode($json_func,true);
+      $vals =  json_decode($json_vals,true);
+      $dep_name = DB::table('org_helper')->where('id', '=', $dep)->value('title');
+      $values = json_decode($report_value, true);
+      $colnum = 1;
+      $arrCol = [];
+      $arrNum = [];
+      $arrKeyVal = [];
+      $row_uuid = $row_uuid[0]->row_uuid;
+
+      echo '<form method="post" action="/admin_user_upgrade">';
 @endphp
 @csrf
 @php
@@ -66,34 +71,67 @@
         }
         $arrCol[$qw] = $colnum;
     }
-    foreach ($arrs as $key => $arr) {
-        $values = $arrs[$key];
-        $arrKeyVal = array_combine($arrNum, $values);
-        unset($arrCol[0]);
-        $dep = DB::table('report_values')->where('row_uuid', $key)->value('user_dep');
-        $row_id = DB::table('report_values')->where('row_uuid', $key)->value('id');
-        $user_id = DB::table('report_values')->where('row_uuid', $key)->value('user_id');
-        $row_uuid = DB::table('report_values')->where('row_uuid', $key)->value('row_uuid');
+    unset($arrCol[0]);
 
-        echo '<tr>' . PHP_EOL;
-        echo '<td>' . $dep . '</td>';
-        foreach ($arrCol as $key => $colnum) {
-            if ($colnum == 1 && isset($arrAddRow[$key])) {
-                echo '<td><input type="text" name="' . $row_id . '+' . $arrAddRow[$key] . '" value="' . $arrKeyVal[$key] . '" class="regex" pattern="' . $pattern . '"></td>';
-            } elseif ($colnum > 1 && isset($arrAddRow[$key])) {
-                echo '<td colspan="' . $colnum . '"><input type="text" pattern="' . $pattern . '" name="' . $row_id . '+' . $arrAddRow[$key] . '" value="' . $arrKeyVal[$key] . '" class="regex"></td>';
+    var_dump($values);
+foreach($values as $count) {
+echo '<tr>' . PHP_EOL;
+echo '<td>' . $dep_name . '</td>' . PHP_EOL;
+        foreach ($sum as $key => $val) {
+            if (isset($vals[$key])) {
+                if (isset($val)) {
+                    if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
+                        $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                        echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+                    } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
+                        echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+                    } elseif (str_contains($val, 'colspan')) {
+                        $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                        echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+                    } elseif (is_numeric($val)) {
+                        echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+                    }
+                } else {
+                    echo '<td><input type="text"  id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+                }
+            } else {
+                if (isset($val)) {
+                    if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
+                        $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                        echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                    } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
+                        echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                    } elseif (str_contains($val, 'colspan')) {
+                        $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                        echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                    } elseif (is_numeric($val)) {
+                        echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                    }
+                } else {
+                    echo '<td><input type="text"  id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                }
             }
         }
-        $table[] = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $dep . ' + ' . $highest_column_index . ' + ';
+    for ($i = 1; $i <= $highest_column_index; $i++) {
+        if (isset($sum[$i])) {
+            echo '<td hidden><span class="sum_cell" data-target="' . $i . '">' . $sum[$i] . '</span></td>' . PHP_EOL;
+        } else {
+            echo '<td hidden></td>' . PHP_EOL;
+        }
     }
-        $table_info = implode($table);
+    echo '</tr>' . PHP_EOL;
+    }
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
-    echo '<input class="btn" type="submit">';
     echo '</form>' . PHP_EOL;
+    echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
+
 @endphp
-<script src="/js/regexp.js"></script>
+<script src="/js/regexp.js" type="text/javascript"></script>
+<script src="/js/excel_functions.js" type="text/javascript"></script>
+
 @include('layouts.footer')
 
 

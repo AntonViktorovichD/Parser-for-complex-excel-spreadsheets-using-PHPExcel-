@@ -36,6 +36,7 @@
     $arrCol = [];
     $arrNum = [];
     $arrKeyVal = [];
+    $row_uuid = $row_uuid[0]->row_uuid;
     echo '<form method="post" action="/user_upgrade">';
 @endphp
 @csrf
@@ -54,7 +55,6 @@
     }
     echo '<tr>' . PHP_EOL;
     echo '<td>' . $dep_name . '</td>' . PHP_EOL;
-    $row_arr = [];
     if ($read_only == 'disabled') {
         foreach ($sum as $key => $val) {
             if (isset($vals[$key])) {

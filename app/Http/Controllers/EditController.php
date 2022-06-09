@@ -73,7 +73,7 @@ class EditController extends Controller {
                 $rep_value[] = $val;
             }
             $report_value = (json_encode(array_combine($rep_key, $rep_value)));
-            return view('admin_edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'report_value', 'dep', 'pattern', 'json_func', 'json_vals'));
+            return view('admin_edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'report_value', 'dep', 'pattern', 'json_func', 'json_vals'));
         } else {
             $report_value = json_encode(DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_id', $user_id)->value('json_val'));
             return view('edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'row_uuid', 'user_id', 'report_value', 'dep', 'pattern', 'read_only', 'json_func', 'json_vals'));

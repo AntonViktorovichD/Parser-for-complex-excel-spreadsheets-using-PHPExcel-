@@ -63,13 +63,11 @@ unset($arrCol[0]);
 
 echo '<tr>' . PHP_EOL;
 echo '<td>' . $dep_name . '</td>' . PHP_EOL;
-$row_arr = [];
 if ($read_only == 'disabled') {
     foreach ($sum as $key => $val) {
         if (isset($val)) {
             if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
                 $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
-
                 echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
             } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
                 echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
