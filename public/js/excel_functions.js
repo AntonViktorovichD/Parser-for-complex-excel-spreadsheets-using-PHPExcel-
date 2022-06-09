@@ -58,9 +58,9 @@ window.onload = () => {
         let divisible = parseFloat(document.getElementById(digits[0]).innerHTML);
         let divider = parseFloat(document.getElementById(digits[1]).value);
         if (isNaN(divisible) || isNaN(divider)) {
-            target.innerHTML = 0;
+            target.value = 0;
         } else {
-            target.innerHTML = Math.round(parseFloat(divisible / divider) * 100) + '%';
+            target.value = Math.round(parseFloat(divisible / divider) * 100) + '%';
         }
     }
 
@@ -71,9 +71,9 @@ window.onload = () => {
             let divisible = parseFloat(document.getElementById(digits[0]).value);
             let divider = parseFloat(document.getElementById(digits[1]).value);
             if (isNaN(divisible) || isNaN(divider)) {
-                target.innerHTML = 0;
+                target.value = 0;
             } else {
-                target.innerHTML = (Math.round(parseFloat(divisible / divider) * 100)) / 100;
+                target.value = (Math.round(parseFloat(divisible / divider) * 100)) / 100;
             }
         }
     }
@@ -103,7 +103,7 @@ window.onload = () => {
                     if (!isNaN(dig)) {
                         vals.push(dig);
                     }
-                    target.innerHTML = (Math.round(parseFloat(vals.reduce((prev, curr) => prev * curr)) * 100)) / 100;
+                    target.value = (Math.round(parseFloat(vals.reduce((prev, curr) => prev * curr)) * 100)) / 100;
                 }
 
             }
@@ -125,11 +125,12 @@ window.onload = () => {
                     vals -= dig;
                 }
             }
-            target.innerHTML = (Math.round(parseFloat(vals) * 100)) / 100;
+            target.value = (Math.round(parseFloat(vals) * 100)) / 100;
         }
     }
 
     function sum(value, keys_arr, e) {
+
 
         let arrSum = [];
         let sum_digits = value.replace(/[a-z\s]+|/g, '').replace(/\d+\|/, '').split(',');
@@ -156,7 +157,7 @@ window.onload = () => {
                     if (!isNaN(dig)) {
                         vals.push(dig);
                     }
-                    target.innerHTML = (Math.round(parseFloat(vals.reduce((prev, curr) => prev + curr)) * 100)) / 100;
+                    target.value = (Math.round(parseFloat(vals.reduce((prev, curr) => prev + curr)) * 100)) / 100;
                 }
             }
         }

@@ -32,6 +32,7 @@
     $arrCol = [];
     $sum =  json_decode($json_func,true);
     $dep_name = DB::table('org_helper')->where('id', '=', $dep)->value('title');
+    var_dump($sum);
 
 echo '<form method="post" action="/user_upload">';
 @endphp
@@ -68,6 +69,7 @@ if ($read_only == 'disabled') {
         if (isset($val)) {
             if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
                 $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+
                 echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
             } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
                 echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
@@ -107,6 +109,7 @@ if ($read_only == 'disabled') {
     echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
 }
 echo '</form>' . PHP_EOL;
+echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>';
 @endphp
 
 <script src="/js/regexp.js" type="text/javascript"></script>
