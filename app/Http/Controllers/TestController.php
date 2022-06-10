@@ -24,24 +24,31 @@ class TestController extends Controller {
         $highestRow = $worksheet->getHighestRow();
         $highestColumn = $worksheet->getHighestColumn();
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
-        $arr = [];
+        $coords = [];
         for ($row = 1; $row < $highestRow; $row++) {
-            $colCounter = 0;
             for ($col = 0; $col < $highestColumnIndex; $col++) {
                 $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
                 $coord = $worksheet->getCellByColumnAndRow($col, $row)->getCoordinate();
                 if (isset($value)) {
-                    $arr[$coord] = $value;
+                    $coords[$coord] = $value;
                 }
             }
         }
-        $mergeCells = $worksheet->getMergeCells();
-        $mc = json_encode($mergeCells);
-        $cv = json_encode($arr);
-        DB::table('test')->insert(['coord' => $cv, 'merge_cells' => $mc]);
-//        echo '<pre>';
-//        var_dump($arr);
-//        echo '</pre>';
+        $merge_cells = $worksheet->getMergeCells();
+        foreach ($merge_cells as $key => $merge_cell) {
+            $merge_cells[$merge_cell] = preg_replace('#:\w+#', '', $merge_cell);;
+        }
+
+        foreach ($coords as $key => $coord) {
+            foreach ($merge_cells as $k => $merge_arr) {
+                if ($key == $merge_arr) {
+                    $merge_cells[$k] = $coord;
+                    unset($coords[$key]);
+                }
+            }
+        }
+
+        DB::table('test')->insert(['cells' => json_encode(array_merge($coords, $merge_cells))]);
 
         return view('export');
     }

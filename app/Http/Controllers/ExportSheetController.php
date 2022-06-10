@@ -12,35 +12,7 @@ use App\Http\Requests;
 class ExportSheetController extends Controller {
     public function export() {
 
-        $coords = json_decode(DB::table('test')->pluck('coord')[0], true);
-        $merge_cells = json_decode(DB::table('test')->pluck('merge_cells')[0], true);
-
-        foreach ($merge_cells as $key => $merge_cell) {
-            $merge_cells[$merge_cell] = preg_replace('#:\w+#', '', $merge_cell);;
-        }
-
-        foreach ($coords as $key => $coord) {
-            foreach ($merge_cells as $k => $merge_arr) {
-                if ($key == $merge_arr) {
-                    $merge_cells[$k] = $coord;
-                    unset($coords[$key]);
-                }
-            }
-        }
-
-        $cells_arr = array_merge($coords, $merge_cells);
-
-//        foreach ($cells_arr as $key => $cell) {
-//            if(str_contains($key, ':')) {
-//                $sheet->mergeCells($key);
-//                $merge = preg_replace('#:\w+#', '', $key);
-//                $sheet->setCellValue($merge, $cell);
-//                $sheet->getStyle($key)->applyFromArray($border);
-//            } else {
-//                $sheet->setCellValue($key, $cell);
-//                $sheet->getStyle($key)->applyFromArray($border);
-//            }
-//        }
+        $cells_arr = json_decode(DB::table('test')->pluck('cells')[0], true);
 
         $xls = new PHPExcel();
         $xls->setActiveSheetIndex(0);
