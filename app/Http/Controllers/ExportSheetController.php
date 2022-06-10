@@ -12,7 +12,7 @@ use App\Http\Requests;
 class ExportSheetController extends Controller {
     public function export() {
 
-        $cells_arr = json_decode(DB::table('test')->pluck('cells')[0], true);
+        $cells_arr = json_decode(DB::table('tables')->pluck('json_markup')[2], true);
 
         $xls = new PHPExcel();
         $xls->setActiveSheetIndex(0);
