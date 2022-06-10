@@ -7,7 +7,7 @@ Route::get('/home', 'HomeController@index');
 
 use App\Http\Controllers\TestController;
 Route::get('/test', [TestController::class, 'test']);
-Route::post('/export', [TestController::class, 'ultest']);
+Route::post('/test', [TestController::class, 'ultest']);
 
 use App\Http\Controllers\UploadController;
 
@@ -51,7 +51,7 @@ Route::post('/admin_user_upgrade', [AdminUserUpgradeController::class, 'admin_us
 
 use App\Http\Controllers\ExportSheetController;
 
-Route::post('/export', [ExportSheetController::class, 'export']);
+Route::get('/export', [ExportSheetController::class, 'export']);
 //Route::get('/exp', [ExportSheetController::class, 'export']);
 
 Auth::routes(['register' => false]);
