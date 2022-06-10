@@ -27,17 +27,14 @@ class ExportSheetController extends Controller {
         $sheet->getHeaderFooter()->setOddHeader("Название листа");
         $sheet->getHeaderFooter()->setOddFooter('&L&B Название листа &R Страница &P из &N');
 
-        $border = array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000'))));
-
         foreach ($cells_arr as $key => $cell) {
-            if(str_contains($key, ':')) {
+            if (str_contains($key, ':')) {
                 $sheet->mergeCells($key);
-                $merge = preg_replace('#:\w+#', '', $key);
-                $sheet->setCellValue($merge, $cell);
+                $sheet->setCellValue(preg_replace('#:\w+#', '', $key), $cell);
             } else {
                 $sheet->setCellValue($key, $cell);
             }
-            $sheet->getStyle($key)->applyFromArray($border);
+            $sheet->getStyle($key)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
         }
 
         header("Expires: Mon, 1 Apr 1974 05:00:00 GMT");
