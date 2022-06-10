@@ -352,14 +352,39 @@ class UploadController extends Controller {
                 }
 
                 for ($i = 1; $i <= count($arrFin); $i++) {
-                    if(isset($filledArr[$i]) && $arrFin[$i] == NULL){
+                    if (isset($filledArr[$i]) && $arrFin[$i] == NULL) {
                         $arrFin[$i] = $filledArr[$i];
                     }
                 }
 
+                $coords = [];
+                for ($row = 1; $row < $highestRow; $row++) {
+                    for ($col = 0; $col < $highestColumnIndex; $col++) {
+                        $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                        $coord = $worksheet->getCellByColumnAndRow($col, $row)->getCoordinate();
+                        if (isset($value)) {
+                            $coords[$coord] = $value;
+                        }
+                    }
+                }
+                $merge_cells = $worksheet->getMergeCells();
+                foreach ($merge_cells as $key => $merge_cell) {
+                    $merge_cells[$merge_cell] = preg_replace('#:\w+#', '', $merge_cell);;
+                }
+
+                foreach ($coords as $key => $coord) {
+                    foreach ($merge_cells as $k => $merge_arr) {
+                        if ($key == $merge_arr) {
+                            $merge_cells[$k] = $coord;
+                            unset($coords[$key]);
+                        }
+                    }
+                }
+                $json_markup = json_encode(array_merge($coords, $merge_cells));
+
                 $json_func = json_encode($arrFin);
 
-                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, updated_at, highest_row, highest_column_index, departments, radio, read_only, comment, json_func) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $created_at, $updated_at, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled', $comment, $json_func]);
+                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, updated_at, highest_row, highest_column_index, departments, radio, read_only, comment, json_func, json_markup) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $created_at, $updated_at, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled', $comment, $json_func, $json_markup]);
 
                 unlink($tmpPath);
 
