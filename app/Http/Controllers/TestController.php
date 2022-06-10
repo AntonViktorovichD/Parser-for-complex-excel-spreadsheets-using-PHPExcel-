@@ -43,6 +43,6 @@ class TestController extends Controller {
 //        var_dump($arr);
 //        echo '</pre>';
 
-        return view('test');
+        return view('export');
     }
 }
