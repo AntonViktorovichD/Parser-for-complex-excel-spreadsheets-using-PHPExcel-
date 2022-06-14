@@ -42,12 +42,12 @@ window.onload = () => {
             let target = document.getElementById(keys_arr.indexOf(value));
             vals = 0;
             let digits = value.replace(/[a-z\s]+|/g, '').replace(/\d+\|/, '').replace('-', '/').split('/');
-            let divisible = parseFloat(document.getElementById(digits[0]).innerHTML);
-            let divider = parseFloat(document.getElementById(digits[1]).innerHTML);
+            let divisible = parseFloat(document.getElementById(digits[0]).value);
+            let divider = parseFloat(document.getElementById(digits[1]).value);
             if (isNaN(divisible) || isNaN(divider)) {
-                target.innerHTML = 0;
+                target.value = 0;
             } else {
-                target.innerHTML = Math.round(parseFloat((divisible - divider) / divider) * 100) + '%';
+                target.value = Math.round(parseFloat((divisible - divider) / divider) * 100) + '%';
             }
         }
     }

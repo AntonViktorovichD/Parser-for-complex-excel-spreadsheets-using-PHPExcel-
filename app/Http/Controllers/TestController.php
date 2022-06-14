@@ -25,31 +25,33 @@ class TestController extends Controller {
         $highestColumn = $worksheet->getHighestColumn();
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
         $coords = [];
-        for ($row = 1; $row < $highestRow; $row++) {
+        for ($row = $highestRow; $row <= $highestRow; $row++) {
             for ($col = 0; $col < $highestColumnIndex; $col++) {
                 $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
                 $coord = $worksheet->getCellByColumnAndRow($col, $row)->getCoordinate();
-                if (isset($value)) {
+                if(isset($value)) {
                     $coords[$coord] = $value;
                 }
             }
         }
-        $merge_cells = $worksheet->getMergeCells();
-        foreach ($merge_cells as $key => $merge_cell) {
-            $merge_cells[$merge_cell] = preg_replace('#:\w+#', '', $merge_cell);;
-        }
 
-        foreach ($coords as $key => $coord) {
-            foreach ($merge_cells as $k => $merge_arr) {
-                if ($key == $merge_arr) {
-                    $merge_cells[$k] = $coord;
-                    unset($coords[$key]);
-                }
-            }
-        }
+        var_dump($coords);
+//        $merge_cells = $worksheet->getMergeCells();
+//        foreach ($merge_cells as $key => $merge_cell) {
+//            $merge_cells[$merge_cell] = preg_replace('#:\w+#', '', $merge_cell);;
+//        }
+//
+//        foreach ($coords as $key => $coord) {
+//            foreach ($merge_cells as $k => $merge_arr) {
+//                if ($key == $merge_arr) {
+//                    $merge_cells[$k] = $coord;
+//                    unset($coords[$key]);
+//                }
+//            }
+//        }
+//
+//        DB::table('test')->insert(['cells' => json_encode(array_merge($coords, $merge_cells))]);
 
-        DB::table('test')->insert(['cells' => json_encode(array_merge($coords, $merge_cells))]);
-
-        return view('export');
+//        return view('export');
     }
 }

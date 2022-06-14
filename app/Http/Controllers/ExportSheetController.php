@@ -2,17 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use PHPExcel_Writer_Excel2007;
 use Illuminate\Support\Facades\DB;
 use PHPExcel_Style_Border;
 use PHPExcel;
+use PHPExcel_Style_Alignment;
+use PHPExcel_Cell_DataType;
 use PHPExcel_Worksheet_PageSetup;
-use PHPExcel_Writer_Excel2007;
 use App\Http\Requests;
 
 class ExportSheetController extends Controller {
-    public function export() {
+    public function export($row_uuid) {
 
-        $cells_arr = json_decode(DB::table('tables')->pluck('json_markup')[2], true);
+        date_default_timezone_set('Europe/Moscow');
+
+        $date = date('d_m_Y');
+
+        $table_uuid = json_decode(DB::table('report_values')->where('row_uuid', '=', $row_uuid)->pluck('table_uuid'), true);
+        $json_val = json_decode(DB::table('report_values')->where('row_uuid', '=', $row_uuid)->value('json_val'), true);
+        $table_name = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('table_name'), true);
+        $cells_arr = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('json_markup'), true);
+        $funcs = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('func_coords'), true);
+        $highest_row = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('highest_row'), true);
 
         $xls = new PHPExcel();
         $xls->setActiveSheetIndex(0);
@@ -35,6 +46,33 @@ class ExportSheetController extends Controller {
                 $sheet->setCellValue($key, $cell);
             }
             $sheet->getStyle($key)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
+            $sheet->getStyle($key)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle($key)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        }
+        $arrKeys = [];
+        for ($i = "A", $k = 1; $i <= 'Z'; $i++) {
+            $arrKeys[$k] = $i;
+            $k++;
+        }
+
+        $arrKeys = array_slice($arrKeys, 0, count($json_val));
+
+        $json_vals = [];
+
+        foreach (array_combine($arrKeys, $json_val) as $k => $json_val) {
+            $json_vals[$k . $highest_row] = $json_val;
+        }
+
+        foreach ($json_vals as $key => $val) {
+            if (isset($funcs[$key])) {
+                $sheet->getStyle($key)->getNumberFormat()->setFormatCode('0%;-0%');
+                $sheet->setCellValue($key, $funcs[$key], PHPExcel_Cell_DataType::TYPE_NUMERIC);
+            } else {
+                $sheet->setCellValue($key, $val);
+            }
+            $sheet->getStyle($key)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
+            $sheet->getStyle($key)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle($key)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
         }
 
         header("Expires: Mon, 1 Apr 1974 05:00:00 GMT");
@@ -42,7 +80,7 @@ class ExportSheetController extends Controller {
         header("Cache-Control: no-cache, must-revalidate");
         header("Pragma: no-cache");
         header("Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        header("Content-Disposition: attachment; filename=file.xlsx");
+        header("Content-Disposition: attachment; filename=$table_name-$date.xlsx");
 
         $objWriter = new PHPExcel_Writer_Excel2007($xls);
         $objWriter->save('php://output');

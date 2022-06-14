@@ -51,7 +51,7 @@ Route::post('/admin_user_upgrade', [AdminUserUpgradeController::class, 'admin_us
 
 use App\Http\Controllers\ExportSheetController;
 
-Route::get('/export', [ExportSheetController::class, 'export']);
+Route::get('/export/{name}', [ExportSheetController::class, 'export']);
 //Route::get('/exp', [ExportSheetController::class, 'export']);
 
 Auth::routes(['register' => false]);

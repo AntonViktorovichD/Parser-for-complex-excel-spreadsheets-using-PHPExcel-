@@ -380,11 +380,27 @@ class UploadController extends Controller {
                         }
                     }
                 }
+
+                $func_coords = [];
+
+                for ($row = $highestRow; $row <= $highestRow; $row++) {
+                    for ($col = 0; $col < $highestColumnIndex; $col++) {
+                        $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                        $coord = $worksheet->getCellByColumnAndRow($col, $row)->getCoordinate();
+                        if(isset($value)) {
+                            $func_coords[$coord] = $value;
+                        }
+                    }
+                }
+
+                var_dump($func_coords);
+                $json_func_coords = json_encode($func_coords);
+
                 $json_markup = json_encode(array_merge($coords, $merge_cells));
 
                 $json_func = json_encode($arrFin);
 
-                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, updated_at, highest_row, highest_column_index, departments, radio, read_only, comment, json_func, json_markup) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $created_at, $updated_at, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled', $comment, $json_func, $json_markup]);
+                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, updated_at, highest_row, highest_column_index, departments, radio, read_only, comment, json_func, json_markup, func_coords) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $created_at, $updated_at, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled', $comment, $json_func, $json_markup, $json_func_coords]);
 
                 unlink($tmpPath);
 
