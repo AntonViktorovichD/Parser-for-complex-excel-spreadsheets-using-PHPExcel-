@@ -124,6 +124,7 @@
     echo '</table>' . PHP_EOL;
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
+    echo '<a href="/admin_export/' . $row_uuid . '">Экспорт</a>'
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>

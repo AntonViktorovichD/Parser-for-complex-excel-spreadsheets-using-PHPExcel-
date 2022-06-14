@@ -6,6 +6,7 @@ Route::redirect('/', 'home');
 Route::get('/home', 'HomeController@index');
 
 use App\Http\Controllers\TestController;
+
 Route::get('/test', [TestController::class, 'test']);
 Route::post('/test', [TestController::class, 'ultest']);
 
@@ -51,8 +52,11 @@ Route::post('/admin_user_upgrade', [AdminUserUpgradeController::class, 'admin_us
 
 use App\Http\Controllers\ExportSheetController;
 
-Route::get('/export/{name}', [ExportSheetController::class, 'export']);
-//Route::get('/exp', [ExportSheetController::class, 'export']);
+Route::get('/export/{name}', [ExportSheetController::class, 'export'])->middleware('auth');
+
+use App\Http\Controllers\AdminExportSheetController;
+
+Route::get('/admin_export/{name}', [AdminExportSheetController::class, 'admin_export'])->middleware('checkAdmin');
 
 Auth::routes(['register' => false]);
 
