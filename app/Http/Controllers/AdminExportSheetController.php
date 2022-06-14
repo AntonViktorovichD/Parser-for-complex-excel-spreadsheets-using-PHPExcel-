@@ -25,7 +25,6 @@ class AdminExportSheetController extends Controller {
         $highest_col = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('highest_column_index'), true);
         $cells_arr = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('json_markup'), true);
         $funcs = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('func_coords'), true);
-        $highest_row = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('highest_row'), true);
 
         $xls = new PHPExcel();
         $xls->setActiveSheetIndex(0);

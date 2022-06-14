@@ -107,9 +107,9 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
                 if ($arr['table_uuid'] == $row['table_uuid'] && $user_id == $row['user_id']) {
                     echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_name'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
                     break;
-                } else {
-                    echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_name'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
-                    break;
+               } elseif($arr['table_uuid'] != $row['table_uuid']) {
+                   echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_name'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
+                   break;
                 }
             }
         }
