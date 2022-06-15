@@ -8,6 +8,10 @@
         width: 100%;
     }
 
+    td input[type="checkbox"], th input[type="checkbox"] {
+        display: block !important;
+    }
+
     th, td {
         border: 1px solid black;
         padding: 5px;
@@ -24,17 +28,19 @@
         <th>Специалист</th>
         <th>Руководитель</th>
     </tr>
-    {{ $users }}
-{{--    @php--}}
-{{--        $users = json_decode($users, true);--}}
-{{--        foreach ($users as $user) {--}}
-{{--            echo '<tr>';--}}
-{{--            echo '<td>' . $user['email'] . '</td>';--}}
-{{--            echo '<td>' . $user['mobile_phone'] . '</td>';--}}
-{{--            echo '<td>' . $user['responsible_specialist'] . '</td>';--}}
-{{--            echo '<td>' . $user['director'] . '</td>';--}}
-{{--            echo '</tr>';--}}
-{{--        }--}}
-{{--    @endphp--}}
+    @php
+        $users = json_decode($users, true);
+        foreach ($users as $user) {
+            echo '<tr>';
+            echo '<td>' . $user['district'] . '</td>';
+            echo '<td>' . $user['department'] . '</td>';
+            echo '<td>' . $user['org'] . '</td>';
+            echo '<td><input type="checkbox" id="email" name="email"></td>';
+            echo '<td><input type="checkbox" id="mobile_phone" name="mobile_phone"></td>';
+            echo '<td><input type="checkbox" id="responsible_specialist" name="responsible_specialist"></td>';
+            echo '<td><input type="checkbox" id="director" name="director"></td>';
+            echo '</tr>';
+        }
+    @endphp
 </table>
 @include('layouts.footer')
