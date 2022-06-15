@@ -58,17 +58,21 @@ use App\Http\Controllers\AdminExportSheetController;
 
 Route::get('/admin_export/{name}', [AdminExportSheetController::class, 'admin_export'])->middleware('checkAdmin');
 
+use App\Http\Controllers\SendUsersController;
+
+Route::get('/send_users', [SendUsersController::class, 'send'])->middleware('checkAdmin');
+
 Auth::routes(['register' => false]);
 
 Route::get('change_password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('auth.change_password')->middleware('checkAdmin');
 Route::patch('change_password', 'Auth\ChangePasswordController@changePassword')->name('auth.change_password')->middleware('checkAdmin');
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'administrator', 'as' => 'admin.'], function () {
-    Route::get('/', 'AdminController@index')->name('home')->middleware('checkAdmin');;
-    Route::resource('permissions', 'Admin\PermissionsController')->middleware('checkAdmin');;
-    Route::delete('permissions_mass_destroy', 'Admin\PermissionsController@massDestroy')->name('permissions.mass_destroy')->middleware('checkAdmin');;
-    Route::resource('roles', 'Admin\RolesController')->middleware('checkAdmin');;
-    Route::delete('roles_mass_destroy', 'Admin\RolesController@massDestroy')->name('roles.mass_destroy')->middleware('checkAdmin');;
-    Route::resource('users', 'Admin\UsersController')->middleware('checkAdmin');;
-    Route::delete('users_mass_destroy', 'Admin\UsersController@massDestroy')->name('users.mass_destroy')->middleware('checkAdmin');;
+    Route::get('/', 'AdminController@index')->name('home')->middleware('checkAdmin');
+    Route::resource('permissions', 'Admin\PermissionsController')->middleware('checkAdmin');
+    Route::delete('permissions_mass_destroy', 'Admin\PermissionsController@massDestroy')->name('permissions.mass_destroy')->middleware('checkAdmin');
+    Route::resource('roles', 'Admin\RolesController')->middleware('checkAdmin');
+    Route::delete('roles_mass_destroy', 'Admin\RolesController@massDestroy')->name('roles.mass_destroy')->middleware('checkAdmin');
+    Route::resource('users', 'Admin\UsersController')->middleware('checkAdmin');
+    Route::delete('users_mass_destroy', 'Admin\UsersController@massDestroy')->name('users.mass_destroy')->middleware('checkAdmin');
 });
