@@ -70,6 +70,7 @@
         let department = 0;
         let distr_depart_arr = [];
         let users_arr = [];
+        let difference = [];
         document.addEventListener('input', e => {
                 if (e.target.id == 'district') {
                     district = e.target.selectedIndex;
@@ -77,7 +78,9 @@
                 if (e.target.id == 'department') {
                     department = e.target.selectedIndex;
                 }
+
                 users_arr.length = 0;
+                difference.length = 0;
                 distr_depart_arr = [district, department];
 
                 for (let i = 0; i < users.length; i++) {
@@ -87,9 +90,27 @@
                         users_arr.push(users[i]);
                     } else if (users[i].dataset.district == distr_depart_arr[0] && distr_depart_arr[1] == 0) {
                         users_arr.push(users[i]);
+                    } else if (district == 0 && department == 0) {
+                        users_arr;
                     }
                 }
-                console.log(users_arr);
+                if (users_arr.length > 0) {
+                    difference = users.filter(num => !users_arr.includes(num)).concat(users_arr.filter(num => !users.includes(num)));
+                    for (let k = 0; k < difference.length; k++) {
+                        difference[k].hidden = true;
+                    }
+                } else if (users_arr.length == 0) {
+                    difference = users.filter(num => !users_arr.includes(num)).concat(users_arr.filter(num => !users.includes(num)));
+                    for (let k = 0; k < difference.length; k++) {
+                        difference[k].hidden = true;
+                    }
+                }
+                if (district == 0 && department == 0) {
+                    difference = users.filter(num => !users_arr.includes(num)).concat(users_arr.filter(num => !users.includes(num)));
+                    for (let k = 0; k < difference.length; k++) {
+                        difference[k].hidden = false;
+                    }
+                }
             }
         )
     }
