@@ -65,14 +65,11 @@
 @include('layouts.footer')
 <script>
     window.onload = () => {
-        let users = document.querySelectorAll('.user');
+        let users = Array.from(document.querySelectorAll('.user'));
         let district = 0;
         let department = 0;
-        let distr = [];
-        let distr_arr = [];
-        let user_arr = Array.from(users);
-        let depart = [];
-        let depart_arr = [];
+        let distr_depart_arr = [];
+        let users_arr = [];
         document.addEventListener('input', e => {
                 if (e.target.id == 'district') {
                     district = e.target.selectedIndex;
@@ -80,32 +77,19 @@
                 if (e.target.id == 'department') {
                     department = e.target.selectedIndex;
                 }
-                distr.length = 0;
-                depart.length = 0;
+                users_arr.length = 0;
+                distr_depart_arr = [district, department];
 
                 for (let i = 0; i < users.length; i++) {
-                    users[i].hidden = false;
-                    if (users[i].dataset.district == district) {
-                        distr.push(users[i]);
-                    }
-                    if (users[i].dataset.department == department) {
-                        depart.push(users[i])
-                    }
-                }
-
-                if (distr.length == 0) {
-                    depart_arr = user_arr.filter(num => !depart.includes(num)).concat(depart.filter(num => !user_arr.includes(num)));
-                    for (let i = 0; i < depart_arr.length; i++) {
-                        depart_arr[i].hidden = true;
+                    if (users[i].dataset.department == distr_depart_arr[1] && users[i].dataset.district == distr_depart_arr[0]) {
+                        users_arr.push(users[i]);
+                    } else if (users[i].dataset.department == distr_depart_arr[1] && distr_depart_arr[0] == 0) {
+                        users_arr.push(users[i]);
+                    } else if (users[i].dataset.district == distr_depart_arr[0] && distr_depart_arr[1] == 0) {
+                        users_arr.push(users[i]);
                     }
                 }
-
-                if (depart.length == 0) {
-                    distr_arr = user_arr.filter(num => !distr.includes(num)).concat(distr.filter(num => !user_arr.includes(num)));
-                    for (let i = 0; i < distr_arr.length; i++) {
-                        distr_arr[i].hidden = true;
-                    }
-                }
+                console.log(users_arr);
             }
         )
     }
