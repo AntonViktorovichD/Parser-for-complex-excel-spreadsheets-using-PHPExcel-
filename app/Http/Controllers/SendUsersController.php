@@ -21,9 +21,6 @@ class SendUsersController extends Controller {
             $users[$i]["department"] = DB::table('depart_helper')->where('id', '=', $users[$i]["department"])->value('title');
             unset($users[$i]["remember_token"], $users[$i]["password"], $users[$i]["created_at"], $users[$i]["updated_at"]);
         }
-//        echo '<pre>';
-//        var_dump($users);
-//        echo '</pre>';
         $users = json_encode($users, JSON_UNESCAPED_UNICODE);
         return view('send_users', compact('users', 'departments', 'districts'));
     }

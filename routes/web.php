@@ -61,6 +61,7 @@ Route::get('/admin_export/{name}', [AdminExportSheetController::class, 'admin_ex
 use App\Http\Controllers\SendUsersController;
 
 Route::get('/send_users', [SendUsersController::class, 'send'])->middleware('checkAdmin');
+Route::post('/send_users', [SendUsersController::class, 'get_options'])->middleware('checkAdmin');
 
 Auth::routes(['register' => false]);
 
