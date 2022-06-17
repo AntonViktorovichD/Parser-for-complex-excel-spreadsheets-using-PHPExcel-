@@ -85,7 +85,6 @@
                 difference.length = 0;
                 distr_depart_arr = [district, department];
 
-                console.log(distr_depart_arr);
 
                 for (let i = 0; i < users.length; i++) {
                     if (users[i].dataset.department == distr_depart_arr[1] && users[i].dataset.district == distr_depart_arr[0]) {
@@ -104,10 +103,20 @@
 
                 if (users_arr.length > 0) {
                     difference = users.filter(num => !users_arr.includes(num)).concat(users_arr.filter(num => !users.includes(num)));
-                    // intersection = users.filter(num => users_arr.includes(num));
-                    for (let k = 0; k < difference.length; k++) {
-                        difference[k].hidden = true;
+                    intersection = users.filter(num => users_arr.includes(num));
+                    if (intersection == difference) {
+                        for (let k = 0; k < difference.length; k++) {
+                            difference[k].hidden = false;
+                        }
+                    } else {
+                        for (let k = 0; k < difference.length; k++) {
+                            difference[k].hidden = true;
+                        }
+                        for (let j = 0; j < difference.length; j++) {
+                            intersection[j].hidden = false;
+                        }
                     }
+
                 } else if (users_arr.length == 0) {
                     difference = users.filter(num => !users_arr.includes(num)).concat(users_arr.filter(num => !users.includes(num)));
                     for (let k = 0; k < difference.length; k++) {
