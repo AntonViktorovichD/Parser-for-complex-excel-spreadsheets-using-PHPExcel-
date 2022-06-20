@@ -81,9 +81,9 @@
                 echo '<td colspan="2">' . $user['district'] . '</td>';
                 echo '<td colspan="2">' . $user['department'] . '</td>';
                 echo '<td colspan="2">' . $user['org'] . '</td>';
-                echo '<td colspan="2"><input type="checkbox" id="email" name="email ' . $user['org_id'] . '"></td>';
-                echo '<td><input type="checkbox" id="specialist_mobile_phone" name="specialist_mobile_phone ' . $user['org_id'] . '"></td>';
-                echo '<td><input type="checkbox" id="directors_mobile_phone" name="directors_mobile_phone ' . $user['org_id'] . '"></td>';
+                echo '<td colspan="2"><input type="checkbox" id="email" name="email ' . $user['org_id'] . '" value="' . $user['org_id'] . '"></td>';
+                echo '<td><input type="checkbox" id="specialist_mobile_phone" name="specialist_mobile_phone ' . $user['org_id'] . '" value="' . $user['org_id'] . '"></td>';
+                echo '<td><input type="checkbox" id="directors_mobile_phone" name="directors_mobile_phone ' . $user['org_id'] . '" value="' . $user['org_id'] . '"></td>';
                 echo '</tr>';
             }
         @endphp
@@ -93,41 +93,40 @@
 @include('layouts.footer')
 <script src="/js/users_filter.js"></script>
 <script>
-    window.onload = () => {
-        let email = Array.from(document.querySelectorAll('#email'));
-        let specialist_mobile_phone = Array.from(document.querySelectorAll('#specialist_mobile_phone'));
-        let directors_mobile_phone = Array.from(document.querySelectorAll('#directors_mobile_phone'));
-        let notifications = <?php echo $notification_rights ?>;
-        global_time.value = notifications[0]['time_delay'];
-        if (notifications[0]['id'] == '1') {
-            global_email.checked = true;
-        }
-        if (notifications[0]['mobile_phone'] == '1') {
-            global_sms.checked = true;
-        }
-
-        global_email.addEventListener('input', (e) => {
-                for (let i = 0; i < email.length; i++) {
-                    if (e.target.checked) {
-                        email[i].disabled = false;
-                    } else {
-                        email[i].disabled = true;
-                    }
-                }
-            }
-        )
-        global_sms.addEventListener('input', (e) => {
-                for (let i = 0; i < specialist_mobile_phone.length; i++) {
-                    if (e.target.checked) {
-                        specialist_mobile_phone[i].disabled = false;
-                        directors_mobile_phone[i].disabled = false;
-                    } else {
-                        specialist_mobile_phone[i].disabled = true;
-                        directors_mobile_phone[i].disabled = true;
-                    }
-                }
-            }
-        )
+    let email = Array.from(document.querySelectorAll('#email'));
+    let specialist_mobile_phone = Array.from(document.querySelectorAll('#specialist_mobile_phone'));
+    let directors_mobile_phone = Array.from(document.querySelectorAll('#directors_mobile_phone'));
+    let notifications = <?php echo $notification_rights ?>;
+    global_time.value = notifications[0]['time_delay'];
+    if (notifications[0]['id'] == '1') {
+        global_email.checked = true;
     }
+    if (notifications[0]['mobile_phone'] == '1') {
+        global_sms.checked = true;
+    }
+
+    let checked = <?php echo $checked ?>;
+    for (let i = 0; i < checked.length; i++) {
+        console.log(checked);
+    }
+
+    global_email.addEventListener('input', (e) => {
+            for (let i = 0; i < email.length; i++) {
+                email[i].disabled = e.target.checked ? false : true;
+            }
+        }
+    )
+    global_sms.addEventListener('input', (e) => {
+            for (let i = 0; i < specialist_mobile_phone.length; i++) {
+                if (e.target.checked) {
+                    specialist_mobile_phone[i].disabled = false;
+                    directors_mobile_phone[i].disabled = false;
+                } else {
+                    specialist_mobile_phone[i].disabled = true;
+                    directors_mobile_phone[i].disabled = true;
+                }
+            }
+        }
+    )
 </script>
 
