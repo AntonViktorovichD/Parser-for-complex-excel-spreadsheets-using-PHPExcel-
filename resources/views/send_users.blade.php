@@ -107,7 +107,6 @@
 
     let checked = <?php echo $checked ?>;
     for (let i = 0; i < checked.length; i++) {
-        console.log(checked);
     }
 
     global_email.addEventListener('input', (e) => {
