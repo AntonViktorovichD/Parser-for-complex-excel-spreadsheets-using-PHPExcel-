@@ -28,9 +28,6 @@ window.onload = () => {
                 if (users[i].dataset.district == distr_depart_arr[0] && distr_depart_arr[1] == 0) {
                     users_arr.push(users[i]);
                 }
-                if (district == 0 && department == 0) {
-                    users_arr;
-                }
             }
 
             if (users_arr.length > 0) {
@@ -44,57 +41,21 @@ window.onload = () => {
                     for (let k = 0; k < difference.length; k++) {
                         difference[k].hidden = true;
                     }
-                    for (let j = 0; j < difference.length; j++) {
+                    for (let j = 0; j < intersection.length; j++) {
                         intersection[j].hidden = false;
                     }
                 }
             } else if (users_arr.length == 0) {
                 difference = users.filter(num => !users_arr.includes(num)).concat(users_arr.filter(num => !users.includes(num)));
+                intersection = users.filter(num => users_arr.includes(num));
                 for (let k = 0; k < difference.length; k++) {
                     difference[k].hidden = true;
                 }
             }
+
             if (district == 0 && department == 0) {
-                difference = users.filter(num => !users_arr.includes(num)).concat(users_arr.filter(num => !users.includes(num)));
-                for (let k = 0; k < difference.length; k++) {
-                    difference[k].hidden = false;
-                }
-            }
-        }
-    )
-    let email = Array.from(document.querySelectorAll('#email'));
-    let specialist_mobile_phone = Array.from(document.querySelectorAll('#specialist_mobile_phone'));
-    let directors_mobile_phone = Array.from(document.querySelectorAll('#directors_mobile_phone'));
-    for (let i = 0; i < email.length; i++) {
-        if (email[i].disabled == false) {
-            global_email.checked = true;
-        } else {
-            global_email.checked = false;
-        }
-        if (specialist_mobile_phone[i].disabled == false && directors_mobile_phone[i].disabled == false) {
-            global_sms.checked = true;
-        } else {
-            global_sms.checked = false;
-        }
-    }
-    global_email.addEventListener('input', (e) => {
-            for (let i = 0; i < email.length; i++) {
-                if (e.target.checked) {
-                    email[i].disabled = false;
-                } else {
-                    email[i].disabled = true;
-                }
-            }
-        }
-    )
-    global_sms.addEventListener('input', (e) => {
-            for (let i = 0; i < specialist_mobile_phone.length; i++) {
-                if (e.target.checked) {
-                    specialist_mobile_phone[i].disabled = false;
-                    directors_mobile_phone[i].disabled = false;
-                } else {
-                    specialist_mobile_phone[i].disabled = true;
-                    directors_mobile_phone[i].disabled = true;
+                for (let k = 0; k < users.length; k++) {
+                    users[k].hidden = false;
                 }
             }
         }
