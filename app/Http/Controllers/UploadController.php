@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -393,7 +394,6 @@ class UploadController extends Controller {
                     }
                 }
 
-                var_dump($func_coords);
                 $json_func_coords = json_encode($func_coords);
 
                 $json_markup = json_encode(array_merge($coords, $merge_cells));
@@ -409,8 +409,8 @@ class UploadController extends Controller {
             } else {
                 return view('upload', ['ulerror' => 'Проверьте правильность введенных данных и наличие таблицы для загрузки']);
             }
-        } catch (\Exception $e) {
-            die("Нет подключения к базе данных.");
+        } catch (QueryException $e) {
+            echo 'Ошибка: ' . $e->getMessage();
         }
     }
 }

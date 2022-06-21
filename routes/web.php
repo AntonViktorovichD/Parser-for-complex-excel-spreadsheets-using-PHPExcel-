@@ -1,5 +1,7 @@
 <?php
 
+Route::get('mail/send', 'MailController@send');
+
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'home');

@@ -1,15 +1,45 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Swift_SmtpTransport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use PHPExcel_Cell;
 use PHPExcel_IOFactory;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
+
 class TestController extends Controller {
     public function test() {
+
+        $transport = \Swift_SmtpTransport::newInstance('smtp.example.org', 25);
+
+// Create the Mailer using your created Transport
+        $mailer = new \Swift_Mailer($transport);
+
+// Create a message
+        $message = (new \Swift_Message('Wonderful Subject'))
+            ->setFrom(['john@doe.com' => 'John Doe'])
+            ->setTo(['receiver@domain.org', 'other@domain.org' => 'A name'])
+            ->setBody('Here is the message itself');
+
+// Send the message
+        $result = $mailer->send($message);
+
+//            $subject = 'Обращение из мобильного приложения министерства социальной политики Нижегородской области MINSOCIUM.RU';
+//            $mail_message = '<html>
+//            <body>
+//            <h2>Министерство социальной политики Нижегородской области</h2>
+//            <p><b>Ф.И.О. (отчество при наличии)</b></p>
+//            <p style="margin-left: 16px;">Test Message</p>
+//            </body>
+//            </html>
+//            ';
+//            $headers = 'MIME-Version: 1.0' . "\r\n";
+//            $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+//            $sender = "=?utf-8?B?ИНФОРМАЦИОННО?= <ИНФОРМАЦИОННО> ";
+//            $headers .= 'From: admin@wampserver.invalid' . "\r\n";
+//            mail('pigem38101@exoacre.com', $subject, $mail_message, $headers);
         return view('test');
     }
 
@@ -29,7 +59,7 @@ class TestController extends Controller {
             for ($col = 0; $col < $highestColumnIndex; $col++) {
                 $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
                 $coord = $worksheet->getCellByColumnAndRow($col, $row)->getCoordinate();
-                if(isset($value)) {
+                if (isset($value)) {
                     $coords[$coord] = $value;
                 }
             }
