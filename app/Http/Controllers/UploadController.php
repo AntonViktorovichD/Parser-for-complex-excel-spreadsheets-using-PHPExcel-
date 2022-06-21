@@ -404,7 +404,8 @@ class UploadController extends Controller {
 
                 unlink($tmpPath);
 
-                return redirect()->action([JsonController::class, 'arrayToJson']);
+//                return redirect()->action([JsonController::class, 'arrayToJson']);
+                return redirect()->action([TestController::class, 'test'], ['table_uuid' => $table_uuid]);
 
             } else {
                 return view('upload', ['ulerror' => 'Проверьте правильность введенных данных и наличие таблицы для загрузки']);

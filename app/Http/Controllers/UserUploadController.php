@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,8 +18,8 @@ class UserUploadController extends Controller {
             $json_val = json_encode($input, JSON_UNESCAPED_UNICODE);
             DB::insert('insert into report_values (table_name, table_uuid, row_uuid, user_id, user_dep, json_val, created_at) values (?, ?, ?, ?, ?, ?, ?)', [$table_name, $table_uuid, $row_uuid, $user_id, $user_dep, $json_val, $created_at]);
             return view('user_upload', ['name' => $table_name, 'alert' => 'Запись успешно добавлена']);
-        } catch (\Exception $e) {
-            die("Нет подключения к базе данных.");
+        } catch (QueryException $e) {
+            echo 'Ошибка: ' . $e->getMessage();
         }
     }
 }

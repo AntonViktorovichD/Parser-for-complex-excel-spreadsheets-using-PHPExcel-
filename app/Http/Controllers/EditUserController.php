@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
@@ -18,8 +19,8 @@ class EditUserController extends Controller {
                 $department = $user;
             }
             DB::table('users')->where('id', '$id')->update(['department' => $department]);
-        } catch (\Exception $e) {
-            die("Нет подключения к базе данных.");
+        } catch (QueryException $e) {
+            echo 'Ошибка: ' . $e->getMessage();
         }
     }
 }

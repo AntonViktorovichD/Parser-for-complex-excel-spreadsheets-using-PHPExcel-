@@ -4,16 +4,15 @@ namespace App\Http\Controllers\Traits;
 
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use App\Http\Controllers\Controller;
 
-trait FileUploadTrait
-{
+trait FileUploadTrait {
 
     /**
      * File upload trait used in controllers to upload files
      */
-    public function saveFiles(Request $request)
-    {
-        if (! file_exists(public_path('uploads'))) {
+    public function saveFiles(Request $request) {
+        if (!file_exists(public_path('uploads'))) {
             mkdir(public_path('uploads'), 0777);
             mkdir(public_path('uploads/thumb'), 0777);
         }
@@ -25,13 +24,13 @@ trait FileUploadTrait
                 if ($request->has($key . '_max_width') && $request->has($key . '_max_height')) {
                     // Check file width
                     $filename = time() . '-' . $request->file($key)->getClientOriginalName();
-                    $file     = $request->file($key);
-                    $image    = Image::make($file);
-                    if (! file_exists(public_path('uploads/thumb'))) {
+                    $file = $request->file($key);
+                    $image = Image::make($file);
+                    if (!file_exists(public_path('uploads/thumb'))) {
                         mkdir(public_path('uploads/thumb'), 0777, true);
                     }
                     Image::make($file)->resize(50, 50)->save(public_path('uploads/thumb') . '/' . $filename);
-                    $width  = $image->width();
+                    $width = $image->width();
                     $height = $image->height();
                     if ($width > $request->{$key . '_max_width'} && $height > $request->{$key . '_max_height'}) {
                         $image->resize($request->{$key . '_max_width'}, $request->{$key . '_max_height'});

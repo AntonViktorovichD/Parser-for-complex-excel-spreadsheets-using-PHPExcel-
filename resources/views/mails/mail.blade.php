@@ -3,4 +3,3 @@
 <p>Заполнить до: {{ $mail->updated_at }}</p>
 <p>Ответственный: {{ $mail->responsible_specialist }}</p>
 <a href="http://мониторинг.минсоциум.рф">Перейти к заполнению</a>
-

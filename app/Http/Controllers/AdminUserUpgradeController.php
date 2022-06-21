@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -45,8 +46,8 @@ class AdminUserUpgradeController extends Controller {
                 DB::table('report_values')->where('table_uuid', $table_uuid[$j])->where('row_uuid', $row_uuid[$j])->where('user_id', $user_id[$j])->update(['json_val' => $json_val, 'created_at' => $created_at]);
             }
             return view('admin_user_upgrade', ['alert' => 'Запись успешно отредактирована']);
-        } catch (\Exception $e) {
-            die("Нет подключения к базе данных.");
+        } catch (QueryException $e) {
+            echo 'Ошибка: ' . $e->getMessage();
         }
     }
 }

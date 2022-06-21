@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'home');
@@ -10,7 +8,7 @@ Route::get('/home', 'HomeController@index');
 use App\Http\Controllers\TestController;
 
 Route::get('/test', [TestController::class, 'test']);
-Route::post('/test', [TestController::class, 'ultest']);
+//Route::post('/test', [TestController::class, 'test']);
 
 use App\Http\Controllers\UploadController;
 

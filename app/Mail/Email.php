@@ -36,9 +36,5 @@ class Email extends Mailable {
             ->subject('Запрос от министерства')
             ->view('mails.mail')
             ->text('mails.mail_plain');
-//            ->with([
-//                'testVarOne' => '1',
-//                'testVarTwo' => '2',
-//            ]);
     }
 }
