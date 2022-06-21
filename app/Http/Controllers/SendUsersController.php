@@ -27,7 +27,7 @@ class SendUsersController extends Controller {
             $users = json_encode($users, JSON_UNESCAPED_UNICODE);
             return view('send_users', compact('users', 'departments', 'districts', 'notification_rights', 'checked'));
         } catch (QueryException $e) {
-            echo 'Error: ' . $e->getMessage();
+            echo 'Ошибка: ' . $e->getMessage();
         }
     }
 
@@ -65,7 +65,7 @@ class SendUsersController extends Controller {
             }
             return view('send_users_upgrade', ['alert' => "Настройки успешно сохранены"]);
         } catch (QueryException $e) {
-            echo 'Error: ' . $e->getMessage();
+            echo 'Ошибка: ' . $e->getMessage();
         }
     }
 }

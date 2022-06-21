@@ -82,8 +82,8 @@
                 echo '<td colspan="2">' . $user['department'] . '</td>';
                 echo '<td colspan="2">' . $user['org'] . '</td>';
                 echo '<td colspan="2"><input type="checkbox" id="email" name="email ' . $user['org_id'] . '" value="' . $user['org_id'] . '"></td>';
-                echo '<td><input type="checkbox" id="specialist_mobile_phone" name="specialist_mobile_phone ' . $user['org_id'] . '" value="' . $user['org_id'] . '"></td>';
-                echo '<td><input type="checkbox" id="directors_mobile_phone" name="directors_mobile_phone ' . $user['org_id'] . '" value="' . $user['org_id'] . '"></td>';
+                echo '<td><input type="checkbox" id="specialist_mobile_phone" name="' . $user['org_id'] . '" value="' . $user['org_id'] . '"></td>';
+                echo '<td><input type="checkbox" id="directors_mobile_phone" name="' . $user['org_id'] . '" value="' . $user['org_id'] . '"></td>';
                 echo '</tr>';
             }
         @endphp
@@ -106,7 +106,17 @@
     }
 
     let checked = <?php echo $checked ?>;
-    for (let i = 0; i < checked.length; i++) {
+
+    for(let i = 0; i < checked.length; i++) {
+        if(checked[i]['e_mail'] == 1){
+            email[checked[i]['org_id'] - 1].checked = true;
+        }
+        if(checked[i]['specialist_mobile_phone'] == 1){
+            specialist_mobile_phone[checked[i]['org_id'] - 1].checked = true;
+        }
+        if(checked[i]['directors_mobile_phone'] == 1){
+            directors_mobile_phone[checked[i]['org_id'] - 1].checked = true;
+        }
     }
 
     global_email.addEventListener('input', (e) => {
