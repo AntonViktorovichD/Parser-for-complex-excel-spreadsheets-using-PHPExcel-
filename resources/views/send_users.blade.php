@@ -10,6 +10,16 @@
         width: 60px;
     }
 
+    .top-btn {
+        float: right;
+        margin-right: 20px;
+        margin-top: 10px !important;
+    }
+
+    .top-checkbox {
+        margin-bottom: 20px !important;
+    }
+
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button {
         display: none;
@@ -42,12 +52,15 @@
 </style>
 <form method="post" action="/send_users_upgrade">
     @csrf
-    <label><input type="checkbox" id="global_email" name="global_email">&nbsp; Email</label>
+    <label><input type="checkbox" id="global_email" name="global_email">&nbsp; Глобальная блокировка Email</label>
+    <input class="btn top-btn btn-primary btn-submit-second button" type="submit" value="Отправить">
     <br/>
-    <label><input type="checkbox" id="global_sms" name="global_sms">&nbsp; Sms</label>
-    <label><input type="number" placeholder="time" id="global_time" name="global_time">&nbsp; Time</label>
-    <br/>
-    <br/>
+
+    <label><input type="checkbox" id="global_sms" name="global_sms">&nbsp;Глобальная блокировка Sms</label>
+    <div class="top-checkbox">
+        <label>Время задержки отправки Sms (мин) &nbsp;<input type="number" placeholder="time" id="global_time"
+                                                              name="global_time"></label>
+    </div>
     <table>
         <tr>
             <th rowspan="2" colspan="2">
@@ -107,14 +120,14 @@
 
     let checked = <?php echo $checked ?>;
 
-    for(let i = 0; i < checked.length; i++) {
-        if(checked[i]['e_mail'] == 1){
+    for (let i = 0; i < checked.length; i++) {
+        if (checked[i]['e_mail'] == 1) {
             email[checked[i]['org_id'] - 1].checked = true;
         }
-        if(checked[i]['specialist_mobile_phone'] == 1){
+        if (checked[i]['specialist_mobile_phone'] == 1) {
             specialist_mobile_phone[checked[i]['org_id'] - 1].checked = true;
         }
-        if(checked[i]['directors_mobile_phone'] == 1){
+        if (checked[i]['directors_mobile_phone'] == 1) {
             directors_mobile_phone[checked[i]['org_id'] - 1].checked = true;
         }
     }
