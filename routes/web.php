@@ -1,6 +1,6 @@
 <?php
 
-Route::get('mail/send', 'MailController@send');
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -64,6 +64,10 @@ use App\Http\Controllers\SendUsersController;
 
 Route::get('/send_users', [SendUsersController::class, 'send'])->middleware('checkAdmin');
 Route::post('/send_users_upgrade', [SendUsersController::class, 'get_options'])->middleware('checkAdmin');
+
+use App\Http\Controllers\MailController;
+
+Route::get('/mail', [MailController::class, 'send_mail']);
 
 Auth::routes(['register' => false]);
 

@@ -1,20 +1,20 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Mail\DemoEmail;
+use App\Mail\Email;
 use Illuminate\Support\Facades\Mail;
 
-class MailController extends Controller
-{
-    public function send()
-    {
-        $objDemo = new \stdClass();
-        $objDemo->demo_one = 'Demo One Value';
-        $objDemo->demo_two = 'Demo Two Value';
-        $objDemo->sender = 'SenderUserName';
-        $objDemo->receiver = 'ReceiverUserName';
+class MailController extends Controller {
+    public function send_mail() {
 
-        Mail::to("receiver@example.com")->send(new DemoEmail($objDemo));
+        date_default_timezone_set('Europe/Moscow');
+
+        $objDemo = new \stdClass();
+        $objDemo->table_name = "Имя Таблицы";
+        $objDemo->updated_at = date('H:i - d.m.Y');
+        $objDemo->responsible_specialist = "Ответственный: ";
+        Mail::to("receiver@example.com")->send(new Email($objDemo));
     }
 }
