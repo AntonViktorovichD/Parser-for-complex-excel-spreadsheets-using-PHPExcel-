@@ -8,7 +8,6 @@ Route::get('/home', 'HomeController@index');
 use App\Http\Controllers\TestController;
 
 Route::get('/test', [TestController::class, 'test']);
-//Route::post('/test', [TestController::class, 'test']);
 
 use App\Http\Controllers\UploadController;
 
@@ -63,9 +62,9 @@ use App\Http\Controllers\SendUsersController;
 Route::get('/send_users', [SendUsersController::class, 'send'])->middleware('checkAdmin');
 Route::post('/send_users_upgrade', [SendUsersController::class, 'get_options'])->middleware('checkAdmin');
 
-use App\Http\Controllers\MailController;
+use App\Http\Controllers\NotificationController;
 
-Route::get('/mail', [MailController::class, 'send_mail']);
+Route::get('/notification', [NotificationController::class, 'send_notification']);
 
 Auth::routes(['register' => false]);
 

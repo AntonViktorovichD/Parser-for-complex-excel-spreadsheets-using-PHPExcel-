@@ -9,8 +9,8 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
-class MailController extends Controller {
-    public function send_mail(Request $request) {
+class NotificationController extends Controller {
+    public function send_notification(Request $request) {
         date_default_timezone_set('Europe/Moscow');
         try {
             $notification_rights = DB::table('notification_rights')->where('id', '=', 1)->get()[0];
