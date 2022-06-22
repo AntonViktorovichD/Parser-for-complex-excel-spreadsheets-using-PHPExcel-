@@ -43,11 +43,11 @@
                         @csrf
                         @php
                             $prev_create_time = DB::table('tables')->orderBy('id', 'desc')->value('created_at');
+                            $time_range = DB::table('notification_rights')->value('time_range');
                               date_default_timezone_set('Europe/Moscow');
                               $now = new DateTime();
                               $date = DateTime::createFromFormat("Y-m-d H:i:s", $prev_create_time);
-                              $days = $now->diff($date)->d;
-                              $hours = $now->diff($date)->h;
+                              $hours = $now->diff($date)->d*24 + $now->diff($date)->h;
                                 echo '<div class="row-fluid">';
                                 echo '<label for="reestr_table___label" class="fabrikLabel control-label fabrikTip">
                                                 <i data-isicon="true" class="icon- small " ></i> Название запроса </label>';
@@ -118,12 +118,24 @@
                                 echo '</div>';
                                 echo '</div>';
                                 echo '</div>';
-                                echo '<input style="border: 2px solid #e43d3c !important;" class="btn btn-primary btn-submit-second button" type="submit" @click="check" value="Отправить запрос">';
+                                echo '<input style="border: 2px solid #e43d3c !important;" class="btn btn-primary btn-submit-second button" id="cnfrm" @click="check" value="Отправить запрос">';
                         @endphp
                     </form>
                     <script src="/js/vue.global.js"></script>
                     <script src="/js/vue.upload.js"></script>
-                    <script></script>
+                    <script>
+                        let time_range = <?php echo $time_range?>;
+                        let hours = <?php echo $hours ?>;
+                        console.log(hours);
+                        cnfrm.onclick = function() {
+
+                            if(confirm(11111)){
+                                form.submit()
+                            } else {
+                                alert('Something went wrong')
+                            }
+                        }
+                    </script>
                     <script>
                         jQuery.datetimepicker.setLocale('ru');
                         jQuery('#datetimepicker-s, #datetimepicker-f').datetimepicker({

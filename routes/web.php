@@ -8,7 +8,7 @@ Route::get('/home', 'HomeController@index');
 use App\Http\Controllers\TestController;
 
 Route::get('/test', [TestController::class, 'test']);
-//Route::post('/test', [TestController::class, 'test']);
+Route::post('/testul', [TestController::class, 'ultest']);
 
 use App\Http\Controllers\UploadController;
 

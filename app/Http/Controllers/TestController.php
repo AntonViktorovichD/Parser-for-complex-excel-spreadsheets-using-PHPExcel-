@@ -3,34 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use PHPExcel_Cell;
+use PHPExcel_IOFactory;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
-
 class TestController extends Controller {
-    public function test(Request $request) {
-        $notification_rights = DB::table('notification_rights')->where('id', '=', 1)->get()[0];
-        $notifications = [];
-        if ($notification_rights->e_mail != 0 || $notification_rights->mobile_phone != 0) {
-            $table_uuid = $request->get('table_uuid');
-            $table = DB::table('tables')->where('table_uuid', '=', $table_uuid)->get();
-            $table_name = $table[0]->table_name;
-            $departments = json_decode($table[0]->departments, true);
-            foreach ($departments as $department) {
-                $notification = DB::table('user_noifications')->where('org_id', '=', $department)->get()[0];
-                $notifications[$department]['e_mail'] = $notification->e_mail;
-                $notifications[$department]['specialist_mobile_phone'] = $notification->specialist_mobile_phone;
-                $notifications[$department]['directors_mobile_phone'] = $notification->directors_mobile_phone;
+    public function test() {
+        return view('test');
+    }
+
+    public function ultest(Request $request) {
+        $file = $request->file('userfile');
+        $newFileName = bin2hex(random_bytes(10)) . '.tmp';
+        Storage::putFileAs('public/folder', $file, $newFileName);
+        $tmpPath = base_path() . '/storage/app/public/folder' . '/' . $newFileName;
+
+        $excel = PHPExcel_IOFactory::load($tmpPath);
+        $worksheet = $excel->getActiveSheet();
+        $highestRow = $worksheet->getHighestRow();
+        $highestColumn = $worksheet->getHighestColumn();
+        $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+        $arr = [];
+        for ($row = 1; $row < $highestRow; $row++) {
+            $colCounter = 0;
+            for ($col = 0; $col < $highestColumnIndex; $col++) {
+                $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                $coord = $worksheet->getCellByColumnAndRow($col, $row)->getCoordinate();
+                if (isset($value)) {
+                    $arr[$coord] = $value;
+                }
             }
-//        foreach ($table as $key => $tab) {
-//            echo '<pre>';
-//            var_dump($tab);
-//            echo '</pre>';
-//        }
         }
-        foreach ($notifications as $key => $notification) {
-            if($notification['e_mail'] == 1) {
-                var_dump(DB::table('users')->where('department', '=', $key)->value('email'));
-            }
-        }
+        $mergeCells = $worksheet->getMergeCells();
+        $mc = json_encode($mergeCells);
+        $cv = json_encode($arr);
+        DB::table('test')->insert(['coord' => $cv, 'merge_cells' => $mc]);
+//        echo '<pre>';
+//        var_dump($arr);
+//        echo '</pre>';
+
+        return view('export');
     }
 }
