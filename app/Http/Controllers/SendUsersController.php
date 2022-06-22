@@ -39,7 +39,7 @@ class SendUsersController extends Controller {
             $e_mail = isset($global_email) ? 1 : 0;
             $global_sms = $request->input('global_sms');
             $mobile_phone = isset($global_sms) ? 1 : 0;
-            DB::table('notification_rights')->where('id', 1)->update(['e_mail' => $e_mail, 'mobile_phone' => $mobile_phone, 'time_delay' => $request->input('global_time')]);
+            DB::table('notification_rights')->where('id', 1)->update(['e_mail' => $e_mail, 'mobile_phone' => $mobile_phone, 'time_delay' => $request->input('global_time'), 'time_range' => $request->input('time_range')]);
             foreach ($alinements as $key => $alinement) {
                 if (preg_replace('#_\d+#', '', $key) == 'email') {
                     $arr_checked[$alinement]['email'] = 1;

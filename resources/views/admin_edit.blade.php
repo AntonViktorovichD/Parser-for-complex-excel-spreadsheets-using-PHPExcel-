@@ -43,6 +43,7 @@
     $arrNum = [];
     $arrKeyVal = [];
     $row_uuid = $row_uuid[0]->row_uuid;
+
     echo '<form method="post" action="/admin_user_upgrade">';
 @endphp
 @csrf

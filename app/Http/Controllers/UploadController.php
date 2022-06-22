@@ -404,7 +404,7 @@ class UploadController extends Controller {
 
                 unlink($tmpPath);
 
-                return redirect()->action([NotificationController::class, 'send_notification'], ['table_uuid' => $table_uuid]);
+                return redirect()->action([MailController::class, 'send_mail'], ['table_uuid' => $table_uuid]);
 
             } else {
                 return view('upload', ['ulerror' => 'Проверьте правильность введенных данных и наличие таблицы для загрузки']);

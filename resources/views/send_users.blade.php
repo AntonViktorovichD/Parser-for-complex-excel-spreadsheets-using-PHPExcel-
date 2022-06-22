@@ -8,6 +8,7 @@
         -appearance: textfield;
         height: 20px;
         width: 60px;
+        text-align: center;
     }
 
     .top-btn {
@@ -58,8 +59,8 @@
 
     <label><input type="checkbox" id="global_sms" name="global_sms">&nbsp;Глобальная блокировка Sms</label>
     <div class="top-checkbox">
-        <label>Время задержки отправки Sms (мин) &nbsp;<input type="number" placeholder="time" id="global_time"
-                                                              name="global_time"></label>
+        <label>Время задержки отправки Sms (мин) &nbsp;<input type="number" id="global_time" name="global_time"></label><br/>
+        <label>Разница времени между началом и концом сбора данных (ч) &nbsp;<input type="number" id="time_range" name="time_range"></label>
     </div>
     <table>
         <tr>
@@ -111,6 +112,7 @@
     let directors_mobile_phone = Array.from(document.querySelectorAll('#directors_mobile_phone'));
     let notifications = <?php echo $notification_rights ?>;
     global_time.value = notifications[0]['time_delay'];
+    time_range.value = notifications[0]['time_range'];
     if (notifications[0]['id'] == '1') {
         global_email.checked = true;
     }
