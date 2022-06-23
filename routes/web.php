@@ -67,6 +67,10 @@ use App\Http\Controllers\MailController;
 
 Route::get('/mail', [MailController::class, 'send_mail']);
 
+use App\Http\Controllers\SmsController;
+
+Route::get('/sms', [SmsController::class, 'send_sms']);
+
 Auth::routes(['register' => false]);
 
 Route::get('change_password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('auth.change_password')->middleware('checkAdmin');

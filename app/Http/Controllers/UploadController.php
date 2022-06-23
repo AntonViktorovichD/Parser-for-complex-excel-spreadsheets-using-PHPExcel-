@@ -32,6 +32,8 @@ class UploadController extends Controller {
 
         $user_id = Auth::id();
 
+
+
         try {
             DB::connection()->getPdo();
 
@@ -70,6 +72,7 @@ class UploadController extends Controller {
 
                 $tmpPath = base_path() . '/storage/app/public/folder' . '/' . $newFileName;
 
+                $sms = $request->input('sms');
 
                 $excel = PHPExcel_IOFactory::load($tmpPath);
                 $worksheet = $excel->getActiveSheet();
@@ -404,8 +407,11 @@ class UploadController extends Controller {
 
                 unlink($tmpPath);
 
-                return redirect()->action([MailController::class, 'send_mail'], ['table_uuid' => $table_uuid]);
-
+                if ($sms == 'yes') {
+                    return redirect()->action([SmsController::class, 'send_sms'], ['table_uuid' => $table_uuid]);
+                } else {
+                    return redirect()->action([MailController::class, 'send_mail'], ['table_uuid' => $table_uuid]);
+                }
             } else {
                 return view('upload', ['ulerror' => 'Проверьте правильность введенных данных и наличие таблицы для загрузки']);
             }

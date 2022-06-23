@@ -32,7 +32,7 @@
                         <h2>Создание запроса данных</h2>
                     </div>
                     {{ $ulerror }}
-                    <form method="post" action="/ul" enctype="multipart/form-data">
+                    <form method="post" id="form" action="/ul" enctype="multipart/form-data">
                         <div class="row-fluid nav">
                             <div class="span6 pull-right">
                             </div>
@@ -43,11 +43,13 @@
                         @csrf
                         @php
                             $prev_create_time = DB::table('tables')->orderBy('id', 'desc')->value('created_at');
-                            $time_range = DB::table('notification_rights')->value('time_range');
+                            echo '<div id="prev" hidden>' . $prev_create_time . '</div>';
+                            $time_delay = DB::table('notification_rights')->value('time_delay');
                               date_default_timezone_set('Europe/Moscow');
                               $now = new DateTime();
                               $date = DateTime::createFromFormat("Y-m-d H:i:s", $prev_create_time);
                               $hours = $now->diff($date)->d*24 + $now->diff($date)->h;
+                              $minutes = $now->diff($date)->d*24*60 + $now->diff($date)->h*60 + $now->diff($date)->i;
                                 echo '<div class="row-fluid">';
                                 echo '<label for="reestr_table___label" class="fabrikLabel control-label fabrikTip">
                                                 <i data-isicon="true" class="icon- small " ></i> Название запроса </label>';
@@ -113,6 +115,7 @@
                                 echo '<div class="controls">';
                                 echo '<div class="fabrikElement">';
                                 echo '<textarea class="fabrikinput inputbox input-block-level" name="comment" cols="40" rows="6"></textarea>';
+                                echo '<input id="sms" type="text" name="sms" hidden>';
                                 echo '</div>';
                                 echo '</div>';
                                 echo '</div>';
@@ -124,15 +127,24 @@
                     <script src="/js/vue.global.js"></script>
                     <script src="/js/vue.upload.js"></script>
                     <script>
-                        let time_range = <?php echo $time_range?>;
+                        let success = document.getElementById("prev");
+                        let sms = document.getElementById("sms");
                         let hours = <?php echo $hours ?>;
-                        console.log(hours);
-                        cnfrm.onclick = function() {
-
-                            if(confirm(11111)){
-                                form.submit()
+                        let time_delay = <?php echo $time_delay ?>;
+                        let minutes = <?php echo $minutes ?>;
+                        console.log(minutes);
+                        cnfrm.onclick = function () {
+                            if (minutes < time_delay) {
+                                if (confirm('Прошло меньше ' + minutes + ' мин (прошло: ' + success.innerHTML + ' мин) с момента последней отправки смс, подождите или создайте сейчас без смс.')) {
+                                    sms.value = 'yes';
+                                    form.submit()
+                                } else {
+                                    sms.value = 'no';
+                                    form.submit()
+                                }
                             } else {
-                                alert('Something went wrong')
+                                sms.value = 'yes';
+                                form.submit();
                             }
                         }
                     </script>
