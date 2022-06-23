@@ -33,7 +33,6 @@ class UploadController extends Controller {
         $user_id = Auth::id();
 
 
-
         try {
             DB::connection()->getPdo();
 
@@ -391,7 +390,7 @@ class UploadController extends Controller {
                     for ($col = 0; $col < $highestColumnIndex; $col++) {
                         $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
                         $coord = $worksheet->getCellByColumnAndRow($col, $row)->getCoordinate();
-                        if(isset($value)) {
+                        if (isset($value)) {
                             $func_coords[$coord] = $value;
                         }
                     }
@@ -407,11 +406,11 @@ class UploadController extends Controller {
 
                 unlink($tmpPath);
 
-//                if ($sms == 'yes') {
+                if ($sms == 'yes') {
                     return redirect()->action([SmsController::class, 'send_sms'], ['table_uuid' => $table_uuid]);
-//                } else {
-//                    return redirect()->action([MailController::class, 'send_mail'], ['table_uuid' => $table_uuid]);
-//                }
+                } else {
+                    return redirect()->action([MailController::class, 'send_mail'], ['table_uuid' => $table_uuid]);
+                }
             } else {
                 return view('upload', ['ulerror' => 'Проверьте правильность введенных данных и наличие таблицы для загрузки']);
             }
