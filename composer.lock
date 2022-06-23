@@ -4,8 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be215b1db47adecad6232a4bc2dc5d7f",
+    "content-hash": "d453c6b058dc04938b91658d10389b21",
     "packages": [
+        {
+            "name": "cooperav/sms-aero-v2-laravel",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CooperAV/sms-aero-v2-laravel.git",
+                "reference": "e111859c8fa2b97e31e28bab7817fcfd46bf00d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CooperAV/sms-aero-v2-laravel/zipball/e111859c8fa2b97e31e28bab7817fcfd46bf00d4",
+                "reference": "e111859c8fa2b97e31e28bab7817fcfd46bf00d4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CooperAV\\SmsAero\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander",
+                    "email": "cooperav@ukr.net",
+                    "homepage": "https://github.com/CooperAV/SmsAero-v2-laravel",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Package for using service messages in Laravel-5",
+            "keywords": [
+                "laravel",
+                "sms-aero"
+            ],
+            "support": {
+                "issues": "https://github.com/CooperAV/sms-aero-v2-laravel/issues",
+                "source": "https://github.com/CooperAV/sms-aero-v2-laravel/tree/1.0.1"
+            },
+            "time": "2019-01-17T10:48:14+00:00"
+        },
         {
             "name": "coreui/coreui",
             "version": "v4.1.0",

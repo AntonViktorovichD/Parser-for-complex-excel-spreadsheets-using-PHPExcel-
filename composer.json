@@ -9,6 +9,7 @@
         "ext-mbstring": "*",
         "ext-xml": "*",
         "ext-xmlwriter": "*",
+        "cooperav/sms-aero-v2-laravel": "^1.0",
         "coreui/coreui": "^4.1",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",

@@ -407,11 +407,11 @@ class UploadController extends Controller {
 
                 unlink($tmpPath);
 
-                if ($sms == 'yes') {
+//                if ($sms == 'yes') {
                     return redirect()->action([SmsController::class, 'send_sms'], ['table_uuid' => $table_uuid]);
-                } else {
-                    return redirect()->action([MailController::class, 'send_mail'], ['table_uuid' => $table_uuid]);
-                }
+//                } else {
+//                    return redirect()->action([MailController::class, 'send_mail'], ['table_uuid' => $table_uuid]);
+//                }
             } else {
                 return view('upload', ['ulerror' => 'Проверьте правильность введенных данных и наличие таблицы для загрузки']);
             }
