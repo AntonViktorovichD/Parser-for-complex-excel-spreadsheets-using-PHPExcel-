@@ -62,7 +62,8 @@ class SmsController extends Controller {
                 Storage::disk('local')->put('/folder/' . date("m-Y") . '-log-sendsms.txt', $log);
             }
 
-//            return redirect()->action([MailController::class, 'send_mail']);
+            return redirect()->action([MailController::class, 'send_mail'], ['table_uuid' => $table_uuid]);
+
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }
