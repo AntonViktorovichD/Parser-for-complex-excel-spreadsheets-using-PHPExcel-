@@ -12,7 +12,7 @@ Route::post('/testul', [TestController::class, 'ultest']);
 
 use App\Http\Controllers\UploadController;
 
-Route::get('/add', [UploadController::class, 'form'])->middleware('auth');
+Route::get('/user_add', [UploadController::class, 'form'])->middleware('auth');
 Route::post('/ul', [UploadController::class, 'upload'])->middleware('auth');
 
 use App\Http\Controllers\ShowUserController;

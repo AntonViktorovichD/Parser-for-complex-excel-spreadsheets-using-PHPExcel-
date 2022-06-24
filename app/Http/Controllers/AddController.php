@@ -57,7 +57,7 @@ class AddController extends Controller {
             $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
             asort($arrLR);
             $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-            return view('add', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'dep', 'pattern', 'read_only'));
+            return view('user_add', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'dep', 'pattern', 'read_only'));
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }
