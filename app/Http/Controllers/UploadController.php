@@ -73,6 +73,10 @@ class UploadController extends Controller {
 
                 $sms = $request->input('sms');
 
+                $periodicity = $request->input('periodicity');
+
+                var_dump($periodicity);
+
                 $excel = PHPExcel_IOFactory::load($tmpPath);
                 $worksheet = $excel->getActiveSheet();
                 $mergeCells[] = $worksheet->getMergeCells();
@@ -402,7 +406,7 @@ class UploadController extends Controller {
 
                 $json_func = json_encode($arrFin);
 
-                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, updated_at, highest_row, highest_column_index, departments, radio, read_only, comment, json_func, json_markup, func_coords) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $created_at, $updated_at, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled', $comment, $json_func, $json_markup, $json_func_coords]);
+                DB::insert('insert into tables (json_val, table_name, table_uuid, user_id, created_at, updated_at, highest_row, highest_column_index, departments, radio, read_only, comment, json_func, json_markup, func_coords, status, periodicity) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$json, $filename, $table_uuid, $user_id, $created_at, $updated_at, $highestRow, $highestColumnIndex, $checked, $radio, 'disabled', $comment, $json_func, $json_markup, $json_func_coords, 1, $periodicity]);
 
                 unlink($tmpPath);
 
