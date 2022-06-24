@@ -15,7 +15,11 @@ class UploadController extends Controller {
 
     public function form() {
         if (Auth::user()->getRoleNames()[0] != 'user') {
-            return view('upload', ['ulerror' => '']);
+            if(Auth::user()->getRoleNames()[0] == 'moderator' || Auth::user()->getRoleNames()[0] == 'administrator') {
+                return view('upload', ['ulerror' => '', 'auth' => 1]);
+            } else {
+                return view('upload', ['ulerror' => '', 'auth' => 0]);
+            }
         } else {
             return view('denied');
         }
@@ -232,6 +236,10 @@ class UploadController extends Controller {
                 $created_at = $request->input('created_at');
                 $updated_at = $request->input('updated_at');
                 $comment = $request->input('comment');
+
+                if (empty($created_at)) {
+                    $created_at = date('Y-m-d H:i:s');
+                }
 
                 $json = json_encode($arrCell, JSON_UNESCAPED_UNICODE);
 
