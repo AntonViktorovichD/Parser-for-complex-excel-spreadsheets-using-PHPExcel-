@@ -6,11 +6,11 @@
                     <ul class="uk-navbar-nav uk-hidden-small">
                         <li><a href="/">Начало
                                 работы</a></li>
-                        <li><a href="/add">Создать
+                        <li><a href="/user_add">Создать
                                 запрос из таблицы excel</a></li>
                         <li><a href="/json">Результаты
                                 заполнения запросов</a></li>
-                        <li><a href="/index.php?option=com_wrapper&amp;view=wrapper&amp;Itemid=136">Квартальный
+                        <li><a href="/quarterly_reports">Квартальный
                                 отчёт</a></li>
                         <li><a href="/index.php?option=com_wrapper&amp;view=wrapper&amp;Itemid=137">Удаление
                                 запросов</a></li>

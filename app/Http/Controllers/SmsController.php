@@ -30,39 +30,44 @@ class SmsController extends Controller {
                 }
             }
 
-            $responses_array = [];
-            preg_match('#(\d+)\-(\d+)-(\d+) (\d+)\:(\d+)#', $updated_at, $res);
-            $message = 'Срочный запрос до: ' . $res[4] . ':' . $res[5] . '-' . $res[3] . '.' . $res[2] . '.' . $res[1];
-            $type = 'DIRECT';
-            foreach ($notifications as $key => $notification) {
-                if ($notification['specialist_mobile_phone'] == 1) {
-                    $specialist_mobile_phone = DB::table('users')->where('department', '=', $key)->value('mobile_phone');
-                    if (isset($specialist_mobile_phone)) {
-                        $response = $SMSAero->send('$specialist_mobile_phone', $message, $type);
-                        $responses_array[] = $specialist_mobile_phone;
+            if (isset($updated_at)) {
+
+                $responses_array = [];
+                preg_match('#(\d+)\-(\d+)-(\d+) (\d+)\:(\d+)#', $updated_at, $res);
+                $message = 'Срочный запрос до: ' . $res[4] . ':' . $res[5] . '-' . $res[3] . '.' . $res[2] . '.' . $res[1];
+                $type = 'DIRECT';
+                foreach ($notifications as $key => $notification) {
+                    if ($notification['specialist_mobile_phone'] == 1) {
+                        $specialist_mobile_phone = DB::table('users')->where('department', '=', $key)->value('mobile_phone');
+                        if (isset($specialist_mobile_phone)) {
+                            $response = $SMSAero->send('$specialist_mobile_phone', $message, $type);
+                            $responses_array[] = $specialist_mobile_phone;
+                        }
+                    }
+                    if ($notification['directors_mobile_phone'] == 1) {
+                        $directors_mobile_phone = DB::table('users')->where('department', '=', $key)->value('directors_phone');
+                        if (isset($directors_mobile_phone)) {
+                            $response = $SMSAero->send('directors_mobile_phone', $message, $type);
+                            $responses_array[] = $directors_mobile_phone;
+                        }
                     }
                 }
-                if ($notification['directors_mobile_phone'] == 1) {
-                    $directors_mobile_phone = DB::table('users')->where('department', '=', $key)->value('directors_phone');
-                    if (isset($directors_mobile_phone)) {
-                        $response = $SMSAero->send('directors_mobile_phone', $message, $type);
-                        $responses_array[] = $directors_mobile_phone;
-                    }
+
+                $log = date("d-m H:i:s") . ' ' . $table_uuid . ' ' . $table[0]->id . ' ' . implode(', ', $responses_array) . PHP_EOL;
+
+                if (Storage::exists('/folder/' . 0 . (date("m") - 1) . '-' . date("Y") . '-log-sendsms.txt')) {
+                    Storage::delete('/folder/' . 0 . (date("m") - 1) . '-' . date("Y") . '-log-sendsms.txt');
                 }
-            }
-
-            $log = date("d-m H:i:s") . ' ' . $table_uuid . ' ' . $table[0]->id . ' ' . implode(', ', $responses_array) . PHP_EOL;
-
-            if (Storage::exists('/folder/' . 0 . (date("m") - 1) . '-' . date("Y") . '-log-sendsms.txt')) {
-                Storage::delete('/folder/' . 0 . (date("m") - 1) . '-' . date("Y") . '-log-sendsms.txt');
-            }
-            if (Storage::exists('/folder/' . date("m-Y") . '-log-sendsms.txt')) {
-                Storage::append('/folder/' . date("m-Y") . '-log-sendsms.txt', $log);
-            } else {
-                Storage::disk('local')->put('/folder/' . date("m-Y") . '-log-sendsms.txt', $log);
-            }
+                if (Storage::exists('/folder/' . date("m-Y") . '-log-sendsms.txt')) {
+                    Storage::append('/folder/' . date("m-Y") . '-log-sendsms.txt', $log);
+                } else {
+                    Storage::disk('local')->put('/folder/' . date("m-Y") . '-log-sendsms.txt', $log);
+                }
 
             return redirect()->action([MailController::class, 'send_mail'], ['table_uuid' => $table_uuid]);
+            } else {
+                return redirect()->action([MailController::class, 'send_mail'], ['table_uuid' => $table_uuid]);
+            }
 
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();

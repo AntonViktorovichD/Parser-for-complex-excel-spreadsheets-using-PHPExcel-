@@ -5,6 +5,11 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', 'home');
 Route::get('/home', 'HomeController@index');
 
+use App\Http\Controllers\QuarterlyReportsController;
+
+Route::get('/quarterly_reports', [QuarterlyReportsController::class, 'quarterly_reports']);
+Route::get('/quarterly_report/{name}', [QuarterlyReportsController::class, 'quarterly_report']);
+
 use App\Http\Controllers\TestController;
 
 Route::get('/test', [TestController::class, 'test']);
