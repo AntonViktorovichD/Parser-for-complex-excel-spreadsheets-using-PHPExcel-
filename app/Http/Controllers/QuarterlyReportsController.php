@@ -27,7 +27,12 @@ class QuarterlyReportsController extends Controller {
         }
     }
 
-    public function quarterly_report($name){
-        var_dump($name);
+    public function quarterly_report($name) {
+        $table = DB::table('tables')->where('table_uuid', '=', $name)->get();
+        $departments = [];
+        foreach (json_decode($table[0]->departments, true) as $department) {
+            $departments[] = DB::table('org_helper')->where('id', '=', $department)->value('title');
+        }
+        return view('quarterly_report', compact('table', 'departments'));
     }
 }
