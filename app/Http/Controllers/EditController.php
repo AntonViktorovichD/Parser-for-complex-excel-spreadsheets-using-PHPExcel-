@@ -11,18 +11,19 @@ use Illuminate\Support\Facades\DB;
 class EditController extends Controller {
     public function edit($name) {
         try {
-            $json = json_encode(DB::table('tables')->where('table_name', $name)->value('json_val'));
-            $highest_column_index = DB::table('tables')->where('table_name', $name)->value('highest_column_index');
-            $highest_row = DB::table('tables')->where('table_name', $name)->value('highest_row');
-            $table_uuid = DB::table('tables')->where('table_name', $name)->value('table_uuid');
-            $row_uuid = DB::table('report_values')->where('table_name', $name)->get('row_uuid');
-            $user_id = DB::table('report_values')->where('table_name', $name)->value('user_id');
-            $user_dep = DB::table('report_values')->where('table_name', $name)->value('user_dep');
-            $json_vals = DB::table('report_values')->where('table_name', $name)->value('json_val');
-            $json_func = DB::table('tables')->where('table_name', $name)->value('json_func');
-            $dep = DB::table('org_helper')->where('id', '=', $user_dep)->value('id');
-            $radio = DB::table('tables')->where('table_name', $name)->value('radio');
-            $read_only = DB::table('tables')->where('table_name', $name)->value('read_only');
+            $table = DB::table('tables')->where('table_name', $name)->get();
+            $json = $table[0]->json_val;
+            $highest_column_index = $table[0]->highest_column_index;
+            $highest_row = $table[0]->highest_row;
+            $table_uuid = $table[0]->table_uuid;
+            $radio = $table[0]->radio;
+            $read_only = $table[0]->read_only;
+            $json_func = $table[0]->json_func;
+            $report_values = DB::table('report_values')->where('table_name', $name)->get();
+            $row_uuid = $report_values[0]->row_uuid;
+            $user_id = $report_values[0]->user_id;
+            $user_dep = $report_values[0]->user_dep;
+            $json_vals = $report_values[0]->json_val;
             $pattern = '';
             $reg_arr = [
                 'v_text' => '[A-Za-zА-Яа-яЁё\s,.:;-]+',
@@ -75,16 +76,16 @@ class EditController extends Controller {
                         $rep_value[] = $val;
                     }
                     $report_value = (json_encode(array_combine($rep_key, $rep_value)));
-                    return view('admin_edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'report_value', 'dep', 'pattern', 'json_func', 'json_vals'));
+                    return view('admin_edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'report_value', 'user_dep', 'pattern', 'json_func', 'json_vals'));
                 } else {
                     $report_value = null;
-                    $dep = null;
+                    $user_dep = null;
                     $json_vals = null;
                     return view('admin_add', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid'));
                 }
                             } else {
                 $report_value = json_encode(DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_id', $user_id)->value('json_val'));
-                return view('edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'row_uuid', 'user_id', 'report_value', 'dep', 'pattern', 'read_only', 'json_func', 'json_vals'));
+                return view('edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'row_uuid', 'user_id', 'report_value', 'user_dep', 'pattern', 'read_only', 'json_func', 'json_vals'));
             }
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();

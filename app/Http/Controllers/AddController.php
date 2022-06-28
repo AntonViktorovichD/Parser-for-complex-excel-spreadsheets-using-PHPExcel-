@@ -10,13 +10,14 @@ class AddController extends Controller {
     public function add($name) {
         try {
             DB::connection()->getPdo();
-            $json = json_encode(DB::table('tables')->where('table_name', $name)->value('json_val'));
-            $highest_column_index = DB::table('tables')->where('table_name', $name)->value('highest_column_index');
-            $highest_row = DB::table('tables')->where('table_name', $name)->value('highest_row');
-            $table_uuid = DB::table('tables')->where('table_name', $name)->value('table_uuid');
-            $radio = DB::table('tables')->where('table_name', $name)->value('radio');
-            $read_only = DB::table('tables')->where('table_name', $name)->value('read_only');
-            $json_func = DB::table('tables')->where('table_name', $name)->value('json_func');
+            $table = DB::table('tables')->where('table_name', $name)->get();
+            $json = $table[0]->json_val;
+            $highest_column_index = $table[0]->highest_column_index;
+            $highest_row = $table[0]->highest_row;
+            $table_uuid = $table[0]->table_uuid;
+            $radio = $table[0]->radio;
+            $read_only = $table[0]->read_only;
+            $json_func = $table[0]->json_func;
             $pattern = '';
             $reg_arr = [
                 'v_text' => '[A-Za-zА-Яа-яЁё\s,.:;-]+',
@@ -30,7 +31,7 @@ class AddController extends Controller {
                 }
             }
 
-            $arrCell = json_decode(json_decode($json), true);
+            $arrCell = json_decode($json, true);
             $arrLastRowId = [];
             $arrLastRowKeys = [];
             $arrFirstRowKeys = [];

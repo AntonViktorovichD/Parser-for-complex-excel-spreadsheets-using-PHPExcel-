@@ -25,13 +25,13 @@
 </style>
 @php
     $user_id = Auth::user()->id;
-    $arrCell = json_decode(json_decode($json), true);
+    $arrCell = json_decode($json, true);
     $arrAddRow = array_flip(json_decode($addRowArr, true));
     ksort($arrAddRow);
     $sum =  json_decode($json_func,true);
     $vals =  json_decode($json_vals,true);
     $dep_name = DB::table('org_helper')->where('id', '=', $dep)->value('title');
-    $values = json_decode(json_decode($report_value), true);
+    $values = json_decode($report_value, true);
     $colnum = 1;
     $arrCol = [];
     $arrNum = [];

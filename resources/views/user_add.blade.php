@@ -23,13 +23,11 @@
 @php
     $user_role = Auth::user()->roles->first()->id;
     $user_id = Auth::user()->id;
-    $arrCell = json_decode(json_decode($json), true);
+    $arrCell = json_decode($json, true);
     $arrAddRow = array_flip(json_decode($addRowArr, true));
         $colnum = 1;
     $arrCol = [];
     $sum =  json_decode($json_func,true);
-    $dep_name = DB::table('org_helper')->where('id', '=', $dep)->value('title');
-    var_dump($sum);
 echo '<form method="post" action="/user_upload">';
 @endphp
 @csrf
@@ -57,7 +55,7 @@ echo '<form method="post" action="/user_upload">';
     }
     unset($arrCol[0]);
     echo '<tr>' . PHP_EOL;
-    echo '<td>' . $dep_name . '</td>' . PHP_EOL;
+    echo '<td>' . $user_dep . '</td>' . PHP_EOL;
     if ($read_only == 'disabled') {
         foreach ($sum as $key => $val) {
             if (isset($val)) {
@@ -94,7 +92,7 @@ echo '<form method="post" action="/user_upload">';
         }
     }
     echo '</tr>' . PHP_EOL;
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $dep;
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;

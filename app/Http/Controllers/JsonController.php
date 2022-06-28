@@ -29,10 +29,11 @@ class JsonController extends Controller {
     }
 
     public function tables($name) {
-        $json = json_encode(DB::table('tables')->where('table_name', $name)->value('json_val'));
-        $highest_column_index = DB::table('tables')->where('table_name', $name)->value('highest_column_index');
-        $highest_row = DB::table('tables')->where('table_name', $name)->value('highest_row');
-        $radio = DB::table('tables')->where('table_name', $name)->value('radio');
+        $table = DB::table('tables')->where('table_name', $name)->get();
+        $json = $table[0]->json_val;
+        $highest_column_index = $table[0]->highest_column_index;
+        $highest_row = $table[0]->highest_row;
+        $radio = $table[0]->radio;
         return view('table', compact('json', 'highest_row', 'highest_column_index', 'radio'));
     }
 

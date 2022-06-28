@@ -19,12 +19,13 @@ class ExportSheetController extends Controller {
 
             $date = date('d_m_Y');
 
-            $table_uuid = json_decode(DB::table('report_values')->where('row_uuid', '=', $row_uuid)->pluck('table_uuid'), true);
-            $json_val = json_decode(DB::table('report_values')->where('row_uuid', '=', $row_uuid)->value('json_val'), true);
-            $table_name = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('table_name'), true);
-            $cells_arr = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('json_markup'), true);
-            $funcs = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('func_coords'), true);
-            $highest_row = json_decode(DB::table('tables')->where('table_uuid', '=', $table_uuid)->value('highest_row'), true);
+            $report_values = DB::table('report_values')->where('row_uuid', '=', $row_uuid)->get();
+            $table_uuid = $report_values[0]->table_uuid;
+            $json_val = $report_values[0]->json_val;
+            $table_name = $report_values[0]->table_name;
+            $cells_arr = $report_values[0]->json_markup;
+            $funcs = $report_values[0]->func_coords;
+            $highest_row = $report_values[0]->highest_row;
 
             $xls = new PHPExcel();
             $xls->setActiveSheetIndex(0);
