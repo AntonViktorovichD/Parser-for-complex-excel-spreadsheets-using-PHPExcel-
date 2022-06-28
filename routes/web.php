@@ -9,6 +9,7 @@ use App\Http\Controllers\QuarterlyReportsController;
 
 Route::get('/quarterly_reports', [QuarterlyReportsController::class, 'quarterly_reports']);
 Route::get('/quarterly_report/{name}', [QuarterlyReportsController::class, 'quarterly_report']);
+Route::get('/quarterly_user_report/{name}/{year}/{quarter}/{department}', [QuarterlyReportsController::class, 'quarterly_user_report']);
 
 use App\Http\Controllers\TestController;
 
