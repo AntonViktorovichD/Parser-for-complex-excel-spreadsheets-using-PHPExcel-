@@ -28,8 +28,8 @@ class JsonController extends Controller {
         }
     }
 
-    public function tables($name) {
-        $table = DB::table('tables')->where('table_name', $name)->get();
+    public function tables($table_uuid) {
+        $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
         $json = $table[0]->json_val;
         $highest_column_index = $table[0]->highest_column_index;
         $highest_row = $table[0]->highest_row;

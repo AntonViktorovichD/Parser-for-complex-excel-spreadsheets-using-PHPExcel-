@@ -101,14 +101,14 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
         echo '</div></td>';
         foreach ($arr_rows as $row) {
             if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
-                echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_name'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
+                echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
                 break;
             } else {
                 if ($arr['table_uuid'] == $row['table_uuid'] && $user_id == $row['user_id']) {
-                    echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_name'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
+                    echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
                     break;
                } elseif($arr['table_uuid'] != $row['table_uuid']) {
-                   echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_name'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
+                   echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
                    break;
                 }
             }

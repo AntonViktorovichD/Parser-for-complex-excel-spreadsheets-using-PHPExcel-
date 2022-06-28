@@ -7,9 +7,9 @@ Route::get('/home', 'HomeController@index');
 
 use App\Http\Controllers\QuarterlyReportsController;
 
-Route::get('/quarterly_reports', [QuarterlyReportsController::class, 'quarterly_reports']);
-Route::get('/quarterly_report/{name}', [QuarterlyReportsController::class, 'quarterly_report']);
-Route::get('/quarterly_user_report/{name}/{year}/{quarter}/{department}', [QuarterlyReportsController::class, 'quarterly_user_report']);
+Route::get('/quarterly_reports', [QuarterlyReportsController::class, 'quarterly_reports'])->middleware('auth');
+Route::get('/quarterly_report/{name}', [QuarterlyReportsController::class, 'quarterly_report'])->middleware('auth');
+Route::get('/quarterly_user_report/{name}/{year}/{quarter}/{department}', [QuarterlyReportsController::class, 'quarterly_user_report'])->middleware('auth');
 
 use App\Http\Controllers\TestController;
 
@@ -23,17 +23,17 @@ Route::post('/ul', [UploadController::class, 'upload'])->middleware('auth');
 
 use App\Http\Controllers\ShowUserController;
 
-Route::post('/show', [ShowUserController::class, 'showUser']);
+Route::post('/show', [ShowUserController::class, 'showUser'])->middleware('auth');
 
 use App\Http\Controllers\AddDBController;
 
-Route::get('/id', [AddDBController::class, 'edit']);
+Route::get('/id', [AddDBController::class, 'edit'])->middleware('auth');
 
 use App\Http\Controllers\JsonController;
 
 Route::get('/json', [JsonController::class, 'arrayToJson'])->middleware('auth');
 Route::get('/tables/{name}', [JsonController::class, 'tables'])->middleware('auth');
-Route::post('/handler', array(JsonController::class, 'handler'));
+Route::post('/handler', array(JsonController::class, 'handler'))->middleware('auth');
 
 use App\Http\Controllers\AddController;
 

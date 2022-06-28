@@ -7,14 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AddController extends Controller {
-    public function add($name) {
+    public function add($table_uuid) {
         try {
             DB::connection()->getPdo();
-            $table = DB::table('tables')->where('table_name', $name)->get();
+            $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
             $json = $table[0]->json_val;
             $highest_column_index = $table[0]->highest_column_index;
             $highest_row = $table[0]->highest_row;
-            $table_uuid = $table[0]->table_uuid;
             $radio = $table[0]->radio;
             $read_only = $table[0]->read_only;
             $json_func = $table[0]->json_func;
