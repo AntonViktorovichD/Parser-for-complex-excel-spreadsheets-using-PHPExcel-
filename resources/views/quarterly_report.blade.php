@@ -42,14 +42,14 @@
         if (date.getFullYear() == year.id) {
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i].includes(date.getMonth() + 1)) {
-                    qr = i;
+                    for (let k = i + 1; k <= arr.length; k++) {
+                        document.querySelectorAll('.qr_link')[k].hidden = true;
+                        document.getElementById(k).hidden = true;
+                    }
                 }
-            }
-            for (let k = qr + 1; k <= arr.length; k++) {
-                document.querySelectorAll('.qr_link')[k].hidden = true;
-                document.getElementById(k).hidden = true;
             }
         }
     }
+
 </script>
 @include('layouts.footer')
