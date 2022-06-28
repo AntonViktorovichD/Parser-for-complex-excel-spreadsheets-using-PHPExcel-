@@ -55,10 +55,17 @@
 
     .oflow {
         display: inline-block;
-        overflow-x: scroll;
+        overflow-x: auto;
         white-space: nowrap;
         width: 100%;
+        margin-bottom: -25px;
+    }
 
+    .tbls {
+        display: flex;
+    }
+    .nms {
+        margin-top: 50px;
     }
 </style>
 <div class="container">
@@ -73,20 +80,29 @@
         <a href="#" class="btn btn-dl btn-primary">2021 ГОД</a>
         <a href="#" class="btn btn-dl btn-primary">2022 ГОД</a>
     </div>
-<div class="oflow">
-    <table>
-        <th>Учреждение</th>
-        @php
-            $months = array('ЯНВАРЬ' , 'ФЕВРАЛЬ' , 'МАРТ' , 'АПРЕЛЬ' , 'МАЙ' , 'ИЮНЬ' , 'ИЮЛЬ' , 'АВГУСТ' , 'СЕНТЯБРЬ' , 'ОКТЯБРЬ' , 'НОЯБРЬ' , 'ДЕКАБРЬ');
-            foreach ( $months as $month) {
-            echo '<th class="month">' . $month . ' ####' . ' ГОДА</th>' . PHP_EOL;
-            }
-            foreach($departments as $department) {
-               echo '<tr>';
-               echo '<td>' . $department . '</td>' . PHP_EOL;
-               echo '</tr>';
-            }
-        @endphp
-    </table>
-</div>
+    <div class="tbls">
+        <div class="nms">
+        <table>
+            <th>Учреждение</th>
+            @php
+                foreach($departments as $department) {
+                   echo '<tr>';
+                   echo '<td>' . $department . '</td>' . PHP_EOL;
+                   echo '</tr>';
+                }
+            @endphp
+        </table>
+            </div>
+        <div class="oflow">
+            <table>
+                @php
+                    $months = array('ЯНВАРЬ' , 'ФЕВРАЛЬ' , 'МАРТ' , 'АПРЕЛЬ' , 'МАЙ' , 'ИЮНЬ' , 'ИЮЛЬ' , 'АВГУСТ' , 'СЕНТЯБРЬ' , 'ОКТЯБРЬ' , 'НОЯБРЬ' , 'ДЕКАБРЬ');
+                    foreach ( $months as $month) {
+                    echo '<th class="month">' . $month . ' ####' . ' ГОДА</th>' . PHP_EOL;
+                    }
+                @endphp
+
+            </table>
+        </div>
+    </div>
 @include('layouts.footer')
