@@ -46,7 +46,7 @@ class QuarterlyReportsController extends Controller {
         $user_dep = Auth::user()->department;
         $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
         $json = $table[0]->json_val;
-        $name= $table[0]->table_name;
+        $name = $table[0]->table_name;
         $arrCell = json_decode($table[0]->json_val, true);
         $highest_column_index = $table[0]->highest_column_index;
         $highest_row = $table[0]->highest_row;

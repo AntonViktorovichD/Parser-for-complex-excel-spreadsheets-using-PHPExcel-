@@ -15,16 +15,16 @@
     echo '<table>';
     echo '<th>Учреждение</th>';
     $quarters = array('ГОДОВОЙ', '1 КВАРТАЛ', '2 КВАРТАЛ', '3 КВАРТАЛ', '4 КВАРТАЛ');
-    foreach ($quarters as $quarter) {
+    foreach ($quarters as $key => $quarter) {
         echo '<th>';
-        echo '<div class="quarter">' . $quarter . '</div>';
+        echo '<div id="'. $key . '" class="quarter">' . $quarter . '</div>';
         echo '</th>';
     }
     foreach ($departments as $dep_key => $department) {
         echo '<tr>';
         echo '<td>' . $department . '</td>';
         foreach ($quarters as $key => $quarter) {
-            echo '<td><a href="/quarterly_user_report/' . $name . '/' . $year . '/' . $key . '/' . $dep_key . '">Просмотр </a></td>';
+            echo '<td class="qr_link"><a href="/quarterly_user_report/' . $name . '/' . $year . '/' . $key . '/' . $dep_key . '">Просмотр </a></td>';
         }
         echo '</tr>';
     }
@@ -35,7 +35,21 @@
     window.onload = () => {
         let year = document.getElementById(<?= $year ?>);
         year.className = year.className + ' check_button';
-        console.log(year.className);
+        let date = new Date();
+        let link = document.querySelectorAll('.qr_link');
+        let arr = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+        let qr = 0;
+        if (date.getFullYear() == year.id) {
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].includes(date.getMonth() + 1)) {
+                    qr = i;
+                }
+            }
+            for (let k = qr + 1; k <= arr.length; k++) {
+                document.querySelectorAll('.qr_link')[k].hidden = true;
+                document.getElementById(k).hidden = true;
+            }
+        }
     }
 </script>
 @include('layouts.footer')
