@@ -39,9 +39,9 @@
 
     foreach ($arrs['data'] as $key => $arr) {
        if ($key % 2) {
-          echo '<hr><div class="odd"> <p><a href="/quarterly_report/' . $arr['table_uuid'] . '">' . $arr['table_name'] . '</a></p></div>' . PHP_EOL;
+          echo '<hr><div class="odd"> <p><a href="/quarterly_report/' . $arr['table_uuid'] . '/'. date("Y") . '">' . $arr['table_name'] . '</a></p></div>' . PHP_EOL;
        } else {
-           echo '<hr><div class="even"><p><a href="/quarterly_report/' . $arr['table_uuid'] . '">' . $arr['table_name'] . '</a></p></div>' . PHP_EOL;
+           echo '<hr><div class="even"><p><a href="/quarterly_report/' . $arr['table_uuid'] . '/'. date("Y") . '">' . $arr['table_name'] . '</a></p></div>' . PHP_EOL;
        }
     }
    echo '<hr>' . PHP_EOL;

@@ -8,7 +8,7 @@ Route::get('/home', 'HomeController@index');
 use App\Http\Controllers\QuarterlyReportsController;
 
 Route::get('/quarterly_reports', [QuarterlyReportsController::class, 'quarterly_reports'])->middleware('auth');
-Route::get('/quarterly_report/{name}', [QuarterlyReportsController::class, 'quarterly_report'])->middleware('auth');
+Route::get('/quarterly_report/{name}/{year}', [QuarterlyReportsController::class, 'quarterly_report'])->middleware('auth');
 Route::get('/quarterly_user_report/{name}/{year}/{quarter}/{department}', [QuarterlyReportsController::class, 'quarterly_user_report'])->middleware('auth');
 
 use App\Http\Controllers\TestController;

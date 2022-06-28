@@ -27,7 +27,7 @@ class QuarterlyReportsController extends Controller {
         }
     }
 
-    public function quarterly_report($name) {
+    public function quarterly_report($name, $year) {
         $user_id = Auth::id();
         $user_dep = Auth::user()->department;
         $table = DB::table('tables')->where('table_uuid', '=', $name)->get();
@@ -39,7 +39,7 @@ class QuarterlyReportsController extends Controller {
         } else {
             $departments[$user_dep] = DB::table('org_helper')->where('id', $user_dep)->value('title');
         }
-        return view('quarterly_report', compact('table', 'departments', 'name'));
+        return view('quarterly_report', compact('table', 'departments', 'name', 'year'));
     }
 
     public function quarterly_user_report($table_uuid, $year, $quarter, $department) {

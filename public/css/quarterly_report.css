@@ -1,0 +1,65 @@
+a, a:hover, a:active, span {
+    text-decoration: none;
+    color: black;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.check_button {
+    background: rgba(228, 61, 60) !important;
+    color: #ffffff !important;
+    text-shadow: none;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+legend {
+    text-transform: uppercase;
+    border-bottom: none !important;
+    margin-top: 50px !important;
+}
+
+.title {
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+hr {
+    margin: 0 !important;
+    width: 75%;
+}
+
+.year a {
+    margin: 20px 10px;
+}
+.year a:first-child {
+    margin: 20px 10px 20px 0;
+}
+
+.quarter {
+    margin-left: 10px;
+    margin-right: 25px;
+    border: 2px solid #e43d3c !important;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    min-width: 150px;
+}
