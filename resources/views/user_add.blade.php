@@ -55,7 +55,7 @@ echo '<form method="post" action="/user_upload">';
     }
     unset($arrCol[0]);
     echo '<tr>' . PHP_EOL;
-    echo '<td>' . $user_dep . '</td>' . PHP_EOL;
+    echo '<td>' . $dep . '</td>' . PHP_EOL;
     if ($read_only == 'disabled') {
         foreach ($sum as $key => $val) {
             if (isset($val)) {
@@ -92,7 +92,7 @@ echo '<form method="post" action="/user_upload">';
         }
     }
     echo '</tr>' . PHP_EOL;
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep;
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;

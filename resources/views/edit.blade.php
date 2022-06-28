@@ -30,7 +30,6 @@
     ksort($arrAddRow);
     $sum =  json_decode($json_func,true);
     $vals =  json_decode($json_vals,true);
-    $dep_name = DB::table('org_helper')->where('id', '=', $dep)->value('title');
     $values = json_decode($report_value, true);
     $colnum = 1;
     $arrCol = [];
@@ -54,7 +53,7 @@
         echo '</tr>' . PHP_EOL;
     }
     echo '<tr>' . PHP_EOL;
-    echo '<td>' . $dep_name . '</td>' . PHP_EOL;
+    echo '<td>' . $dep . '</td>' . PHP_EOL;
     if ($read_only == 'disabled') {
         foreach ($sum as $key => $val) {
             if (isset($vals[$key])) {
@@ -109,7 +108,7 @@
         }
     }
     echo '</tr>' . PHP_EOL;
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $dep;
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;

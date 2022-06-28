@@ -23,6 +23,7 @@ class EditController extends Controller {
             $row_uuid = $report_values[0]->row_uuid;
             $user_id = $report_values[0]->user_id;
             $user_dep = $report_values[0]->user_dep;
+            $dep = DB::table('org_helper')->where('id', $user_dep)->value('title');
             $json_vals = $report_values[0]->json_val;
             $pattern = '';
             $reg_arr = [
@@ -76,7 +77,7 @@ class EditController extends Controller {
                         $rep_value[] = $val;
                     }
                     $report_value = (json_encode(array_combine($rep_key, $rep_value)));
-                    return view('admin_edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'report_value', 'user_dep', 'pattern', 'json_func', 'json_vals'));
+                    return view('admin_edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'report_value', 'user_dep', 'pattern', 'json_func', 'json_vals', 'dep'));
                 } else {
                     $report_value = null;
                     $user_dep = null;
@@ -85,7 +86,7 @@ class EditController extends Controller {
                 }
                             } else {
                 $report_value = json_encode(DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_id', $user_id)->value('json_val'));
-                return view('edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'row_uuid', 'user_id', 'report_value', 'user_dep', 'pattern', 'read_only', 'json_func', 'json_vals'));
+                return view('edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'row_uuid', 'user_id', 'report_value', 'user_dep', 'pattern', 'read_only', 'json_func', 'json_vals', 'dep'));
             }
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
