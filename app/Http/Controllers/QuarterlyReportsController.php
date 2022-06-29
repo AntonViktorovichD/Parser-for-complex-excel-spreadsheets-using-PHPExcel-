@@ -95,7 +95,7 @@ class QuarterlyReportsController extends Controller {
         $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
         asort($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-        if (count($quarterly_reports)) {
+        if (count($quarterly_reports) > 0) {
             $row_uuid = $quarterly_reports[0]->row_uuid;
             $json_vals = $quarterly_reports[0]->json_val;
             return view('quarterly_user_report', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter'));
