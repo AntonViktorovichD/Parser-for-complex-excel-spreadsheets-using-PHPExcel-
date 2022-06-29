@@ -31,7 +31,7 @@
 </style>
 @php
     $user_id = Auth::user()->id;
-    $arrCell = json_decode(json_decode($json), true);
+    $arrCell = json_decode($json, true);
     $arrAddRow = array_flip(json_decode($addRowArr, true));
     ksort($arrAddRow);
     $sum =  json_decode($json_func,true);
@@ -42,7 +42,6 @@
     $arrCol = [];
     $arrNum = [];
     $arrKeyVal = [];
-    $row_uuid = $row_uuid[0]->row_uuid;
 
     echo '<form method="post" action="/admin_user_upgrade">';
 @endphp
@@ -74,7 +73,7 @@
     unset($arrCol[0]);
     foreach ($values as $count) {
         echo '<tr>' . PHP_EOL;
-        echo '<td>' . $dep_name . '</td>' . PHP_EOL;
+        echo '<td>' . $dep . '</td>' . PHP_EOL;
         foreach ($sum as $key => $val) {
             if (isset($vals[$key])) {
                 if (isset($val)) {
@@ -119,7 +118,7 @@
         }
         echo '</tr>' . PHP_EOL;
     }
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $dep;
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;

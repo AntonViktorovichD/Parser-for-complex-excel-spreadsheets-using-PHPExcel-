@@ -31,11 +31,11 @@
         ksort($arrAddRow);
         $sum =  json_decode($json_func,true);
         $vals =  json_decode($json_vals,true);
-        $values = json_decode($json_vals, true);
         $colnum = 1;
         $arrCol = [];
         $arrNum = [];
         $arrKeyVal = [];
+        var_dump($department);
                 $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
         echo '<form method="post" action="/quarterly_update">';
 @endphp
@@ -118,11 +118,6 @@
     }
     echo '</form>' . PHP_EOL;
     echo '<a href="/export/' . $row_uuid . '">Экспорт</a>';
-     @endphp
-
-{{--Adding data--}}
-
-    @php
     } else {
         $user_role = Auth::user()->roles->first()->id;
         $user_id = Auth::user()->id;

@@ -45,6 +45,7 @@ use App\Http\Controllers\EditController;
 
 Route::get('/edit/{name}', [EditController::class, 'edit'])->middleware('auth');
 Route::get('/admin_edit/{name}', [EditController::class, 'edit'])->middleware('checkAdmin');
+Route::get('/admin_view/{name}', [EditController::class, 'edit'])->middleware('checkAdmin');
 
 use App\Http\Controllers\UserUploadController;
 

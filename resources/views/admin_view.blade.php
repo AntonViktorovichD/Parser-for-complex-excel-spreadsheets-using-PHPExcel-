@@ -6,12 +6,10 @@
         border: 1px solid black;
         width: 100%;
     }
-
     th, td {
         border: 1px solid black;
         padding: 10px;
     }
-
     input {
         outline: none;
         border: none;
@@ -20,19 +18,17 @@
         padding: 0 !important;
         margin: 0 !important;
     }
-
     .btn {
         width: 100px;
         height: 35px;
     }
-
     .regex {
         border: none !important;
     }
 </style>
 @php
     $user_id = Auth::user()->id;
-    $arrCell = json_decode(json_decode($json), true);
+    $arrCell = json_decode($json, true);
     $arrAddRow = array_flip(json_decode($addRowArr, true));
     ksort($arrAddRow);
 @endphp
@@ -53,9 +49,5 @@
     }
     echo '</table>' . PHP_EOL;
 @endphp
-<script src="/js/regexp.js" type="text/javascript"></script>
-<script src="/js/excel_functions.js" type="text/javascript"></script>
 
 @include('layouts.footer')
-
-
