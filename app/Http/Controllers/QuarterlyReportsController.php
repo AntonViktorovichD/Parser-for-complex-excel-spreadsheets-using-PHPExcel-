@@ -46,6 +46,7 @@ class QuarterlyReportsController extends Controller {
     public function quarterly_user_report($table_uuid, $year, $quarter, $department) {
         $user_dep = Auth::user()->department;
         $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
+        $report = DB::table('quarterly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('quarter', $quarter)->where('year', $year)->value('json_val');
         $json = $table[0]->json_val;
         $name = $table[0]->table_name;
         $arrCell = json_decode($table[0]->json_val, true);
@@ -91,7 +92,11 @@ class QuarterlyReportsController extends Controller {
         $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
         asort($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-        return view('quarterly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter'));
+        if (isset($report)) {
+            return view('quarterly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter', 'report'));
+        } else {
+            return view('quarterly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter'));
+        }
     }
 
     public function quarterly_upload(Request $request) {
@@ -99,10 +104,10 @@ class QuarterlyReportsController extends Controller {
             date_default_timezone_set('Europe/Moscow');
             $date = date('Y-m-d H:i:s');
             $info = $request->except(['_token']);
-            list($name, $table_uuid, $row_uuid, $user_id, $department, $quarter) = explode(' + ', $info['table_information']);
+            list($name, $table_uuid, $row_uuid, $user_id, $department, $quarter, $year) = explode(' + ', $info['table_information']);
             unset($info['table_information']);
             $json = json_encode($info, JSON_UNESCAPED_UNICODE);
-            DB::table('quarterly_reports')->insert(['table_name' => $name, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'user_dep' => $department, 'json_val' => $json, 'quarter' => $quarter, 'created_at' => $date]);
+            DB::table('quarterly_reports')->insert(['table_name' => $name, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'user_dep' => $department, 'json_val' => $json, 'quarter' => $quarter, 'created_at' => $date, 'year' => $year]);
             return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/quarterly_reports']);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();

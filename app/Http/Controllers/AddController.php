@@ -13,6 +13,7 @@ class AddController extends Controller {
             $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
             $json = $table[0]->json_val;
             $highest_column_index = $table[0]->highest_column_index;
+            $name = $table[0]->table_name;
             $highest_row = $table[0]->highest_row;
             $radio = $table[0]->radio;
             $read_only = $table[0]->read_only;

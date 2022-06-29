@@ -15,7 +15,7 @@ class EditController extends Controller {
             $json = $table[0]->json_val;
             $highest_column_index = $table[0]->highest_column_index;
             $highest_row = $table[0]->highest_row;
-            $table_uuid = $table[0]->table_uuid;
+            $name = $table[0]->table_name;
             $radio = $table[0]->radio;
             $read_only = $table[0]->read_only;
             $json_func = $table[0]->json_func;
@@ -37,7 +37,7 @@ class EditController extends Controller {
                     $pattern = $reg;
                 }
             }
-            $arrCell = json_decode(json_decode($json), true);
+            $arrCell = json_decode($json, true);
             $arrLastRowId = [];
             $arrLastRowKeys = [];
             $rep_value = [];

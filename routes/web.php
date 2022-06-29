@@ -47,11 +47,11 @@ Route::get('/admin_edit/{name}', [EditController::class, 'edit'])->middleware('c
 
 use App\Http\Controllers\UserUploadController;
 
-Route::post('/router', [UserUploadController::class, 'user_upload'])->middleware('auth');
+Route::post('/user_upload', [UserUploadController::class, 'user_upload'])->middleware('auth');
 
 use App\Http\Controllers\UserUpgradeController;
 
-Route::post('/router', [UserUpgradeController::class, 'user_upgrade'])->middleware('auth');
+Route::post('/user_upgrade', [UserUpgradeController::class, 'user_upgrade'])->middleware('auth');
 
 use App\Http\Controllers\AdminUserUpgradeController;
 

@@ -5,32 +5,38 @@
         border-collapse: collapse;
         border: 1px solid black;
     }
+
     th, td {
         border: 1px solid black;
         padding: 10px;
     }
+
     input {
         outline: none;
         border: none;
         width: 100%;
         height: 100%;
     }
+
     .btn {
         width: 100px;
         height: 35px;
     }
 </style>
 @php
-    $user_role = Auth::user()->roles->first()->id;
-    $user_id = Auth::user()->id;
-    $arrCell = json_decode($json, true);
-    $arrAddRow = array_flip(json_decode($addRowArr, true));
-        $colnum = 1;
-    $arrCol = [];
-    $sum =  json_decode($json_func,true);
-    $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
+    if (isset($report)) {
+       var_dump('yes');
+    } else {
+        $user_role = Auth::user()->roles->first()->id;
+        $user_id = Auth::user()->id;
+        $arrCell = json_decode($json, true);
+        $arrAddRow = array_flip(json_decode($addRowArr, true));
+            $colnum = 1;
+        $arrCol = [];
+        $sum =  json_decode($json_func,true);
+        $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
 
-echo '<form method="post" action="/quarterly_upload">';
+    echo '<form method="post" action="/quarterly_upload">';
 @endphp
 @csrf
 @php
@@ -94,7 +100,7 @@ echo '<form method="post" action="/quarterly_upload">';
         }
     }
     echo '</tr>' . PHP_EOL;
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $department. ' + ' . $quarter;
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $department. ' + ' . $quarter. ' + ' . $year;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
@@ -102,9 +108,9 @@ echo '<form method="post" action="/quarterly_upload">';
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
     echo '</form>' . PHP_EOL;
-    echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>';
+    echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
+    }
 @endphp
-
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
 

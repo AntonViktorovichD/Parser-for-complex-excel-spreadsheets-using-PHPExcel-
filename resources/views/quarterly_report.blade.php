@@ -1,7 +1,6 @@
 @include('layouts.header')
 @include('layouts.menu')
 <link href="/css/quarterly_report.css" rel="stylesheet" type="text/css">
-
 @php
     echo '<div class="container">';
     echo '<h2>КВАРТАЛЬНЫЙ ОТЧЁТ</h2>';
@@ -20,6 +19,7 @@
         echo '<div id="'. $key . '" class="quarter">' . $quarter . '</div>';
         echo '</th>';
     }
+
     foreach ($departments as $dep_key => $department) {
         echo '<tr>';
         echo '<td>' . $department . '</td>';
