@@ -46,7 +46,9 @@ class QuarterlyReportsController extends Controller {
     public function quarterly_user_report($table_uuid, $year, $quarter, $department) {
         $user_dep = Auth::user()->department;
         $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
-        $json_vals = DB::table('quarterly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('quarter', $quarter)->where('year', $year)->value('json_val');
+        $quarterly_reports = DB::table('quarterly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('quarter', $quarter)->where('year', $year)->get();
+        $row_uuid = $quarterly_reports[0]->row_uuid;
+        $json_vals = $quarterly_reports[0]->json_val;
         $json = $table[0]->json_val;
         $name = $table[0]->table_name;
         $arrCell = json_decode($json, true);
@@ -89,7 +91,9 @@ class QuarterlyReportsController extends Controller {
                 }
             }
         }
-        $row_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
+        if (empty($row_uuid)) {
+            $row_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
+        }
         $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
         asort($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
@@ -109,6 +113,23 @@ class QuarterlyReportsController extends Controller {
             unset($info['table_information']);
             $json = json_encode($info, JSON_UNESCAPED_UNICODE);
             DB::table('quarterly_reports')->insert(['table_name' => $name, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'user_dep' => $department, 'json_val' => $json, 'quarter' => $quarter, 'created_at' => $date, 'year' => $year]);
+            return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/quarterly_reports']);
+        } catch (QueryException $e) {
+            echo 'Ошибка: ' . $e->getMessage();
+        }
+    }
+
+    public function quarterly_update(Request $request) {
+        try {
+            date_default_timezone_set('Europe/Moscow');
+            $date = date('Y-m-d H:i:s');
+            $info = $request->except(['_token']);
+            echo '<pre>';
+            echo '</pre>';
+            list($table_uuid, $row_uuid) = explode(' + ', $info['table_information']);
+            unset($info['table_information']);
+            $json = json_encode($info, JSON_UNESCAPED_UNICODE);
+            DB::table('quarterly_reports')->where('table_uuid', $table_uuid)->where('row_uuid', $row_uuid)->update(['json_val' => $json]);
             return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/quarterly_reports']);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();

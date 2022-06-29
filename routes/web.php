@@ -11,6 +11,7 @@ Route::get('/quarterly_reports', [QuarterlyReportsController::class, 'quarterly_
 Route::get('/quarterly_report/{name}/{year}', [QuarterlyReportsController::class, 'quarterly_report'])->middleware('auth');
 Route::get('/quarterly_user_report/{name}/{year}/{quarter}/{department}', [QuarterlyReportsController::class, 'quarterly_user_report'])->middleware('auth');
 Route::post('/quarterly_upload', [QuarterlyReportsController::class, 'quarterly_upload'])->middleware('auth');
+Route::post('/quarterly_update', [QuarterlyReportsController::class, 'quarterly_update'])->middleware('auth');
 
 use App\Http\Controllers\TestController;
 

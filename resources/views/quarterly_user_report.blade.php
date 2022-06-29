@@ -37,8 +37,7 @@
         $arrNum = [];
         $arrKeyVal = [];
                 $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
-
-        echo '<form method="post" action="/quarterly_upload">';
+        echo '<form method="post" action="/quarterly_update">';
 @endphp
 @csrf
 @php
@@ -110,7 +109,7 @@
         }
     }
     echo '</tr>' . PHP_EOL;
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $department;
+    $table_info = $table_uuid . ' + ' . $row_uuid;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
@@ -119,6 +118,11 @@
     }
     echo '</form>' . PHP_EOL;
     echo '<a href="/export/' . $row_uuid . '">Экспорт</a>';
+     @endphp
+
+{{--Adding data--}}
+
+    @php
     } else {
         $user_role = Auth::user()->roles->first()->id;
         $user_id = Auth::user()->id;
