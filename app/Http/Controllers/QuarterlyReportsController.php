@@ -47,8 +47,6 @@ class QuarterlyReportsController extends Controller {
         $user_dep = Auth::user()->department;
         $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
         $quarterly_reports = DB::table('quarterly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('quarter', $quarter)->where('year', $year)->get();
-        $row_uuid = $quarterly_reports[0]->row_uuid;
-        $json_vals = $quarterly_reports[0]->json_val;
         $json = $table[0]->json_val;
         $name = $table[0]->table_name;
         $arrCell = json_decode($json, true);
@@ -91,17 +89,18 @@ class QuarterlyReportsController extends Controller {
                 }
             }
         }
-        var_dump($row_uuid);
-//        if (empty($row_uuid)) {
-//            $row_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
-//        }
+        if (empty($row_uuid)) {
+            $row_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
+        }
         $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
         asort($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-        if (isset($json_vals)) {
+        if (count($quarterly_reports)) {
+            $row_uuid = $quarterly_reports[0]->row_uuid;
+            $json_vals = $quarterly_reports[0]->json_val;
             return view('quarterly_user_report', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter'));
         } else {
-            return view('quarterly_user_report', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter'));
+            return view('quarterly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter'));
         }
     }
 
