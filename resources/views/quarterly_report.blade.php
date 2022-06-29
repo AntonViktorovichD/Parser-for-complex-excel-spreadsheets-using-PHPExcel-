@@ -24,7 +24,7 @@
         echo '<tr>';
         echo '<td>' . $department . '</td>';
         foreach ($quarters as $key => $quarter) {
-            echo '<td class="qr_link"><a href="/quarterly_user_report/' . $name . '/' . $year . '/' . $key . '/' . $dep_key . '">Просмотр </a></td>';
+            echo '<td class="qr_link" data-key="'. $key . '"><a href="/quarterly_user_report/' . $name . '/' . $year . '/' . $key . '/' . $dep_key . '">Просмотр </a></td>';
         }
         echo '</tr>';
     }
@@ -43,8 +43,12 @@
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i].includes(date.getMonth() + 1)) {
                     for (let k = i + 1; k <= arr.length; k++) {
-                        document.querySelectorAll('.qr_link')[k].hidden = true;
                         document.getElementById(k).hidden = true;
+                        for (let val of document.querySelectorAll('.qr_link')) {
+                            if(val.dataset.key == k) {
+                                val.hidden = true;
+                            }
+                        }
                     }
                 }
             }
