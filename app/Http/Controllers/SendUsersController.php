@@ -63,7 +63,8 @@ class SendUsersController extends Controller {
                 }
                 DB::table('user_noifications')->where('org_id', $key)->update(['e_mail' => $arr_checked[$key]['email'], 'directors_mobile_phone' => $arr_checked[$key]['directors_mobile_phone'], 'specialist_mobile_phone' => $arr_checked[$key]['specialist_mobile_phone']]);
             }
-            return view('send_users_upgrade', ['alert' => "Настройки успешно сохранены"]);
+            return view('router', ['alert' => 'Настройки успешно сохранены', 'route' => '/json']);
+
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }

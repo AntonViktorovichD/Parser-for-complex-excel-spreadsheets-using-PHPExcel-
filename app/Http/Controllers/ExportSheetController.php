@@ -88,7 +88,7 @@ class ExportSheetController extends Controller {
             $objWriter->save('php://output');
             exit();
 
-            return view("export");
+            return view('router', ['alert' => 'Таблица успешно сохранена', 'route' => '/json']);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }

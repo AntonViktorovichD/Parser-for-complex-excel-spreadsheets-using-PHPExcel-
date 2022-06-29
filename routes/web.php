@@ -10,6 +10,7 @@ use App\Http\Controllers\QuarterlyReportsController;
 Route::get('/quarterly_reports', [QuarterlyReportsController::class, 'quarterly_reports'])->middleware('auth');
 Route::get('/quarterly_report/{name}/{year}', [QuarterlyReportsController::class, 'quarterly_report'])->middleware('auth');
 Route::get('/quarterly_user_report/{name}/{year}/{quarter}/{department}', [QuarterlyReportsController::class, 'quarterly_user_report'])->middleware('auth');
+Route::post('/quarterly_upload', [QuarterlyReportsController::class, 'quarterly_upload'])->middleware('auth');
 
 use App\Http\Controllers\TestController;
 
@@ -46,11 +47,11 @@ Route::get('/admin_edit/{name}', [EditController::class, 'edit'])->middleware('c
 
 use App\Http\Controllers\UserUploadController;
 
-Route::post('/user_upload', [UserUploadController::class, 'user_upload'])->middleware('auth');
+Route::post('/router', [UserUploadController::class, 'user_upload'])->middleware('auth');
 
 use App\Http\Controllers\UserUpgradeController;
 
-Route::post('/user_upgrade', [UserUpgradeController::class, 'user_upgrade'])->middleware('auth');
+Route::post('/router', [UserUpgradeController::class, 'user_upgrade'])->middleware('auth');
 
 use App\Http\Controllers\AdminUserUpgradeController;
 
@@ -67,7 +68,7 @@ Route::get('/admin_export/{name}', [AdminExportSheetController::class, 'admin_ex
 use App\Http\Controllers\SendUsersController;
 
 Route::get('/send_users', [SendUsersController::class, 'send'])->middleware('checkAdmin');
-Route::post('/send_users_upgrade', [SendUsersController::class, 'get_options'])->middleware('checkAdmin');
+Route::post('/router', [SendUsersController::class, 'get_options'])->middleware('checkAdmin');
 
 use App\Http\Controllers\MailController;
 

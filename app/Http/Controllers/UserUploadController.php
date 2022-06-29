@@ -17,7 +17,7 @@ class UserUploadController extends Controller {
             list($table_name, $table_uuid, $row_uuid, $user_id, $user_dep) = explode(' + ', $request->input('table_information'));
             $json_val = json_encode($input, JSON_UNESCAPED_UNICODE);
             DB::insert('insert into report_values (table_name, table_uuid, row_uuid, user_id, user_dep, json_val, created_at) values (?, ?, ?, ?, ?, ?, ?)', [$table_name, $table_uuid, $row_uuid, $user_id, $user_dep, $json_val, $created_at]);
-            return view('user_upload', ['name' => $table_name, 'alert' => 'Запись успешно добавлена']);
+            return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/json']);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }

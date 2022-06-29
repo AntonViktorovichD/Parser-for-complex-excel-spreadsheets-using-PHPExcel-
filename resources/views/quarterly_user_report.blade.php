@@ -29,7 +29,8 @@
     $arrCol = [];
     $sum =  json_decode($json_func,true);
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
-echo '<form method="post" action="/user_upload">';
+
+echo '<form method="post" action="/quarterly_upload">';
 @endphp
 @csrf
 @php
@@ -93,7 +94,7 @@ echo '<form method="post" action="/user_upload">';
         }
     }
     echo '</tr>' . PHP_EOL;
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $department;
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $department. ' + ' . $quarter;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;

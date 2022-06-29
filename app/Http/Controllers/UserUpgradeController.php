@@ -17,7 +17,7 @@ class UserUpgradeController extends Controller {
             list($table_name, $table_uuid, $row_uuid, $user_id) = explode(' + ', $request->input('table_information'));
             $json_val = json_encode($input, JSON_UNESCAPED_UNICODE);
             DB::table('report_values')->where('table_uuid', $table_uuid)->where('row_uuid', $row_uuid)->where('user_id', $user_id)->update(['json_val' => $json_val, 'created_at' => $created_at]);
-            return view('user_upgrade', ['name' => $table_name, 'alert' => 'Запись успешно отредактирована']);
+            return view('router', ['alert' => 'Запись успешно отредактирована', 'route' => '/json']);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }

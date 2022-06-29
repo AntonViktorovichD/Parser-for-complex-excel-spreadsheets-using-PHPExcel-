@@ -6,6 +6,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
+use Illuminate\Http\Request;
 
 class QuarterlyReportsController extends Controller {
     public function quarterly_reports() {
@@ -91,5 +92,20 @@ class QuarterlyReportsController extends Controller {
         asort($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
         return view('quarterly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter'));
+    }
+
+    public function quarterly_upload(Request $request) {
+        try {
+            date_default_timezone_set('Europe/Moscow');
+            $date = date('Y-m-d H:i:s');
+            $info = $request->except(['_token']);
+            list($name, $table_uuid, $row_uuid, $user_id, $department, $quarter) = explode(' + ', $info['table_information']);
+            unset($info['table_information']);
+            $json = json_encode($info, JSON_UNESCAPED_UNICODE);
+            DB::table('quarterly_reports')->insert(['table_name' => $name, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'user_dep' => $department, 'json_val' => $json, 'quarter' => $quarter, 'created_at' => $date]);
+            return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/quarterly_reports']);
+        } catch (QueryException $e) {
+            echo 'Ошибка: ' . $e->getMessage();
+        }
     }
 }
