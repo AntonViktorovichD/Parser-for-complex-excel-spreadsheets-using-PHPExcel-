@@ -46,15 +46,16 @@ class QuarterlyReportsController extends Controller {
     public function quarterly_user_report($table_uuid, $year, $quarter, $department) {
         $user_dep = Auth::user()->department;
         $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
-        $report = DB::table('quarterly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('quarter', $quarter)->where('year', $year)->value('json_val');
+        $json_vals = DB::table('quarterly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('quarter', $quarter)->where('year', $year)->value('json_val');
         $json = $table[0]->json_val;
         $name = $table[0]->table_name;
-        $arrCell = json_decode($table[0]->json_val, true);
+        $arrCell = json_decode($json, true);
         $highest_column_index = $table[0]->highest_column_index;
         $highest_row = $table[0]->highest_row;
         $radio = $table[0]->radio;
         $read_only = $table[0]->read_only;
         $json_func = $table[0]->json_func;
+
         $pattern = '';
         $reg_arr = [
             'v_text' => '[A-Za-zА-Яа-яЁё\s,.:;-]+',
@@ -92,10 +93,10 @@ class QuarterlyReportsController extends Controller {
         $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
         asort($arrLR);
         $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-        if (isset($report)) {
-            return view('quarterly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter', 'report'));
+        if (isset($json_vals)) {
+            return view('quarterly_user_report', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter', 'json_vals'));
         } else {
-            return view('quarterly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter'));
+            return view('quarterly_user_report', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter'));
         }
     }
 
