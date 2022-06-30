@@ -20,7 +20,7 @@ class AdminDailyReportsController extends Controller {
             $empty_deps = 0;
             $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
-            $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->paginate(20);
+            $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->get();
             foreach ($arrs as $key => $val) {
                 foreach (json_decode($val->departments, true) as $depart) {
                     $fill_arrs[$val->table_uuid][$depart] = DB::table('daily_reports')->where('table_uuid', $val->table_uuid)->where('user_dep', $depart)->value('json_val');
@@ -48,15 +48,14 @@ class AdminDailyReportsController extends Controller {
                 $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->first('name')->name;
             }
 
-            foreach ($arrs as $key => $arr) {
-                $table_arr[$key] = json_decode(json_encode($arr), true);
-            }
-            foreach ($filled_arr as $key => $fill) {
-                foreach ($table_arr as $k => $table) {
-                    if ($table['table_uuid'] == $key) {
-                        $table_arr[$k]['fill'] = $fill;
+            $table_arr = json_decode($arrs, true);
+
+            foreach (json_decode($arrs, true) as $key => $arr) {
+                foreach ($filled_arr as $ke => $fill) {
+                    if($arr['table_uuid'] == $ke){
+                        $table_arr[$key]['fill'] = $fill;
                     } else {
-                        $table_arr[$k]['fill'] = 0;
+                        $table_arr[$key]['fill'] = 0;
                     }
                 }
             }
