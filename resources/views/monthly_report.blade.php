@@ -26,6 +26,7 @@
         echo '<tr>';
         echo '<td nowrap>' . $department . '</td>';
         foreach ($months as $key => $month) {
+           $key = $key + 1;
             echo '<td class="qr_link monthly" data-key="' . $key . '"><a href="/monthly_user_report/' . $name . '/' . $year . '/' . $key . '/' . $dep_key . '">Просмотр </a></td>';
         }
         echo '</tr>';
@@ -45,7 +46,7 @@
         let qr = 0;
         if (date.getFullYear() == year.id) {
             for (let i = 0; i < arr.length; i++) {
-                if (arr[i] == (date.getMonth() + 1)) {
+                if (arr[i] == (date.getMonth() + 2)) {
                     for (let k = i + 1; k <= arr.length; k++) {
                         document.getElementById(k).hidden = true;
                         for (let val of document.querySelectorAll('.qr_link')) {

@@ -12,6 +12,14 @@ Route::get('/monthly_user_report/{name}/{year}/{quarter}/{department}', [Monthly
 Route::post('/monthly_upload', [MonthlyReportsController::class, 'monthly_upload'])->middleware('auth');
 Route::post('/monthly_update', [MonthlyReportsController::class, 'monthly_update'])->middleware('auth');
 
+use App\Http\Controllers\AdminDailyReportsController;
+
+Route::get('/admin_daily_reports', [AdminDailyReportsController::class, 'admin_daily_reports'])->middleware('checkAdmin');
+Route::get('/admin_daily_report/{name}/{year}', [AdminDailyReportsController::class, 'admin_daily_report'])->middleware('checkAdmin');
+Route::get('/admin_daily_user_report/{name}/{year}/{quarter}/{department}', [AdminDailyReportsController::class, 'admin_daily_user_report'])->middleware('checkAdmin');
+Route::post('/admin_daily_upload', [AdminDailyReportsController::class, 'admin_daily_upload'])->middleware('checkAdmin');
+Route::post('/admin_daily_update', [AdminDailyReportsController::class, 'admin_daily_update'])->middleware('checkAdmin');
+
 use App\Http\Controllers\QuarterlyReportsController;
 Route::get('/quarterly_reports', [QuarterlyReportsController::class, 'quarterly_reports'])->middleware('auth');
 Route::get('/quarterly_report/{name}/{year}', [QuarterlyReportsController::class, 'quarterly_report'])->middleware('auth');

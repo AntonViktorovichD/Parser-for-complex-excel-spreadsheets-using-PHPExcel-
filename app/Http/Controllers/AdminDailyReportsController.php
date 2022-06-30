@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests;
+use Illuminate\Http\Request;
+
+class AdminDailyReportsController extends Controller {
+    public function admin_daily_reports() {
+        try {
+            $rv_ja = [];
+            $user_names = [];
+            $fill_arrs = [];
+            $filled_arr = [];
+            $table_arr = [];
+            $counter = 0;
+            $empty_deps = 0;
+            $user_role = Auth::user()->roles->first()->id;
+            $user_id = Auth::id();
+            $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->paginate(20);
+            foreach ($arrs as $key => $val) {
+                foreach (json_decode($val->departments, true) as $depart) {
+                    $fill_arrs[$val->table_uuid][$depart] = DB::table('daily_reports')->where('table_uuid', $val->table_uuid)->where('user_dep', $depart)->value('json_val');
+                }
+            }
+            foreach ($fill_arrs as $table => $fill_table) {
+                if (isset($table)) {
+                    $cols = DB::table('tables')->where('table_uuid', $table)->value('highest_column_index');
+                    foreach ($fill_table as $dep => $fill_dep) {
+                        if (isset($fill_dep)) {
+                            foreach (json_decode($fill_dep, true) as $val) {
+                                if (isset($val)) {
+                                    $counter++;
+                                } else {
+                                    $empty_deps++;
+                                }
+                            }
+                            $filled_arr[$table] = intval(round($counter / ($cols + ($empty_deps * $cols)) * 100, 0, PHP_ROUND_HALF_UP));
+                        }
+                    }
+                }
+            }
+
+            foreach (DB::table('tables')->orderBy('id', 'desc')->pluck('user_id') as $user) {
+                $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->first('name')->name;
+            }
+
+            foreach ($arrs as $key => $arr) {
+                $table_arr[$key] = json_decode(json_encode($arr), true);
+            }
+            foreach ($filled_arr as $key => $fill) {
+                foreach ($table_arr as $k => $table) {
+                    if ($table['table_uuid'] == $key) {
+                        $table_arr[$k]['fill'] = $fill;
+                    } else {
+                        $table_arr[$k]['fill'] = 0;
+                    }
+                }
+            }
+
+            $arrs = json_encode($table_arr, JSON_UNESCAPED_UNICODE);
+
+            $table_user = json_encode($user_names);
+            $arr_rows = json_encode(DB::select('select * from report_values'));
+            return view('admin_daily_reports', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => 'user_role', 'table_user' => $table_user, 'pages' => $arrs]);
+        } catch (QueryException $e) {
+            echo 'Ошибка: ' . $e->getMessage();
+        }
+    }
+}
