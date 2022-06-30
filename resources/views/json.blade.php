@@ -1,6 +1,11 @@
 @include('layouts.header')
 @include('layouts.menu')
 <link rel="stylesheet" href="/css/arrayToJson.css">
+<style>
+    table tr {
+        text-align: center;
+    }
+</style>
 {{ $tableload }}
 @csrf
 @php

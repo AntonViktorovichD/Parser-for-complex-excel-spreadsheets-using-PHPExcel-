@@ -37,14 +37,23 @@
 @php
     $arrs = json_decode($arr, true);
 
-    foreach ($arrs['data'] as $key => $arr) {
-       if ($key % 2) {
-          echo '<hr><div class="odd"> <p><a href="/quarterly_report/' . $arr['table_uuid'] . '/'. date("Y") . '">' . $arr['table_name'] . '</a></p></div>' . PHP_EOL;
-       } else {
-           echo '<hr><div class="even"><p><a href="/quarterly_report/' . $arr['table_uuid'] . '/'. date("Y") . '">' . $arr['table_name'] . '</a></p></div>' . PHP_EOL;
+echo '<table class="table table-striped">';
+
+foreach ($arrs['data'] as $key => $arr) {
+   echo '<tr>';
+       if($arr['periodicity'] == 4){
+          echo '<td><a href="/quarterly_report/' . $arr['table_uuid'] . '/'. date("Y") . '">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
+
+       } elseif ($arr['periodicity'] == 3) {
+          echo '<td><a href="/monthly_report/' . $arr['table_uuid'] . '/'. date("Y") . '">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
        }
-    }
-   echo '<hr>' . PHP_EOL;
+echo '</tr>';
+}
+
+echo '</table>';
+
+
+
 @endphp
 {{ $pages->links() }}
 @include('layouts.footer')

@@ -5,8 +5,14 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', 'home');
 Route::get('/home', 'HomeController@index');
 
-use App\Http\Controllers\QuarterlyReportsController;
+use App\Http\Controllers\MonthlyReportsController;
 
+Route::get('/monthly_report/{name}/{year}', [MonthlyReportsController::class, 'monthly_report'])->middleware('auth');
+Route::get('/monthly_user_report/{name}/{year}/{quarter}/{department}', [MonthlyReportsController::class, 'monthly_user_report'])->middleware('auth');
+Route::post('/monthly_upload', [MonthlyReportsController::class, 'monthly_upload'])->middleware('auth');
+Route::post('/monthly_update', [MonthlyReportsController::class, 'monthly_update'])->middleware('auth');
+
+use App\Http\Controllers\QuarterlyReportsController;
 Route::get('/quarterly_reports', [QuarterlyReportsController::class, 'quarterly_reports'])->middleware('auth');
 Route::get('/quarterly_report/{name}/{year}', [QuarterlyReportsController::class, 'quarterly_report'])->middleware('auth');
 Route::get('/quarterly_user_report/{name}/{year}/{quarter}/{department}', [QuarterlyReportsController::class, 'quarterly_user_report'])->middleware('auth');
