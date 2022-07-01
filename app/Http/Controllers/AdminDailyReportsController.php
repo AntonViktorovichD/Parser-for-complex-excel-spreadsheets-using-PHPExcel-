@@ -16,6 +16,8 @@ class AdminDailyReportsController extends Controller {
             $fill_arrs = [];
             $filled_arr = [];
             $table_arr = [];
+            $arr_orgs = [];
+            $arr_orgs_s = [];
             $counter = 0;
             $empty_deps = 0;
             $user_role = Auth::user()->roles->first()->id;
@@ -51,12 +53,21 @@ class AdminDailyReportsController extends Controller {
             $table_arr = json_decode($arrs, true);
 
             foreach (json_decode($arrs, true) as $key => $arr) {
-                foreach ($filled_arr as $ke => $fill) {
-                    if($arr['table_uuid'] == $ke){
+                foreach ($filled_arr as $k => $fill) {
+                    if ($arr['table_uuid'] == $k) {
                         $table_arr[$key]['fill'] = $fill;
                     } else {
                         $table_arr[$key]['fill'] = 0;
                     }
+                }
+                $depart = json_decode($arr['departments'], true);
+                for ($i = 0; $i < count($depart); $i++) {
+                    if ($i == 0) {
+                        $arr_orgs[$key][$i] = DB::table('org_helper')->where('id', $depart[$i])->value('depart_id');
+                    } else {
+                        $arr_orgs[$key][$i] = $arr_orgs[$key][$i - 1] . ', ' . DB::table('org_helper')->where('id', $depart[$i])->value('depart_id');
+                    }
+                    $table_arr[$key]['orgs'] = array_slice($arr_orgs[$key], 0, count($depart) - 1)[0];
                 }
             }
 
