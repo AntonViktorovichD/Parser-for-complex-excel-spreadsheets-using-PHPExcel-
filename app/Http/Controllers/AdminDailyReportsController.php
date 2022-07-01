@@ -67,9 +67,13 @@ class AdminDailyReportsController extends Controller {
                     } else {
                         $arr_orgs[$key][$i] = $arr_orgs[$key][$i - 1] . ', ' . DB::table('org_helper')->where('id', $depart[$i])->value('depart_id');
                     }
-                    $table_arr[$key]['orgs'] = array_slice($arr_orgs[$key], 0, count($depart) - 1)[0];
                 }
+                $table_arr[$key]['orgs'] = array_unique(explode(', ', array_slice($arr_orgs[$key], 0, count($depart) - 1)[count($arr_orgs[$key]) - 2]));
             }
+//            echo '<pre>';
+//            var_dump($table_arr);
+//            echo '</pre>';
+
 
             $arrs = json_encode($table_arr, JSON_UNESCAPED_UNICODE);
 
