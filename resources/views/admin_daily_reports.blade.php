@@ -60,7 +60,7 @@
     }
 
     .org_type {
-        margin-top: -22px !important;
+        margin-top: -21px !important;
         padding-bottom: 5px !important;
         padding-left: 30px !important;
     }
@@ -81,8 +81,8 @@
         5 => ['othr', 'О', 'Остальные учреждения'],
         6 => ['uszn', 'У', 'Управления социальной защиты населения'],
         7 => ['cso', 'Ц', 'Центры социального обслуживания населения']];
-    echo '<table class="table table-striped">';
-    echo '<tr>';
+    echo '<table>';
+    echo '<tr class="table_titles">';
     echo '<th>Отчет</th>';;
     echo '<th>Заполнения</th>';;
     echo '<th>Тип учреждений</th>';;
@@ -91,7 +91,7 @@
     foreach ($arrs as $key => $arr) {
         echo '<tr>';
         if ($arr['periodicity'] == 1) {
-            echo '<td><a href="/quarterly_report/' . $arr['table_uuid'] . '/' . date("Y") . '">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
+            echo '<td><a href="/admin_daily_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
             echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
             echo '<td style="text-align: center;">';
             foreach ($arr['orgs'] as $org) {
@@ -99,7 +99,7 @@
             }
             echo '</td>';
         } elseif ($arr['periodicity'] == 2) {
-            echo '<td><a href="/monthly_report/' . $arr['table_uuid'] . '/' . date("Y") . '">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
+            echo '<td><a href="/admin_weekly_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
             echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
             echo '<td style="text-align: center;">';
             foreach ($arr['orgs'] as $org) {

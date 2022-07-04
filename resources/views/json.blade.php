@@ -5,6 +5,9 @@
     table tr {
         text-align: center;
     }
+    table {
+        width: calc(100% + 250px) !important;
+    }
 </style>
 {{ $tableload }}
 @csrf

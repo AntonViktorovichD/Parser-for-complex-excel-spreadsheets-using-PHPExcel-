@@ -45,7 +45,7 @@ class AdminUserUpgradeController extends Controller {
                 echo '<pre>';
                 DB::table('report_values')->where('table_uuid', $table_uuid[$j])->where('row_uuid', $row_uuid[$j])->where('user_id', $user_id[$j])->update(['json_val' => $json_val, 'created_at' => $created_at]);
             }
-            return view('admin_user_upgrade', ['alert' => 'Запись успешно отредактирована']);
+            return view('router', ['alert' => 'Запись успешно отредактирована', 'route' => 'json/']);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }

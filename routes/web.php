@@ -15,8 +15,7 @@ Route::post('/monthly_update', [MonthlyReportsController::class, 'monthly_update
 use App\Http\Controllers\AdminDailyReportsController;
 
 Route::get('/admin_daily_reports', [AdminDailyReportsController::class, 'admin_daily_reports'])->middleware('checkAdmin');
-Route::get('/admin_daily_report/{name}/{year}', [AdminDailyReportsController::class, 'admin_daily_report'])->middleware('checkAdmin');
-Route::get('/admin_daily_user_report/{name}/{year}/{quarter}/{department}', [AdminDailyReportsController::class, 'admin_daily_user_report'])->middleware('checkAdmin');
+Route::get('/admin_daily_report/{name}', [AdminDailyReportsController::class, 'admin_daily_report'])->middleware('checkAdmin');
 Route::post('/admin_daily_upload', [AdminDailyReportsController::class, 'admin_daily_upload'])->middleware('checkAdmin');
 Route::post('/admin_daily_update', [AdminDailyReportsController::class, 'admin_daily_update'])->middleware('checkAdmin');
 
@@ -71,7 +70,7 @@ Route::post('/user_upgrade', [UserUpgradeController::class, 'user_upgrade'])->mi
 
 use App\Http\Controllers\AdminUserUpgradeController;
 
-Route::post('/admin_user_upgrade', [AdminUserUpgradeController::class, 'admin_user_upgrade'])->middleware('checkAdmin');
+Route::post('/router', [AdminUserUpgradeController::class, 'admin_user_upgrade'])->middleware('checkAdmin');
 
 use App\Http\Controllers\ExportSheetController;
 
