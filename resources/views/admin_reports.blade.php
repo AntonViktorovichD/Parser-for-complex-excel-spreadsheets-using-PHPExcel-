@@ -81,12 +81,10 @@
         5 => ['othr', 'О', 'Остальные учреждения'],
         6 => ['uszn', 'У', 'Управления социальной защиты населения'],
         7 => ['cso', 'Ц', 'Центры социального обслуживания населения']];
-    echo '<table>';
-    echo '<tr class="table_titles">';
+    echo '<table class="table table-striped">';
     echo '<th>Отчет</th>';;
     echo '<th>Заполнения</th>';;
     echo '<th>Тип учреждений</th>';;
-    echo '<tr>';
 
     foreach ($arrs as $key => $arr) {
         echo '<tr>';

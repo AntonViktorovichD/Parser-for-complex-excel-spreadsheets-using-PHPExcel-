@@ -12,17 +12,35 @@ Route::get('/monthly_user_report/{name}/{year}/{quarter}/{department}', [Monthly
 Route::post('/monthly_upload', [MonthlyReportsController::class, 'monthly_upload'])->middleware('auth');
 Route::post('/monthly_update', [MonthlyReportsController::class, 'monthly_update'])->middleware('auth');
 
-use App\Http\Controllers\AdminDailyReportsController;
+use App\Http\Controllers\AdminReportsController;
 
-Route::get('/admin_daily_reports', [AdminDailyReportsController::class, 'admin_daily_reports'])->middleware('checkAdmin');
-Route::get('/admin_daily_report/{name}', [AdminDailyReportsController::class, 'admin_daily_report'])->middleware('checkAdmin');
-Route::post('/admin_daily_update', [AdminDailyReportsController::class, 'admin_daily_update'])->middleware('checkAdmin');
+Route::get('/admin_reports', [AdminReportsController::class, 'admin_reports'])->middleware('checkAdmin');
+
+use App\Http\Controllers\AdminDailyReportController;
+
+Route::get('/admin_daily_report/{name}', [AdminDailyReportController::class, 'admin_daily_report'])->middleware('checkAdmin');
+Route::post('/admin_daily_update', [AdminDailyReportController::class, 'admin_daily_update'])->middleware('checkAdmin');
 
 use App\Http\Controllers\AdminWeeklyReportController;
 
-Route::get('/admin_weekly_reports', [AdminWeeklyReportController::class, 'admin_weekly_reports'])->middleware('checkAdmin');
 Route::get('/admin_weekly_report/{name}', [AdminWeeklyReportController::class, 'admin_weekly_report'])->middleware('checkAdmin');
 Route::post('/admin_weekly_update', [AdminWeeklyReportController::class, 'admin_weekly_update'])->middleware('checkAdmin');
+
+use App\Http\Controllers\DailyReportsController;
+
+Route::get('/daily_reports', [DailyReportsController::class, 'daily_reports'])->middleware('auth');
+
+use App\Http\Controllers\DailyReportController;
+
+Route::get('/daily_report/{name}', [DailyReportController::class, 'daily_report'])->middleware('auth');
+Route::post('/daily_upload', [DailyReportController::class, 'daily_upload'])->middleware('auth');
+Route::post('/daily_update', [DailyReportController::class, 'daily_update'])->middleware('auth');
+
+use App\Http\Controllers\WeeklyReportController;
+
+Route::get('/weekly_report/{name}', [WeeklyReportController::class, 'weekly_report'])->middleware('auth');
+Route::post('/weekly_upload', [WeeklyReportController::class, 'weekly_upload'])->middleware('auth');
+Route::post('/weekly_update', [WeeklyReportController::class, 'weekly_update'])->middleware('auth');
 
 use App\Http\Controllers\QuarterlyReportsController;
 Route::get('/quarterly_reports', [QuarterlyReportsController::class, 'quarterly_reports'])->middleware('auth');

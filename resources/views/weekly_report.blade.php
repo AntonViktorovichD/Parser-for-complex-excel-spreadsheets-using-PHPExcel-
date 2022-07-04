@@ -36,7 +36,7 @@
         $arrNum = [];
         $arrKeyVal = [];
                 $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
-        echo '<form method="post" action="/daily_update">';
+        echo '<form method="post" action="/weekly_update">';
 @endphp
 @csrf
 @php
@@ -129,7 +129,7 @@
     $arrCol = [];
     $sum =  json_decode($json_func,true);
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
-echo '<form method="post" action="/daily_upload">';
+echo '<form method="post" action="/weekly_upload">';
 @endphp
 @csrf
 @php
@@ -194,7 +194,7 @@ echo '<form method="post" action="/daily_upload">';
     }
     echo '</tr>' . PHP_EOL;
 
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $department . ' + ' . $quarter . ' + ' . $year;
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $department;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;

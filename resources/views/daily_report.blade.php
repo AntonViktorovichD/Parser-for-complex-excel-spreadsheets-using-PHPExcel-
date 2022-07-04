@@ -194,7 +194,7 @@ echo '<form method="post" action="/daily_upload">';
     }
     echo '</tr>' . PHP_EOL;
 
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $department . ' + ' . $quarter . ' + ' . $year;
+    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $department;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
