@@ -25,7 +25,7 @@
 @php
     $arrs = json_decode($arr, true);
 
-    echo '<table class="table table-striped">';
+    echo '<table class="table table-striped table-borderless">';
     echo '<th>Отчет</th>';
     echo '<th>Заполнения</th>';
 
@@ -34,12 +34,10 @@
         if ($arr['periodicity'] == 1) {
             echo '<td><a href="/daily_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
             echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
-            echo '<td style="text-align: center;">';
             echo '</td>';
         } elseif ($arr['periodicity'] == 2) {
             echo '<td><a href="/weekly_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
             echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
-            echo '<td style="text-align: center;">';
             echo '</td>';
         }
         echo '</tr>';

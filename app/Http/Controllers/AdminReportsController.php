@@ -16,9 +16,7 @@ class AdminReportsController extends Controller {
             $filled_arrs = [];
             $table_arr = [];
             $arr_orgs = [];
-            $arr_orgs_s = [];
             $counter = 0;
-            $empty_deps = 0;
             $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
             $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->get();
