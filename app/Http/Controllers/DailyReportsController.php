@@ -11,16 +11,13 @@ use Illuminate\Http\Request;
 class DailyReportsController extends Controller {
     public function daily_reports() {
         try {
-            $rv_ja = [];
             $user_names = [];
             $fill_arrs = [];
             $filled_arr = [];
             $table_arr = [];
             $arr_orgs = [];
-            $arr_orgs_s = [];
             $counter = 0;
             $empty_deps = 0;
-            $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
             $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->get();
             foreach ($arrs as $key => $val) {

@@ -10,10 +10,10 @@ use App\Http\Requests;
 class AdminReportsController extends Controller {
     public function admin_reports() {
         try {
-            $rv_ja = [];
             $user_names = [];
+            $tables_arr = [];
             $fill_arrs = [];
-            $filled_arr = [];
+            $filled_arrs = [];
             $table_arr = [];
             $arr_orgs = [];
             $arr_orgs_s = [];
@@ -22,26 +22,58 @@ class AdminReportsController extends Controller {
             $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
             $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->get();
-            foreach ($arrs as $key => $val) {
-                foreach (json_decode($val->departments, true) as $depart) {
-                    $fill_arrs[$val->table_uuid][$depart] = DB::table('daily_reports')->where('table_uuid', $val->table_uuid)->where('user_dep', $depart)->value('json_val');
+
+            foreach ($arrs as $key => $arr) {
+                $tables_arr[$arr->table_uuid]['departments'] = $arr->departments;
+                $tables_arr[$arr->table_uuid]['periodicity'] = $arr->periodicity;
+                $tables_arr[$arr->table_uuid]['highest_column_index'] = $arr->highest_column_index;
+            }
+
+            foreach ($tables_arr as $key => $arr) {
+                foreach (json_decode($arr['departments'], true) as $num => $dep) {
+                    if ($arr['periodicity'] == 1) {
+                        $fill_arrs[$key][$num] = DB::table('daily_reports')->where('table_uuid', $key)->where('user_dep', $dep)->value('json_val');
+                    } elseif ($arr['periodicity'] == 2) {
+                        $fill_arrs[$key][$num] = DB::table('weekly_reports')->where('table_uuid', $key)->where('user_dep', $dep)->value('json_val');
+                    }
                 }
             }
-            foreach ($fill_arrs as $table => $fill_table) {
-                if (isset($table)) {
-                    $cols = DB::table('tables')->where('table_uuid', $table)->value('highest_column_index');
-                    foreach ($fill_table as $dep => $fill_dep) {
-                        if (isset($fill_dep)) {
-                            foreach (json_decode($fill_dep, true) as $val) {
-                                if (isset($val)) {
-                                    $counter++;
-                                } else {
-                                    $empty_deps++;
-                                }
+
+            foreach ($fill_arrs as $key => $ars) {
+                foreach ($ars as $k => $arr) {
+                    if (isset($arr)) {
+                        $j_val = json_decode($arr, true);
+                        for ($i = 1; $i < count($j_val); $i++) {
+                            if (isset($j_val[$i])) {
+                                $counter++;
+                                $filled_arrs[$key][$k] = $counter;
                             }
-                            $filled_arr[$table] = intval(round($counter / ($cols + ($empty_deps * $cols)) * 100, 0, PHP_ROUND_HALF_UP));
                         }
+                        $counter = 0;
                     }
+                }
+            }
+
+            foreach ($filled_arrs as $key => $filled_arr) {
+                $filled_arrs[$key] = array_sum($filled_arr);
+            }
+
+            foreach ($fill_arrs as $key => $empty_val) {
+                foreach ($empty_val as $nmbr => $empty_arr) {
+                    if (empty($empty_arr)) {
+                        $counter++;
+                    }
+                    $fill_arrs[$key] = $counter;
+                }
+                $counter = 0;
+            }
+
+
+            foreach ($fill_arrs as $key => $fill_arr) {
+                if(isset($filled_arrs[$key])) {
+                    $filled_arrs[$key] = intval(round(($filled_arrs[$key] / ((($tables_arr[$key]['highest_column_index'] * $fill_arr)) + $filled_arrs[$key])) * 100, 0, PHP_ROUND_HALF_UP));
+                } else {
+                    $filled_arrs[$key] = 0;
                 }
             }
 
@@ -52,11 +84,9 @@ class AdminReportsController extends Controller {
             $table_arr = json_decode($arrs, true);
 
             foreach (json_decode($arrs, true) as $key => $arr) {
-                foreach ($filled_arr as $k => $fill) {
+                foreach ($filled_arrs as $k => $fill) {
                     if ($arr['table_uuid'] == $k) {
                         $table_arr[$key]['fill'] = $fill;
-                    } else {
-                        $table_arr[$key]['fill'] = 0;
                     }
                 }
                 $depart = json_decode($arr['departments'], true);
