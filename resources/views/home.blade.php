@@ -1,5 +1,24 @@
 @include('layouts.header')
 @include('layouts.menu')
+<style>
+    table {
+        height: 600px !important;
+        overflow-y: auto !important;
+    }
+
+    .sidebar-panel-box {
+        padding: 20px;
+        background: #ffffff;
+        color: #a2a2a2;
+        overflow: hidden;
+        border-radius: 0;
+        background-image: none;
+        box-shadow: 2px 26px 69px 0 rgba(0, 0, 0, 0.1);
+        min-height: calc(36vw - 40px) !important;
+        margin-top: 50px !important;
+        margin-left: -20px !important;
+    }
+</style>
 <div id="tm-main" class="tm-block-main uk-block uk-block-default ">
     <div class="uk-container uk-container-center">
         <div class="tm-main uk-grid uk-position-relative" data-uk-grid-match data-uk-grid-margin>
@@ -54,25 +73,40 @@
                     </div>
                 </main>
             </div>
-            <aside class="tm-sidebar-b uk-width-medium-1-4 uk-flex-order-last">
-                <div class="uk-panel uk-panel-box">
-                    <style>
-
-                    </style>
-
-                    <table class="table table-striped">
-                        <tr>
-                            <th scope="col">Ежедневные отчеты, требующие заполнения</th>
-                        </tr>
-                        <tr>
-                            <td><i class='cmpl uk-icon-times' style='color: #e43d3c;'></i> Нет отчетов для заполнения
-                            </td>
-                        </tr>
-                    </table>
+            <aside class="tm-sidebar-b uk-width-medium-1-4 uk-flex-order-last sidebar">
+                <div class="uk-panel sidebar-panel-box">
+                    @php
+                        echo '<table class="table">';
+                        echo '<tr>';
+                        echo '<th scope="col">Ежедневные отчеты, требующие заполнения</th>';
+                        echo '</tr>';
+                        echo '<td id="nothing" hidden><i class="cmpl uk-icon-times" style="color: #e43d3c;"></i> Нет отчетов для заполнения</td>';
+                        foreach (json_decode($arrs, true) as $arr) {
+                                echo '<tr class="tables_daily" id="' . $arr['fill'] . '">';
+                                echo '<td>';
+                                echo '<a  href="#">' . $arr['table_name'] . '</a>';
+                                echo '</td>';
+                                echo '</tr>';
+                        }
+                        echo '</table>';
+                    @endphp
                 </div>
             </aside>
-
         </div>
     </div>
 </div>
+<script>
+    window.onload = () => {
+        let tables = document.querySelectorAll('.tables_daily');
+        let counter = 0;
+        for (let table of tables) {
+            if (table.id == 100) {
+                table.hidden = true;
+                counter++;
+            } else if (tables.length == counter) {
+                nothing.hidden = false
+            }
+        }
+    }
+</script>
 @include('layouts.footer')

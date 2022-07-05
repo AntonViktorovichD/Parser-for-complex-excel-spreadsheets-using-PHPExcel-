@@ -37,7 +37,7 @@
             echo '</td>';
         } elseif ($arr['periodicity'] == 2) {
             echo '<td><a href="/weekly_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
-            echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
+            echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL
             echo '</td>';
         }
         echo '</tr>';
