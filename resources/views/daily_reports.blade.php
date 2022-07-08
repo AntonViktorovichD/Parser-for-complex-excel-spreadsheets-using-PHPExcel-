@@ -20,8 +20,8 @@
 <link rel="stylesheet" href="/css/arrayToJson.css">
 <div class="container">
     <h2>Создание запроса данных</h2>
-    <legend class="legend">СПИСОК КВАРТАЛЬНЫХ ОТЧЕТОВ</legend>
-    <h5 class="text-center title">Название квартального отчета</h5>
+    <legend class="legend">СПИСОК ЕЖЕДНЕВНЫХ ОТЧЕТОВ</legend>
+    <h5 class="text-center title">Название ежедневного отчета</h5>
 @php
     $arrs = json_decode($arr, true);
 
@@ -37,7 +37,7 @@
             echo '</td>';
         } elseif ($arr['periodicity'] == 2) {
             echo '<td><a href="/weekly_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
-            echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL
+            echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
             echo '</td>';
         }
         echo '</tr>';

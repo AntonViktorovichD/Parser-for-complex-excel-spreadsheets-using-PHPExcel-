@@ -76,6 +76,7 @@
             <aside class="tm-sidebar-b uk-width-medium-1-4 uk-flex-order-last sidebar">
                 <div class="uk-panel sidebar-panel-box">
                     @php
+                    if ($user_role == 3) {
                         echo '<table class="table">';
                         echo '<tr>';
                         echo '<th scope="col">Ежедневные отчеты, требующие заполнения</th>';
@@ -89,6 +90,7 @@
                                 echo '</tr>';
                         }
                         echo '</table>';
+                        }
                     @endphp
                 </div>
             </aside>

@@ -9,10 +9,13 @@ use PHPExcel_IOFactory;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 class TestController extends Controller {
-    public function test(Request $request) {
-        echo '<pre>';
-        var_dump($request->all());
-        echo '</pre>';
+    public function test() {
+        $users = DB::table('users')->get();
+        foreach ($users as $user) {
+            echo '<pre>';
+            var_dump($user);
+            echo '</pre>';
+        }
     }
 
 //    public function ultest(Request $request) {

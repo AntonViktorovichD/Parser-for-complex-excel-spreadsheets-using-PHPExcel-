@@ -11,8 +11,10 @@ use Illuminate\Http\Request;
 class DailyReportController extends Controller {
     public function daily_report($table_uuid) {
         $department = Auth::user()->department;
+        date_default_timezone_set('Europe/Moscow');
         $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
         $daily_reports = DB::table('daily_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->get();
+        $date_reports = [];
         $json = $table[0]->json_val;
         $name = $table[0]->table_name;
         $arrCell = json_decode($json, true);

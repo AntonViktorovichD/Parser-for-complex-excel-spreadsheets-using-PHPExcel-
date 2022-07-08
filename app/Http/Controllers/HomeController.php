@@ -66,7 +66,7 @@ class HomeController extends Controller {
 
             return view('home', compact('arrs'));
         } else {
-            return view('home');
+            return view('home', compact('user_role'));
         }
     }
 }
