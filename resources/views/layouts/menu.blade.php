@@ -12,7 +12,7 @@
                                 заполнения запросов</a></li>
                         <li><a href="/quarterly_reports">Квартальный
                                 отчёт</a></li>
-                        <li><a href="/index.php?option=com_wrapper&amp;view=wrapper&amp;Itemid=137">Удаление
+                        <li><a href="/delete_tables">Удаление
                                 запросов</a></li>
                         <li><a href="/index.php?option=com_fabrik&amp;view=list&amp;listid=5&amp;Itemid=138">Справочник
                                 телефонов</a></li>

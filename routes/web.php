@@ -57,7 +57,11 @@ Route::post('/testul', [TestController::class, 'ultest']);
 use App\Http\Controllers\UploadController;
 
 Route::get('/user_add', [UploadController::class, 'form'])->middleware('auth');
-Route::post('/ul', [UploadController::class, 'upload'])->middleware('auth');
+
+use App\Http\Controllers\DeleteTablesController;
+
+Route::get('/delete_tables', [DeleteTablesController::class, 'delete_tables'])->middleware('checkAdmin');
+Route::get('/delete_table/{name}/{stat}', [DeleteTablesController::class, 'delete_table'])->middleware('checkAdmin');
 
 use App\Http\Controllers\ShowUserController;
 
