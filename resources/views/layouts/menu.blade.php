@@ -12,8 +12,12 @@
                                 заполнения запросов</a></li>
                         <li><a href="/quarterly_reports">Квартальный
                                 отчёт</a></li>
-                        <li><a href="/delete_tables">Удаление
-                                запросов</a></li>
+                        @php
+                        if(Auth::id() == 1 || Auth::id() == 4) {
+                        echo '<li><a href="/delete_tables">Удаление
+                                запросов</a></li>';
+                        }
+                        @endphp
                         <li><a href="/index.php?option=com_fabrik&amp;view=list&amp;listid=5&amp;Itemid=138">Справочник
                                 телефонов</a></li>
 
