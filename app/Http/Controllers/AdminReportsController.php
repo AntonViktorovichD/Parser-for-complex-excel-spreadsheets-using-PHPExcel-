@@ -19,7 +19,7 @@ class AdminReportsController extends Controller {
             $counter = 0;
             $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
-            $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->get();
+            $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->where('status', 0)->orderBy('id', 'desc')->get();
 
             foreach ($arrs as $key => $arr) {
                 $tables_arr[$arr->table_uuid]['departments'] = $arr->departments;

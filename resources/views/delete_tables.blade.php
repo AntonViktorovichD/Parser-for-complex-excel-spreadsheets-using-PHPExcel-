@@ -1,5 +1,6 @@
 @include('layouts.header')
 @include('layouts.menu')
+<link rel="stylesheet" href="/css/arrayToJson.css">
 <style>
     table {
         margin-bottom: 50px !important;
@@ -20,8 +21,12 @@
         color: red;
     }
 
+    #cnfrm {
+        padding: 5px 15px !important;
+    }
+
 </style>
-<link rel="stylesheet" href="/css/arrayToJson.css">
+
 <div class="container">
     <h2>Удаление запроса данных</h2>
     <legend class="legend">Удаление запросов</legend>

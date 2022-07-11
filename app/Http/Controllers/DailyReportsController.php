@@ -21,7 +21,7 @@ class DailyReportsController extends Controller {
             $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
             $user_dep = DB::table('users')->where('id', $user_id)->value('department');
-            $arrs = DB::table('tables')->where('departments->' . $user_dep)->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->get();
+            $arrs = DB::table('tables')->where('departments->' . $user_dep)->where('status', 0)->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->get();
 
             foreach ($arrs as $key => $arr) {
                 $tables_arr[$arr->table_uuid]['periodicity'] = $arr->periodicity;

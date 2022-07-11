@@ -12,7 +12,7 @@ class MonthlyReportsController extends Controller {
     public function monthly_report($name, $year) {
         $user_id = Auth::id();
         $user_dep = Auth::user()->department;
-        $table = DB::table('tables')->where('table_uuid', '=', $name)->get();
+        $table = DB::table('tables')->where('status', 0)->where('table_uuid', '=', $name)->get();
         if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
             $departments = [];
             foreach (json_decode($table[0]->departments, true) as $department) {
@@ -25,7 +25,7 @@ class MonthlyReportsController extends Controller {
     }
     public function monthly_user_report($table_uuid, $year, $month, $department) {
         $user_dep = Auth::user()->department;
-        $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
+        $table = DB::table('tables')->where('status', 0)->where('table_uuid', $table_uuid)->get();
         $monthly_reports = DB::table('monthly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('month', $month)->where('year', $year)->get();
         $json = $table[0]->json_val;
         $name = $table[0]->table_name;

@@ -15,7 +15,7 @@ class JsonController extends Controller {
             $user_names = [];
             $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
-            $arrs = DB::table('tables')->where('periodicity', '=', 0)->orderBy('id', 'desc')->paginate(20);
+            $arrs = DB::table('tables')->where('status', 0)->where('periodicity', '=', 0)->orderBy('id', 'desc')->paginate(20);
             foreach (DB::table('tables')->orderBy('id', 'desc')->pluck('user_id') as $user) {
                 $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->first('name')->name;
             }
@@ -29,7 +29,7 @@ class JsonController extends Controller {
     }
 
     public function tables($table_uuid) {
-        $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
+        $table = DB::table('tables')->where('status', 0)->where('table_uuid', $table_uuid)->get();
         $json = $table[0]->json_val;
         $highest_column_index = $table[0]->highest_column_index;
         $highest_row = $table[0]->highest_row;

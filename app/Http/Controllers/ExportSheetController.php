@@ -19,7 +19,7 @@ class ExportSheetController extends Controller {
 
             $date = date('d_m_Y');
 
-            $report_values = DB::table('report_values')->where('row_uuid', '=', $row_uuid)->get();
+            $report_values = DB::table('report_values')->where('row_uuid', '=', $row_uuid)->where('status', 0)->get();
             $table_uuid = $report_values[0]->table_uuid;
             $json_val = $report_values[0]->json_val;
             $table_name = $report_values[0]->table_name;

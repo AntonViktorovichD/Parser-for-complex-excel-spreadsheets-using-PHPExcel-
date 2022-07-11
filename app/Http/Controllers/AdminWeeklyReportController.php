@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class AdminWeeklyReportController extends Controller {
     public function admin_weekly_report($table_uuid) {
         try {
-            $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
+            $table = DB::table('tables')->where('table_uuid', $table_uuid)->where('status', 0)->get();
             $json = $table[0]->json_val;
             $name = $table[0]->table_name;
             $highest_column_index = $table[0]->highest_column_index;

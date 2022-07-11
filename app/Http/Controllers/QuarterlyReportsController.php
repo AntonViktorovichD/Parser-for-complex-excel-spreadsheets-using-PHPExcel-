@@ -15,7 +15,7 @@ class QuarterlyReportsController extends Controller {
             $user_names = [];
             $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
-            $arrs = DB::table('tables')->where('periodicity', '=', 4)->orWhere('periodicity', '=', 3)->orderBy('id', 'desc')->paginate(20);
+            $arrs = DB::table('tables')->where('status', 0)->where('periodicity', '=', 4)->orWhere('periodicity', '=', 3)->orderBy('id', 'desc')->paginate(20);
             foreach (DB::table('tables')->orderBy('id', 'desc')->pluck('user_id') as $user) {
                 $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->first('name')->name;
             }
@@ -31,7 +31,7 @@ class QuarterlyReportsController extends Controller {
     public function quarterly_report($name, $year) {
         $user_id = Auth::id();
         $user_dep = Auth::user()->department;
-        $table = DB::table('tables')->where('table_uuid', '=', $name)->get();
+        $table = DB::table('tables')->where('status', 0)->where('table_uuid', '=', $name)->get();
         if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
             $departments = [];
             foreach (json_decode($table[0]->departments, true) as $department) {
@@ -45,7 +45,7 @@ class QuarterlyReportsController extends Controller {
 
     public function quarterly_user_report($table_uuid, $year, $quarter, $department) {
         $user_dep = Auth::user()->department;
-        $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
+        $table = DB::table('tables')->where('status', 0)->where('table_uuid', $table_uuid)->get();
         $quarterly_reports = DB::table('quarterly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('quarter', $quarter)->where('year', $year)->get();
         $json = $table[0]->json_val;
         $name = $table[0]->table_name;
