@@ -11,8 +11,9 @@ class DeleteTablesController extends Controller {
         return view('delete_tables', compact('tables'));
     }
 
-    public function delete_table($name) {
-//var_dump(DB::table('tables')->where('table_uuid', $name)->update('status' => ));
-
+    public function delete_table($name, $stat) {
+        $stat ? $stat = 0 : $stat = 1;
+            DB::table('tables')->where('table_uuid', $name)->update(['status' => $stat]);
+        return redirect('delete_tables');
     }
 }

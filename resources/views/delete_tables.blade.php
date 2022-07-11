@@ -16,6 +16,10 @@
         font-size: 20px;
     }
 
+    .recov {
+        color: red;
+    }
+
 </style>
 <link rel="stylesheet" href="/css/arrayToJson.css">
 <div class="container">
@@ -30,8 +34,14 @@
 
     for($i = 0; $i < count($arrs); $i++) {
        echo '<tr>';
-            echo '<td>' . $arrs['data'][$i]['table_name'] . '</td>' . PHP_EOL;
-            echo '<td><a id="cnfrm" href="/delete_table/' . $arrs['data'][$i]['table_uuid'] . '/' . $arrs['data'][$i]['status'] . '">Удаление</a></td>' . PHP_EOL;
+       if($arrs['data'][$i]['table_name'] == 0) {
+          echo '<td>' . $arrs['data'][$i]['table_name'] . '</td>' . PHP_EOL;
+            echo '<td><a id="cnfrm" href="/delete_table/' . $arrs['data'][$i]['table_uuid'] . '/' . $arrs['data'][$i]['status'] . '">Удалить</a></td>' . PHP_EOL;
+       } else {
+          echo '<td class="recov">' . $arrs['data'][$i]['table_name'] . '</td>' . PHP_EOL;
+            echo '<td><a id="cnfrm" href="/delete_table/' . $arrs['data'][$i]['table_uuid'] . '/' . $arrs['data'][$i]['status'] . '">Восстановить</a></td>' . PHP_EOL;
+       }
+
     echo '</tr>';
     }
     echo '</table>';
@@ -44,7 +54,7 @@
             let cnfrms = document.querySelectorAll('#cnfrm');
             for (let cnfrm of cnfrms) {
                 cnfrm.onclick = () => {
-                    return confirm("Удалить?");
+                    return confirm(cnfrm.innerHTML + "?");
                 }
             }
         }
