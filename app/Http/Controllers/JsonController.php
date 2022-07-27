@@ -21,7 +21,7 @@ class JsonController extends Controller {
          }
          $arr = json_encode($arrs);
          $table_user = json_encode($user_names);
-         $arr_rows = json_encode(DB::select('select * from report_values'));
+         $arr_rows = json_encode(DB::table('report_values')->get());
          return view('json', ['arr' => $arr, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => 'user_role', 'table_user' => $table_user, 'pages' => $arrs]);
       } catch (QueryException $e) {
          echo 'Ошибка: ' . $e->getMessage();
