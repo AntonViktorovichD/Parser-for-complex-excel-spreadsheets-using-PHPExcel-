@@ -13,7 +13,7 @@ class MailController extends Controller {
     public function send_mail(Request $request) {
         date_default_timezone_set('Europe/Moscow');
         try {
-            $notification_rights = DB::table('notification_rights')->where('id', '=', 1)->get()[0];
+            $notification_rights = DB::table('notification_rights')->where('id', 1)->get()[0];
             $notifications = [];
             if ($notification_rights->e_mail != 0 || $notification_rights->mobile_phone != 0) {
                 $table_uuid = $request->get('table_uuid');

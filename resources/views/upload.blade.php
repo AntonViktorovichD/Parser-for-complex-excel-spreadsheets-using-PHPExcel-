@@ -42,7 +42,8 @@
                         <legend class="legend">Создание запроса из таблицы Excel</legend>
                         @csrf
                         @php
-                            $prev_create_time = DB::table('tables')->orderBy('id', 'desc')->value('created_at');
+                            var_dump(Auth::user()->getRoleNames());
+                            $prev_create_time = DB::table('tables')->orderBy('id', 'desc')->value('created_at');;
                             echo '<div id="prev" hidden>' . $prev_create_time . '</div>';
                             date_default_timezone_set('Europe/Moscow');
                             $time_delay = DB::table('notification_rights')->value('time_delay');
@@ -56,7 +57,7 @@
                             echo '<input class="input-xlarge form-control fabrikinput inputbox text" type="text" name="filename">';
                             echo '</div>';
                             echo '<div class="row-fluid">';
-                            if ($auth == 1) {
+                           if (Auth::user()->getRoleNames()[0] == 'moderator' || Auth::user()->getRoleNames()[0] == 'administrator') {
                                 echo '<label for="periodicity">Выбор периодичности</label>';
                                 echo '<select id="periodicity" name="periodicity" class="form-select distr" aria-label="Default select example">';
                                 echo '<option selected value="0"> Разовый </option>';

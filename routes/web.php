@@ -57,6 +57,7 @@ Route::post('/testul', [TestController::class, 'ultest']);
 use App\Http\Controllers\UploadController;
 
 Route::get('/user_add', [UploadController::class, 'form'])->middleware('auth');
+Route::post('/ul', [UploadController::class, 'upload'])->middleware('auth');
 
 use App\Http\Controllers\DeleteTablesController;
 
@@ -125,7 +126,7 @@ Auth::routes(['register' => false]);
 Route::get('change_password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('auth.change_password')->middleware('checkAdmin');
 Route::patch('change_password', 'Auth\ChangePasswordController@changePassword')->name('auth.change_password')->middleware('checkAdmin');
 
-Route::group(['middleware' => ['auth'], 'prefix' => 'administrator', 'as' => 'admin.'], function () {
+Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', 'AdminController@index')->name('home')->middleware('checkAdmin');
     Route::resource('permissions', 'Admin\PermissionsController')->middleware('checkAdmin');
     Route::delete('permissions_mass_destroy', 'Admin\PermissionsController@massDestroy')->name('permissions.mass_destroy')->middleware('checkAdmin');

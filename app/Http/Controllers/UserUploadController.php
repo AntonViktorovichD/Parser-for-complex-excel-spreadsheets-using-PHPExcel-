@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class UserUploadController extends Controller {
     public function user_upload(Request $request) {
         date_default_timezone_set('Europe/Moscow');
-        $created_at = date('Y-m-d, H:i:s');
+        $created_at = date('Y-m-d H:i:s');
         try {
             DB::connection()->getPdo();
             $input = $request->except('_token', 'table_information');
