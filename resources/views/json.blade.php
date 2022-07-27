@@ -5,6 +5,7 @@
     table tr {
         text-align: center;
     }
+
     table {
         width: calc(100% + 250px) !important;
     }
@@ -107,23 +108,33 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
            echo '<div class="progress-bar-zero" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>';
         }
         echo '</div></td>';
-           for($i = 0; $i < count($arr_rows); $i++) {
-            if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
-               if ($arr['table_uuid'] == $arr_rows[count($arr_rows) - 1]['table_uuid']) {
-                  echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
-                break;
-               } elseif($arr['table_uuid'] != $arr_rows[count($arr_rows) - 1]['table_uuid']) {
-                   echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/admin_view/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Просмотр </a></td>';
-               break;}
-            } else {
-                if ($arr['table_uuid'] == $arr_rows[count($arr_rows) - 1]['table_uuid'] && $user_id == $arr_rows[count($arr_rows) - 1]['user_id']) {
+
+           for($i = 0; $i < count($arr); $i++) {
+              if(isset($arr_rows[$i]['row_uuid'])) {
+                 if($arr_rows[$i]['user_id'] == $user_id && $arr_rows[$i]['table_uuid'] == $arr['table_uuid']) {
                     echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
-               break;
-               } elseif($arr['table_uuid'] != $arr_rows[count($arr_rows) - 1]['table_uuid']) {
-                   echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
-               break;
-                }
-            }
+                    break;
+                 }
+              } else {
+                    echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
+                    break;
+                 }
+//            if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
+//               if ($arr['table_uuid'] == $arr_rows[count($arr_rows) - 1]['table_uuid']) {
+//                  echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
+//                break;
+//               } elseif($arr['table_uuid'] != $arr_rows[count($arr_rows) - 1]['table_uuid']) {
+//                   echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/admin_view/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Просмотр </a></td>';
+//               break;}
+//            } else {
+//                if ($arr['table_uuid'] == $arr_rows[count($arr_rows) - 1]['table_uuid'] && $user_id == $arr_rows[count($arr_rows) - 1]['user_id']) {
+//                    echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
+//               break;
+//               } elseif($arr['table_uuid'] != $arr_rows[count($arr_rows) - 1]['table_uuid']) {
+//                   echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
+//               break;
+//                }
+//            }
         }
         echo '<td><button type="submit" class="btn btn-dl btn-primary">Скачать</button></td>';
         echo '<td><button type="submit" id="read_only" class="btn btn-primary" data-change="' . $arr['read_only'] . '" value="' . $arr['table_uuid'] . '">Принять запрос</button></td>';
