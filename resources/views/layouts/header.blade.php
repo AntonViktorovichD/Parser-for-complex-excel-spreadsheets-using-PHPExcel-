@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/theme.css">
     <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/font-awesome.css"/>
     <script src="/js/jquery.min.js" type="text/javascript"></script>
     <script src="/js/core.js" type="text/javascript"></script>
     <script src="/js/calendar.js" type="text/javascript"></script>
@@ -33,5 +34,5 @@
 </head>
 <body class="tm-sidebar-b-right tm-sidebars-1 tm-noblog">
 <div class="container">
-<h1 class="main-header">ИНФОРМАЦИОННО-АНАЛИТИЧЕСКИЙ СЕРВИС "АВТОМАТИЗИРОВАННЫЙ СБОР ПОКАЗАТЕЛЕЙ РАБОТЫ СОЦИАЛЬНЫХ
-    УЧРЕЖДЕНИЙ НИЖЕГОРОДСКОЙ ОБЛАСТИ"</h1>
+    <h1 class="main-header">ИНФОРМАЦИОННО-АНАЛИТИЧЕСКИЙ СЕРВИС "АВТОМАТИЗИРОВАННЫЙ СБОР ПОКАЗАТЕЛЕЙ РАБОТЫ СОЦИАЛЬНЫХ
+        УЧРЕЖДЕНИЙ НИЖЕГОРОДСКОЙ ОБЛАСТИ"</h1>

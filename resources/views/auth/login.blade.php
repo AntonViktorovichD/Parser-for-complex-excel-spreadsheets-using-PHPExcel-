@@ -41,15 +41,6 @@
                                 @endif
                             </div>
 
-                            <div class="input-group mb-4">
-                                <div class="form-check checkbox">
-                                    <input class="form-check-input" name="remember" type="checkbox" id="remember" style="vertical-align: middle;" />
-                                    <label class="form-check-label" for="remember" style="vertical-align: middle;">
-                                        Remember me
-                                    </label>
-                                </div>
-                            </div>
-
                             <div class="row">
                                 <div class="col-6">
                                     <button type="submit" class="btn btn-primary px-4">
