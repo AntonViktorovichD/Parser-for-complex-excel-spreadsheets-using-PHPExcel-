@@ -1,11 +1,14 @@
 @extends('layouts.app')
 <style>
+    body {
+        font-family: 'Open Sans' !important;
+    }
+
     .card-group {
         box-shadow: 2px 26px 69px 0 rgba(0, 0, 0, 0.1);
     }
 
     .tm-heading-teaser {
-        font-family: 'Open Sans';
         text-transform: uppercase;
         left: 0;
         right: 0;
@@ -19,6 +22,14 @@
 
     }
 
+    .form-control:focus {
+        color: #ffffff !important;
+        text-shadow: none !important;
+        background: rgba(150, 150, 150, 0.15) !important;
+        box-shadow: 0 0 6px #f8b9b7 !important;
+        border-color: #cccccc !important;
+    }
+
     .tm-heading-teaser-span {
         margin-bottom: 50px !important;
         line-height: 2 !important;
@@ -27,6 +38,19 @@
 
     .form-control {
         margin-top: 25px !important;
+        border-radius: 0 !important;
+    }
+
+    .input-group {
+        width: 225px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .btn-primary {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 90px !important;
     }
 
 </style>
@@ -35,7 +59,7 @@
         <div class="col-md-9">
             <div class="card-group">
                 <div class="card p-4">
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         @if(\Session::has('message'))
                             <p class="alert alert-info">
                                 {{ \Session::get('message') }}
@@ -43,14 +67,13 @@
                         @endif
                         <form method="POST" action="{{ route('login') }}">
                             {{ csrf_field() }}
-                            <h1 class="tm-heading-teaser text-center"><span class="tm-heading-teaser-span">Информационно-аналитический сервис</span><br/>
+                            <h1 class="tm-heading-teaser "><span class="tm-heading-teaser-span">Информационно-аналитический сервис</span><br/>
                                 Автоматизированный сбор показателей работы социальных учреждений Нижегородской области
                             </h1>
-                            <div class="input-group mb-3">
-
+                            <div class="input-group">
                                 <input name="login" type="text"
                                        class="form-control {{ $errors->has('login') ? ' is-invalid' : '' }}" required
-                                       autofocus placeholder="Login" value="{{ old('login', null) }}">
+                                       autofocus placeholder="Логин *" value="{{ old('login', null) }}">
                                 @if($errors->has('login'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('login') }}
@@ -58,11 +81,11 @@
                                 @endif
                             </div>
 
-                            <div class="input-group mb-3">
+                            <div class="input-group">
 
                                 <input name="password" type="password"
                                        class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" required
-                                       placeholder="Password">
+                                       placeholder="Пароль *">
                                 @if($errors->has('password'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('password') }}
@@ -71,11 +94,9 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-6">
-                                    <button type="submit" class="btn btn-primary px-4">
-                                        Login
-                                    </button>
-                                </div>
+                                <button type="submit" class="btn btn-primary px-4">
+                                    Login
+                                </button>
                             </div>
                         </form>
                     </div>
