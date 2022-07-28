@@ -23,7 +23,7 @@
 
                         <li><a href="/daily_reports">Ежедневные отчеты</a></li>
                         @php
-                            if(Auth::id() == 1 || Auth::id() == 4) {
+                            if(Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
                               echo '<li><a href="/admin_reports">ЕЖЕДНЕВНЫЕ ОТЧЕТЫ
                                 (ТОЛЬКО ДЛЯ АДМИНИСТРАТОРОВ)</a></li>';
                               }
