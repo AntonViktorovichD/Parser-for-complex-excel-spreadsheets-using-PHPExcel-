@@ -284,7 +284,7 @@ table.dataTable thead .sorting_desc {
 }
 
 .input-group {
-    width: 225px !important;
+    /*width: 225px !important;*/
     margin-left: auto !important;
     margin-right: auto !important;
 }
@@ -305,4 +305,8 @@ table.dataTable thead .sorting_desc {
 .btn:hover {
     color: #fff !important;
     background-color: #e43d3c !important;
+}
+
+.form-control {
+    border-radius: 0 !important;
 }

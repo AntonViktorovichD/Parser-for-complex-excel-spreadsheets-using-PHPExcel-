@@ -35,12 +35,17 @@
         font-size: 20px;
     }
 
-    .form-control {
-        margin-top: 35px !important;
-        border-radius: 0 !important;
+    .input-group {
+        width: 300px !important;
+        margin-top: 40px !important;
+        font-size: 14px !important;
+        line-height: 2.75 !important;
     }
 
-
+    .btn {
+        margin-top: 50px !important;
+        margin-bottom: 30px !important;
+    }
 </style>
 @section('content')
     <div class="row justify-content-center">
@@ -59,9 +64,10 @@
                                 Автоматизированный сбор показателей работы социальных учреждений Нижегородской области
                             </h1>
                             <div class="input-group">
+                                <span>Логин * &nbsp&nbsp&nbsp&nbsp</span>
                                 <input name="login" type="text"
                                        class="form-control {{ $errors->has('login') ? ' is-invalid' : '' }}" required
-                                       autofocus placeholder="Логин *" value="{{ old('login', null) }}">
+                                       autofocus value="{{ old('login', null) }}">
                                 @if($errors->has('login'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('login') }}
@@ -70,10 +76,10 @@
                             </div>
 
                             <div class="input-group">
-
+                                <span>Пароль * &nbsp&nbsp</span>
                                 <input name="password" type="password"
-                                       class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" required
-                                       placeholder="Пароль *">
+                                       class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                       required>
                                 @if($errors->has('password'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('password') }}
