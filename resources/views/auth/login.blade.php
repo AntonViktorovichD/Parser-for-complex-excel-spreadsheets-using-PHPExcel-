@@ -19,7 +19,6 @@
         margin-top: -10px;
         line-height: 1.2;
         font-size: 30px !important;
-
     }
 
     .form-control:focus {
@@ -37,21 +36,10 @@
     }
 
     .form-control {
-        margin-top: 25px !important;
+        margin-top: 35px !important;
         border-radius: 0 !important;
     }
 
-    .input-group {
-        width: 225px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    .btn-primary {
-        margin-left: auto !important;
-        margin-right: auto !important;
-        width: 90px !important;
-    }
 
 </style>
 @section('content')
@@ -94,8 +82,8 @@
                             </div>
 
                             <div class="row">
-                                <button type="submit" class="btn btn-primary px-4">
-                                    Login
+                                <button type="submit" class="btn btn-outline-danger">
+                                    Войти
                                 </button>
                             </div>
                         </form>

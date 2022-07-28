@@ -18,17 +18,42 @@
     <link href="/css/select2.min.css" rel="stylesheet"/>
     <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
     <link href="/css/dropzone.min.css" rel="stylesheet"/>
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet"/>
+    <link href="css/custom.css" rel="stylesheet"/>
     @yield('styles')
 </head>
 <style>
+    html, body {
+        margin: 0;
+        height: 100%;
+    }
 
+    .wrapper {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer-fixed {
+        height: 50px;
+        margin-top: -60px !important;
+    }
+    .p_footer {
+        margin-left: 35px !important;
+        font-size: 14px !important;
+    }
 </style>
 <body class="header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden login-page">
-<div class="app flex-row align-items-center">
-    <div class="container">
-        @yield("content")
+<div class="wrapper">
+    <div class="app flex-row align-items-center">
+        <div class="container">
+            @yield("content")
+        </div>
     </div>
+</div>
+
+<div class="footer-fixed">
+    <p class="p_footer">Права защищены © @php echo date("Y") @endphp Министерство
+        социальной политики Нижегородской области</p>
 </div>
 @yield('scripts')
 </body>

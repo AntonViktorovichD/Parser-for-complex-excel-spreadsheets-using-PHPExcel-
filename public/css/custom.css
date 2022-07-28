@@ -282,3 +282,27 @@ table.dataTable thead .sorting_desc {
     url('../fonts/open-sans-v29-latin-ext_latin_cyrillic-ext_cyrillic-800italic.ttf') format('truetype'), /* Safari, Android, iOS */
     url('../fonts/open-sans-v29-latin-ext_latin_cyrillic-ext_cyrillic-800italic.svg#OpenSans') format('svg'); /* Legacy iOS */
 }
+
+.input-group {
+    width: 225px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.btn {
+    margin-top: 35px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    border-radius: 0 !important;
+    font-weight: 400 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    padding: 4px 12px !important;
+    max-width: 90px !important;
+    color: black !important;
+    border: 2px solid #e43d3c !important;
+}
+.btn:hover {
+    color: #fff !important;
+    background-color: #e43d3c !important;
+}
