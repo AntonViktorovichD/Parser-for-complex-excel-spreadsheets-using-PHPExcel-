@@ -87,7 +87,7 @@
                             </div>
 
                             <div class="row">
-                                <button type="submit" class="btn btn-outline-danger">
+                                <button type="submit" class="btn btn_mon btn-outline-danger">
                                     Войти
                                 </button>
                             </div>

@@ -22,7 +22,7 @@ class HomeController extends Controller {
         $user_role = Auth::user()->roles->first()->id;
 
         $user_id = Auth::id();
-        if ($user_role == 3) {
+//        if ($user_role == 3) {
             $user_dep = DB::table('users')->where('id', $user_id)->value('department');
             $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->where('departments->' . $user_dep)->orderBy('id', 'desc')->get();
             foreach ($arrs as $key => $arr) {
@@ -65,8 +65,8 @@ class HomeController extends Controller {
             $arrs = json_encode($table_arr, JSON_UNESCAPED_UNICODE);
 
             return view('home', compact('arrs'));
-        } else {
-            return view('home', compact('user_role'));
-        }
+//        } else {
+//            return view('home', compact('user_role'));
+//        }
     }
 }

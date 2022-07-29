@@ -245,7 +245,7 @@ table.dataTable thead .sorting_desc {
     margin-right: auto !important;
 }
 
-.btn {
+.btn_mon {
     margin-top: 35px !important;
     margin-left: auto !important;
     margin-right: auto !important;
@@ -254,7 +254,7 @@ table.dataTable thead .sorting_desc {
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
     padding: 4px 12px !important;
-    max-width: 90px !important;
+    max-width: 100px !important;
     color: black !important;
     border: 2px solid #e43d3c !important;
 }
@@ -302,9 +302,9 @@ table.dataTable thead .sorting_desc {
 }
 
 .bg_info {
-    padding: 35px;
+    padding: 35px !important;
     background: #ffffff;
-    color: #a2a2a2;
+    /*color: #a2a2a2;*/
     overflow: hidden;
     border-radius: 0;
     background-image: none;
@@ -316,8 +316,20 @@ table.dataTable thead .sorting_desc {
     padding: 10px;
 }
 
-.warning_text h2 {
+.warning_text > h2 {
     font-weight: 600;
     font-size: 38px;
 }
 
+.instruction, .instruction > h3{
+    margin-top: 25px !important;
+    margin-bottom: 25px !important;
+}
+
+.container {
+    margin-bottom: 35px !important;
+}
+
+.daily_reports {
+    width: 22vw !important;
+}
