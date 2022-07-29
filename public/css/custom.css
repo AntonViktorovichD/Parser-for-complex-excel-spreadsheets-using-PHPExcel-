@@ -363,8 +363,27 @@ input[type="text"]:focus {
 
 .legend {
     margin-bottom: 25px !important;
+    display: block;
+    width: 100%;
+    padding: 0;
+    font-size: 21px;
+    line-height: 48px;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .row_info {
     margin: 25px 0 !important;
+}
+
+textarea[type="text"]:focus {
+    box-shadow: none;
+    border-color: rgba(0, 0, 0, 0);
+    outline: 0;
+    background: rgba(150, 150, 150, 0.15);
+    background-image: none;
+}
+
+.title_h1 {
+    padding-bottom: 35px !important;
 }

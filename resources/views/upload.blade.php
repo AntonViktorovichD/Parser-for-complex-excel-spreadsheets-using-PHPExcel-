@@ -1,18 +1,23 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
-
+    .cols {
+        columns: 3;
+    }
+    .inputs_cols {
+        margin: 30px 0 !important;
+    }
 </style>
 <link rel="stylesheet" href="/css/jquery.datetimepicker.min.css">
 <script src="/js/jquery.js"></script>
 <script src="/js/jquery.datetimepicker.full.js"></script>
 <div class="container px-4">
-
-    <h1>Создание запроса данных</h1>
+    <h1 class="title_h1">Создание запроса данных</h1>
     {{ $ulerror }}
     <form method="post" id="form" action="/ul" enctype="multipart/form-data">
+        <div class="row row_info">
         <legend class="legend">Создание запроса из таблицы Excel</legend>
-        <div class="">
+        </div>
         @csrf
         @php
             $prev_create_time = DB::table('tables')->orderBy('id', 'desc')->value('created_at');;
@@ -32,7 +37,6 @@
             echo '</div>';
             echo '</div>';
            if (Auth::user()->getRoleNames()[0] == 'moderator' || Auth::user()->getRoleNames()[0] == 'administrator') {
-
                echo '<div class="row row_info">';
             echo '<div class="col-1 text-nowrap info_headers">';
                 echo '<label for="periodicity">Выбор периодичности</label>';
@@ -79,13 +83,12 @@
             echo '<input type="file" name="userfile" accept=".xls,.xlsx">';
                   echo '</div>';
             echo '</div>';
-
             $depart_helper = DB::table('depart_helper')->pluck('title');
             $depart_helper = (json_decode(json_encode($depart_helper, JSON_UNESCAPED_UNICODE), true));
             $depart_helper_id = DB::table('depart_helper')->pluck('id');
             $depart_helper_id = (json_decode(json_encode($depart_helper_id, JSON_UNESCAPED_UNICODE), true));
 
-            echo '<h3>Типы Учреждений:</h3>';
+            echo '<h3 class="inputs_cols">Типы Учреждений:</h3>';
             echo '<div id="v-model-multiple-checkboxes" >';
             echo '<div id="checkboxes">';
             echo '<div class="cols">';
@@ -98,7 +101,7 @@
             $distr_helper = (json_decode(json_encode($distr_helper, JSON_UNESCAPED_UNICODE), true));
             $distr_helper_id = DB::table('distr_helper')->pluck('id');
             $distr_helper_id = (json_decode(json_encode($distr_helper_id, JSON_UNESCAPED_UNICODE), true));
-            echo '<h3>Районы:</h3>';
+            echo '<h3  class="inputs_cols">Районы:</h3>';
             echo '<div class="cols">';
             foreach ($distr_helper as $distr_counter => $distr) {
                 echo '<input type="checkbox" class="distr" id=" ' . $distr . '" v-model="checked" data-checker="distr" @change="getStatus($event)" value=" ' . $distr_helper_id[$distr_counter] . ' " data-value=" ' . $distr_helper_id[$distr_counter] . ' "><label for="' . $distr . '">' . $distr . '</label><br />';
@@ -112,25 +115,22 @@
             $org_distr_id = (json_decode(json_encode($org_distr_id, JSON_UNESCAPED_UNICODE), true));
             $org_helper_id = DB::table('org_helper')->pluck('id');
             $org_helper_id = (json_decode(json_encode($org_helper_id, JSON_UNESCAPED_UNICODE), true));
-            echo '<h3>Учреждения:</h3>';
+            echo '<h3  class="inputs_cols">Учреждения:</h3>';
             echo '<div class="cols">';
             foreach ($org_helper as $org_counter => $org) {
                 $org = preg_replace('#"#', '&quot', $org);
                 echo '<input type="checkbox" class="org" name="org[' . $org_helper_id[$org_counter] . ']" id=" ' . $org . '" v-model="checked" @change="getStatus($event)" data-checker="org" data-departId=" ' . $org_depart_id[$org_counter] . ' " data-distrId=" ' . $org_distr_id[$org_counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$org_counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
             }
             echo '</div>';
-            echo '<div class="row-fluid">';
-            echo '<div class="control-group fabrikElementContainer plg-textarea">';
-            echo '<p><label class="fabrikLabel control-label"> Комментарий к запросу </label></p>';
-            echo '<div class="controls">';
-            echo '<div class="fabrikElement">';
-            echo '<textarea class="fabrikinput inputbox input-block-level" name="comment" cols="40" rows="6"></textarea>';
+                echo '<div class="row row_info">';
+            echo '<div class="col-1 text-nowrap info_headers">';
+                echo '<label for="comment">Комментарий к запросу</label>';
+                   echo '</div>';
+             echo '<div class="col-1">';
+            echo '<textarea type="text" name="comment" cols="40" rows="6" style="width: 80vw !important; margin-bottom:30px;"></textarea>';
+            echo '</div>';
+            echo '</div>';
             echo '<input id="sms" type="text" name="sms" hidden>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
             echo '<input style="border: 2px solid #e43d3c !important;" class="btn btn-primary btn-submit-second button" id="cnfrm" @click="check" value="Отправить запрос">';
         @endphp
     </form>
