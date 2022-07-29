@@ -1,42 +1,33 @@
-<div class="tm-navbar-container ">
-    <nav class="tm-navbar uk-navbar">
-        <div class="uk-container uk-container-center">
-            <div class="uk-grid uk-flex-middle uk-hidden-small">
-                <div class="uk-flex-item-1">
-                    <ul class="uk-navbar-nav uk-hidden-small">
-                        <li><a href="/">Начало
-                                работы</a></li>
-                        <li><a href="/user_add">Создать
-                                запрос из таблицы excel</a></li>
-                        <li><a href="/json">Результаты
-                                заполнения запросов</a></li>
-                        <li><a href="/quarterly_reports">Квартальный
-                                отчёт</a></li>
-                        @php
-                        if(Auth::id() == 1 || Auth::id() == 4) {
-                        echo '<li><a href="/delete_tables">Удаление
-                                запросов</a></li>';
-                        }
-                        @endphp
-                        <li><a href="/index.php?option=com_fabrik&amp;view=list&amp;listid=5&amp;Itemid=138">Справочник
-                                телефонов</a></li>
+<ul class="nav">
+    <li class="nav-item"><a class="nav-link" href="/home">Начало
+            работы</a></li>
+    <li class="nav-item"><a class="nav-link" href="/user_add">Создать
+            запрос из таблицы excel</a></li>
+    <li class="nav-item"><a class="nav-link" href="/json">Результаты
+            заполнения запросов</a></li>
+    <li class="nav-item"><a class="nav-link" href="/quarterly_reports">Квартальный
+            отчёт</a></li>
+    @php
+        if(Auth::id() == 1 || Auth::id() == 4) {
+        echo '<li class="nav-item"><a class="nav-link" href="/delete_tables">Удаление
+                запросов</a></li>';
+        }
+    @endphp
+    <li class="nav-item"><a class="nav-link" href="/">Справочник
+            телефонов</a></li>
 
-                        <li><a href="/daily_reports">Ежедневные отчеты</a></li>
-                        @php
-                            if(Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
-                              echo '<li><a href="/admin_reports">ЕЖЕДНЕВНЫЕ ОТЧЕТЫ
-                                (ТОЛЬКО ДЛЯ АДМИНИСТРАТОРОВ)</a></li>';
-                              }
-                        @endphp
-                    </ul>
-                </div>
-                <div class="uk-flex-item-1">
-                    <ul class="tm-nav-secondary uk-hidden uk-navbar-nav uk-float-right"></ul>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <li class="nav-item"><a class="nav-link" href="/daily_reports">Ежедневные отчеты</a></li>
+    @php
+        if(Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
+          echo '<li class="nav-item" ><a class="nav-link" href="/admin_reports">ЕЖЕДНЕВНЫЕ ОТЧЕТЫ
+            (ТОЛЬКО ДЛЯ АДМИНИСТРАТОРОВ)</a></li>';
+          }
+    @endphp
+</ul>
+<div class="uk-flex-item-1">
+    <ul class="tm-nav-secondary uk-hidden uk-navbar-nav uk-float-right"></ul>
 </div>
+
 <script>
     (function ($) {
         var navbar = $('.tm-navbar'),

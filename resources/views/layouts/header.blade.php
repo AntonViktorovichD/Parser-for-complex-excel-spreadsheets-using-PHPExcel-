@@ -32,7 +32,12 @@
     <script src="/js/social.js"></script>
     <script src="/js/theme.js"></script>
 </head>
-<body class="tm-sidebar-b-right tm-sidebars-1 tm-noblog">
+<style>
+    body {
+        font-family: 'Open Sans' !important;
+    }
+</style>
+<body>
 <div class="container">
     <h1 class="main-header">ИНФОРМАЦИОННО-АНАЛИТИЧЕСКИЙ СЕРВИС "АВТОМАТИЗИРОВАННЫЙ СБОР ПОКАЗАТЕЛЕЙ РАБОТЫ СОЦИАЛЬНЫХ
         УЧРЕЖДЕНИЙ НИЖЕГОРОДСКОЙ ОБЛАСТИ"</h1>

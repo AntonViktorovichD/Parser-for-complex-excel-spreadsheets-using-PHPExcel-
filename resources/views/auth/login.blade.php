@@ -22,7 +22,6 @@
     }
 
     .form-control:focus {
-        color: #ffffff !important;
         text-shadow: none !important;
         background: rgba(150, 150, 150, 0.15) !important;
         box-shadow: 0 0 6px #f8b9b7 !important;
