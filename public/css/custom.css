@@ -313,11 +313,11 @@ table.dataTable thead .sorting_desc {
 
 .nav {
     text-transform: uppercase !important;
-    margin-left: 15px !important;
+    margin-left: 25px !important;
     margin-top: 30px !important;
 }
 
-.nav-link {
+.uk-navbar-nav > li > a {
     display: block;
     box-sizing: border-box;
     text-decoration: none;
@@ -330,4 +330,15 @@ table.dataTable thead .sorting_desc {
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;
+}
+
+.active::after {
+    content: '';
+    bottom: 7px;
+    left: 0;
+    height: 2px !important;
+    width: 100%;
+    background: #e43d3c;
+    -webkit-transition: height 0.15s ease, color 0.15s ease;
+    transition: height 0.15s ease, color 0.15s ease;
 }
