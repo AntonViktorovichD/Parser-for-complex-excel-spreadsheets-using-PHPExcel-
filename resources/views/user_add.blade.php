@@ -1,5 +1,6 @@
 @include('header')
 @include('layouts.menu')
+
 <style>
     table {
         border-collapse: collapse;
@@ -105,5 +106,4 @@ echo '<form method="post" action="/user_upload">';
 
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
-
 @include('layouts.footer')

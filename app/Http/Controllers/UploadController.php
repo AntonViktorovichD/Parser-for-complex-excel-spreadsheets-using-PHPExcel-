@@ -74,8 +74,6 @@ class UploadController extends Controller {
 
             $periodicity = $request->input('periodicity');
 
-            var_dump($periodicity);
-
             $excel = PHPExcel_IOFactory::load($tmpPath);
             $worksheet = $excel->getActiveSheet();
             $mergeCells[] = $worksheet->getMergeCells();

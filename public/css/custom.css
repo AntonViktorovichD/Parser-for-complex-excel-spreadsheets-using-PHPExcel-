@@ -321,7 +321,7 @@ table.dataTable thead .sorting_desc {
     font-size: 38px;
 }
 
-.instruction, .instruction > h3{
+.instruction, .instruction > h3 {
     margin-top: 25px !important;
     margin-bottom: 25px !important;
 }
@@ -332,4 +332,39 @@ table.dataTable thead .sorting_desc {
 
 .daily_reports {
     width: 22vw !important;
+}
+
+input[type="text"], select[name="periodicity"] {
+    width: 280px;
+}
+
+label, input, button, select, textarea {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 24px;
+    margin-left: 20px !important;
+}
+
+input[type="text"]:focus {
+    box-shadow: none;
+    border-color: rgba(0, 0, 0, 0);
+    outline: 0;
+    background: rgba(150, 150, 150, 0.15);
+    background-image: none;
+}
+
+.requests {
+    padding-left: 25px !important;
+}
+
+.info_headers {
+    width: 200px !important;
+}
+
+.legend {
+    margin-bottom: 25px !important;
+}
+
+.row_info {
+    margin: 25px 0 !important;
 }
