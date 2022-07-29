@@ -272,6 +272,7 @@ table.dataTable thead .sorting_desc {
     text-transform: uppercase !important;
     margin-left: 25px !important;
     margin-top: 30px !important;
+    margin-bottom: 30px !important;
 }
 
 .uk-navbar-nav > li > a {
@@ -301,12 +302,22 @@ table.dataTable thead .sorting_desc {
 }
 
 .bg_info {
-    padding: 20px;
+    padding: 35px;
     background: #ffffff;
     color: #a2a2a2;
     overflow: hidden;
     border-radius: 0;
     background-image: none;
     box-shadow: 2px 26px 69px 0 rgba(0, 0, 0, 0.1);
+}
+
+.warning_text {
+    border: 3px solid #0088cc;
+    padding: 10px;
+}
+
+.warning_text h2 {
+    font-weight: 600;
+    font-size: 38px;
 }
 

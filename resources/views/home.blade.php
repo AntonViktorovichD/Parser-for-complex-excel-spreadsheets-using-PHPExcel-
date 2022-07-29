@@ -9,7 +9,7 @@
 </style>
 <div class="container px-4">
 <div class="bg_info justify-content-start col-9">
-    <div>
+    <div class="warning_text">
         <h2>ВНИМАНИЕ!</h2>
 
         <p style="margin-top:10px;">В связи с частыми обращениями на почту с просьбой
