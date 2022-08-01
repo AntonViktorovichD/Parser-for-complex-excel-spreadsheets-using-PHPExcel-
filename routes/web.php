@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', 'home');
 Route::get('/home', 'HomeController@index');
 
+use App\Http\Controllers\PhonesController;
+
+Route::get('/phones', 'PhonesController@phones');
+
 use App\Http\Controllers\MonthlyReportsController;
 
 Route::get('/monthly_report/{name}/{year}', [MonthlyReportsController::class, 'monthly_report'])->middleware('auth');

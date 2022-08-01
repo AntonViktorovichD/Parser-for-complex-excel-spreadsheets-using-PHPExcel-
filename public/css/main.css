@@ -95,7 +95,7 @@ th input[type="checkbox"] {
 }
 
 .legend {
-    font-family: 'Helvetica' !important
+    font-family: Helvetica, Arial, Sans-Serif !important
 }
 
 .fbDateTime.fabrikWindow {
@@ -117,11 +117,11 @@ th input[type="checkbox"] {
 
 h1 {
     font-size: 35px;
-    font-family: 'Helvetica' !important;
+    font-family: Helvetica, Arial, Sans-Serif !important;
 }
 
 h2, h3 {
-    font-family: 'Helvetica' !important;
+    font-family: Helvetica, Arial, Sans-Serif !important;
 }
 
 h1 a, .distr a {
@@ -682,7 +682,7 @@ p {
     text-shadow: none;
     background: rgba(0, 0, 0, 0);
     border: 2px solid rgba(150, 150, 150, 0.15);
-    font-family: 'MyriadProCondRegular';
+    font-family: Helvetica, Arial, Sans-Serif;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -792,7 +792,7 @@ input.regex {
     text-shadow: none;
     background: rgba(0, 0, 0, 0);
     border: 2px solid #e43d3c !important;
-    font-family: 'MyriadProCondRegular';
+    font-family: Helvetica, Arial, Sans-Serif;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;

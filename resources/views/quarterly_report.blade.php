@@ -11,7 +11,9 @@
         echo '<a id="'. $i .'" href="/quarterly_report/' . $name . '/' . $i . '" class="btn btn-outline-danger">' . $i . ' ГОД</a>';
     }
     echo '</div>';
-    echo '<table>';
+    echo '<table class="table table-striped table-hover table-borderless">';
+    echo '<thead>';
+    echo '<tr>';
     echo '<th>Учреждение</th>';
     $quarters = array('ГОДОВОЙ', '1 КВАРТАЛ', '2 КВАРТАЛ', '3 КВАРТАЛ', '4 КВАРТАЛ');
     foreach ($quarters as $key => $quarter) {
@@ -19,7 +21,9 @@
         echo '<div id="'. $key . '" class="quarter">' . $quarter . '</div>';
         echo '</th>';
     }
-
+    echo '</tr>';
+echo '</thead>';
+echo '<tbody>';
     foreach ($departments as $dep_key => $department) {
         echo '<tr>';
         echo '<td>' . $department . '</td>';
@@ -28,6 +32,7 @@
         }
         echo '</tr>';
     }
+    echo '</tbody>';
     echo '</table>';
     echo '</div>';
     echo '</div>';
