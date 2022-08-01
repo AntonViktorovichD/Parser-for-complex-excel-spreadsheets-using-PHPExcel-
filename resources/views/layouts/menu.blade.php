@@ -26,6 +26,7 @@
         @endphp
     </ul>
 </nav>
+
 <script>
     let pathname = window.location.pathname;
     let links = document.querySelectorAll('#nav');

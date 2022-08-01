@@ -143,11 +143,6 @@ table.dataTable thead .sorting_desc {
     background-color: #e43d3c !important;
 }
 
-.btn-outline-success:hover {
-    color: #fff !important;
-    background-color: #008000 !important;
-}
-
 .form-control {
     border-radius: 0 !important;
 }
@@ -210,7 +205,8 @@ table.dataTable thead .sorting_desc {
     margin-bottom: 25px !important;
 }
 
-.container {
+.container, .container-flex {
+    min-height: 71% !important;
     margin-bottom: 35px !important;
 }
 
@@ -274,4 +270,8 @@ textarea[type="text"]:focus {
 
 .btn-outline-success {
     color: black !important;
+}
+
+.footer {
+    margin-left: 35px !important;
 }

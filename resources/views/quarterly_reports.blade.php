@@ -12,10 +12,14 @@
         font-size: 20px;
     }
 
+    .container-flex {
+        margin-left: 40px;
+    }
+
 </style>
 <link rel="stylesheet" href="/css/arrayToJson.css">
-<div class="container">
-    <h2>Создание запроса данных</h2>
+<div class="container-flex">
+    <h1>Квартальный отчёт</h1>
     <legend class="legend">СПИСОК КВАРТАЛЬНЫХ ОТЧЕТОВ</legend>
     <h5 class="text-center title">Название квартального отчета</h5>
 @php
