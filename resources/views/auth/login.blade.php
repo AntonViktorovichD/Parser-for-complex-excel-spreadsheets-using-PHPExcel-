@@ -1,7 +1,7 @@
 @extends('layouts.app')
 <style>
     body {
-        font-family: 'Open Sans' !important;
+        font-family: "Helvetica, Arial, Sans-Serif" !important;
     }
 
     .card-group {

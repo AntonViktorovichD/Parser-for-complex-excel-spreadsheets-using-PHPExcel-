@@ -28,10 +28,6 @@ input:focus, textarea:focus {
     transition: border linear .2s, box-shadow linear .2s;
 }
 
-/*body div {*/
-/*    color: #c0c0c0;*/
-/*}*/
-
 body td {
     font-weight: normal;
 }
@@ -99,7 +95,7 @@ th input[type="checkbox"] {
 }
 
 .legend {
-    font-family: 'Open Sans' !important
+    font-family: 'Helvetica' !important
 }
 
 .fbDateTime.fabrikWindow {
@@ -121,11 +117,11 @@ th input[type="checkbox"] {
 
 h1 {
     font-size: 35px;
-    font-family: 'Open Sans' !important;
+    font-family: 'Helvetica' !important;
 }
 
 h2, h3 {
-    font-family: 'Open Sans' !important;
+    font-family: 'Helvetica' !important;
 }
 
 h1 a, .distr a {
@@ -686,7 +682,7 @@ p {
     text-shadow: none;
     background: rgba(0, 0, 0, 0);
     border: 2px solid rgba(150, 150, 150, 0.15);
-    font-family: 'Open Sans';
+    font-family: 'MyriadProCondRegular';
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -796,7 +792,7 @@ input.regex {
     text-shadow: none;
     background: rgba(0, 0, 0, 0);
     border: 2px solid #e43d3c !important;
-    font-family: 'Open Sans';
+    font-family: 'MyriadProCondRegular';
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -813,4 +809,3 @@ input.regex {
     color: #fff !important;
     background-color: #e43d3c;
 }
-

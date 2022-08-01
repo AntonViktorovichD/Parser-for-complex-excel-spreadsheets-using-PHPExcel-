@@ -4,12 +4,15 @@
     .cols-3 {
         columns: 3;
     }
+
     .cols-4 {
         columns: 4;
     }
+
     .inputs_cols {
         margin: 30px 0 !important;
     }
+
     .ml-add {
         margin-left: 17px;
     }
@@ -17,12 +20,12 @@
 <link rel="stylesheet" href="/css/jquery.datetimepicker.min.css">
 <script src="/js/jquery.js"></script>
 <script src="/js/jquery.datetimepicker.full.js"></script>
-<div class="container px-4 ml-add">
+<div class="container-flex px-4 ml-add">
     <h1 class="title_h1">Создание запроса данных</h1>
     {{ $ulerror }}
     <form method="post" id="form" action="/ul" enctype="multipart/form-data">
         <div class="row row_info">
-        <legend class="legend">Создание запроса из таблицы Excel</legend>
+            <legend class="legend">Создание запроса из таблицы Excel</legend>
         </div>
         @csrf
         @php
@@ -126,14 +129,8 @@
                 echo '<input type="checkbox" class="org" name="org[' . $org_helper_id[$org_counter] . ']" id=" ' . $org . '" v-model="checked" @change="getStatus($event)" data-checker="org" data-departId=" ' . $org_depart_id[$org_counter] . ' " data-distrId=" ' . $org_distr_id[$org_counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$org_counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
             }
             echo '</div>';
-                echo '<div class="row row_info">';
-            echo '<div class="col-1 text-nowrap info_headers">';
-                echo '<label for="comment">Комментарий к запросу</label>';
-                   echo '</div>';
-             echo '<div class="col-1">';
-            echo '<textarea type="text" name="comment" cols="40" rows="6" style="width: 80vw !important; margin-bottom:30px;"></textarea>';
-            echo '</div>';
-            echo '</div>';
+            echo '<label for="comment" style="margin: 30px 0">Комментарий к запросу:</label>';
+            echo '<textarea type="text" name="comment" cols="40" rows="6" style="width: 100% !important; margin-bottom:30px;"></textarea>';
             echo '<input id="sms" type="text" name="sms" hidden>';
             echo '<input style="border: 2px solid #e43d3c !important;" class="btn btn-primary btn-submit-second button" id="cnfrm" @click="check" value="Отправить запрос">';
         @endphp
