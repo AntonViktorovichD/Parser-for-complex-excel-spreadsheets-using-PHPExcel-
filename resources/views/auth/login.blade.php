@@ -78,7 +78,7 @@
                                 </div>
 
                                 <div class="input-group">
-                                    <span>Пароль * &nbsp&nbsp&nbsp&nbsp</span>
+                                    <span>Пароль * &nbsp&nbsp</span>
                                     <input name="password" type="password"
                                            class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
                                            required>
