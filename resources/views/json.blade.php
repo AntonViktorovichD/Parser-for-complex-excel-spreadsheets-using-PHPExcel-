@@ -143,7 +143,7 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
            }
         }
         echo '<td class="align-middle"><button type="submit" class="btn btn_mon btn-outline-danger">Скачать</button></td>';
-        echo '<td class="align-middle"><button type="submit" id="read_only" class="btn " data-change="' . $arr['read_only'] . '" value="' . $arr['table_uuid'] . '">Принять запрос</button></td>';
+        echo '<td class="align-middle"><button type="submit" id="read_only" class="btn btn-outline-success " data-change="' . $arr['read_only'] . '" value="' . $arr['table_uuid'] . '">Принять запрос</button></td>';
         if ($arr['read_only'] == 'enabled') {
            echo '<td class="align-middle"><span class="enbl">Запрос принят</span></td>';
         }

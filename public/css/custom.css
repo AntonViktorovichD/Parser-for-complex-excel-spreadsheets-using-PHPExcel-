@@ -138,9 +138,14 @@ table.dataTable thead .sorting_desc {
     border: 2px solid #e43d3c !important;
 }
 
-.btn:hover {
+.btn-outline-danger:hover {
     color: #fff !important;
     background-color: #e43d3c !important;
+}
+
+.btn-outline-success:hover {
+    color: #fff !important;
+    background-color: #008000 !important;
 }
 
 .form-control {
@@ -265,4 +270,8 @@ textarea[type="text"]:focus {
 
 .title_h1 {
     padding-bottom: 35px !important;
+}
+
+.btn-outline-success {
+    color: black !important;
 }

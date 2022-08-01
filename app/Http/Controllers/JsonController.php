@@ -6,7 +6,7 @@ use App\Http\Requests;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Http\Request;
 
 class JsonController extends Controller {
    public function arrayToJson() {
