@@ -9,6 +9,7 @@
     table {
         width: calc(100% + 250px) !important;
     }
+
 </style>
 {{ $tableload }}
 @csrf
@@ -31,7 +32,8 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
           $arrs = json_decode($arr, true);
           $arr_rows = json_decode($arr_rows, true);
           $table_user = json_decode($table_user, true);
-          echo '<table>' . PHP_EOL;
+          echo '<table class="table table-striped">' . PHP_EOL;
+          echo '<thead>' . PHP_EOL;
           echo '<tr>' . PHP_EOL;
           echo '<th>Номер запроса</th>' . PHP_EOL;
           echo '<th>Название запроса</th>' . PHP_EOL;
@@ -41,14 +43,21 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
           echo '<th></th>' . PHP_EOL;
           echo '<th></th>' . PHP_EOL;
           echo '<th>Таблицы</th>' . PHP_EOL;
+          echo '<th></th>' . PHP_EOL;
           echo '</tr>' . PHP_EOL;
+          echo '</thead>' . PHP_EOL;
+          echo '<tbody>' . PHP_EOL;
 @endphp
 @foreach ($arrs['data'] as $key => $arr)
     @php
         $arr_deps = json_decode($arr['departments']);
         $arr_uuids = $arr['table_uuid'];
         foreach ($arr_deps as $dep) {
-           $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $arr_uuids)->where('user_dep', '=', $dep)->pluck('json_val'));
+           if ($user_role == 1 || $user_role == 4) {
+                         $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $arr_uuids)->pluck('json_val'));
+           } else {
+                         $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $arr_uuids)->where('user_dep', '=', $dep)->pluck('json_val'));
+           }
         }
         $counter = 0;
         foreach (array_slice($rv_ja, -count($arr_deps)) as $isset_arrs) {
@@ -86,22 +95,23 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
         }
         $finish_day = $finish_hour . ':' . $finish_minute . ' - ' . $finish_day . '.' . $finish_month . '.' . $finish_year;
         $all_deps = (substr($counter / (count($rv_ja) * ((DB::table('tables')->where('table_uuid', '=', $arr_uuids)->first('highest_column_index')->highest_column_index) - 1)), 0, 4) * 100);
+
         echo '<tr>' . PHP_EOL;
-        echo '<td><span>' . $arr['id'] . '</span></td>';
-        echo '<td><span>' . $arr['table_name'] . '</span></td>';
-        echo '<td><span>' . $table_user[$key] . '</span></td>';
-        echo '<td><span>' . $strt_day . '</span></td>';
+        echo '<td class="align-middle"><span>' . $arr['id'] . '</span></td>';
+        echo '<td class="align-middle"><span>' . $arr['table_name'] . '</span></td>';
+        echo '<td class="align-middle"><span>' . $table_user[$key] . '</span><br /><span>' . $user_phones[$key] . '</span></td>';
+        echo '<td class="align-middle"><span>' . $strt_day . '</span></td>';
         if ($target_day > $today) {
-           echo '<td><span>' . $finish_day . '</span></td>';
+           echo '<td class="align-middle"><span>' . $finish_day . '</span></td>';
         } else {
            if (isset($arr['updated_at'])) {
-              echo '<td><span style="background: red; color: white; padding: 10px">' . $finish_day . '</span></td>';
+              echo '<td class="align-middle"><span style="background: red; color: white; padding: 10px">' . $finish_day . '</span></td>';
            } else {
               echo '<td></td>';
            }
         }
 
-        echo '<td><div class="progress">';
+        echo '<td class="align-middle"><div class="progress">';
         if ($all_deps > 0) {
            echo '<div class="progress-bar" role="progressbar" style="width: ' . intval($all_deps) . '%;" aria-valuenow="' . intval($all_deps) . '%" aria-valuemin="0" aria-valuemax="100">' . $all_deps . '%</div>';
         } else {
@@ -113,52 +123,37 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
            if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
               if (isset($arr_rows[$i]['row_uuid'])) {
                  if ($arr_rows[$i]['table_uuid'] == $arr['table_uuid']) {
-                    echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
+                    echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
                     break;
                  }
               } else {
-                 echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/admin_view/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Просмотр </a></td>';
+                 echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '" href="/admin_view/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Просмотр </a></td>';
                  break;
               }
            } else {
               if (isset($arr_rows[$i]['row_uuid'])) {
                  if ($arr_rows[$i]['user_id'] == $user_id && $arr_rows[$i]['table_uuid'] == $arr['table_uuid']) {
-                    echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
+                    echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
                     break;
                  }
               } else {
-                 echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
+                 echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
                  break;
               }
            }
-    //            if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
-    //               if ($arr['table_uuid'] == $arr_rows[count($arr_rows) - 1]['table_uuid']) {
-    //                  echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
-    //                break;
-    //               } elseif($arr['table_uuid'] != $arr_rows[count($arr_rows) - 1]['table_uuid']) {
-    //                   echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/admin_view/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Просмотр </a></td>';
-    //               break;}
-    //            } else {
-    //                if ($arr['table_uuid'] == $arr_rows[count($arr_rows) - 1]['table_uuid'] && $user_id == $arr_rows[count($arr_rows) - 1]['user_id']) {
-    //                    echo '<td><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
-    //               break;
-    //               } elseif($arr['table_uuid'] != $arr_rows[count($arr_rows) - 1]['table_uuid']) {
-    //                   echo '<td><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
-    //               break;
-    //                }
-    //            }
         }
-        echo '<td><button type="submit" class="btn btn-dl btn-primary">Скачать</button></td>';
-        echo '<td><button type="submit" id="read_only" class="btn btn-primary" data-change="' . $arr['read_only'] . '" value="' . $arr['table_uuid'] . '">Принять запрос</button></td>';
+        echo '<td class="align-middle"><button type="submit" class="btn btn_mon btn-outline-danger">Скачать</button></td>';
+        echo '<td class="align-middle"><button type="submit" id="read_only" class="btn " data-change="' . $arr['read_only'] . '" value="' . $arr['table_uuid'] . '">Принять запрос</button></td>';
         if ($arr['read_only'] == 'enabled') {
-           echo '<td><span class="enbl">Запрос принят</span></td>';
+           echo '<td class="align-middle"><span class="enbl">Запрос принят</span></td>';
         }
         echo '</tr>' . PHP_EOL;
     @endphp
 @endforeach
 @php
-    echo '</table>' . PHP_EOL;
-    echo '</div>' . PHP_EOL;
+    echo '</tbody>' . PHP_EOL;
+        echo '</table>' . PHP_EOL;
+        echo '</div>' . PHP_EOL;
 @endphp
 {{ $pages->links() }}
 @include('layouts.footer')

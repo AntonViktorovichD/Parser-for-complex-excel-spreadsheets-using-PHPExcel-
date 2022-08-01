@@ -12678,15 +12678,14 @@ p.uk-h2 {
     line-height: 18px;
 }
 
-.table td span {
-    font-weight: bold;
-}
+/*.table td span {*/
+/*    font-weight: bold;*/
+/*}*/
 
 hr {
     border-top: 1px solid #969696;
 }
 
 .table {
-    display: flex;
     overflow: auto;
 }

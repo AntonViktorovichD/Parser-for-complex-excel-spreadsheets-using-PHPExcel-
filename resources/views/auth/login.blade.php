@@ -8,6 +8,10 @@
         box-shadow: 2px 26px 69px 0 rgba(0, 0, 0, 0.1);
     }
 
+    .btn_mon {
+        margin-top: 35px !important;
+    }
+
     .tm-heading-teaser {
         text-transform: uppercase;
         left: 0;
