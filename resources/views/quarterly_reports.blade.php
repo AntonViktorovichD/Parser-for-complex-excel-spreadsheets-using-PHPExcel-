@@ -40,8 +40,6 @@ echo '</tr>';
 
 echo '</table>';
 
-
-
 @endphp
 {{ $pages->links() }}
 @include('layouts.footer')

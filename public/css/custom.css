@@ -138,6 +138,11 @@ table.dataTable thead .sorting_desc {
     border: 2px solid #e43d3c !important;
 }
 
+.btn-outline-danger{
+    border: 2px solid #e43d3c !important;
+    color: black !important;
+}
+
 .btn-outline-danger:hover {
     color: #fff !important;
     background-color: #e43d3c !important;
@@ -205,7 +210,7 @@ table.dataTable thead .sorting_desc {
     margin-bottom: 25px !important;
 }
 
-.container, .container-flex {
+.container, .container-flex, .container-fluid {
     min-height: 71% !important;
     margin-bottom: 35px !important;
 }
@@ -272,6 +277,7 @@ textarea[type="text"]:focus {
     color: black !important;
 }
 
-.footer {
-    margin-left: 35px !important;
+footer {
+    width: 800px !important;
+    padding-left: 35px !important;
 }

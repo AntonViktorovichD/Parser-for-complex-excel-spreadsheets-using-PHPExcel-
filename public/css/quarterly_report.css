@@ -58,3 +58,8 @@ hr {
     border-radius: 0.25rem;
     min-width: 150px;
 }
+
+.container-flex {
+    margin-left: 35px !important;
+}
+
