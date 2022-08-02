@@ -6,18 +6,22 @@
         margin-bottom: 50px !important;
         width: auto !important;
     }
+
     .legend {
         text-transform: uppercase;
         border-bottom: none !important;
         margin-top: 25px !important;
     }
+
     .title {
         margin-bottom: 30px;
         font-size: 20px;
     }
+
     .recov {
         color: red;
     }
+
     #cnfrm {
         padding: 5px 15px !important;
     }
@@ -27,22 +31,21 @@
     <h1>Удаление запроса данных</h1>
     <h5 class="text-center title">Название отчета</h5>
     @php
-        $arrs = json_decode(json_encode($tables), true);
-    echo '<table class="table table-striped table-borderless">';
-    echo '<th>Отчет</th>';
-    echo '<th>Удаление</th>';
-    for($i = 0; $i < count($arrs); $i++) {
+        echo '<table class="table table-striped table-borderless">';
+echo '<th>Отчет</th>';
+echo '<th>Удаление</th>';
+foreach ( $tables as $table ){
        echo '<tr>';
-       if($arrs['data'][$i]['status'] == 0) {
-          echo '<td>' . $arrs['data'][$i]['table_name'] . '</td>' . PHP_EOL;
-            echo '<td><a id="cnfrm" href="/delete_table/' . $arrs['data'][$i]['table_uuid'] . '/' . $arrs['data'][$i]['status'] . '">Удалить</a></td>' . PHP_EOL;
+       if($table->status == 0) {
+          echo '<td>' . $table->table_name . '</td>' . PHP_EOL;
+            echo '<td><a id="cnfrm" href="/delete_table/' . $table->table_uuid . '/' . $table->status . '">Удалить</a></td>' . PHP_EOL;
        } else {
-          echo '<td class="recov">' . $arrs['data'][$i]['table_name'] . '</td>' . PHP_EOL;
-            echo '<td><a id="cnfrm" href="/delete_table/' . $arrs['data'][$i]['table_uuid'] . '/' . $arrs['data'][$i]['status'] . '">Восстановить</a></td>' . PHP_EOL;
+          echo '<td class="recov">' . $table->table_name . '</td>' . PHP_EOL;
+            echo '<td><a id="cnfrm" href="/delete_table/' . $table->table_uuid . '/' . $table->status . '">Восстановить</a></td>' . PHP_EOL;
        }
     echo '</tr>';
-    }
-    echo '</table>';
+}
+echo '</table>';
     @endphp
 
     {{ $tables->links() }}
