@@ -46,6 +46,26 @@
         background: #ffcdd2;
         width: auto !important;
     }
+    [class*="uk-icon-"] {
+        margin-top: 5px !important;
+        font-family: FontAwesome;
+        height: 20px !important;
+        width: 20px !important;
+        display: inline-block;
+        font-weight: normal;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    .uk-icon-check-circle {
+        font-size: 18px;
+        color: #0088cc;
+    }
+    .uk-icon-times-circle {
+        font-size: 18px;
+        color: #e43d3c;
+    }
+
 </style>
 <link rel="stylesheet" href="/css/arrayToJson.css">
 <div class="container-flex">
@@ -63,6 +83,7 @@
     echo '<thead>';
     echo '<tr>';
     echo '<th>Отчет</th>';
+    echo '<th>Статус</th>';
     echo '<th>Заполнения</th>';
     echo '<th>Тип учреждений</th>';
     echo '</tr>';
@@ -72,6 +93,11 @@
         echo '<tr id="tr" data-status="' . $arr['status'] . '">';
         if ($arr['periodicity'] == 1) {
             echo '<td><a href="/admin_daily_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
+            if ($arr['status'] == 1) {
+               echo '<td style="text-align: center;"><i class="uk-icon-times-circle" title="Не опубликован"></i></td>' . PHP_EOL;
+            } else {
+               echo '<td style="text-align: center;"><i class="uk-icon-check-circle" title="Опубликован"></i></td>' . PHP_EOL;
+            }
             echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
             echo '<td style="text-align: center;">';
             foreach ($arr['type'] as $type) {
@@ -80,6 +106,11 @@
             echo '</td>';
         } elseif ($arr['periodicity'] == 2) {
             echo '<td><a href="/admin_weekly_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
+            if ($arr['status'] == 1) {
+               echo '<td style="text-align: center;"><i class="uk-icon-times-circle" title="Не опубликован"></i></td>' . PHP_EOL;
+            } else {
+               echo '<td style="text-align: center;"><i class="uk-icon-check-circle" title="Опубликован"></i></td>' . PHP_EOL;
+            }
             echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
             echo '<td style="text-align: center;">';
             foreach ($arr['type'] as $type) {
