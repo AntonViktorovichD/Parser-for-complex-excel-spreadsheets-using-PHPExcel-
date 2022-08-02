@@ -9,12 +9,12 @@
         <li class="nav-item"><a id="nav" class="nav-link" href="/quarterly_reports">Квартальный
                 отчёт</a></li>
         @php
-            if(Auth::id() == 1 || Auth::id() == 4) {
+            if(Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
             echo '<li class="nav-item"><a id="nav" class="nav-link" href="/delete_tables">Удаление
                     запросов</a></li>';
             }
         @endphp
-        <li class="nav-item"><a id="nav" class="nav-link" href="/">Справочник
+        <li class="nav-item"><a id="nav" class="nav-link" href="/phones">Справочник
                 телефонов</a></li>
 
         <li class="nav-item"><a id="nav" class="nav-link" href="/daily_reports">Ежедневные отчеты</a></li>

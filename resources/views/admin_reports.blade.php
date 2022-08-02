@@ -6,10 +6,6 @@
         width: auto !important;
     }
 
-    .container-flex {
-        margin-left: 35px !important;
-    }
-
     .uszn {
         background-color: #1976D2;
     }
@@ -40,6 +36,10 @@
         text-align: center;
         font-weight: bold !important;
         line-height: 20px;
+    }
+
+    .line_info {
+        display: inline !important;
     }
 </style>
 <link rel="stylesheet" href="/css/arrayToJson.css">
@@ -82,8 +82,10 @@
         echo '</tr>';
     }
     echo '</table>';
-    echo '<h6>Справка по типам учреждений:</h6>';
-
+    echo '<h6>Справка по типам учреждений:</h6><br />';
+        foreach ($arr_orgs as $org) {
+        echo '<div class="align-self-center" style="margin-bottom: 10px;"><span  class="marker ' . $org[0] . '">' . $org[1] . '</span>' . $org[2] . '</span></div>';
+    }
 @endphp
 @include('layouts.footer')
 

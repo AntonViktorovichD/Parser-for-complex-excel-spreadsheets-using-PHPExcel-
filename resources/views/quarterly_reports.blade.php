@@ -12,10 +12,6 @@
         font-size: 20px;
     }
 
-    .container-flex {
-        margin-left: 40px;
-    }
-
     table {
         width: auto !important;
     }

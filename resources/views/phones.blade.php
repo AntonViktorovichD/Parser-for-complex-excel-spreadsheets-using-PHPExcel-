@@ -1,9 +1,6 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
-    .container-flex {
-        margin-left: 40px;
-    }
 
     table {
         width: auto !important;

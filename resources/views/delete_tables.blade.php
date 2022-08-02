@@ -4,6 +4,7 @@
 <style>
     table {
         margin-bottom: 50px !important;
+        width: auto !important;
     }
     .legend {
         text-transform: uppercase;
@@ -22,9 +23,8 @@
     }
 </style>
 
-<div class="container">
-    <h2>Удаление запроса данных</h2>
-    <legend class="legend">Удаление запросов</legend>
+<div class="container-flex">
+    <h1>Удаление запроса данных</h1>
     <h5 class="text-center title">Название отчета</h5>
     @php
         $arrs = json_decode(json_encode($tables), true);
