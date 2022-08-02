@@ -20,7 +20,7 @@ class AdminReportsController extends Controller {
             $user_role = Auth::user()->roles->first()->id;
             $user_id = Auth::id();
             $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->where('status', 0)->orderBy('id', 'desc')->get();
-
+            $districts = DB::table('dist')->where('parent_id', '>', 0)->get();
             foreach ($arrs as $key => $arr) {
                 $tables_arr[$arr->table_uuid]['departments'] = $arr->departments;
                 $tables_arr[$arr->table_uuid]['periodicity'] = $arr->periodicity;
@@ -102,7 +102,7 @@ class AdminReportsController extends Controller {
 
             $table_user = json_encode($user_names);
             $arr_rows = json_encode(DB::select('select * from report_values'));
-            return view('admin_reports', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => 'user_role', 'table_user' => $table_user, 'pages' => $arrs]);
+            return view('admin_reports', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => 'user_role', 'table_user' => $table_user, 'pages' => $arrs, 'districts' => $districts]);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }

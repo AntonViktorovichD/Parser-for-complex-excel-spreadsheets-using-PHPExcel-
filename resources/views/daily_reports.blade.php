@@ -1,27 +1,18 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
+    .container-flex {
+        margin-left: 35px;
+    }
     table {
-        margin-bottom: 50px !important;
-    }
-
-    .legend {
-        text-transform: uppercase;
-        border-bottom: none !important;
-        margin-top: 25px !important;
-    }
-
-    .title {
-        margin-bottom: 30px;
-        font-size: 20px;
+        width: auto !important;
+        margin: 50px 0 !important;
     }
 
 </style>
 <link rel="stylesheet" href="/css/arrayToJson.css">
-<div class="container">
-    <h2>Создание запроса данных</h2>
-    <legend class="legend">СПИСОК ЕЖЕДНЕВНЫХ ОТЧЕТОВ</legend>
-    <h5 class="text-center title">Название ежедневного отчета</h5>
+<div class="container-flex">
+    <h1>Ежедневные отчеты</h1>
 @php
     $arrs = json_decode($arr, true);
 

@@ -2,52 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use PHPExcel_Cell;
-use PHPExcel_IOFactory;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
-class TestController extends Controller {
-    public function test() {
-        $users = DB::table('users')->get();
-        foreach ($users as $user) {
-            echo '<pre>';
-            var_dump($user);
-            echo '</pre>';
-        }
-    }
 
-//    public function ultest(Request $request) {
-//        $file = $request->file('userfile');
-//        $newFileName = bin2hex(random_bytes(10)) . '.tmp';
-//        Storage::putFileAs('public/folder', $file, $newFileName);
-//        $tmpPath = base_path() . '/storage/app/public/folder' . '/' . $newFileName;
+class TestController extends Controller {
+   public function test() {
+      $orgs = DB::table('org_helper')->where('type', NULL)->get();
+      $dists = DB::table('dist')->where('id', '>', 59)->get();
+      $curs = [];
+//      echo '<pre>';
+//      var_dump($orgs);
+//      echo '</pre>';
+
+      foreach ($dists as $key => $dist) {
+         $curs[$key][$dist->type] = preg_replace('#\.+#', ' ', preg_replace('#НО #', '', preg_replace('#ГКУ #', '', preg_replace('#ГБУ #', '', preg_replace('#["\']+#', '', $dist->other_title)))));
+      }
+
+      foreach ($orgs as $org) {
+         foreach ($curs as $cur) {
+            foreach ($cur as $key => $item) {
+               if (strlen($item) > 0) {
+//                  var_dump(preg_replace('#ГБУ #', '', preg_replace('#ГКУ #', '', preg_replace('#["\']+#', '', $org->title))));
+//                  if ($item == preg_replace('#НО #', '', preg_replace('#ГБУ #', '', preg_replace('#ГКУ #', '', preg_replace('#["\']+#', '', $org->title))))) {
+                  if ($item == preg_replace('#["\'.]+#', ' ', $org->title)) {
+                     var_dump($key);
+                     DB::table('org_helper')->where('id', $org->id)->update(['type' => $key]);
+                  }
+               }
 //
-//        $excel = PHPExcel_IOFactory::load($tmpPath);
-//        $worksheet = $excel->getActiveSheet();
-//        $highestRow = $worksheet->getHighestRow();
-//        $highestColumn = $worksheet->getHighestColumn();
-//        $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
-//        $arr = [];
-//        for ($row = 1; $row < $highestRow; $row++) {
-//            $colCounter = 0;
-//            for ($col = 0; $col < $highestColumnIndex; $col++) {
-//                $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
-//                $coord = $worksheet->getCellByColumnAndRow($col, $row)->getCoordinate();
-//                if (isset($value)) {
-//                    $arr[$coord] = $value;
-//                }
-//            }
-//        }
-//        $mergeCells = $worksheet->getMergeCells();
-//        $mc = json_encode($mergeCells);
-//        $cv = json_encode($arr);
-//        DB::table('test')->insert(['coord' => $cv, 'merge_cells' => $mc]);
-////        echo '<pre>';
-////        var_dump($arr);
-////        echo '</pre>';
-//
-//        return view('export');
-//    }
+            }
+         }
+      }
+
+
+      return view('test');
+   }
 }

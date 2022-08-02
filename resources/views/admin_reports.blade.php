@@ -2,7 +2,12 @@
 @include('layouts.menu')
 <style>
     table {
-        margin-bottom: 50px !important;
+        margin: 50px 0 !important;
+        width: auto !important;
+    }
+
+    .container-flex {
+        margin-left: 35px !important;
     }
 
     .legend {
@@ -48,17 +53,6 @@
         line-height: 20px;
     }
 
-    .mrkr {
-        height: 20px !important;
-        width: 20px !important;
-        border-radius: 50% !important;
-        margin-right: 5px;
-        font-size: 10px;
-        text-align: center;
-        font-weight: bold !important;
-        line-height: 20px;
-    }
-
     .org_type {
         margin-top: -21px !important;
         padding-bottom: 5px !important;
@@ -67,10 +61,8 @@
 
 </style>
 <link rel="stylesheet" href="/css/arrayToJson.css">
-<div class="container">
-    <h2>Создание запроса данных</h2>
-    <legend class="legend">СПИСОК КВАРТАЛЬНЫХ ОТЧЕТОВ</legend>
-    <h5 class="text-center title">Название квартального отчета</h5>
+<div class="container-flex">
+    <h1>Ежедневные отчеты (только для администраторов)</h1>
 @php
     $arrs = json_decode($arr, true);
 
