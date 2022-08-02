@@ -41,6 +41,11 @@
     .line_info {
         display: inline !important;
     }
+
+    .stat {
+        background: #ffcdd2;
+        width: auto !important;
+    }
 </style>
 <link rel="stylesheet" href="/css/arrayToJson.css">
 <div class="container-flex">
@@ -55,17 +60,20 @@
                  5 => ['othr', 'О', 'Остальные учреждения']];
 
     echo '<table class="table table-striped">';
-    echo '<th>Отчет</th>';;
-    echo '<th>Заполнения</th>';;
-    echo '<th>Тип учреждений</th>';;
-
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th>Отчет</th>';
+    echo '<th>Заполнения</th>';
+    echo '<th>Тип учреждений</th>';
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
     foreach ($arrs as $key => $arr) {
-        echo '<tr>';
+        echo '<tr id="tr" data-status="' . $arr['status'] . '">';
         if ($arr['periodicity'] == 1) {
             echo '<td><a href="/admin_daily_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
             echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
             echo '<td style="text-align: center;">';
-
             foreach ($arr['type'] as $type) {
                 echo '<div class="marker ' . $arr_orgs[$type][0] . '">' . $arr_orgs[$type][1] . '</div>';
             }
@@ -81,12 +89,23 @@
         }
         echo '</tr>';
     }
+    echo '</tbody>';
     echo '</table>';
     echo '<h6>Справка по типам учреждений:</h6><br />';
         foreach ($arr_orgs as $org) {
         echo '<div class="align-self-center" style="margin-bottom: 10px;"><span  class="marker ' . $org[0] . '">' . $org[1] . '</span>' . $org[2] . '</span></div>';
     }
 @endphp
+    <script>
+        window.onload = () => {
+            let del_tables = document.querySelectorAll('#tr');
+            for(let del_table of del_tables) {
+                if(del_table.dataset.status == 1) {
+                    del_table.classList.add('stat');
+                }
+            }
+        }
+    </script>
 @include('layouts.footer')
 
 
