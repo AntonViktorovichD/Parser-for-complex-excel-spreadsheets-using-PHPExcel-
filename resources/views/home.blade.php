@@ -1,9 +1,15 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
+    body {
+        max-width: 95vw !important;
+    }
     table {
         height: 600px !important;
         overflow-y: auto !important;
+    }
+    .uk-navbar-nav {
+        margin-left: 30px !important;
     }
 </style>
 <div class="container px-5">

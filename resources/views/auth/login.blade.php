@@ -1,5 +1,47 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ env('APP_NAME', 'Permissions Manager') }}</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/coreui.min.css" rel="stylesheet"/>
+    <link href="/css/font-awesome.css" rel="stylesheet"/>
+    <link href="/css/all.css" rel="stylesheet"/>
+    <link href="/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="/css/font-awesome.css" rel="stylesheet"/>
+    <link href="/css/select2.min.css" rel="stylesheet"/>
+    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+    <link href="/css/dropzone.min.css" rel="stylesheet"/>
+    <link href="css/custom.css" rel="stylesheet"/>
+</head>
 <style>
+    html, body {
+        margin: 0;
+        height: 100%;
+        max-width: 99vw !important;
+    }
+
+    .wrapper {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer-fixed {
+        height: 50px;
+        margin-top: -60px !important;
+    }
+
+    .p_footer {
+        margin-left: 35px !important;
+        font-size: 14px !important;
+    }
     body {
         font-family: "Helvetica, Arial, Sans-Serif" !important;
     }
@@ -50,59 +92,72 @@
         margin-bottom: 30px !important;
     }
 </style>
-@section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-9">
-                <div class="card-group">
-                    <div class="card p-4">
-                        <div class="card-body text-center">
-                            @if(\Session::has('message'))
-                                <p class="alert alert-info">
-                                    {{ \Session::get('message') }}
-                                </p>
-                            @endif
-                            <form method="POST" action="{{ route('login') }}">
-                                {{ csrf_field() }}
-                                <h1 class="tm-heading-teaser "><span class="tm-heading-teaser-span">Информационно-аналитический сервис</span><br/>
-                                    Автоматизированный сбор показателей работы социальных учреждений Нижегородской
-                                    области
-                                </h1>
-                                <div class="input-group">
-                                    <label for="login">Логин * &nbsp&nbsp&nbsp&nbsp</label>
-                                    <input name="login" type="text"
-                                           class="form-control {{ $errors->has('login') ? ' is-invalid' : '' }}"
-                                           required
-                                           autofocus value="{{ old('login', null) }}">
-                                    @if($errors->has('login'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('login') }}
-                                        </div>
-                                    @endif
-                                </div>
+<body class="header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden login-page">
+<div class="wrapper">
+    <div class="app flex-row align-items-center">
+        <div class="container-login">
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <div class="card-group">
+                        <div class="card p-4">
+                            <div class="card-body text-center">
+                                @if(\Session::has('message'))
+                                    <p class="alert alert-info">
+                                        {{ \Session::get('message') }}
+                                    </p>
+                                @endif
+                                <form method="POST" action="{{ route('login') }}">
+                                    {{ csrf_field() }}
+                                    <h1 class="tm-heading-teaser "><span class="tm-heading-teaser-span">Информационно-аналитический сервис</span><br/>
+                                        Автоматизированный сбор показателей работы социальных учреждений
+                                        Нижегородской
+                                        области
+                                    </h1>
+                                    <div class="input-group">
+                                        <label for="login">Логин * &nbsp&nbsp&nbsp&nbsp</label>
+                                        <input name="login" type="text"
+                                               class="form-control {{ $errors->has('login') ? ' is-invalid' : '' }}"
+                                               required
+                                               autofocus value="{{ old('login', null) }}">
+                                        @if($errors->has('login'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('login') }}
+                                            </div>
+                                        @endif
+                                    </div>
 
-                                <div class="input-group">
-                                    <span>Пароль * &nbsp&nbsp</span>
-                                    <input name="password" type="password"
-                                           class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                           required>
-                                    @if($errors->has('password'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('password') }}
-                                        </div>
-                                    @endif
-                                </div>
+                                    <div class="input-group">
+                                        <span>Пароль * &nbsp&nbsp</span>
+                                        <input name="password" type="password"
+                                               class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                               required>
+                                        @if($errors->has('password'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('password') }}
+                                            </div>
+                                        @endif
+                                    </div>
 
-                                <div class="row">
-                                    <button type="submit" class="btn btn_mon btn-outline-danger">
-                                        Войти
-                                    </button>
-                                </div>
-                            </form>
+                                    <div class="row">
+                                        <button type="submit" class="btn btn_mon btn-outline-danger">
+                                            Войти
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
+</div>
+
+<div class="footer-fixed">
+    <p class="p_footer">Права защищены © @php echo date("Y") @endphp Министерство
+        социальной политики Нижегородской области</p>
+</div>
+@yield('scripts')
+</body>
+
+</html>

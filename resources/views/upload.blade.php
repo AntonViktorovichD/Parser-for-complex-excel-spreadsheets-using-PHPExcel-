@@ -16,11 +16,15 @@
     .ml-add {
         margin-left: 17px;
     }
+
+    .container-flex {
+        margin-left: 15px !important;
+    }
 </style>
 <link rel="stylesheet" href="/css/jquery.datetimepicker.min.css">
 <script src="/js/jquery.js"></script>
 <script src="/js/jquery.datetimepicker.full.js"></script>
-<div class="container-flex px-4 ml-add">
+<div class="container-flex px-4 ">
     <h1 class="title_h1">Создание запроса данных</h1>
     {{ $ulerror }}
     <form method="post" id="form" action="/ul" enctype="multipart/form-data">
