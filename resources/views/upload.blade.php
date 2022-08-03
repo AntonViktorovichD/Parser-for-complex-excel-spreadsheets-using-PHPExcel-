@@ -129,7 +129,7 @@
             echo '<div class="cols-3">';
             foreach ($org_helper as $org_counter => $org) {
                $org = preg_replace('#"#', '&quot', $org);
-               echo '<input type="checkbox" class="org" name="org[' . $org_helper_id[$org_counter] . ']" id=" ' . $org . '" v-model="checked" @change="getStatus($event)" data-checker="org" data-departId=" ' . $org_depart_id[$org_counter] . ' " data-distrId=" ' . $org_distr_id[$org_counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$org_counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
+               echo '<input type="checkbox" class="org" name="org[' . $org_helper_id[$org_counter] . ']" id=" ' . $org . '" v-model="checked" @change="getStatus($event)" data-checker="org" data-org="0" data-departId=" ' . $org_depart_id[$org_counter] . ' " data-distrId=" ' . $org_distr_id[$org_counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$org_counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
             }
             echo '</div>';
             echo '</div>';
@@ -179,6 +179,7 @@
                 if (e.target.dataset.checker === 'org') {
                     for (let org of orgs) {
                         if (org.checked === true) {
+                            org.dataset.org = 1;
                             arr_checked_org.push(org);
                         }
                     }
@@ -189,6 +190,9 @@
                             for (let org of orgs) {
                                 if (org.dataset.departid === arr_checked_depart[i].value && org.dataset.distrid === arr_checked_distr[k].value) {
                                     arr_checked_org.push(org);
+                                }
+                                if (org.dataset.org === '1') {
+                                    console.log(org);
                                 } else {
                                     org.checked = false;
                                 }
@@ -220,7 +224,7 @@
                     checked_org.checked = true;
                 }
 
-                console.log(arr_checked_org);
+                // console.log(arr_checked_org);
                 arr_checked_org = [];
                 arr_checked_depart = [];
                 arr_checked_distr = [];
