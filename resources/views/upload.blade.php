@@ -165,6 +165,14 @@
                         if (depart.checked === true) {
                             arr_checked_depart.push(depart);
                         }
+                        if (e.target.checked === false) {
+                            for (let org of orgs) {
+                                if (e.target.value === org.dataset.departid) {
+                                    org.dataset.org = 0;
+                                    org.checked = false;
+                                }
+                            }
+                        }
                     }
                     for (let distr of distrs) {
                         if (distr.checked === true) {
@@ -173,9 +181,18 @@
                     }
                 }
                 if (e.target.dataset.checker === 'distr') {
+                    console.log(e.target.checked);
                     for (let distr of distrs) {
                         if (distr.checked === true) {
                             arr_checked_distr.push(distr);
+                        }
+                        if (e.target.checked === false) {
+                            for (let org of orgs) {
+                                if (e.target.value === org.dataset.distrid) {
+                                    org.dataset.org = 0;
+                                    org.checked = false;
+                                }
+                            }
                         }
                     }
                     for (let depart of departs) {
@@ -183,6 +200,7 @@
                             arr_checked_depart.push(depart);
                         }
                     }
+
                 }
 
                 if (arr_checked_depart.length > 0 && arr_checked_distr.length > 0) {
