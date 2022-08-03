@@ -45,25 +45,25 @@
             echo '<div class="col-1 text-nowrap info_headers">';
             echo '<label for="filename">Название запроса </label>';
             echo '</div>';
-             echo '<div class="col-1">';
+            echo '<div class="col-1">';
             echo '<input type="text" name="filename">';
             echo '</div>';
             echo '</div>';
-           if (Auth::user()->getRoleNames()[0] == 'moderator' || Auth::user()->getRoleNames()[0] == 'administrator') {
+            if (Auth::user()->getRoleNames()[0] == 'moderator' || Auth::user()->getRoleNames()[0] == 'administrator') {
                echo '<div class="row row_info">';
-            echo '<div class="col-1 text-nowrap info_headers">';
-                echo '<label for="periodicity">Выбор периодичности</label>';
-                   echo '</div>';
-             echo '<div class="col-1">';
-                echo '<select id="periodicity" name="periodicity">';
-                echo '<option selected value="0"> Разовый </option>';
-                echo '<option value="1"> Ежедневный </option>';
-                echo '<option value="2"> Еженедельный </option>';
-                echo '<option value="3"> Ежемесячный </option>';
-                echo '<option value="4"> Квартальный </option>';
-                echo '</select>';
-                      echo '</div>';
-            echo '</div>';
+               echo '<div class="col-1 text-nowrap info_headers">';
+               echo '<label for="periodicity">Выбор периодичности</label>';
+               echo '</div>';
+               echo '<div class="col-1">';
+               echo '<select id="periodicity" name="periodicity">';
+               echo '<option selected value="0"> Разовый </option>';
+               echo '<option value="1"> Ежедневный </option>';
+               echo '<option value="2"> Еженедельный </option>';
+               echo '<option value="3"> Ежемесячный </option>';
+               echo '<option value="4"> Квартальный </option>';
+               echo '</select>';
+               echo '</div>';
+               echo '</div>';
             } else {
                echo '<input type="hidden" name="periodicity" value="0">';
             }
@@ -71,30 +71,30 @@
             echo '<input type="radio" name="reg_func" value="v_int">&nbsp int';
             echo '<input type="radio" name="reg_func" value="v_float">&nbsp float';
             echo '<input type="radio" name="reg_func" value="v_all">&nbsp all';
-                 echo '<div class="row  row_info">';
+            echo '<div class="row  row_info">';
             echo '<div class="col-1 text-nowrap info_headers">';
             echo '<label for="created_at">
-                       Начало сбора данных</label>';
-               echo '</div>';
-             echo '<div class="col-1">';
-            echo '<input name="created_at" id="datetimepicker-s" type="text">';
-              echo '</div>';
+                            Начало сбора данных</label>';
             echo '</div>';
-                     echo '<div class="row  row_info">';
+            echo '<div class="col-1">';
+            echo '<input name="created_at" id="datetimepicker-s" type="text">';
+            echo '</div>';
+            echo '</div>';
+            echo '<div class="row  row_info">';
             echo '<div class="col-1 text-nowrap info_headers">';
             echo '<label for="updated_at"> Конец сбора данных </label>';
-               echo '</div>';
-             echo '<div class="col-1">';
-            echo '<input name="updated_at" id="datetimepicker-f" type="text">';
-              echo '</div>';
             echo '</div>';
-                           echo '<div class="row  row_info">';
+            echo '<div class="col-1">';
+            echo '<input name="updated_at" id="datetimepicker-f" type="text">';
+            echo '</div>';
+            echo '</div>';
+            echo '<div class="row  row_info">';
             echo '<div class="col-1 text-nowrap info_headers">';
             echo '<label class="userfile"> Excel файл запроса </label>';
-                 echo '</div>';
-             echo '<div class="col-1">';
+            echo '</div>';
+            echo '<div class="col-1">';
             echo '<input type="file" name="userfile" accept=".xls,.xlsx">';
-                  echo '</div>';
+            echo '</div>';
             echo '</div>';
             $depart_helper = DB::table('depart_helper')->pluck('title');
             $depart_helper = (json_decode(json_encode($depart_helper, JSON_UNESCAPED_UNICODE), true));
@@ -105,9 +105,8 @@
             echo '<div id="v-model-multiple-checkboxes" >';
             echo '<div id="checkboxes">';
             foreach ($depart_helper as $depart_counter => $depart) {
-                echo '<input type="checkbox" class="depart" id=" ' . $depart . ' " v-model="checked" data-checker="depart" @change="getStatus($event)" value=" ' . $depart_helper_id[$depart_counter] . ' " data-value=" ' . $depart_helper_id[$depart_counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
+               echo '<input type="checkbox" class="depart" id=" ' . $depart . ' " v-model="checked" data-checker="depart" @change="getStatus($event)" value=" ' . $depart_helper_id[$depart_counter] . ' " data-value=" ' . $depart_helper_id[$depart_counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
             }
-            echo '</div>';
             $distr_helper = DB::table('distr_helper')->pluck('title');
             $distr_helper = (json_decode(json_encode($distr_helper, JSON_UNESCAPED_UNICODE), true));
             $distr_helper_id = DB::table('distr_helper')->pluck('id');
@@ -115,8 +114,9 @@
             echo '<h3  class="inputs_cols">Районы:</h3>';
             echo '<div class="cols-4">';
             foreach ($distr_helper as $distr_counter => $distr) {
-                echo '<input type="checkbox" class="distr" id=" ' . $distr . '" v-model="checked" data-checker="distr" @change="getStatus($event)" value=" ' . $distr_helper_id[$distr_counter] . ' " data-value=" ' . $distr_helper_id[$distr_counter] . ' "><label for="' . $distr . '">' . $distr . '</label><br />';
+               echo '<input type="checkbox" class="distr" id=" ' . $distr . '" v-model="checked" data-checker="distr" @change="getStatus($event)" value=" ' . $distr_helper_id[$distr_counter] . ' " data-value=" ' . $distr_helper_id[$distr_counter] . ' "><label for="' . $distr . '">' . $distr . '</label><br />';
             }
+            echo '</div>';
             echo '</div>';
             $org_helper = DB::table('org_helper')->pluck('title');
             $org_helper = (json_decode(json_encode($org_helper, JSON_UNESCAPED_UNICODE), true));
@@ -129,9 +129,10 @@
             echo '<h3  class="inputs_cols">Учреждения:</h3>';
             echo '<div class="cols-3">';
             foreach ($org_helper as $org_counter => $org) {
-                $org = preg_replace('#"#', '&quot', $org);
-                echo '<input type="checkbox" class="org" name="org[' . $org_helper_id[$org_counter] . ']" id=" ' . $org . '" v-model="checked" @change="getStatus($event)" data-checker="org" data-departId=" ' . $org_depart_id[$org_counter] . ' " data-distrId=" ' . $org_distr_id[$org_counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$org_counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
+               $org = preg_replace('#"#', '&quot', $org);
+               echo '<input type="checkbox" class="org" name="org[' . $org_helper_id[$org_counter] . ']" id=" ' . $org . '" v-model="checked" @change="getStatus($event)" data-checker="org" data-departId=" ' . $org_depart_id[$org_counter] . ' " data-distrId=" ' . $org_distr_id[$org_counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$org_counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
             }
+            echo '</div>';
             echo '</div>';
             echo '<label for="comment" style="margin: 30px 0">Комментарий к запросу:</label>';
             echo '<textarea type="text" name="comment" cols="40" rows="6" style="width: 100% !important; margin-bottom:30px;"></textarea>';

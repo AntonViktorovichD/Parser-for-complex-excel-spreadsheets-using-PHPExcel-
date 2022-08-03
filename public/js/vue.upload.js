@@ -27,15 +27,6 @@ const event = Vue.createApp({
                     }
                 })
             }
-            depart = document.querySelectorAll('.depart');
-            if (e.target.dataset.checker === 'depart') {
-                this.arr_checked_depart = [];
-                for (let i = 0; i < depart.length; i++) {
-                    if (depart[i].checked === true) {
-                        this.arr_checked_depart.push(depart[i]);
-                    }
-                }
-            }
             distr = document.querySelectorAll('.distr');
             if (e.target.dataset.checker === 'distr') {
                 this.arr_checked_distr = [];
@@ -45,6 +36,16 @@ const event = Vue.createApp({
                     }
                 }
             }
+            depart = document.querySelectorAll('.depart');
+            if (e.target.dataset.checker === 'depart') {
+                this.arr_checked_depart = [];
+                for (let i = 0; i < depart.length; i++) {
+                    if (depart[i].checked === true) {
+                        this.arr_checked_depart.push(depart[i]);
+                    }
+                }
+            }
+
             if (this.arr_checked_depart.length !== 0 && this.arr_checked_distr.length !== 0) {
                 for (let i = 0; i < this.arr_checked_depart.length; i++) {
                     for (let j = 0; j < this.arr_checked_distr.length; j++) {

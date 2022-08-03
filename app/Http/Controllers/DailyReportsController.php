@@ -55,19 +55,36 @@ class DailyReportsController extends Controller {
 
             $table_arr = json_decode($arrs, true);
 
-            foreach (json_decode($arrs, true) as $key => $arr) {
-                foreach ($filled_arrs as $k => $fill) {
-                    if ($arr['table_uuid'] == $k) {
-                        $table_arr[$key]['fill'] = $fill;
-                    }
-                }
-            }
+           foreach (json_decode($arrs, true) as $key => $arr) {
+              foreach ($filled_arrs as $k => $fill) {
+                 if ($arr['table_uuid'] == $k) {
+                    $table_arr[$key]['fill'] = $fill;
+                 }
+              }
+              $depart = json_decode($arr['departments'], true);
+              for ($i = 0; $i < count($depart); $i++) {
+                 if ($i == 0) {
+                    $arr_orgs[$key][$i] = DB::table('org_helper')->where('id', $depart[$i])->value('depart_id');
+                 } else {
+                    $arr_orgs[$key][$i] = $arr_orgs[$key][$i - 1] . ', ' . DB::table('org_helper')->where('id', $depart[$i])->value('depart_id');
+                 }
+              }
+              $table_arr[$key]['orgs'] = array_unique(explode(', ', array_slice($arr_orgs[$key], 0, count($depart) - 1)[count($arr_orgs[$key]) - 2]));
+              for ($i = 0; $i < count($depart); $i++) {
+                 if ($i == 0) {
+                    $arr_orgs[$key][$i] = DB::table('org_helper')->where('id', $depart[$i])->value('type');
+                 } else {
+                    $arr_orgs[$key][$i] = $arr_orgs[$key][$i - 1] . ', ' . DB::table('org_helper')->where('id', $depart[$i])->value('type');
+                 }
+              }
+              $table_arr[$key]['type'] = array_unique(explode(', ', array_slice($arr_orgs[$key], 0, count($depart) - 1)[count($arr_orgs[$key]) - 2]));
+           }
 
             $arrs = json_encode($table_arr, JSON_UNESCAPED_UNICODE);
 
             $table_user = json_encode($user_names);
             $arr_rows = json_encode(DB::select('select * from report_values'));
-            return view('daily_reports', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => 'user_role', 'table_user' => $table_user, 'pages' => $arrs]);
+            return view('daily_reports', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role, 'table_user' => $table_user, 'pages' => $arrs]);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }
