@@ -117,7 +117,6 @@
                echo '<input type="checkbox" class="distr" id=" ' . $distr . '" v-model="checked" data-checker="distr" @change="getStatus($event)" value=" ' . $distr_helper_id[$distr_counter] . ' " data-value=" ' . $distr_helper_id[$distr_counter] . ' "><label for="' . $distr . '">' . $distr . '</label><br />';
             }
             echo '</div>';
-            echo '</div>';
             $org_helper = DB::table('org_helper')->pluck('title');
             $org_helper = (json_decode(json_encode($org_helper, JSON_UNESCAPED_UNICODE), true));
             $org_depart_id = DB::table('org_helper')->pluck('depart_id');
@@ -134,6 +133,7 @@
             }
             echo '</div>';
             echo '</div>';
+            echo '</div>';
             echo '<label for="comment" style="margin: 30px 0">Комментарий к запросу:</label>';
             echo '<textarea type="text" name="comment" cols="40" rows="6" style="width: 100% !important; margin-bottom:30px;"></textarea>';
             echo '<input id="sms" type="text" name="sms" hidden>';
@@ -141,8 +141,63 @@
         @endphp
     </form>
 </div>
-<script src="/js/vue.global.js"></script>
-<script src="/js/vue.upload.js"></script>
+{{--<script src="/js/vue.global.js"></script>--}}
+{{--<script src="/js/vue.upload.js"></script>--}}
+<script>
+    window.onload = () => {
+        let arr_checked_depart = [];
+        let arr_checked_distr = [];
+        let arr_checked_org = [];
+        document.addEventListener('input', (e) => {
+                let departs = document.querySelectorAll('.depart');
+                if (e.target.dataset.checker == 'depart') {
+                    for (let depart of departs) {
+                        if (depart.checked == true) {
+                            arr_checked_depart.push(depart);
+                        }
+                    }
+                }
+                let distrs = document.querySelectorAll('.distr');
+                if (e.target.dataset.checker == 'distr') {
+                    for (let distr of distrs) {
+                        if (distr.checked == true) {
+                            arr_checked_distr.push(distr);
+                        }
+                    }
+                }
+                let orgs = document.querySelectorAll('.org');
+                if (e.target.dataset.checker == 'org') {
+                    for (let org of orgs) {
+                        if (org.checked == true) {
+                            arr_checked_org.push(org);
+                        }
+                    }
+                    for (let checked_org of arr_checked_org) {
+                        for (let i = 0; i < distrs.length; i++) {
+                            if (distrs[i].value === checked_org.dataset.distrid) {
+                                distrs[i].checked = checked_org.checked;
+                                arr_checked_distr.push(distrs[i]);
+                            }
+                        }
+                        for (let k = 0; k < departs.length; k++) {
+                            if (departs[k].value === checked_org.dataset.departid) {
+                                departs[k].checked = checked_org.checked;
+                                arr_checked_depart.push(departs[k]);
+                            }
+                        }
+                    }
+                    for (let i = 0; i < arr_checked_depart.length; i++) {
+                        console.log(arr_checked_depart);
+                    }
+
+                }
+                arr_checked_org = [];
+                arr_checked_depart = [];
+                arr_checked_distr = [];
+            }
+        )
+    }
+</script>
 <script>
     periodicity.addEventListener('input', (e) => {
         let start = document.getElementById("datetimepicker-s");

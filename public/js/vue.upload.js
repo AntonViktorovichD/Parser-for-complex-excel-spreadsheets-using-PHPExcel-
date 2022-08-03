@@ -45,6 +45,14 @@ const event = Vue.createApp({
                     }
                 }
             }
+            if (e.target.dataset.checker === 'org') {
+                this.arr_checked_depart = [];
+                for (let i = 0; i < org.length; i++) {
+                    if (org[i].checked === true) {
+                        this.arr_checked_depart.push(org[i]);
+                    }
+                }
+            }
 
             if (this.arr_checked_depart.length !== 0 && this.arr_checked_distr.length !== 0) {
                 for (let i = 0; i < this.arr_checked_depart.length; i++) {
