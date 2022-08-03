@@ -152,6 +152,14 @@
                 let departs = document.querySelectorAll('.depart');
                 let distrs = document.querySelectorAll('.distr');
                 let orgs = document.querySelectorAll('.org');
+                if (e.target.dataset.checker === 'org') {
+                    for (let org of orgs) {
+                        if (org.checked === true) {
+                            org.dataset.org = 1;
+                            arr_checked_org.push(org);
+                        }
+                    }
+                }
                 if (e.target.dataset.checker === 'depart') {
                     for (let depart of departs) {
                         if (depart.checked === true) {
@@ -176,14 +184,7 @@
                         }
                     }
                 }
-                if (e.target.dataset.checker === 'org') {
-                    for (let org of orgs) {
-                        if (org.checked === true) {
-                            org.dataset.org = 1;
-                            arr_checked_org.push(org);
-                        }
-                    }
-                }
+
                 if (arr_checked_depart.length > 0 && arr_checked_distr.length > 0) {
                     for (let i = 0; i < arr_checked_depart.length; i++) {
                         for (let k = 0; k < arr_checked_distr.length; k++) {
@@ -192,7 +193,7 @@
                                     arr_checked_org.push(org);
                                 }
                                 if (org.dataset.org === '1') {
-                                    console.log(org);
+                                    arr_checked_org.push(org);
                                 } else {
                                     org.checked = false;
                                 }
@@ -223,8 +224,6 @@
                 for (let checked_org of arr_checked_org) {
                     checked_org.checked = true;
                 }
-
-                // console.log(arr_checked_org);
                 arr_checked_org = [];
                 arr_checked_depart = [];
                 arr_checked_distr = [];
