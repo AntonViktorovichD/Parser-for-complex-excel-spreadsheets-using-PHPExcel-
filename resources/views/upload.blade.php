@@ -172,24 +172,41 @@
                             arr_checked_org.push(org);
                         }
                     }
-                    for (let checked_org of arr_checked_org) {
-                        for (let i = 0; i < distrs.length; i++) {
-                            if (distrs[i].value === checked_org.dataset.distrid) {
-                                distrs[i].checked = checked_org.checked;
-                                arr_checked_distr.push(distrs[i]);
-                            }
-                        }
-                        for (let k = 0; k < departs.length; k++) {
-                            if (departs[k].value === checked_org.dataset.departid) {
-                                departs[k].checked = checked_org.checked;
-                                arr_checked_depart.push(departs[k]);
-                            }
-                        }
-                    }
-                    for (let i = 0; i < arr_checked_depart.length; i++) {
-                        console.log(arr_checked_depart);
-                    }
+                    // for (let checked_org of arr_checked_org) {
+                    //     for (let i = 0; i < distrs.length; i++) {
+                    //         if (distrs[i].value === checked_org.dataset.distrid) {
+                    //             distrs[i].checked = checked_org.checked;
+                    //             arr_checked_distr.push(distrs[i]);
+                    //         }
+                    //     }
+                    //     for (let k = 0; k < departs.length; k++) {
+                    //         if (departs[k].value === checked_org.dataset.departid) {
+                    //             departs[k].checked = checked_org.checked;
+                    //             arr_checked_depart.push(departs[k]);
+                    //         }
+                    //     }
+                    // }
 
+                }
+                if (arr_checked_depart.length > 0 && arr_checked_distr.length === 0) {
+                    for (let i = 0; i < arr_checked_depart.length; i++) {
+                        for (let org of orgs) {
+                            if (arr_checked_depart[i].value === org.dataset.departid) {
+                                org.checked = true;
+                                arr_checked_org.push(org);
+                            }
+                        }
+                    }
+                }
+                if (arr_checked_depart.length === 0 && arr_checked_distr.length > 0) {
+                    for (let k = 0; k < arr_checked_distr.length; k++) {
+                        for (let org of orgs) {
+                            if (arr_checked_distr[k].value === org.dataset.distrid) {
+                                org.checked = true;
+                                arr_checked_org.push(org);
+                            }
+                        }
+                    }
                 }
                 arr_checked_org = [];
                 arr_checked_depart = [];
@@ -197,8 +214,7 @@
             }
         )
     }
-</script>
-<script>
+    //
     periodicity.addEventListener('input', (e) => {
         let start = document.getElementById("datetimepicker-s");
         let finish = document.getElementById("datetimepicker-f");
@@ -211,8 +227,7 @@
             dtp_f.hidden = true;
         }
     })
-</script>
-<script>
+    //
     let success = document.getElementById("prev");
     let sms = document.getElementById("sms");
     let hours = <?php echo $hours ?>;
@@ -232,8 +247,7 @@
             form.submit();
         }
     }
-</script>
-<script>
+    //
     jQuery.datetimepicker.setLocale('ru');
     jQuery('#datetimepicker-s, #datetimepicker-f').datetimepicker({
         defaultDate: new Date(),
