@@ -151,40 +151,51 @@
         document.addEventListener('input', (e) => {
                 let departs = document.querySelectorAll('.depart');
                 let distrs = document.querySelectorAll('.distr');
-                if (e.target.dataset.checker == 'depart') {
-                    for (let depart of departs) {
-                        if (depart.checked == true) {
-                            arr_checked_depart.push(depart);
-                        }
-                    }
-                    for (let distr of distrs) {
-                        if (distr.checked == true) {
-                            arr_checked_distr.push(distr);
-                        }
-                    }
-                }
-                if (e.target.dataset.checker == 'distr') {
-                    for (let distr of distrs) {
-                        if (distr.checked == true) {
-                            arr_checked_distr.push(distr);
-                        }
-                    }
-                    for (let depart of departs) {
-                        if (depart.checked == true) {
-                            arr_checked_depart.push(depart);
-                        }
-                    }
-                }
                 let orgs = document.querySelectorAll('.org');
-                if (e.target.dataset.checker == 'org') {
+                if (e.target.dataset.checker === 'depart') {
+                    for (let depart of departs) {
+                        if (depart.checked === true) {
+                            arr_checked_depart.push(depart);
+                        }
+                    }
+                    for (let distr of distrs) {
+                        if (distr.checked === true) {
+                            arr_checked_distr.push(distr);
+                        }
+                    }
+                }
+                if (e.target.dataset.checker === 'distr') {
+                    for (let distr of distrs) {
+                        if (distr.checked === true) {
+                            arr_checked_distr.push(distr);
+                        }
+                    }
+                    for (let depart of departs) {
+                        if (depart.checked === true) {
+                            arr_checked_depart.push(depart);
+                        }
+                    }
+                }
+                if (e.target.dataset.checker === 'org') {
                     for (let org of orgs) {
-                        if (org.checked == true) {
+                        if (org.checked === true) {
                             arr_checked_org.push(org);
                         }
                     }
                 }
-
-
+                if (arr_checked_depart.length > 0 && arr_checked_distr.length > 0) {
+                    for (let i = 0; i < arr_checked_depart.length; i++) {
+                        for (let k = 0; k < arr_checked_distr.length; k++) {
+                            for (let org of orgs) {
+                                if (org.dataset.departid === arr_checked_depart[i].value && org.dataset.distrid === arr_checked_distr[k].value) {
+                                    arr_checked_org.push(org);
+                                } else {
+                                    org.checked = false;
+                                }
+                            }
+                        }
+                    }
+                }
                 if (arr_checked_depart.length !== 0 && arr_checked_distr.length === 0) {
                     for (let i = 0; i < arr_checked_depart.length; i++) {
                         for (let org of orgs) {
@@ -205,6 +216,11 @@
                         }
                     }
                 }
+                for (let checked_org of arr_checked_org) {
+                    checked_org.checked = true;
+                }
+
+                console.log(arr_checked_org);
                 arr_checked_org = [];
                 arr_checked_depart = [];
                 arr_checked_distr = [];
