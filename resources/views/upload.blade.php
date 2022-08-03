@@ -150,18 +150,28 @@
         let arr_checked_org = [];
         document.addEventListener('input', (e) => {
                 let departs = document.querySelectorAll('.depart');
+                let distrs = document.querySelectorAll('.distr');
                 if (e.target.dataset.checker == 'depart') {
                     for (let depart of departs) {
                         if (depart.checked == true) {
                             arr_checked_depart.push(depart);
                         }
                     }
+                    for (let distr of distrs) {
+                        if (distr.checked == true) {
+                            arr_checked_distr.push(distr);
+                        }
+                    }
                 }
-                let distrs = document.querySelectorAll('.distr');
                 if (e.target.dataset.checker == 'distr') {
                     for (let distr of distrs) {
                         if (distr.checked == true) {
                             arr_checked_distr.push(distr);
+                        }
+                    }
+                    for (let depart of departs) {
+                        if (depart.checked == true) {
+                            arr_checked_depart.push(depart);
                         }
                     }
                 }
@@ -172,23 +182,10 @@
                             arr_checked_org.push(org);
                         }
                     }
-                    // for (let checked_org of arr_checked_org) {
-                    //     for (let i = 0; i < distrs.length; i++) {
-                    //         if (distrs[i].value === checked_org.dataset.distrid) {
-                    //             distrs[i].checked = checked_org.checked;
-                    //             arr_checked_distr.push(distrs[i]);
-                    //         }
-                    //     }
-                    //     for (let k = 0; k < departs.length; k++) {
-                    //         if (departs[k].value === checked_org.dataset.departid) {
-                    //             departs[k].checked = checked_org.checked;
-                    //             arr_checked_depart.push(departs[k]);
-                    //         }
-                    //     }
-                    // }
-
                 }
-                if (arr_checked_depart.length > 0 && arr_checked_distr.length === 0) {
+
+
+                if (arr_checked_depart.length !== 0 && arr_checked_distr.length === 0) {
                     for (let i = 0; i < arr_checked_depart.length; i++) {
                         for (let org of orgs) {
                             if (arr_checked_depart[i].value === org.dataset.departid) {
@@ -198,7 +195,7 @@
                         }
                     }
                 }
-                if (arr_checked_depart.length === 0 && arr_checked_distr.length > 0) {
+                if (arr_checked_depart.length === 0 && arr_checked_distr.length !== 0) {
                     for (let k = 0; k < arr_checked_distr.length; k++) {
                         for (let org of orgs) {
                             if (arr_checked_distr[k].value === org.dataset.distrid) {
