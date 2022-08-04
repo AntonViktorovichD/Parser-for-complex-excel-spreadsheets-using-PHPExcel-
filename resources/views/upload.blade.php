@@ -18,7 +18,7 @@
     }
 
     .container-flex {
-        margin-left: 15px !important;
+        margin-right: 35px !important;
     }
 </style>
 <link rel="stylesheet" href="/css/jquery.datetimepicker.min.css">
@@ -102,10 +102,8 @@
             $depart_helper_id = (json_decode(json_encode($depart_helper_id, JSON_UNESCAPED_UNICODE), true));
 
             echo '<h3 class="inputs_cols">Типы Учреждений:</h3>';
-            echo '<div id="v-model-multiple-checkboxes" >';
-            echo '<div id="checkboxes">';
             foreach ($depart_helper as $depart_counter => $depart) {
-               echo '<input type="checkbox" class="depart" id=" ' . $depart . ' " v-model="checked" data-checker="depart" @change="getStatus($event)" value=" ' . $depart_helper_id[$depart_counter] . ' " data-value=" ' . $depart_helper_id[$depart_counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
+               echo '<input type="checkbox" class="depart" id=" ' . $depart . ' " data-checker="depart" value=" ' . $depart_helper_id[$depart_counter] . ' " data-value=" ' . $depart_helper_id[$depart_counter] . ' "><label for="' . $depart . '">' . $depart . '</label><br />';
             }
             $distr_helper = DB::table('distr_helper')->pluck('title');
             $distr_helper = (json_decode(json_encode($distr_helper, JSON_UNESCAPED_UNICODE), true));
@@ -114,7 +112,7 @@
             echo '<h3  class="inputs_cols">Районы:</h3>';
             echo '<div class="cols-4">';
             foreach ($distr_helper as $distr_counter => $distr) {
-               echo '<input type="checkbox" class="distr" id=" ' . $distr . '" v-model="checked" data-checker="distr" @change="getStatus($event)" value=" ' . $distr_helper_id[$distr_counter] . ' " data-value=" ' . $distr_helper_id[$distr_counter] . ' "><label for="' . $distr . '">' . $distr . '</label><br />';
+               echo '<input type="checkbox" class="distr" id=" ' . $distr . '" data-checker="distr" value=" ' . $distr_helper_id[$distr_counter] . ' " data-value=" ' . $distr_helper_id[$distr_counter] . ' "><label for="' . $distr . '">' . $distr . '</label><br />';
             }
             echo '</div>';
             $org_helper = DB::table('org_helper')->pluck('title');
@@ -129,10 +127,8 @@
             echo '<div class="cols-3">';
             foreach ($org_helper as $org_counter => $org) {
                $org = preg_replace('#"#', '&quot', $org);
-               echo '<input type="checkbox" class="org" name="org[' . $org_helper_id[$org_counter] . ']" id=" ' . $org . '" v-model="checked" @change="getStatus($event)" data-checker="org" data-org="0" data-departId=" ' . $org_depart_id[$org_counter] . ' " data-distrId=" ' . $org_distr_id[$org_counter] . ' " @change="getOrgStatus($event)" value=" ' . $org_helper_id[$org_counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
+               echo '<input type="checkbox" class="org" name="org[' . $org_helper_id[$org_counter] . ']" id=" ' . $org . '"data-checker="org" data-org="0" data-departId=" ' . $org_depart_id[$org_counter] . ' " data-distrId=" ' . $org_distr_id[$org_counter] . ' " value=" ' . $org_helper_id[$org_counter] . ' "><label for="' . $org . '">' . $org . '</label><br />';
             }
-            echo '</div>';
-            echo '</div>';
             echo '</div>';
             echo '<label for="comment" style="margin: 30px 0">Комментарий к запросу:</label>';
             echo '<textarea type="text" name="comment" cols="40" rows="6" style="width: 100% !important; margin-bottom:30px;"></textarea>';
@@ -141,8 +137,6 @@
         @endphp
     </form>
 </div>
-{{--<script src="/js/vue.global.js"></script>--}}
-{{--<script src="/js/vue.upload.js"></script>--}}
 <script>
     window.onload = () => {
         let arr_checked_depart = [];
