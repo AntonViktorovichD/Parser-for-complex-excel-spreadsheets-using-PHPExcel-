@@ -18,8 +18,8 @@ class JsonController extends Controller {
          $user_id = Auth::id();
          $arrs = DB::table('tables')->where('status', 0)->where('periodicity', '=', 0)->orderBy('id', 'desc')->paginate(20);
          foreach (DB::table('tables')->orderBy('id', 'desc')->pluck('user_id') as $user) {
-            $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->first('name')->name;
-            $user_phones[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->first('city_phone')->city_phone;
+            $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('name');
+            $user_phones[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('city_phone');
          }
          $arr = json_encode($arrs);
          $table_user = json_encode($user_names);

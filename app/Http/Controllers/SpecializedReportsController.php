@@ -13,7 +13,7 @@ class SpecializedReportsController extends Controller {
       $department = Auth::user()->department;
       date_default_timezone_set('Europe/Moscow');
       $table = DB::table('tables')->where('table_uuid', $table_uuid)->where('status', 0)->get();
-      $daily_reports = DB::table('daily_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->get();
+      $daily_reports = DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_dep', $department)->get();
       $date_reports = [];
       $json = $table[0]->json_val;
       $name = $table[0]->table_name;
@@ -66,7 +66,7 @@ class SpecializedReportsController extends Controller {
       if (count($daily_reports) > 0) {
          $row_uuid = $daily_reports[0]->row_uuid;
          $json_vals = $daily_reports[0]->json_val;
-         return view('spec_rep', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department'));
+         return view('spec_rep_edit', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department'));
       } else {
          return view('spec_rep', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department'));
       }

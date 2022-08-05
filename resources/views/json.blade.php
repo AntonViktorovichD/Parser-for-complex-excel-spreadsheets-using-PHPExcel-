@@ -2,14 +2,12 @@
 @include('layouts.menu')
 <link rel="stylesheet" href="/css/arrayToJson.css">
 <style>
-    table tr {
-        text-align: center;
-    }
-
     table {
-        width: calc(100% + 250px) !important;
+        margin-left: -30px !important;
     }
-
+    h1 {
+        margin-bottom: 50px !important;
+    }
 </style>
 {{ $tableload }}
 @csrf
@@ -25,6 +23,8 @@ if ($result && !empty($matches)) {
    $minute = $matches[5];
    $second = $matches[6];
 }
+echo '<div class="container-flex">';
+echo '<h1>Результаты заполнения запросов</h1>';
 
 $today = mktime($hour, $minute, $second, $month, $day, $year);
         echo '<div class="envelope input-block-level">';
@@ -153,6 +153,7 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
 @php
     echo '</tbody>' . PHP_EOL;
         echo '</table>' . PHP_EOL;
+        echo '</div>' . PHP_EOL;
         echo '</div>' . PHP_EOL;
 @endphp
 {{ $pages->links() }}
