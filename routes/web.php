@@ -125,10 +125,16 @@ use App\Http\Controllers\SmsController;
 
 Route::get('/sms', [SmsController::class, 'send_sms']);
 
+use App\Http\Controllers\AdminSpecializedReportsController;
+
+Route::get('/admin_specialized_reports/{name}', [AdminSpecializedReportsController::class, 'admin_spec_reps_view']);
+Route::post('/spec_upload', [AdminSpecializedReportsController::class, 'spec_upload'])->middleware('auth');
+Route::post('/spec_update', [AdminSpecializedReportsController::class, 'spec_update'])->middleware('auth');
+
 use App\Http\Controllers\SpecializedReportsController;
 
-Route::get('/specialized_reports/{name}', [SpecializedReportsController::class, 'admin_spec_reps_view']);
-Route::post('/spec_upload', [SpecializedReportsController::class, 'spec_upload'])->middleware('auth');
+Route::get('/specialized_reports/{name}', [SpecializedReportsController::class, 'spec_reps']);
+Route::post('/spec_reps_upload', [SpecializedReportsController::class, 'spec_reps_upload'])->middleware('auth');
 Route::post('/spec_update', [SpecializedReportsController::class, 'spec_update'])->middleware('auth');
 
 Auth::routes(['register' => false]);

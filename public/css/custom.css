@@ -138,7 +138,7 @@ table.dataTable thead .sorting_desc {
     border: 2px solid #e43d3c !important;
 }
 
-.btn-outline-danger{
+.btn-outline-danger {
     border: 2px solid #e43d3c !important;
     color: black !important;
 }
@@ -282,4 +282,10 @@ textarea[type="text"]:focus {
 footer {
     width: 800px !important;
     padding-left: 35px !important;
+}
+
+table input {
+    max-width: 80px !important;
+    outline: none !important;
+    border: 0 !important;
 }
