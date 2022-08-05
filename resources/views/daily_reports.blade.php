@@ -1,9 +1,43 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
+
+    .list-group-item {
+        font-weight: 400;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+    }
+
+    .list-group-item a {
+        color: #a2a2a2;
+        padding: 3px 0;
+        background: transparent;
+    }
+
+    .list-group {
+        max-width: 90vw;
+    }
+
+    .spec_reps {
+        margin-top: 100px;
+    }
+
+    .uk-panel-title {
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 400;
+        text-transform: none;
+        color: #1f1e20;
+    }
+
     table {
         margin: 50px 0 !important;
         width: auto !important;
+        max-width: calc(100vw - 90px) !important;
     }
 
     .uszn {
@@ -95,6 +129,7 @@
         echo '</thead>';
         echo '<tbody>';
         foreach ($arrs as $key => $arr) {
+        if($arr['table_uuid'] != 'd7011723-8363-4c80-ba88-7e06ddb6856e') {
             echo '<tr id="tr" data-status="' . $arr['status'] . '">';
             if ($arr['periodicity'] == 1) {
                 echo '<td><a href="/admin_daily_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
@@ -102,7 +137,7 @@
                 echo '<td style="text-align: center;">';
                 if($user_role == 1 || $user_role == 4) {
                 foreach ($arr['type'] as $type) {
-                    echo '<div class="marker ' . $arr_orgs[$type][0] . '">' . $arr_orgs[$type][1] . '</div>';
+                    echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
                 }
                 }
                 echo '</td>';
@@ -112,12 +147,13 @@
                 echo '<td style="text-align: center;">';
                 if($user_role == 1 || $user_role == 4) {
                 foreach ($arr['type'] as $type) {
-                    echo '<div class="marker ' . $arr_orgs[$type][0] . '">' . $arr_orgs[$type][1] . '</div>';
+                    echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
                 }
                 }
                 echo '</td>';
             }
             echo '</tr>';
+        }
         }
         echo '</tbody>';
         echo '</table>';
@@ -127,12 +163,19 @@
             echo '<div class="align-self-center" style="margin-bottom: 10px;"><span  class="marker ' . $org[0] . '">' . $org[1] . '</span>' . $org[2] . '</span></div>';
         }
         }
+        echo '<div class="spec_reps">';
+        echo '<h3 class="uk-panel-title">Специализированные отчеты</h3>';
+       echo '<ul class="list-group list-group-flush">';
+ echo '<li class="list-group-item"><a href="/specialized_reports/d7011723-8363-4c80-ba88-7e06ddb6856e">Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания (учреждения социального обслуживания семьи и детей)</a></li>';
+ echo '<li class="list-group-item">Dapibus ac facilisis in</li>';
+ echo '</ul>';
+        echo '</div>';
     @endphp
     <script>
         window.onload = () => {
             let del_tables = document.querySelectorAll('#tr');
             for (let del_table of del_tables) {
-                if (del_table.dataset.status == 1) {
+                if (del_table.dataset.status === 1) {
                     del_table.classList.add('stat');
                 }
             }

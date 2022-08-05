@@ -42,18 +42,16 @@ class UploadController extends Controller {
             foreach ($names as $name) {
                $namesArr[] = $name->table_name;
             }
-            $check = \Request::get("org");
-            foreach ($check as $checked) {
-               $checkboxes[] = $checked;
-            }
+            $checkboxes = explode(" , ", $request->input('checked'));
+
             $file = $request->file('userfile');
             $radio = $request->input('reg_func');
             $filename = $request->input('filename');
             if (in_array($file->extension(), ['xls', 'xlsx'])) {
                if ($file->getSize() < 5242880) {
-                  if (preg_match("/^[а-я А-Я0-9]+$/u", $filename)) {
+                  if (preg_match("/^[а-я А-Я0-9,]+$/u", $filename)) {
                      $upload_folder = 'public/folder';
-                     $newFileName = $date . $filename . '.tmp';
+                     $newFileName = $date . mb_strimwidth($filename, 0, 32) . '.tmp';
                      Storage::putFileAs($upload_folder, $file, $newFileName);
                   } else {
                      sleep(0);

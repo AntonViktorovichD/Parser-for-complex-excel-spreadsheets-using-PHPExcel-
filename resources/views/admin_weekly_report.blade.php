@@ -4,6 +4,7 @@
     table {
         border-collapse: collapse;
         border: 1px solid black;
+
     }
 
     th, td {
@@ -29,6 +30,9 @@
         border: none !important;
     }
 </style>
+
+{{$name}}
+
 @php
     $user_id = Auth::user()->id;
     $arrCell = json_decode($json, true);
@@ -42,7 +46,7 @@
     $arrCol = [];
     $arrNum = [];
     $arrKeyVal = [];
-
+echo '<div class="container">';
     echo '<form method="post" action="/admin_weekly_update">';
 @endphp
 @csrf
@@ -125,7 +129,8 @@
     echo '<input class="btn-submit-ae" type="submit">';
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a href="/admin_export/' . $row_uuid . '">Экспорт</a>'
+    echo '<a href="/admin_export/' . $row_uuid . '">Экспорт</a>';
+echo '</div>' . PHP_EOL;
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>

@@ -133,12 +133,14 @@
             echo '<label for="comment" style="margin: 30px 0">Комментарий к запросу:</label>';
             echo '<textarea type="text" name="comment" cols="40" rows="6" style="width: 100% !important; margin-bottom:30px;"></textarea>';
             echo '<input id="sms" type="text" name="sms" hidden>';
+            echo '<input id="checked" type="text" name="checked" value="" hidden>';
             echo '<input style="border: 2px solid #e43d3c !important;" class="btn btn-primary btn-submit-second button" id="cnfrm" @click="check" value="Отправить запрос">';
         @endphp
     </form>
 </div>
 <script>
     window.onload = () => {
+        let arr_checked = [];
         let arr_checked_depart = [];
         let arr_checked_distr = [];
         let arr_checked_org = [];
@@ -175,7 +177,6 @@
                     }
                 }
                 if (e.target.dataset.checker === 'distr') {
-                    console.log(e.target.checked);
                     for (let distr of distrs) {
                         if (distr.checked === true) {
                             arr_checked_distr.push(distr);
@@ -236,9 +237,15 @@
                 for (let checked_org of arr_checked_org) {
                     checked_org.checked = true;
                 }
+
+                for (let checked_org of arr_checked_org) {
+                    arr_checked.push(checked_org.value);
+                }
+                checked.value = arr_checked.join();
                 arr_checked_org = [];
                 arr_checked_depart = [];
                 arr_checked_distr = [];
+                arr_checked = [];
             }
         )
     }

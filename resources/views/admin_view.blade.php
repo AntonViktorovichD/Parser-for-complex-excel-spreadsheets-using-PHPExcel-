@@ -1,15 +1,21 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
+    .container {
+        margin-left: 30px !important;
+    }
+
     table {
         border-collapse: collapse;
         border: 1px solid black;
-        width: 100%;
+        width: calc(100vw - 100px) !important;
     }
+
     th, td {
         border: 1px solid black;
         padding: 10px;
     }
+
     input {
         outline: none;
         border: none;
@@ -18,10 +24,12 @@
         padding: 0 !important;
         margin: 0 !important;
     }
+
     .btn {
         width: 100px;
         height: 35px;
     }
+
     .regex {
         border: none !important;
     }
@@ -36,6 +44,7 @@
 @php
     $rowSpan = $highest_row - 1;
     $table = [];
+    echo '<div class="container-flex">';
     echo '<table>' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
@@ -48,6 +57,7 @@
         echo '</tr>' . PHP_EOL;
     }
     echo '</table>' . PHP_EOL;
+    echo '</div>';
 @endphp
 
 @include('layouts.footer')

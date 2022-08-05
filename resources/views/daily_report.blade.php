@@ -23,9 +23,8 @@
         height: 35px;
     }
 </style>
+
 @php
-
-
     if (isset($json_vals)) {
         $user_id = Auth::user()->id;
         $arrCell = json_decode($json, true);

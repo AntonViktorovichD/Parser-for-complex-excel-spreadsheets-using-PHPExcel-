@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
-class AdminWeeklyReportController extends Controller {
-   public function admin_weekly_report($table_uuid) {
+class SpecializedReportsController extends Controller {
+   public function admin_spec_reps_view($table_uuid) {
       try {
-         $table = DB::table('tables')->where('table_uuid', $table_uuid)->where('status', 0)->get();
+         $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
          $json = $table[0]->json_val;
          $name = $table[0]->table_name;
          $highest_column_index = $table[0]->highest_column_index;
@@ -19,13 +19,13 @@ class AdminWeeklyReportController extends Controller {
          $radio = $table[0]->radio;
          $read_only = $table[0]->read_only;
          $json_func = $table[0]->json_func;
-         $weekly_reports = DB::table('weekly_reports')->where('table_uuid', $table_uuid)->get();
-         if (count($weekly_reports) > 0) {
-            $row_uuid = $weekly_reports[0]->row_uuid;
-            $user_id = $weekly_reports[0]->user_id;
+         $daily_reports = DB::table('daily_reports')->where('table_uuid', $table_uuid)->get();
+         if (count($daily_reports) > 0) {
+            $row_uuid = $daily_reports[0]->row_uuid;
+            $user_id = $daily_reports[0]->user_id;
             $user_dep = DB::table('users')->where('id', $user_id)->value('department');
             $dep = DB::table('org_helper')->where('id', $user_dep)->value('title');
-            $json_vals = $weekly_reports[0]->json_val;
+            $json_vals = $daily_reports[0]->json_val;
          }
          $pattern = '';
          $reg_arr = [
@@ -44,7 +44,7 @@ class AdminWeeklyReportController extends Controller {
          $arrLastRowKeys = [];
          $rep_value = [];
          $rep_key = [];
-         $weekly_report = [];
+         $daily_report = [];
 
          for ($i = 1; $i < $highest_row; $i++) {
             for ($k = 0; $k < $highest_column_index; $k++) {
@@ -66,39 +66,24 @@ class AdminWeeklyReportController extends Controller {
          $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
          asort($arrLR);
          $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-         $weekly_reports = json_decode(DB::table('weekly_reports')->where('table_uuid', $table_uuid)->get(), true);
-         if (count($weekly_reports) > 0) {
-            foreach ($weekly_reports as $i => $value) {
-               $val = json_decode($weekly_reports[$i]['json_val'], true);
-               $key = explode('+', $weekly_reports[$i]['row_uuid'] . '+');
+         $daily_reports = json_decode(DB::table('daily_reports')->where('table_uuid', $table_uuid)->get(), true);
+         if (count($daily_reports) > 0) {
+            foreach ($daily_reports as $i => $value) {
+               $val = json_decode($daily_reports[$i]['json_val'], true);
+               $key = explode('+', $daily_reports[$i]['row_uuid'] . '+');
                unset($key[1]);
                foreach ($key as $k => $item) {
                   $rep_key[] = $key[$k];
                }
                $rep_value[] = $val;
             }
-            $weekly_report = (json_encode(array_combine($rep_key, $rep_value)));
-            return view('admin_weekly_report', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'weekly_report', 'user_dep', 'pattern', 'json_func', 'json_vals', 'dep'));
+            $daily_report = (json_encode(array_combine($rep_key, $rep_value)));
+            return view('admin_daily_report', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'daily_report', 'user_dep', 'pattern', 'json_func', 'json_vals', 'dep'));
          } else {
-            return view('admin_view', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid'));
+            return view('admin_spec_reps_view', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid'));
          }
       } catch
       (QueryException $e) {
-         echo 'Ошибка: ' . $e->getMessage();
-      }
-   }
-
-   public function admin_weekly_update(Request $request) {
-      date_default_timezone_set('Europe/Moscow');
-      $created_at = date('Y-m-d, H:i:s');
-      try {
-         DB::connection()->getPdo();
-         $input = $request->except('_token', 'table_information');
-         list($table_name, $table_uuid, $row_uuid, $user_id) = explode(' + ', $request->input('table_information'));
-         $json_val = json_encode($input, JSON_UNESCAPED_UNICODE);
-         DB::table('weekly_reports')->where('table_uuid', $table_uuid)->where('row_uuid', $row_uuid)->update(['json_val' => $json_val, 'created_at' => $created_at]);
-         return view('router', ['alert' => 'Запись успешно отредактирована', 'route' => '/admin_reports']);
-      } catch (QueryException $e) {
          echo 'Ошибка: ' . $e->getMessage();
       }
    }

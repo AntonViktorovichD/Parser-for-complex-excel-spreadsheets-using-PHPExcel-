@@ -214,6 +214,7 @@ table.dataTable thead .sorting_desc {
     min-height: 68% !important;
     margin-bottom: 50px !important;
     margin-left: 35px !important;
+    margin-right: 35px !important;
 }
 
 .daily_reports {

@@ -125,6 +125,12 @@ use App\Http\Controllers\SmsController;
 
 Route::get('/sms', [SmsController::class, 'send_sms']);
 
+use App\Http\Controllers\SpecializedReportsController;
+
+Route::get('/specialized_reports/{name}', [SpecializedReportsController::class, 'admin_spec_reps_view']);
+Route::post('/spec_upload', [SpecializedReportsController::class, 'spec_upload'])->middleware('auth');
+Route::post('/spec_update', [SpecializedReportsController::class, 'spec_update'])->middleware('auth');
+
 Auth::routes(['register' => false]);
 
 Route::get('change_password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('auth.change_password')->middleware('checkAdmin');

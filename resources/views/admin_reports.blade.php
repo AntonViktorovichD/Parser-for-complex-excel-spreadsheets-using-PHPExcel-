@@ -2,8 +2,9 @@
 @include('layouts.menu')
 <style>
     table {
-        margin: 50px 0 !important;
+        margin: 50px 35px !important;
         width: auto !important;
+        max-width: calc(100vw - 700px) !important;
     }
 
     .uszn {
@@ -101,7 +102,7 @@
             echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
             echo '<td style="text-align: center;">';
             foreach ($arr['type'] as $type) {
-                echo '<div class="marker ' . $arr_orgs[$type][0] . '">' . $arr_orgs[$type][1] . '</div>';
+                echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
             }
             echo '</td>';
         } elseif ($arr['periodicity'] == 2) {
@@ -114,7 +115,7 @@
             echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
             echo '<td style="text-align: center;">';
             foreach ($arr['type'] as $type) {
-                echo '<div class="marker ' . $arr_orgs[$type][0] . '">' . $arr_orgs[$type][1] . '</div>';
+                echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
             }
             echo '</td>';
         }
