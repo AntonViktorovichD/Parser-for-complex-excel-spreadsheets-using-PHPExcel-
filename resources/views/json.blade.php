@@ -5,6 +5,7 @@
     table {
         margin-left: -30px !important;
     }
+
     h1 {
         margin-bottom: 50px !important;
     }
@@ -29,9 +30,9 @@ echo '<h1>Результаты заполнения запросов</h1>';
 $today = mktime($hour, $minute, $second, $month, $day, $year);
         echo '<div class="envelope input-block-level">';
           $row = 0;
-          $arrs = json_decode($arr, true);
-          $arr_rows = json_decode($arr_rows, true);
-          $table_user = json_decode($table_user, true);
+          $arrs = $arr;
+          $arr_rows = (array)$arr_rows;
+          $table_user = (array)$table_user;
           echo '<table class="table table-striped">' . PHP_EOL;
           echo '<thead>' . PHP_EOL;
           echo '<tr>' . PHP_EOL;
@@ -48,22 +49,23 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
           echo '</thead>' . PHP_EOL;
           echo '<tbody>' . PHP_EOL;
 @endphp
-@foreach ($arrs['data'] as $key => $arr)
+@foreach ($arr as $key => $arr)
     @php
+    $arr = (array)$arr;
         $arr_deps = json_decode($arr['departments']);
         $arr_uuids = $arr['table_uuid'];
+         if ($user_role == 1 || $user_role == 4) {
         foreach ($arr_deps as $dep) {
-           if ($user_role == 1 || $user_role == 4) {
-                         $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $arr_uuids)->pluck('json_val'));
-           } else {
-                         $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $arr_uuids)->where('user_dep', '=', $dep)->pluck('json_val'));
+           $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $arr_uuids)->pluck('json_val'));
            }
+         } else {
+            $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $arr_uuids)->where('user_dep', $user_dep)->pluck('json_val'));
         }
         $counter = 0;
         foreach (array_slice($rv_ja, -count($arr_deps)) as $isset_arrs) {
            if (!empty($isset_arrs)) {
               foreach ($isset_arrs as $isset_arr) {
-                 foreach (json_decode($isset_arr) as $arr_is) {
+                 foreach ($isset_arr as $arr_is) {
                     if (isset($arr)) {
                        $counter++;
                     }
@@ -95,7 +97,6 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
         }
         $finish_day = $finish_hour . ':' . $finish_minute . ' - ' . $finish_day . '.' . $finish_month . '.' . $finish_year;
         $all_deps = (substr($counter / (count($rv_ja) * ((DB::table('tables')->where('table_uuid', '=', $arr_uuids)->first('highest_column_index')->highest_column_index) - 1)), 0, 4) * 100);
-
         echo '<tr>' . PHP_EOL;
         echo '<td class="align-middle"><span>' . $arr['id'] . '</span></td>';
         echo '<td class="align-middle"><span>' . $arr['table_name'] . '</span></td>';

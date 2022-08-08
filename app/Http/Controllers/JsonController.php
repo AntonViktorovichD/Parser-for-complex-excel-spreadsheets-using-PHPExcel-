@@ -4,28 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 
 class JsonController extends Controller {
    public function arrayToJson() {
       try {
+         $user_role = Auth::user()->roles->first()->id;
          $rv_ja = [];
          $user_names = [];
          $user_phones = [];
-         $user_role = Auth::user()->roles->first()->id;
          $user_id = Auth::id();
          $arrs = DB::table('tables')->where('status', 0)->where('periodicity', '=', 0)->orderBy('id', 'desc')->paginate(20);
          foreach (DB::table('tables')->orderBy('id', 'desc')->pluck('user_id') as $user) {
             $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('name');
             $user_phones[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('city_phone');
          }
-         $arr = json_encode($arrs);
-         $table_user = json_encode($user_names);
-         $user_phones = json_encode($user_phones);
-         $arr_rows = json_encode(DB::table('report_values')->get());
-         return view('json', ['arr' => $arr, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role, 'table_user' => $table_user, 'pages' => $arrs, 'user_phones' => $user_phones]);
+         $user_dep = DB::table('users')->where('id', $user_id)->value('department');
+         $arr_rows = DB::table('report_values')->get();
+
+         foreach ($arrs as $arr) {
+            foreach (json_decode($arr->departments, true) as $dep) {
+               if ($user_role == 1 || $user_role == 4) {
+                  $rv_ja[$arr->table_uuid][] = json_decode(DB::table('report_values')->where('table_uuid', $arr->table_uuid)->pluck('json_val'));
+               } else {
+                  if ($dep == $user_dep) {
+                     $rv_ja[$arr->table_uuid][] = json_decode(DB::table('report_values')->where('table_uuid', $arr->table_uuid)->pluck('json_val'));
+                  }
+               }
+            }
+         }
+         return view('json', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role, 'table_user' => $user_names, 'pages' => $arrs, 'user_phones' => $user_phones, 'user_dep' => $user_dep, 'rv_ja' => $rv_ja]);
       } catch (QueryException $e) {
          echo 'Ошибка: ' . $e->getMessage();
       }

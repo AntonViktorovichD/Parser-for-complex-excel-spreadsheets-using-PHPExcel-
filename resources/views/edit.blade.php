@@ -24,6 +24,7 @@
     }
 </style>
 @php
+echo '<div class="container-flex">';
     $user_id = Auth::user()->id;
     $arrCell = json_decode($json, true);
     $arrAddRow = array_flip(json_decode($addRowArr, true));
@@ -116,7 +117,8 @@
     }
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a href="/export/' . $row_uuid . '">Экспорт</a>'
+    echo '<a href="/export/' . $row_uuid . '">Экспорт</a>';
+    echo '</div>';
 
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
