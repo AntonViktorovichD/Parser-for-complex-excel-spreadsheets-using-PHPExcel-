@@ -51,104 +51,97 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
 @endphp
 @foreach ($arr as $key => $arr)
     @php
-    $arr = (array)$arr;
-        $arr_deps = json_decode($arr['departments']);
-        $arr_uuids = $arr['table_uuid'];
-         if ($user_role == 1 || $user_role == 4) {
-        foreach ($arr_deps as $dep) {
-           $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $arr_uuids)->pluck('json_val'));
-           }
-         } else {
-            $rv_ja[] = json_decode(DB::table('report_values')->where('table_uuid', '=', $arr_uuids)->where('user_dep', $user_dep)->pluck('json_val'));
-        }
-        $counter = 0;
-        foreach (array_slice($rv_ja, -count($arr_deps)) as $isset_arrs) {
-           if (!empty($isset_arrs)) {
-              foreach ($isset_arrs as $isset_arr) {
-                 foreach ($isset_arr as $arr_is) {
-                    if (isset($arr)) {
-                       $counter++;
-                    }
-                 }
-              }
-           }
-        }
-        $pattern = '/^(\d{4})\-(\d{2})\-(\d{2}) (\d{2})\:(\d{2}):(\d{2})$/';
-        $start = preg_match($pattern, $arr['created_at'], $matches);
-        if ($start && !empty($matches)) {
-           $start_year = $matches[1];
-           $start_month = $matches[2];
-           $start_day = $matches[3];
-           $start_hour = $matches[4];
-           $start_minute = $matches[5];
-           $start_second = $matches[6];
-           $start_target_day = mktime($start_hour, $start_minute, $start_second, $start_month, $start_day, $start_year);
-        }
-        $strt_day = $start_hour . ':' . $start_minute . ' - ' . $start_day . '.' . $start_month . '.' . $start_year;
-        $finish = preg_match($pattern, $arr['updated_at'], $matches);
-        if ($finish && !empty($matches)) {
-           $finish_year = $matches[1];
-           $finish_month = $matches[2];
-           $finish_day = $matches[3];
-           $finish_hour = $matches[4];
-           $finish_minute = $matches[5];
-           $finish_second = $matches[6];
-           $target_day = mktime($finish_hour, $finish_minute, $finish_second, $finish_month, $finish_day, $finish_year);
-        }
-        $finish_day = $finish_hour . ':' . $finish_minute . ' - ' . $finish_day . '.' . $finish_month . '.' . $finish_year;
-        $all_deps = (substr($counter / (count($rv_ja) * ((DB::table('tables')->where('table_uuid', '=', $arr_uuids)->first('highest_column_index')->highest_column_index) - 1)), 0, 4) * 100);
-        echo '<tr>' . PHP_EOL;
-        echo '<td class="align-middle"><span>' . $arr['id'] . '</span></td>';
-        echo '<td class="align-middle"><span>' . $arr['table_name'] . '</span></td>';
-        echo '<td class="align-middle"><span>' . $table_user[$key] . '</span><br /><span>' . $user_phones[$key] . '</span></td>';
-        echo '<td class="align-middle"><span>' . $strt_day . '</span></td>';
-        if ($target_day > $today) {
-           echo '<td class="align-middle"><span>' . $finish_day . '</span></td>';
-        } else {
-           if (isset($arr['updated_at'])) {
-              echo '<td class="align-middle"><span style="background: red; color: white; padding: 10px">' . $finish_day . '</span></td>';
-           } else {
-              echo '<td></td>';
-           }
-        }
+        $arr = (array)$arr;
+            $arr_deps = json_decode($arr['departments']);
+            $arr_uuids = $arr['table_uuid'];
+            $counter = 0;
+            foreach (array_slice($rv_ja, -count($arr_deps)) as $isset_arrs) {
+               if (!empty($isset_arrs)) {
+                  foreach ($isset_arrs as $isset_arr) {
+                     foreach ($isset_arr as $arr_is) {
+                        if (isset($arr)) {
+                           $counter++;
+                        }
+                     }
+                  }
+               }
+            }
+            $pattern = '/^(\d{4})\-(\d{2})\-(\d{2}) (\d{2})\:(\d{2}):(\d{2})$/';
+            $start = preg_match($pattern, $arr['created_at'], $matches);
+            if ($start && !empty($matches)) {
+               $start_year = $matches[1];
+               $start_month = $matches[2];
+               $start_day = $matches[3];
+               $start_hour = $matches[4];
+               $start_minute = $matches[5];
+               $start_second = $matches[6];
+               $start_target_day = mktime($start_hour, $start_minute, $start_second, $start_month, $start_day, $start_year);
+            }
+            $strt_day = $start_hour . ':' . $start_minute . ' - ' . $start_day . '.' . $start_month . '.' . $start_year;
+            $finish = preg_match($pattern, $arr['updated_at'], $matches);
+            if ($finish && !empty($matches)) {
+               $finish_year = $matches[1];
+               $finish_month = $matches[2];
+               $finish_day = $matches[3];
+               $finish_hour = $matches[4];
+               $finish_minute = $matches[5];
+               $finish_second = $matches[6];
+               $target_day = mktime($finish_hour, $finish_minute, $finish_second, $finish_month, $finish_day, $finish_year);
+            }
+            $finish_day = $finish_hour . ':' . $finish_minute . ' - ' . $finish_day . '.' . $finish_month . '.' . $finish_year;
+            $all_deps = (substr($counter / (count($rv_ja) * ((DB::table('tables')->where('table_uuid', '=', $arr_uuids)->first('highest_column_index')->highest_column_index) - 1)), 0, 4) * 100);
+            echo '<tr>' . PHP_EOL;
+            echo '<td class="align-middle"><span>' . $arr['id'] . '</span></td>';
+            echo '<td class="align-middle"><span>' . $arr['table_name'] . '</span></td>';
+            echo '<td class="align-middle"><span>' . $table_user[$key] . '</span><br /><span>' . $user_phones[$key] . '</span></td>';
+            echo '<td class="align-middle"><span>' . $strt_day . '</span></td>';
+            if ($target_day > $today) {
+               echo '<td class="align-middle"><span>' . $finish_day . '</span></td>';
+            } else {
+               if (isset($arr['updated_at'])) {
+                  echo '<td class="align-middle"><span style="background: red; color: white; padding: 10px">' . $finish_day . '</span></td>';
+               } else {
+                  echo '<td></td>';
+               }
+            }
 
-        echo '<td class="align-middle"><div class="progress">';
-        if ($all_deps > 0) {
-           echo '<div class="progress-bar" role="progressbar" style="width: ' . intval($all_deps) . '%;" aria-valuenow="' . intval($all_deps) . '%" aria-valuemin="0" aria-valuemax="100">' . $all_deps . '%</div>';
-        } else {
-           echo '<div class="progress-bar-zero" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>';
-        }
-        echo '</div></td>';
+            echo '<td class="align-middle"><div class="progress">';
+            if ($all_deps > 0) {
+               echo '<div class="progress-bar" role="progressbar" style="width: ' . intval($all_deps) . '%;" aria-valuenow="' . intval($all_deps) . '%" aria-valuemin="0" aria-valuemax="100">' . $all_deps . '%</div>';
+            } else {
+               echo '<div class="progress-bar-zero" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>';
+            }
+            echo '</div></td>';
 
-        for ($i = 0; $i < count($arr); $i++) {
-           if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
-              if (isset($arr_rows[$i]['row_uuid'])) {
-                 if ($arr_rows[$i]['table_uuid'] == $arr['table_uuid']) {
-                    echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
-                    break;
-                 }
-              } else {
-                 echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '" href="/admin_view/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Просмотр </a></td>';
-                 break;
-              }
-           } else {
-              if (isset($arr_rows[$i]['row_uuid'])) {
-                 if ($arr_rows[$i]['user_id'] == $user_id && $arr_rows[$i]['table_uuid'] == $arr['table_uuid']) {
-                    echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
-                    break;
-                 }
-              } else {
-                 echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
-                 break;
-              }
-           }
-        }
-        echo '<td class="align-middle"><button type="submit" class="btn btn_mon btn-outline-danger">Скачать</button></td>';
-        echo '<td class="align-middle"><button type="submit" id="read_only" class="btn btn-outline-success " data-change="' . $arr['read_only'] . '" value="' . $arr['table_uuid'] . '">Принять запрос</button></td>';
-        if ($arr['read_only'] == 'enabled') {
-           echo '<td class="align-middle"><span class="enbl">Запрос принят</span></td>';
-        }
-        echo '</tr>' . PHP_EOL;
+            for ($i = 0; $i < count($arr); $i++) {
+               if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
+                  if (isset($arr_rows[$i]['row_uuid'])) {
+                     if ($arr_rows[$i]['table_uuid'] == $arr['table_uuid']) {
+                        echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
+                        break;
+                     }
+                  } else {
+                     echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '" href="/admin_view/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Просмотр </a></td>';
+                     break;
+                  }
+               } else {
+                  if (isset($arr_rows[$i]['row_uuid'])) {
+                     if ($arr_rows[$i]['user_id'] == $user_id && $arr_rows[$i]['table_uuid'] == $arr['table_uuid']) {
+                        echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '"  href="/edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
+                        break;
+                     }
+                  } else {
+                     echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '" href="/add/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Добавить </a></td>';
+                     break;
+                  }
+               }
+            }
+            echo '<td class="align-middle"><button type="submit" class="btn btn_mon btn-outline-danger">Скачать</button></td>';
+            echo '<td class="align-middle"><button type="submit" id="read_only" class="btn btn-outline-success " data-change="' . $arr['read_only'] . '" value="' . $arr['table_uuid'] . '">Принять запрос</button></td>';
+            if ($arr['read_only'] == 'enabled') {
+               echo '<td class="align-middle"><span class="enbl">Запрос принят</span></td>';
+            }
+            echo '</tr>' . PHP_EOL;
     @endphp
 @endforeach
 @php
