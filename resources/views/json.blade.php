@@ -9,6 +9,7 @@
     h1 {
         margin-bottom: 50px !important;
     }
+
     .progress-bar-zero {
         line-height: 200% !important;
     }
@@ -34,7 +35,7 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
         echo '<div class="envelope input-block-level">';
           $row = 0;
           $arrs = $arr;
-          $arr_rows = (array)$arr_rows;
+          $arr_rows = json_decode($arr_rows, true);
           $table_user = (array)$table_user;
           echo '<table class="table table-striped">' . PHP_EOL;
           echo '<thead>' . PHP_EOL;
@@ -55,6 +56,7 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
 @foreach ($arr as $key => $arr)
     @php
         $arr = (array)$arr;
+         if($user_role == 1 || $user_role == 4 || in_array($user_dep, json_decode($arr['departments'], true))){
             $pattern = '/^(\d{4})\-(\d{2})\-(\d{2}) (\d{2})\:(\d{2}):(\d{2})$/';
             $start = preg_match($pattern, $arr['created_at'], $matches);
             if ($start && !empty($matches)) {
@@ -103,7 +105,7 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
             echo '</div></td>';
 
             for ($i = 0; $i < count($arr); $i++) {
-               if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
+               if ($user_role == 1 || $user_role == 4) {
                   if (isset($arr_rows[$i]['row_uuid'])) {
                      if ($arr_rows[$i]['table_uuid'] == $arr['table_uuid']) {
                         echo '<td class="align-middle"><a data-id="' . $arr['table_uuid'] . '"  href="/admin_edit/' . $arr['table_uuid'] . '" name="' . $arr['table_name'] . '"> Редактировать </a></td>';
@@ -131,6 +133,7 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
                echo '<td class="align-middle"><span class="enbl">Запрос принят</span></td>';
             }
             echo '</tr>' . PHP_EOL;
+            }
     @endphp
 @endforeach
 @php

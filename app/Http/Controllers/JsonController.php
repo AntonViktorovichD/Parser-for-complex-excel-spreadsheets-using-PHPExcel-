@@ -21,7 +21,7 @@ class JsonController extends Controller {
             $user_phones[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('city_phone');
          }
          $user_dep = DB::table('users')->where('id', $user_id)->value('department');
-         $arr_rows = DB::table('report_values')->get();
+         $arr_rows = json_encode(DB::table('report_values')->get(), JSON_UNESCAPED_UNICODE);
 
          $arr_values_count = [];
          foreach ($arrs as $arr) {
@@ -52,8 +52,6 @@ class JsonController extends Controller {
                $arr_values_count[$arr->table_uuid] = intval(round($counter / $arr->highest_column_index, 2) * 100);
             }
          }
-
-         var_dump($arr_values_count);
 
          return view('json', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role, 'table_user' => $user_names, 'pages' => $arrs, 'user_phones' => $user_phones, 'user_dep' => $user_dep, 'arr_values_count' => $arr_values_count]);
       } catch (QueryException $e) {
