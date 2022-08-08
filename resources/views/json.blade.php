@@ -9,6 +9,9 @@
     h1 {
         margin-bottom: 50px !important;
     }
+    .progress-bar-zero {
+        line-height: 200% !important;
+    }
 </style>
 {{ $tableload }}
 @csrf
@@ -93,9 +96,9 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
             echo '<td class="align-middle"><div class="progress">';
 
             if (json_decode($arr['departments'], true) > 0 && $arr_values_count[$arr['table_uuid']] > 0 ) {
-               echo '<div class="progress-bar" role="progressbar" style="width: ' . $arr_values_count[$arr['table_uuid']] . '%;" aria-valuenow="' . $arr_values_count[$arr['table_uuid']] . '%" aria-valuemin="0" aria-valuemax="100">' . $arr_values_count[$arr['table_uuid']] . '%</div>';
+               echo '<div class="progress-bar" role="progressbar" style="width: ' . $arr_values_count[$arr['table_uuid']] . '%;" aria-valuenow="' . $arr_values_count[$arr['table_uuid']] . '%" aria-valuemin="0" aria-valuemax="100">&nbsp' . $arr_values_count[$arr['table_uuid']] . '%</div>';
             } else {
-               echo '<div class="progress-bar-zero" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>';
+               echo '<div class="progress-bar-zero" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">&nbsp&nbsp&nbsp0%</div>';
             }
             echo '</div></td>';
 

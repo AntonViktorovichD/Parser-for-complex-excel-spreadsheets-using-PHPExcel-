@@ -39,8 +39,21 @@ class JsonController extends Controller {
                   }
                }
                $arr_values_count[$arr->table_uuid] = intval(round($counter / $arr_values_count[$arr->table_uuid], 2) * 100);
+            } else {
+               $counter = 0;
+               $report = DB::table('report_values')->where('table_uuid', $arr->table_uuid)->where('user_dep', $user_dep)->value('json_val');
+               if (isset($report)) {
+                  foreach (json_decode($report, true) as $item) {
+                     if (isset($item)) {
+                        $counter++;
+                     }
+                  }
+               }
+               $arr_values_count[$arr->table_uuid] = intval(round($counter / $arr->highest_column_index, 2) * 100);
             }
          }
+
+         var_dump($arr_values_count);
 
          return view('json', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role, 'table_user' => $user_names, 'pages' => $arrs, 'user_phones' => $user_phones, 'user_dep' => $user_dep, 'arr_values_count' => $arr_values_count]);
       } catch (QueryException $e) {
