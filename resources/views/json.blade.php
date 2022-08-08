@@ -52,20 +52,6 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
 @foreach ($arr as $key => $arr)
     @php
         $arr = (array)$arr;
-            $arr_deps = json_decode($arr['departments']);
-            $arr_uuids = $arr['table_uuid'];
-            $counter = 0;
-            foreach (array_slice($rv_ja, -count($arr_deps)) as $isset_arrs) {
-               if (!empty($isset_arrs)) {
-                  foreach ($isset_arrs as $isset_arr) {
-                     foreach ($isset_arr as $arr_is) {
-                        if (isset($arr)) {
-                           $counter++;
-                        }
-                     }
-                  }
-               }
-            }
             $pattern = '/^(\d{4})\-(\d{2})\-(\d{2}) (\d{2})\:(\d{2}):(\d{2})$/';
             $start = preg_match($pattern, $arr['created_at'], $matches);
             if ($start && !empty($matches)) {
@@ -89,7 +75,6 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
                $target_day = mktime($finish_hour, $finish_minute, $finish_second, $finish_month, $finish_day, $finish_year);
             }
             $finish_day = $finish_hour . ':' . $finish_minute . ' - ' . $finish_day . '.' . $finish_month . '.' . $finish_year;
-            $all_deps = (substr($counter / (count($rv_ja) * ((DB::table('tables')->where('table_uuid', '=', $arr_uuids)->first('highest_column_index')->highest_column_index) - 1)), 0, 4) * 100);
             echo '<tr>' . PHP_EOL;
             echo '<td class="align-middle"><span>' . $arr['id'] . '</span></td>';
             echo '<td class="align-middle"><span>' . $arr['table_name'] . '</span></td>';
@@ -106,8 +91,9 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
             }
 
             echo '<td class="align-middle"><div class="progress">';
-            if ($all_deps > 0) {
-               echo '<div class="progress-bar" role="progressbar" style="width: ' . intval($all_deps) . '%;" aria-valuenow="' . intval($all_deps) . '%" aria-valuemin="0" aria-valuemax="100">' . $all_deps . '%</div>';
+
+            if (json_decode($arr['departments'], true) > 0 && $arr_values_count[$arr['table_uuid']] > 0 ) {
+               echo '<div class="progress-bar" role="progressbar" style="width: ' . $arr_values_count[$arr['table_uuid']] . '%;" aria-valuenow="' . $arr_values_count[$arr['table_uuid']] . '%" aria-valuemin="0" aria-valuemax="100">' . $arr_values_count[$arr['table_uuid']] . '%</div>';
             } else {
                echo '<div class="progress-bar-zero" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>';
             }
