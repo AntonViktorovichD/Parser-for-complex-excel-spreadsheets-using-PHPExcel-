@@ -6,16 +6,17 @@
         border-collapse: collapse;
         border: 1px solid black;
     }
+
     th, td {
         border: 1px solid black;
         padding: 10px;
     }
+
     input {
         outline: none;
         border: none;
-        width: 100%;
-        height: 100%;
     }
+
     .btn {
         width: 100px;
         height: 35px;
@@ -29,6 +30,7 @@
         $colnum = 1;
     $arrCol = [];
     $sum =  json_decode($json_func,true);
+echo '<div class="container-flex">';
 echo '<form method="post" action="/user_upload">';
 @endphp
 @csrf
@@ -101,6 +103,7 @@ echo '<form method="post" action="/user_upload">';
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
     echo '</form>' . PHP_EOL;
+    echo '</div>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>';
 @endphp
 

@@ -129,30 +129,42 @@
         echo '</thead>';
         echo '<tbody>';
         foreach ($arrs as $key => $arr) {
+           if(in_array($user_dep, json_decode($arr['departments'], true)) ||$user_role == 1 || $user_role == 4) {
         if($arr['table_uuid'] != 'd7011723-8363-4c80-ba88-7e06ddb6856e') {
             echo '<tr id="tr" data-status="' . $arr['status'] . '">';
             if ($arr['periodicity'] == 1) {
-                echo '<td><a href="/admin_daily_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
+
+                if($user_role == 1 || $user_role == 4) {
+                                   echo '<td><a href="/admin_daily_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
                 echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
                 echo '<td style="text-align: center;">';
-                if($user_role == 1 || $user_role == 4) {
                 foreach ($arr['type'] as $type) {
                     echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
                 }
+                } else {
+                   echo '<td><a href="/daily_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
+                echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
+                echo '<td style="text-align: center;">';
                 }
                 echo '</td>';
             } elseif ($arr['periodicity'] == 2) {
-                echo '<td><a href="/admin_weekly_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
+
+                if($user_role == 1 || $user_role == 4) {
+                                   echo '<td><a href="/admin_weekly_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
                 echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
                 echo '<td style="text-align: center;">';
-                if($user_role == 1 || $user_role == 4) {
                 foreach ($arr['type'] as $type) {
                     echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
                 }
+                } else {
+                                       echo '<td><a href="/weekly_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
+                echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
+                echo '<td style="text-align: center;">';
                 }
                 echo '</td>';
             }
             echo '</tr>';
+        }
         }
         }
         echo '</tbody>';

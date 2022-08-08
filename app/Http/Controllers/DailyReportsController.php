@@ -85,7 +85,7 @@ class DailyReportsController extends Controller {
 
          $table_user = json_encode($user_names);
          $arr_rows = json_encode(DB::select('select * from report_values'));
-         return view('daily_reports', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role, 'table_user' => $table_user, 'pages' => $arrs]);
+         return view('daily_reports', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role, 'table_user' => $table_user, 'pages' => $arrs, 'user_dep' => $user_dep]);
       } catch (QueryException $e) {
          echo 'Ошибка: ' . $e->getMessage();
       }

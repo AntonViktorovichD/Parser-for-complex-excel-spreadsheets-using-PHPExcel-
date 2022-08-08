@@ -1,6 +1,7 @@
 @include('header')
 @include('layouts.menu')
 <style>
+
     table {
         border-collapse: collapse;
         border: 1px solid black;
@@ -36,6 +37,7 @@
         $arrNum = [];
         $arrKeyVal = [];
                 $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
+                echo '<div class="container-flex">';
         echo '<form method="post" action="/weekly_update">';
 @endphp
 @csrf
@@ -116,6 +118,7 @@
         echo '<input class="btn-submit-ae" type="submit">';
     }
     echo '</form>' . PHP_EOL;
+    echo '</div>' . PHP_EOL;
     echo '<a href="/export/' . $row_uuid . '">Экспорт</a>';
 @endphp
 {{--Adding values--}}
@@ -129,6 +132,7 @@
     $arrCol = [];
     $sum =  json_decode($json_func,true);
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
+     echo '<div class="container-flex">';
 echo '<form method="post" action="/weekly_upload">';
 @endphp
 @csrf
@@ -202,6 +206,7 @@ echo '<form method="post" action="/weekly_upload">';
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
     echo '</form>' . PHP_EOL;
+     echo '</div>';
     }
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
 @endphp
