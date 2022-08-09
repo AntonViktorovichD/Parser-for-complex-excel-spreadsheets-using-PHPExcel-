@@ -35,7 +35,8 @@
         $arrCol = [];
         $arrNum = [];
         $arrKeyVal = [];
-                $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
+        echo '<div class="container-flex">';
+        $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
         echo '<form method="post" action="/daily_update">';
 @endphp
 @csrf
@@ -117,6 +118,7 @@
     }
     echo '</form>' . PHP_EOL;
     echo '<a href="/export/' . $row_uuid . '">Экспорт</a>';
+       echo '</div>';
 @endphp
 {{--Adding values--}}
 @php
@@ -128,6 +130,7 @@
     $colnum = 1;
     $arrCol = [];
     $sum =  json_decode($json_func,true);
+    echo '<div class="container-flex">';
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
 echo '<form method="post" action="/daily_upload">';
 @endphp
@@ -204,6 +207,8 @@ echo '<form method="post" action="/daily_upload">';
     echo '</form>' . PHP_EOL;
     }
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
+        echo '</div>';
+
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>

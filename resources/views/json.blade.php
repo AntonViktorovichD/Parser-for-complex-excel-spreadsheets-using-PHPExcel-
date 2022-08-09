@@ -53,7 +53,7 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
           echo '</thead>' . PHP_EOL;
           echo '<tbody>' . PHP_EOL;
 @endphp
-@foreach ($arr as $key => $arr)
+@foreach ($arrs as $key => $arr)
     @php
         $arr = (array)$arr;
          if($user_role == 1 || $user_role == 4 || in_array($user_dep, json_decode($arr['departments'], true))){
@@ -142,7 +142,7 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
         echo '</div>' . PHP_EOL;
         echo '</div>' . PHP_EOL;
 @endphp
-{{ $pages->links() }}
+{{ $arrs->links() }}
 @include('layouts.footer')
 <script>
     document.addEventListener('click', function (e) {

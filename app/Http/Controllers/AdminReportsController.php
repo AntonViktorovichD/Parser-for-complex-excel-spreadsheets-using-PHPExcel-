@@ -19,11 +19,8 @@ class AdminReportsController extends Controller {
          $counter = 0;
          $user_role = Auth::user()->roles->first()->id;
          $user_id = Auth::id();
-         if ($user_role == 1 || $user_role == 4) {
-            $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->where('status', 0)->orWhere('status', 1)->orderBy('id', 'desc')->get();
-         } else {
-            $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->where('status', 0)->orderBy('id', 'desc')->get();
-         }
+         $arrs = DB::table('tables')->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->where('status', 0)->orWhere('status', 1)->orderBy('id', 'desc')->paginate(20);
+
          foreach ($arrs as $key => $arr) {
             $tables_arr[$arr->table_uuid]['departments'] = $arr->departments;
             $tables_arr[$arr->table_uuid]['periodicity'] = $arr->periodicity;
@@ -82,15 +79,15 @@ class AdminReportsController extends Controller {
             $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('name');
          }
 
-         $table_arr = json_decode($arrs, true);
+//         $table_arr =(array)$arrs;
 
-         foreach (json_decode($arrs, true) as $key => $arr) {
+         foreach ($arrs as $key => $arr) {
             foreach ($filled_arrs as $k => $fill) {
-               if ($arr['table_uuid'] == $k) {
+               if ($arr->table_uuid == $k) {
                   $table_arr[$key]['fill'] = $fill;
                }
             }
-            $depart = json_decode($arr['departments'], true);
+            $depart = json_decode($arr->departments, true);
             for ($i = 0; $i < count($depart); $i++) {
                if ($i == 0) {
                   $arr_orgs[$key][$i] = DB::table('org_helper')->where('id', $depart[$i])->value('depart_id');
@@ -109,11 +106,9 @@ class AdminReportsController extends Controller {
             $table_arr[$key]['type'] = array_unique(explode(', ', array_slice($arr_orgs[$key], 0, count($depart) - 1)[count($arr_orgs[$key]) - 2]));
          }
 
-         $arrs = json_encode($table_arr, JSON_UNESCAPED_UNICODE);
-
          $table_user = json_encode($user_names);
          $arr_rows = json_encode(DB::select('select * from report_values'));
-         return view('admin_reports', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => 'user_role', 'table_user' => $table_user, 'pages' => $arrs]);
+         return view('admin_reports', ['arrs' => $arrs, 'table_arr' => $table_arr, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => 'user_role', 'table_user' => $table_user, 'pages' => $arrs]);
       } catch (QueryException $e) {
          echo 'Ошибка: ' . $e->getMessage();
       }

@@ -18,7 +18,7 @@ class QuarterlyReportsController extends Controller {
          $arrs = DB::table('tables')->where('status', 0)->where('periodicity', '=', 4)->orWhere('periodicity', '=', 3)->orderBy('id', 'desc')->paginate(20);
          if ($user_role == 1 || $user_role == 4) {
             foreach (DB::table('tables')->orderBy('id', 'desc')->pluck('user_id') as $user) {
-               $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->first('name')->name;
+               $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('name');
             }
          }
 

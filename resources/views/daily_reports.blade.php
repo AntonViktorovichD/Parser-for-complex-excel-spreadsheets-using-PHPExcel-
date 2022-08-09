@@ -133,7 +133,7 @@
         @foreach ($pages as $key => $page)
             @php
                 if (in_array($user_dep, json_decode($page->departments, true)) || $user_role == 1 || $user_role == 4) {
-                   if ($page->table_uuid != 'd7011723-8363-4c80-ba88-7e06ddb6856e' && $page->table_uuid != '09fdb928-b36a-4c5b-8979-8c5e9a62fe63' && $page->table_uuid != '7cb61534-3de1-44c7-8869-092d69165a92' && $page->table_uuid != 'f337ab33-f5b8-4471-814d-fdcde751c9aa') {
+                   if ($page->table_uuid != 'd7011723-8363-4c80-ba88-7e06ddb6856e' && $page->table_uuid != '09fdb928-b36a-4c5b-8979-8c5e9a62fe63' && $page->table_uuid != '7cb61534-3de1-44c7-8869-092d69165a92' && $page->table_uuid != 'f337ab33-f5b8-4471-814d-fdcde751c9aa' && $page->table_uuid != 'a43be089-0281-4956-983e-82f477b56b83') {
                       echo '<tr id="tr" data-status="' . $page->status . '">';
                       if ($page->periodicity == 1) {
                          if ($user_role == 1 || $user_role == 4) {

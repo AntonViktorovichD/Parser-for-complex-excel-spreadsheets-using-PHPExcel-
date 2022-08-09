@@ -11,10 +11,17 @@
     .uk-navbar-nav {
         margin-left: 30px !important;
     }
+    .btn_pos {
+        position: relative !important;
+    }
+    .btn {
+        position: absolute !important;
+        bottom: 35px !important;
+    }
 </style>
 <div class="container px-5">
     <div class="row justify-content-between">
-    <div class="bg_info col-9">
+    <div class="bg_info btn_pos col-9">
         <div class="warning_text">
             <h2>ВНИМАНИЕ!</h2>
 

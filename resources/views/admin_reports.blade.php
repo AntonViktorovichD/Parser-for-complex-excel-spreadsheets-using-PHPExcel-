@@ -47,6 +47,7 @@
         background: #ffcdd2;
         width: auto !important;
     }
+
     [class*="uk-icon-"] {
         margin-top: 5px !important;
         font-family: FontAwesome;
@@ -58,10 +59,12 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
+
     .uk-icon-check-circle {
         font-size: 18px;
         color: #0088cc;
     }
+
     .uk-icon-times-circle {
         font-size: 18px;
         color: #e43d3c;
@@ -71,73 +74,80 @@
 <link rel="stylesheet" href="/css/arrayToJson.css">
 <div class="container-flex">
     <h1>Ежедневные отчеты (только для администраторов)</h1>
-@php
-    $arrs = json_decode($arr, true);
+    @php
+        $arr_orgs = [1 => ['uszn', 'У', 'Управления социальной защиты населения'],
+                     2 => ['cso', 'Ц', 'Центры социального обслуживания населения'],
+                     3 => ['stac', 'C', 'Учреждения стационарного типа'],
+                     4 => ['det', 'Д', 'Детские учреждении'],
+                     5 => ['othr', 'О', 'Остальные учреждения']];
 
-    $arr_orgs = [1 => ['uszn', 'У', 'Управления социальной защиты населения'],
-                 2 => ['cso', 'Ц', 'Центры социального обслуживания населения'],
-                 3 => ['stac', 'C', 'Учреждения стационарного типа'],
-                 4 => ['det', 'Д', 'Детские учреждении'],
-                 5 => ['othr', 'О', 'Остальные учреждения']];
-
-    echo '<table class="table table-striped">';
-    echo '<thead>';
-    echo '<tr>';
-    echo '<th>Отчет</th>';
-    echo '<th>Статус</th>';
-    echo '<th>Заполнения</th>';
-    echo '<th>Тип учреждений</th>';
-    echo '</tr>';
-    echo '</thead>';
-    echo '<tbody>';
-    foreach ($arrs as $key => $arr) {
-        echo '<tr id="tr" data-status="' . $arr['status'] . '">';
-        if ($arr['periodicity'] == 1) {
-            echo '<td><a href="/admin_daily_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
-            if ($arr['status'] == 1) {
-               echo '<td style="text-align: center;"><i class="uk-icon-times-circle" title="Не опубликован"></i></td>' . PHP_EOL;
-            } else {
-               echo '<td style="text-align: center;"><i class="uk-icon-check-circle" title="Опубликован"></i></td>' . PHP_EOL;
-            }
-            echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
-            echo '<td style="text-align: center;">';
-            foreach ($arr['type'] as $type) {
-                echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
-            }
-            echo '</td>';
-        } elseif ($arr['periodicity'] == 2) {
-            echo '<td><a href="/admin_weekly_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
-            if ($arr['status'] == 1) {
-               echo '<td style="text-align: center;"><i class="uk-icon-times-circle" title="Не опубликован"></i></td>' . PHP_EOL;
-            } else {
-               echo '<td style="text-align: center;"><i class="uk-icon-check-circle" title="Опубликован"></i></td>' . PHP_EOL;
-            }
-            echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
-            echo '<td style="text-align: center;">';
-            foreach ($arr['type'] as $type) {
-                echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
-            }
-            echo '</td>';
-        }
+        echo '<table class="table table-striped">';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>Отчет</th>';
+        echo '<th>Статус</th>';
+        echo '<th>Заполнения</th>';
+        echo '<th>Тип учреждений</th>';
         echo '</tr>';
-    }
-    echo '</tbody>';
-    echo '</table>';
-    echo '<h6>Справка по типам учреждений:</h6><br />';
-        foreach ($arr_orgs as $org) {
-        echo '<div class="align-self-center" style="margin-bottom: 10px;"><span  class="marker ' . $org[0] . '">' . $org[1] . '</span>' . $org[2] . '</span></div>';
-    }
-@endphp
-    <script>
-        window.onload = () => {
-            let del_tables = document.querySelectorAll('#tr');
-            for(let del_table of del_tables) {
-                if(del_table.dataset.status == 1) {
-                    del_table.classList.add('stat');
-                }
+        echo '</thead>';
+        echo '<tbody>';
+    @endphp
+    @foreach ($arrs as $key => $arr)
+        @php
+            if ($arr->table_uuid != 'd7011723-8363-4c80-ba88-7e06ddb6856e' && $arr->table_uuid != '09fdb928-b36a-4c5b-8979-8c5e9a62fe63' && $arr->table_uuid != '7cb61534-3de1-44c7-8869-092d69165a92' && $arr->table_uuid != 'f337ab33-f5b8-4471-814d-fdcde751c9aa' && $arr->table_uuid != 'a43be089-0281-4956-983e-82f477b56b83') {
+echo '<tr id="tr" data-status="' . $arr->status . '">';
+if ($arr->periodicity == 1) {
+  echo '<td><a href="/admin_daily_report/' . $arr->table_uuid . '/">' . $arr->table_name . '</a></td>' . PHP_EOL;
+  if ($arr->status == 1) {
+     echo '<td style="text-align: center;"><i class="uk-icon-times-circle" title="Не опубликован"></i></td>' . PHP_EOL;
+  } else {
+     echo '<td style="text-align: center;"><i class="uk-icon-check-circle" title="Опубликован"></i></td>' . PHP_EOL;
+  }
+  echo '<td style="text-align: center;">' . $table_arr[$key]['fill'] . '%</td>' . PHP_EOL;
+  echo '<td style="text-align: center;">';
+  foreach ($table_arr[$key]['type'] as $type) {
+      echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
+  }
+  echo '</td>';
+} elseif ($arr->periodicity == 2) {
+  echo '<td><a href="/admin_weekly_report/' . $arr->table_uuid . '/">' . $arr->table_name . '</a></td>' . PHP_EOL;
+  if ($arr->status == 1) {
+     echo '<td style="text-align: center;"><i class="uk-icon-times-circle" title="Не опубликован"></i></td>' . PHP_EOL;
+  } else {
+     echo '<td style="text-align: center;"><i class="uk-icon-check-circle" title="Опубликован"></i></td>' . PHP_EOL;
+  }
+  echo '<td style="text-align: center;">' . $table_arr[$key]['fill'] . '%</td>' . PHP_EOL;
+  echo '<td style="text-align: center;">';
+  foreach ($table_arr[$key]['type'] as $type) {
+      echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
+  }
+  echo '</td>';
+}
+echo '</tr>';
+echo '</tbody>';
+}
+        @endphp
+    @endforeach
+    @php
+        echo '</table>';
+             echo '<h6>Справка по типам учреждений:</h6><br />';
+                 foreach ($arr_orgs as $org) {
+                 echo '<div class="align-self-center" style="margin-bottom: 10px;"><span  class="marker ' . $org[0] . '">' . $org[1] . '</span>' . $org[2] . '</span></div>';
+                 }
+    @endphp
+
+</div>
+{{ $arrs->links() }}
+<script>
+    window.onload = () => {
+        let del_tables = document.querySelectorAll('#tr');
+        for (let del_table of del_tables) {
+            if (del_table.dataset.status == 1) {
+                del_table.classList.add('stat');
             }
         }
-    </script>
+    }
+</script>
 @include('layouts.footer')
 
 

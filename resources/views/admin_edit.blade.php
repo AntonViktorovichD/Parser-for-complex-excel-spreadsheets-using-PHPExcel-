@@ -42,7 +42,7 @@
     $arrCol = [];
     $arrNum = [];
     $arrKeyVal = [];
-
+    echo '<div class="container-flex">';
     echo '<form method="post" action="/admin_user_upgrade">';
 @endphp
 @csrf
@@ -124,7 +124,8 @@
     echo '</table>' . PHP_EOL;
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a href="/admin_export/' . $row_uuid . '">Экспорт</a>'
+    echo '<a href="/admin_export/' . $row_uuid . '">Экспорт</a>';
+    echo '</div>';
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
