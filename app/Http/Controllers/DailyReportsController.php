@@ -20,7 +20,8 @@ class DailyReportsController extends Controller {
          $user_role = Auth::user()->roles->first()->id;
          $user_id = Auth::id();
          $user_dep = DB::table('users')->where('id', $user_id)->value('department');
-         $arrs = DB::table('tables')->where('departments->' . $user_dep)->where('status', 0)->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->get();
+         $arrs = DB::table('tables')->where('departments->' . $user_dep)->where('status', 0)->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->paginate(20);
+         $pages = $arrs;
          foreach ($arrs as $key => $arr) {
             $tables_arr[$arr->table_uuid]['periodicity'] = $arr->periodicity;
             $tables_arr[$arr->table_uuid]['highest_column_index'] = $arr->highest_column_index;
@@ -50,13 +51,11 @@ class DailyReportsController extends Controller {
 
          if ($user_role == 1 || $user_role == 4) {
             foreach (DB::table('tables')->orderBy('id', 'desc')->pluck('user_id') as $user) {
-               $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->first('name')->name;
+               $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('name');
             }
          }
-
          $table_arr = json_decode($arrs, true);
-
-         foreach (json_decode($arrs, true) as $key => $arr) {
+         foreach (json_decode(json_encode($arrs, JSON_UNESCAPED_UNICODE), true)['data'] as $key => $arr) {
             foreach ($filled_arrs as $k => $fill) {
                if ($arr['table_uuid'] == $k) {
                   $table_arr[$key]['fill'] = $fill;
@@ -81,11 +80,11 @@ class DailyReportsController extends Controller {
             $table_arr[$key]['type'] = array_unique(explode(', ', array_slice($arr_orgs[$key], 0, count($depart) - 1)[count($arr_orgs[$key]) - 2]));
          }
 
-         $arrs = json_encode($table_arr, JSON_UNESCAPED_UNICODE);
+         $arr = json_encode($table_arr, JSON_UNESCAPED_UNICODE);
 
          $table_user = json_encode($user_names);
-         $arr_rows = json_encode(DB::select('select * from report_values'));
-         return view('daily_reports', ['arr' => $arrs, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role, 'table_user' => $table_user, 'pages' => $arrs, 'user_dep' => $user_dep]);
+         $arr_rows = json_encode(DB::table('report_values')->get(), JSON_UNESCAPED_UNICODE);
+         return view('daily_reports', ['arr' => $arr, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role, 'table_user' => $table_user, 'user_dep' => $user_dep, 'pages' => $pages]);
       } catch (QueryException $e) {
          echo 'Ошибка: ' . $e->getMessage();
       }

@@ -106,69 +106,67 @@
 </style>
 <link rel="stylesheet" href="/css/arrayToJson.css">
 <div class="container-flex">
-    <h1>Ежедневные отчеты (только для администраторов)</h1>
     @php
-
-        $arrs = json_decode($arr, true);
-
-        $arr_orgs = [1 => ['uszn', 'У', 'Управления социальной защиты населения'],
-                     2 => ['cso', 'Ц', 'Центры социального обслуживания населения'],
-                     3 => ['stac', 'C', 'Учреждения стационарного типа'],
-                     4 => ['det', 'Д', 'Детские учреждении'],
-                     5 => ['othr', 'О', 'Остальные учреждения']];
-
-        echo '<table class="table table-striped">';
-        echo '<thead>';
-        echo '<tr>';
-        echo '<th>Отчет</th>';
-        echo '<th>Заполнения</th>';
-        if($user_role == 1 || $user_role == 4) {
-           echo '<th>Тип учреждений</th>';
-        }
-        echo '</tr>';
-        echo '</thead>';
-        echo '<tbody>';
-        foreach ($arrs as $key => $arr) {
-           if(in_array($user_dep, json_decode($arr['departments'], true)) ||$user_role == 1 || $user_role == 4) {
-        if($arr['table_uuid'] != 'd7011723-8363-4c80-ba88-7e06ddb6856e') {
-            echo '<tr id="tr" data-status="' . $arr['status'] . '">';
-            if ($arr['periodicity'] == 1) {
-
-                if($user_role == 1 || $user_role == 4) {
-                                   echo '<td><a href="/admin_daily_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
-                echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
-                echo '<td style="text-align: center;">';
-                foreach ($arr['type'] as $type) {
-                    echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
+        $arr = json_decode($arr, true);
+    @endphp
+    <h1>Ежедневные отчеты</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Отчет</th>
+            <th>Заполнения</th>
+            @php
+                if ($user_role == 1 || $user_role == 4) {
+                echo '<th>Тип учреждений</th>';
                 }
-                } else {
-                   echo '<td><a href="/daily_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
-                echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
-                echo '<td style="text-align: center;">';
-                }
-                echo '</td>';
-            } elseif ($arr['periodicity'] == 2) {
+            @endphp
+        </tr>
+        </thead>
 
-                if($user_role == 1 || $user_role == 4) {
-                                   echo '<td><a href="/admin_weekly_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
-                echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
-                echo '<td style="text-align: center;">';
-                foreach ($arr['type'] as $type) {
-                    echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
-                }
-                } else {
-                                       echo '<td><a href="/weekly_report/' . $arr['table_uuid'] . '/">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
-                echo '<td style="text-align: center;">' . $arr['fill'] . '%</td>' . PHP_EOL;
-                echo '<td style="text-align: center;">';
-                }
-                echo '</td>';
-            }
-            echo '</tr>';
-        }
-        }
-        }
-        echo '</tbody>';
-        echo '</table>';
+        @foreach ($pages as $key => $page)
+            @php
+                if (in_array($user_dep, json_decode($page->departments, true)) || $user_role == 1 || $user_role == 4) {
+                   if ($page->table_uuid != 'd7011723-8363-4c80-ba88-7e06ddb6856e' || $page->table_uuid != '09fdb928-b36a-4c5b-8979-8c5e9a62fe63') {
+                      echo '<tr id="tr" data-status="' . $page->status . '">';
+                      if ($page->periodicity == 1) {
+                         if ($user_role == 1 || $user_role == 4) {
+                            echo '<td><a href="/admin_daily_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">';
+                            foreach ($page->type as $type) {
+                               echo '<div class="marker ' . $page_orgs[$type + 1][0] . '">' . $page_orgs[$type + 1][1] . '</div>';
+                            }
+                         } else {
+                            echo '<td><a href="/daily_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">';
+                         }
+                         echo '</td>';
+                      } elseif ($page->periodicity == 2) {
+
+                         if ($user_role == 1 || $user_role == 4) {
+                            echo '<td><a href="/admin_weekly_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">';
+                            foreach ($page->type as $type) {
+                               echo '<div class="marker ' . $page_orgs[$type + 1][0] . '">' . $page_orgs[$type + 1][1] . '</div>';
+                            }
+                         } else {
+                            echo '<td><a href="/weekly_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">';
+                         }
+                         echo '</td>';
+                      }
+                      echo '</tr>';
+                   }
+
+                  }
+            @endphp
+        @endforeach
+    </table>
+
+    @php
         if($user_role == 1 || $user_role == 4) {
         echo '<h6>Справка по типам учреждений:</h6><br />';
             foreach ($arr_orgs as $org) {
@@ -180,13 +178,17 @@
        echo '<ul class="list-group list-group-flush">';
        if($user_role == 1 || $user_role == 4) {
            echo '<li class="list-group-item"><a href="/admin_specialized_reports/d7011723-8363-4c80-ba88-7e06ddb6856e">Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания (учреждения социального обслуживания семьи и детей)</a></li>';
+           echo '<li class="list-group-item"><a href="/admin_specialized_reports/d7011723-8363-4c80-ba88-7e06ddb6856e">Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания (учреждения стационарного типа)</a></li>';
        } else {
           echo '<li class="list-group-item"><a href="/specialized_reports/d7011723-8363-4c80-ba88-7e06ddb6856e">Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания (учреждения социального обслуживания семьи и детей)</a></li>';
+          echo '<li class="list-group-item"><a href="/specialized_reports/d7011723-8363-4c80-ba88-7e06ddb6856e">Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания (учреждения стационарного типа)</a></li>';
        }
- echo '<li class="list-group-item">Dapibus ac facilisis in</li>';
- echo '</ul>';
+    echo '</ul>';
         echo '</div>';
     @endphp
+    {{ $pages->links() }}
+
+
     <script>
         window.onload = () => {
             let del_tables = document.querySelectorAll('#tr');

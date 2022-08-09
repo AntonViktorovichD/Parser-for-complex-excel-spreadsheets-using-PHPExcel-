@@ -79,7 +79,7 @@ class AdminReportsController extends Controller {
          }
 
          foreach (DB::table('tables')->orderBy('id', 'desc')->pluck('user_id') as $user) {
-            $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->first('name')->name;
+            $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('name');
          }
 
          $table_arr = json_decode($arrs, true);

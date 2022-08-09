@@ -121,7 +121,18 @@
     echo '</div>' . PHP_EOL;
     echo '<a href="/export/' . $row_uuid . '">Экспорт</a>';
 @endphp
+
+
+
+
+
 {{--Adding values--}}
+
+
+
+
+
+
 @php
     } else {
    $user_role = Auth::user()->roles->first()->id;
