@@ -79,8 +79,6 @@ class AdminReportsController extends Controller {
             $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('name');
          }
 
-//         $table_arr =(array)$arrs;
-
          foreach ($arrs as $key => $arr) {
             foreach ($filled_arrs as $k => $fill) {
                if ($arr->table_uuid == $k) {
@@ -105,7 +103,6 @@ class AdminReportsController extends Controller {
             }
             $table_arr[$key]['type'] = array_unique(explode(', ', array_slice($arr_orgs[$key], 0, count($depart) - 1)[count($arr_orgs[$key]) - 2]));
          }
-
          $table_user = json_encode($user_names);
          $arr_rows = json_encode(DB::select('select * from report_values'));
          return view('admin_reports', ['arrs' => $arrs, 'table_arr' => $table_arr, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => 'user_role', 'table_user' => $table_user, 'pages' => $arrs]);
