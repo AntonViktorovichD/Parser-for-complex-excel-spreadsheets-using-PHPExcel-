@@ -10,10 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class SpecializedReportsController extends Controller {
    public function spec_reps($table_uuid) {
+      $row_uuid = [];
+      $json_vals = [];
       $department = Auth::user()->department;
       date_default_timezone_set('Europe/Moscow');
       $table = DB::table('tables')->where('table_uuid', $table_uuid)->where('status', 0)->get();
-      $daily_reports = DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_dep', $department)->get();
+      $specialized_reports = DB::table('report_values')->where('table_uuid', 'd7011723-8363-4c80-ba88-7e06ddb6856e')->orWhere('table_uuid', '09fdb928-b36a-4c5b-8979-8c5e9a62fe63')->orWhere('table_uuid', '7cb61534-3de1-44c7-8869-092d69165a92')->orWhere('table_uuid', 'f337ab33-f5b8-4471-814d-fdcde751c9aa')->where('user_dep', $department)->get();
+      $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
       $date_reports = [];
       $json = $table[0]->json_val;
       $name = $table[0]->table_name;
@@ -57,19 +60,20 @@ class SpecializedReportsController extends Controller {
             }
          }
       }
-      if (empty($row_uuid)) {
-         $row_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
-      }
       $arrLR = array_combine($arrFirstRowKeys, $arrLastRowKeys);
       asort($arrLR);
       $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
-      if (count($daily_reports) > 0) {
-         $row_uuid = $daily_reports[0]->row_uuid;
-         $json_vals = $daily_reports[0]->json_val;
-         return view('spec_rep_edit', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department'));
-      } else {
-         return view('spec_rep', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department'));
+      foreach ($specialized_reports as $specialized_report) {
+         if (empty($specialized_report->row_uuid)) {
+            $row_uuid[$specialized_report->table_uuid][$specialized_report->user_dep][] = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
+         } else {
+            $row_uuid[$specialized_report->table_uuid][$specialized_report->user_dep][] = $specialized_report->row_uuid;
+         }
+         $json_vals[$specialized_report->table_uuid][$specialized_report->user_dep][] = $specialized_report->json_val;
       }
+      $row_uuid = json_encode($row_uuid, JSON_UNESCAPED_UNICODE);
+      $json_vals = json_encode($json_vals, JSON_UNESCAPED_UNICODE);
+      return view('spec_rep', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'dep_name'));
    }
 
    public function spec_reps_upload(Request $request) {

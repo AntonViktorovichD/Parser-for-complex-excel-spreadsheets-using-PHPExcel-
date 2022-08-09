@@ -37,7 +37,7 @@
     table {
         margin: 50px 0 !important;
         width: auto !important;
-        max-width: calc(100vw - 90px) !important;
+        max-width: calc(90vw - 90px) !important;
     }
 
     .uszn {
@@ -108,6 +108,13 @@
 <div class="container-flex">
     @php
         $arr = json_decode($arr, true);
+
+      $arr_orgs = [1 => ['uszn', 'У', 'Управления социальной защиты населения'],
+                     2 => ['cso', 'Ц', 'Центры социального обслуживания населения'],
+                     3 => ['stac', 'C', 'Учреждения стационарного типа'],
+                     4 => ['det', 'Д', 'Детские учреждении'],
+                     5 => ['othr', 'О', 'Остальные учреждения']];
+
     @endphp
     <h1>Ежедневные отчеты</h1>
     <table class="table">
@@ -126,15 +133,15 @@
         @foreach ($pages as $key => $page)
             @php
                 if (in_array($user_dep, json_decode($page->departments, true)) || $user_role == 1 || $user_role == 4) {
-                   if ($page->table_uuid != 'd7011723-8363-4c80-ba88-7e06ddb6856e' || $page->table_uuid != '09fdb928-b36a-4c5b-8979-8c5e9a62fe63') {
+                   if ($page->table_uuid != 'd7011723-8363-4c80-ba88-7e06ddb6856e' && $page->table_uuid != '09fdb928-b36a-4c5b-8979-8c5e9a62fe63' && $page->table_uuid != '7cb61534-3de1-44c7-8869-092d69165a92' && $page->table_uuid != 'f337ab33-f5b8-4471-814d-fdcde751c9aa') {
                       echo '<tr id="tr" data-status="' . $page->status . '">';
                       if ($page->periodicity == 1) {
                          if ($user_role == 1 || $user_role == 4) {
                             echo '<td><a href="/admin_daily_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">';
-                            foreach ($page->type as $type) {
-                               echo '<div class="marker ' . $page_orgs[$type + 1][0] . '">' . $page_orgs[$type + 1][1] . '</div>';
+                              foreach ($arr[$key]['type'] as $type) {
+                              echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
                             }
                          } else {
                             echo '<td><a href="/daily_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
@@ -148,8 +155,8 @@
                             echo '<td><a href="/admin_weekly_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">';
-                            foreach ($page->type as $type) {
-                               echo '<div class="marker ' . $page_orgs[$type + 1][0] . '">' . $page_orgs[$type + 1][1] . '</div>';
+                              foreach ($arr[$key]['type'] as $type) {
+                              echo '<div class="marker ' . $arr_orgs[$type + 1][0] . '">' . $arr_orgs[$type + 1][1] . '</div>';
                             }
                          } else {
                             echo '<td><a href="/weekly_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
@@ -178,10 +185,10 @@
        echo '<ul class="list-group list-group-flush">';
        if($user_role == 1 || $user_role == 4) {
            echo '<li class="list-group-item"><a href="/admin_specialized_reports/d7011723-8363-4c80-ba88-7e06ddb6856e">Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания (учреждения социального обслуживания семьи и детей)</a></li>';
-           echo '<li class="list-group-item"><a href="/admin_specialized_reports/d7011723-8363-4c80-ba88-7e06ddb6856e">Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания (учреждения стационарного типа)</a></li>';
+           echo '<li class="list-group-item"><a href="/admin_specialized_reports/7cb61534-3de1-44c7-8869-092d69165a92">Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания (учреждения стационарного типа)</a></li>';
        } else {
           echo '<li class="list-group-item"><a href="/specialized_reports/d7011723-8363-4c80-ba88-7e06ddb6856e">Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания (учреждения социального обслуживания семьи и детей)</a></li>';
-          echo '<li class="list-group-item"><a href="/specialized_reports/d7011723-8363-4c80-ba88-7e06ddb6856e">Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания (учреждения стационарного типа)</a></li>';
+          echo '<li class="list-group-item"><a href="/specialized_reports/7cb61534-3de1-44c7-8869-092d69165a92">Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания (учреждения стационарного типа)</a></li>';
        }
     echo '</ul>';
         echo '</div>';
