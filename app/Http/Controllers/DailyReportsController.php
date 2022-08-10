@@ -19,7 +19,7 @@ class DailyReportsController extends Controller {
          $counter = 0;
          $user_role = Auth::user()->roles->first()->id;
          $user_id = Auth::id();
-         $user_dep = DB::table('users')->where('id', $user_id)->value('department');
+         $user_dep = Auth::user()->department;
          $arrs = DB::table('tables')->where('departments->' . $user_dep)->where('status', 0)->where('periodicity', '=', 1)->orWhere('periodicity', '=', 2)->orderBy('id', 'desc')->paginate(20);
          $pages = $arrs;
          foreach ($arrs as $key => $arr) {

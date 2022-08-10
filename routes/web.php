@@ -102,7 +102,7 @@ Route::post('/user_upgrade', [UserUpgradeController::class, 'user_upgrade'])->mi
 
 use App\Http\Controllers\AdminUserUpgradeController;
 
-Route::post('/router', [AdminUserUpgradeController::class, 'admin_user_upgrade'])->middleware('checkAdmin');
+Route::post('/admin_user_upgrade', [AdminUserUpgradeController::class, 'admin_user_upgrade'])->middleware('checkAdmin');
 
 use App\Http\Controllers\ExportSheetController;
 

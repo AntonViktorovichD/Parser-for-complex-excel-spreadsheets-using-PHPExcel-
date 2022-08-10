@@ -22,6 +22,7 @@ class AdminUserUpgradeController extends Controller {
             $json_arr = [];
 
             $input = $request->except('_token', 'table_information');
+            var_dump($input);
             $table_info = array_chunk(explode(' + ', $request->input('table_information')), 6);
             $count = count($table_info);
             $arr_length = $table_info[0][5] - 1;
@@ -45,7 +46,7 @@ class AdminUserUpgradeController extends Controller {
                 echo '<pre>';
                 DB::table('report_values')->where('table_uuid', $table_uuid[$j])->where('row_uuid', $row_uuid[$j])->where('user_id', $user_id[$j])->update(['json_val' => $json_val, 'created_at' => $created_at]);
             }
-            return view('router', ['alert' => 'Запись успешно отредактирована', 'route' => 'json/']);
+//            return view('router', ['alert' => 'Запись успешно отредактирована', 'route' => 'json/']);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }

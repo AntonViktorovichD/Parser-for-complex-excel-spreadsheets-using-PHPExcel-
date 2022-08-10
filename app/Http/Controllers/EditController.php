@@ -19,14 +19,18 @@ class EditController extends Controller {
          $read_only = $table[0]->read_only;
          $json_func = $table[0]->json_func;
          $report_values = DB::table('report_values')->where('table_uuid', $table_uuid)->get();
+         $row_uuid = [];
          if (count($report_values) > 0) {
-            $row_uuid = $report_values[0]->row_uuid;
-            $user_id = $report_values[0]->user_id;
-            $user_dep = DB::table('users')->where('id', $user_id)->value('department');
-            $dep = DB::table('org_helper')->where('id', $user_dep)->value('title');
-            $json_vals = $report_values[0]->json_val;
+            $user_dep = [];
+            $dep = [];
+            foreach ($report_values as $key => $report_value) {
+               $row_uuid[$key] = $report_value->row_uuid;
+               $user_id[$key] = $report_value->user_id;
+               $user_dep[$key] = DB::table('users')->where('id', $user_id[$key])->value('department');
+               $dep[$key] = DB::table('org_helper')->where('id', $user_dep[$key])->value('title');
+               $json_vals = $report_values[0]->json_val;
+            }
          }
-
          $pattern = '';
          $reg_arr = [
             'v_text' => '[A-Za-zА-Яа-яЁё\s,.:;-]+',

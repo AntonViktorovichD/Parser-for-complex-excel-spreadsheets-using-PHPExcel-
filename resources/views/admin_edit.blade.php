@@ -36,12 +36,12 @@
     ksort($arrAddRow);
     $sum =  json_decode($json_func,true);
     $vals =  json_decode($json_vals,true);
-    $dep_name = DB::table('org_helper')->where('id', '=', $dep)->value('title');
     $values = json_decode($report_value, true);
     $colnum = 1;
     $arrCol = [];
     $arrNum = [];
     $arrKeyVal = [];
+    $table_info = [];
     echo '<div class="container-flex">';
     echo '<form method="post" action="/admin_user_upgrade">';
 @endphp
@@ -71,9 +71,11 @@
         $arrCol[$qw] = $colnum;
     }
     unset($arrCol[0]);
+    $counter = 0;
     foreach ($values as $count) {
         echo '<tr>' . PHP_EOL;
-        echo '<td>' . $dep . '</td>' . PHP_EOL;
+        echo '<td>' . $dep[$counter] . '</td>' . PHP_EOL;
+
         foreach ($sum as $key => $val) {
             if (isset($vals[$key])) {
                 if (isset($val)) {
@@ -116,15 +118,18 @@
                 echo '<td hidden></td>' . PHP_EOL;
             }
         }
-        echo '</tr>' . PHP_EOL;
+        echo '<br/>';
+        $table_info[$counter] = $name . ' + ' . $table_uuid . ' + ' . $row_uuid[$counter];
+    $counter++;
     }
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep;
-    echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
+
+    echo '<input type="hidden" name="table_information" value="' . json_encode($table_info, JSON_UNESCAPED_UNICODE) . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+        echo '<input class="btn-submit-ae" type="submit">';
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a href="/admin_export/' . $row_uuid . '">Экспорт</a>';
+    echo '<a href="/export/' . $table_uuid . '">Экспорт</a>';
     echo '</div>';
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
