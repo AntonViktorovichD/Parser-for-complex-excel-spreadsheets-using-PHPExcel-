@@ -24,7 +24,7 @@ class ExportSheetController extends Controller {
          $json_val = json_decode($table['json_val'], true);
          $table_name = $table['table_name'];
          $cells_arr = json_decode($table['json_markup'], true);
-         $funcs = $table['func_coords'];
+         $funcs = json_decode($table['func_coords'], true);
          $highest_row = $table['highest_row'];
 
          $xls = new PHPExcel();
@@ -64,14 +64,13 @@ class ExportSheetController extends Controller {
          foreach (array_combine($arrKeys, $report_values) as $k => $json_val) {
             $json_vals[$k . $highest_row] = $json_val;
          }
-
             foreach ($json_vals as $key => $val) {
-//                if (isset($funcs[$key])) {
-//                    $sheet->getStyle($key)->getNumberFormat()->setFormatCode('0%;-0%');
-//                    $sheet->setCellValue($key, $funcs[$key], PHPExcel_Cell_DataType::TYPE_NUMERIC);
-//                } else {
+                if (isset($funcs[$key])) {
+                    $sheet->getStyle($key)->getNumberFormat()->setFormatCode('0%;-0%');
+                    $sheet->setCellValue($key, $funcs[$key]);
+                } else {
                     $sheet->setCellValue($key, $val);
-//                }
+                }
                 $sheet->getStyle($key)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
                 $sheet->getStyle($key)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle($key)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
@@ -87,8 +86,7 @@ class ExportSheetController extends Controller {
          $objWriter = new PHPExcel_Writer_Excel2007($xls);
          $objWriter->save('php://output');
          exit();
-
-//         return view('router', ['alert' => 'Таблица успешно сохранена', 'route' => '/json']);
+         
       } catch (QueryException $e) {
          echo 'Ошибка: ' . $e->getMessage();
       }
