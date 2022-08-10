@@ -7,6 +7,7 @@
     }
 </style>
 <div class="container-flex">
+
     <h1>Справочник телефонов специалистов</h1>
     <table class="table table-striped table-borderless ">
         <thead>
@@ -15,18 +16,17 @@
             <th scope="col">Контактный телефон</th>
         </tr>
         </thead>
-        <tbody>
+        @foreach($elev_users as $key => $elev_user)
+            <tbody>
 
             @php
-                foreach($users as $user) {
-   echo '<tr>';
-                        echo '<td>' . $user[0]["name"] .'</td>';
-                     echo '<td>' . $user[0]["city_phone"] .'</td>';
+                echo '<tr>';
+             echo '<td>' . $users[$key][0]["name"] .'</td>';
+echo '<td>' . $users[$key][0]["city_phone"] .'</td>';
              echo '</tr>';
-}
             @endphp
-
-        </tbody>
+            </tbody>
+        @endforeach
     </table>
 </div>
 

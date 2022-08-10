@@ -11,6 +11,6 @@ class PhonesController extends Controller {
       foreach ($elev_users as $key => $elev_user) {
          $users[] = json_decode(DB::table('users')->where('id', $elev_user->model_id)->get(), true);
       }
-      return view('phones', ['users' => $users, 'elev_users' => $elev_users]);
+      return view('phones', compact('users', 'elev_users'));
    }
 }
