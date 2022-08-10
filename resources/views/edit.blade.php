@@ -108,12 +108,13 @@ echo '<div class="container-flex">';
         }
     }
     echo '</tr>' . PHP_EOL;
+
     $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     if ($read_only == 'disabled') {
-        echo '<input class="btn-submit-ae" type="submit">';
+        echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
     }
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';

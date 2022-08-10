@@ -57,6 +57,7 @@
         echo '</tr>' . PHP_EOL;
     }
     echo '</table>' . PHP_EOL;
+    echo '<a href="/export/' . $table_uuid . '">Экспорт</a>';
     echo '</div>';
 @endphp
 

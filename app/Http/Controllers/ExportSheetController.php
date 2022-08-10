@@ -16,18 +16,22 @@ class ExportSheetController extends Controller {
    public function export($table_uuid) {
       try {
          date_default_timezone_set('Europe/Moscow');
-
+         $departs = [];
          $date = date('d_m_Y');
          $table = json_decode(DB::table('tables')->where('table_uuid', $table_uuid)->where('status', 0)->get(), true)[0];
 
          $user_role = Auth::user()->roles->first()->id;
          if ($user_role == 2 || $user_role == 3) {
             $user_dep = Auth::user()->department;
+
             $report_values = json_decode(DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_dep', $user_dep)->value('json_val'), true);
          } else {
             $report_values = json_decode(DB::table('report_values')->where('table_uuid', $table_uuid)->pluck('json_val'), true);
+            $orgs = json_decode(DB::table('report_values')->where('table_uuid', $table_uuid)->pluck('user_dep'), true);
+            foreach ($orgs as $key => $org) {
+               $departs[$key] = DB::table('org_helper')->where('id', $org)->value('title');
+            }
          }
-
          $json_val = json_decode($table['json_val'], true);
          $table_name = $table['table_name'];
          $cells_arr = json_decode($table['json_markup'], true);
@@ -110,7 +114,21 @@ class ExportSheetController extends Controller {
                $sheet->getStyle($key)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
             }
          }
+         $sheet->insertNewColumnBefore('A', 1);
+         $merge = $highest_row - 1;
+         $sheet->mergeCells('A1:A' . $merge . '');
+         $sheet->setCellValue('A1', 'Учреждение');
+         $sheet->getStyle('A1:A' . $merge . '')->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
+         $sheet->getStyle('A1:A' . $merge . '')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+         $sheet->getStyle('A1:A' . $merge . '')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
+         foreach ($departs as $key => $depart) {
+            $row = $highest_row + $key;
+            $sheet->setCellValue('A' . $row . '', $depart);
+            $sheet->getStyle('A' . $row . '', $depart)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
+            $sheet->getStyle('A' . $row . '', $depart)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . $row . '', $depart)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+         }
          header("Expires: Mon, 1 Apr 1974 05:00:00 GMT");
          header("Last-Modified: " . date("D,d M YH:i:s"));
          header("Cache-Control: no-cache, must-revalidate");

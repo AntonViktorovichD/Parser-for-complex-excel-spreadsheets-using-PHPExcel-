@@ -18,9 +18,11 @@ class EditController extends Controller {
          $radio = $table[0]->radio;
          $read_only = $table[0]->read_only;
          $json_func = $table[0]->json_func;
-         $report_values = DB::table('report_values')->where('table_uuid', $table_uuid)->get();
-         $row_uuid = [];
-         if (count($report_values) > 0) {
+
+         $user_role = Auth::user()->roles->first()->id;
+         if ($user_role == 1 || $user_role == 4) {
+            $report_values = DB::table('report_values')->where('table_uuid', $table_uuid)->get();
+            $row_uuid = [];
             $user_dep = [];
             $dep = [];
             foreach ($report_values as $key => $report_value) {
@@ -30,6 +32,13 @@ class EditController extends Controller {
                $dep[$key] = DB::table('org_helper')->where('id', $user_dep[$key])->value('title');
                $json_vals = $report_values[0]->json_val;
             }
+         } else {
+            $report_values = DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_dep', Auth::user()->department)->get();
+            $row_uuid = $report_values[0]->row_uuid;
+            $user_id = Auth::user()->id;
+            $user_dep = DB::table('users')->where('id', $user_id)->value('department');
+            $dep = DB::table('org_helper')->where('id', Auth::user()->department)->value('title');
+            $json_vals = $report_values[0]->json_val;
          }
          $pattern = '';
          $reg_arr = [
