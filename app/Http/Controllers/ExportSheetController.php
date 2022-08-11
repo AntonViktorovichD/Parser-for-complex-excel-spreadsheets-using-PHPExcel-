@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PHPExcel;
 use PHPExcel_Style_Alignment;
 use PHPExcel_Style_Border;
 use PHPExcel_Worksheet_PageSetup;
 use PHPExcel_Writer_Excel2007;
-use Illuminate\Support\Facades\Auth;
 
 class ExportSheetController extends Controller {
    public function export($table_uuid) {
@@ -23,8 +23,8 @@ class ExportSheetController extends Controller {
          $user_role = Auth::user()->roles->first()->id;
          if ($user_role == 2 || $user_role == 3) {
             $user_dep = Auth::user()->department;
-
             $report_values = json_decode(DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_dep', $user_dep)->value('json_val'), true);
+            $departs[0] = DB::table('org_helper')->where('id', $user_dep)->value('title');
          } else {
             $report_values = json_decode(DB::table('report_values')->where('table_uuid', $table_uuid)->pluck('json_val'), true);
             $orgs = json_decode(DB::table('report_values')->where('table_uuid', $table_uuid)->pluck('user_dep'), true);
