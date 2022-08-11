@@ -16,18 +16,24 @@ class ExportSheetController extends Controller {
    public function export($table_uuid) {
       try {
          date_default_timezone_set('Europe/Moscow');
+         $path = preg_replace('#/' . $table_uuid . '#', '', preg_replace('#http://xn----jtbtwdc.xn--h1aakcdgusz.xn--p1ai/#', '', url()->current()));
          $departs = [];
          $date = date('d_m_Y');
          $table = json_decode(DB::table('tables')->where('table_uuid', $table_uuid)->where('status', 0)->get(), true)[0];
 
+         if ($path == 'quarterly_export') {
+            $rep_table = 'quarterly_reports';
+         } else {
+            $rep_table = 'report_values';
+         }
          $user_role = Auth::user()->roles->first()->id;
          if ($user_role == 2 || $user_role == 3) {
             $user_dep = Auth::user()->department;
-            $report_values = json_decode(DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_dep', $user_dep)->value('json_val'), true);
+            $report_values = json_decode(DB::table($rep_table)->where('table_uuid', $table_uuid)->where('user_dep', $user_dep)->value('json_val'), true);
             $departs[0] = DB::table('org_helper')->where('id', $user_dep)->value('title');
          } else {
-            $report_values = json_decode(DB::table('report_values')->where('table_uuid', $table_uuid)->pluck('json_val'), true);
-            $orgs = json_decode(DB::table('report_values')->where('table_uuid', $table_uuid)->pluck('user_dep'), true);
+            $report_values = json_decode(DB::table($rep_table)->where('table_uuid', $table_uuid)->pluck('json_val'), true);
+            $orgs = json_decode(DB::table($rep_table)->where('table_uuid', $table_uuid)->pluck('user_dep'), true);
             foreach ($orgs as $key => $org) {
                $departs[$key] = DB::table('org_helper')->where('id', $org)->value('title');
             }
@@ -67,67 +73,68 @@ class ExportSheetController extends Controller {
             $arrKeys[$k] = $i;
             $k++;
          }
+         if (isset($report_values)) {
+            $json_vals = [];
+            $arrKeys = array_slice($arrKeys, 0, $highest_column_index);
+            if ($user_role == 2 || $user_role == 3) {
 
-         $json_vals = [];
-         $arrKeys = array_slice($arrKeys, 0, $highest_column_index);
-         if ($user_role == 2 || $user_role == 3) {
-
-            foreach (array_combine($arrKeys, $report_values) as $k => $json_val) {
-               $json_vals[$k . $highest_row] = $json_val;
-            }
-            foreach ($json_vals as $key => $val) {
-               if (isset($funcs[$key])) {
-                  $sheet->getStyle($key)->getNumberFormat()->setFormatCode('0%;-0%');
-                  $sheet->setCellValue($key, $funcs[$key]);
-               } else {
-                  $sheet->setCellValue($key, $val);
+               foreach (array_combine($arrKeys, $report_values) as $k => $json_val) {
+                  $json_vals[$k . $highest_row] = $json_val;
                }
-               $sheet->getStyle($key)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
-               $sheet->getStyle($key)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-               $sheet->getStyle($key)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-            }
-         } else {
-            foreach ($report_values as $count => $report_value) {
-               foreach (array_combine($arrKeys, json_decode($report_value, true)) as $k => $json_val) {
-                  $row = $highest_row + $count;
-                  $json_vals[$k . $row] = $json_val;
+               foreach ($json_vals as $key => $val) {
+                  if (isset($funcs[$key])) {
+                     $sheet->getStyle($key)->getNumberFormat()->setFormatCode('0%;-0%');
+                     $sheet->setCellValue($key, $funcs[$key]);
+                  } else {
+                     $sheet->setCellValue($key, $val);
+                  }
+                  $sheet->getStyle($key)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
+                  $sheet->getStyle($key)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                  $sheet->getStyle($key)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+               }
+            } else {
+               foreach ($report_values as $count => $report_value) {
+                  foreach (array_combine($arrKeys, json_decode($report_value, true)) as $k => $json_val) {
+                     $row = $highest_row + $count;
+                     $json_vals[$k . $row] = $json_val;
+                  }
+
+               }
+               $func_i = [];
+               for ($i = 0; $i < count($funcs); $i++) {
+                  foreach ($funcs as $key => $func) {
+                     $row = $highest_row + $i;
+                     $func_i[preg_replace('#\d+#', '' . $row . '', $key)] = preg_replace('#\d+#', '' . $row . '', $func);
+                  }
                }
 
-            }
-            $func_i = [];
-            for ($i = 0; $i < count($funcs); $i++) {
-               foreach ($funcs as $key => $func) {
-                  $row = $highest_row + $i;
-                  $func_i[preg_replace('#\d+#', '' . $row . '', $key)] = preg_replace('#\d+#', '' . $row . '', $func);
+               foreach ($json_vals as $key => $val) {
+                  if (isset($func_i[$key])) {
+                     $sheet->getStyle($key)->getNumberFormat()->setFormatCode('0%;-0%');
+                     $sheet->setCellValue($key, $func_i[$key]);
+                  } else {
+                     $sheet->setCellValue($key, $val);
+                  }
+                  $sheet->getStyle($key)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
+                  $sheet->getStyle($key)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                  $sheet->getStyle($key)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
                }
             }
+            $sheet->insertNewColumnBefore('A', 1);
+            $merge = $highest_row - 1;
+            $sheet->mergeCells('A1:A' . $merge . '');
+            $sheet->setCellValue('A1', 'Учреждение');
+            $sheet->getStyle('A1:A' . $merge . '')->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
+            $sheet->getStyle('A1:A' . $merge . '')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A1:A' . $merge . '')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-            foreach ($json_vals as $key => $val) {
-               if (isset($func_i[$key])) {
-                  $sheet->getStyle($key)->getNumberFormat()->setFormatCode('0%;-0%');
-                  $sheet->setCellValue($key, $func_i[$key]);
-               } else {
-                  $sheet->setCellValue($key, $val);
-               }
-               $sheet->getStyle($key)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
-               $sheet->getStyle($key)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-               $sheet->getStyle($key)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+            foreach ($departs as $key => $depart) {
+               $row = $highest_row + $key;
+               $sheet->setCellValue('A' . $row . '', $depart);
+               $sheet->getStyle('A' . $row . '', $depart)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
+               $sheet->getStyle('A' . $row . '', $depart)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+               $sheet->getStyle('A' . $row . '', $depart)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
             }
-         }
-         $sheet->insertNewColumnBefore('A', 1);
-         $merge = $highest_row - 1;
-         $sheet->mergeCells('A1:A' . $merge . '');
-         $sheet->setCellValue('A1', 'Учреждение');
-         $sheet->getStyle('A1:A' . $merge . '')->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
-         $sheet->getStyle('A1:A' . $merge . '')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-         $sheet->getStyle('A1:A' . $merge . '')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-
-         foreach ($departs as $key => $depart) {
-            $row = $highest_row + $key;
-            $sheet->setCellValue('A' . $row . '', $depart);
-            $sheet->getStyle('A' . $row . '', $depart)->applyFromArray(array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN, 'color' => array('rgb' => '000000')))));
-            $sheet->getStyle('A' . $row . '', $depart)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $sheet->getStyle('A' . $row . '', $depart)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
          }
          header("Expires: Mon, 1 Apr 1974 05:00:00 GMT");
          header("Last-Modified: " . date("D,d M YH:i:s"));

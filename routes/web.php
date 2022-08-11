@@ -107,10 +107,7 @@ Route::post('/admin_user_upgrade', [AdminUserUpgradeController::class, 'admin_us
 use App\Http\Controllers\ExportSheetController;
 
 Route::get('/export/{name}', [ExportSheetController::class, 'export'])->middleware('auth');
-
-use App\Http\Controllers\AdminExportSheetController;
-
-Route::get('/admin_export/{name}', [AdminExportSheetController::class, 'admin_export'])->middleware('checkAdmin');
+Route::get('/quarterly_export/{name}', [ExportSheetController::class, 'export'])->middleware('auth');
 
 use App\Http\Controllers\SendUsersController;
 

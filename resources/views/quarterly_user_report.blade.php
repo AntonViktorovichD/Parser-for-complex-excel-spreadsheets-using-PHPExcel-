@@ -117,7 +117,7 @@
         echo '<input class="btn-submit-ae" type="submit">';
     }
     echo '</form>' . PHP_EOL;
-    echo '<a href="/export/' . $row_uuid . '">Экспорт</a>';
+    echo '<a href="/quarterly_export/' . $row_uuid . '">Экспорт</a>';
        echo '</div>';
 @endphp
 {{--Adding values--}}
@@ -206,6 +206,7 @@ echo '<form method="post" action="/daily_upload">';
     }
     echo '</form>' . PHP_EOL;
     }
+     echo '<a href="/quarterly_export/' . $table_uuid . '">Экспорт</a>';
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
         echo '</div>';
 

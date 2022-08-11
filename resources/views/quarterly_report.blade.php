@@ -34,6 +34,7 @@ echo '<tbody>';
     }
     echo '</tbody>';
     echo '</table>';
+
     echo '</div>';
     echo '</div>';
 @endphp
@@ -51,7 +52,7 @@ echo '<tbody>';
                     for (let k = i + 1; k <= arr.length; k++) {
                         document.getElementById(k).hidden = true;
                         for (let val of document.querySelectorAll('.qr_link')) {
-                            if(val.dataset.key == k) {
+                            if (val.dataset.key == k) {
                                 val.hidden = true;
                             }
                         }
@@ -60,11 +61,11 @@ echo '<tbody>';
             }
         }
 
-        if(date.getFullYear() == year.id) {
+        if (date.getFullYear() == year.id) {
             document.querySelectorAll('.quarter')[0].hidden = true;
             document.querySelectorAll('.quarter_th')[0].hidden = true;
-            for(let qr of document.querySelectorAll('.qr_link')) {
-                if(qr.dataset.key == 0) {
+            for (let qr of document.querySelectorAll('.qr_link')) {
+                if (qr.dataset.key == 0) {
                     qr.hidden = true;
                 }
             }
