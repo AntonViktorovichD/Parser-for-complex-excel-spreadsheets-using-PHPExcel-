@@ -166,7 +166,14 @@
                 } else {
                     cell = document.createElement('td');
                 }
+                cell.className = i;
                 parent.appendChild(cell);
+            }
+        }
+        for (let k = 1; k <= highest_column_index; k++) {
+            // console.log(document.getElementsByClassName(k));
+            if (document.getElementsByClassName(k)[0] !== undefined) {
+                 document.getElementsByClassName(k)[0].innerHTML = sum[k];
             }
         }
     }
