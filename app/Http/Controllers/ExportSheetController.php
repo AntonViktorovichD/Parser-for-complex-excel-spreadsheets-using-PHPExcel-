@@ -23,6 +23,12 @@ class ExportSheetController extends Controller {
 
          if ($path == 'quarterly_export') {
             $rep_table = 'quarterly_reports';
+         } elseif ($path == 'weekly_export') {
+            $rep_table = 'weekly_reports';
+         } elseif ($path == 'daily_export') {
+            $rep_table = 'daily_reports';
+         } elseif ($path == 'monthly_export') {
+            $rep_table = 'monthly_reports';
          } else {
             $rep_table = 'report_values';
          }

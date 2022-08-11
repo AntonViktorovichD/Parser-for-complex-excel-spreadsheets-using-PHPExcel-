@@ -24,19 +24,20 @@
     }
 </style>
 @php
-    if (isset($json_vals)) {
-        $user_id = Auth::user()->id;
-        $arrCell = json_decode($json, true);
-        $arrAddRow = array_flip(json_decode($addRowArr, true));
-        ksort($arrAddRow);
-        $sum =  json_decode($json_func,true);
-        $vals =  json_decode($json_vals,true);
-        $colnum = 1;
-        $arrCol = [];
-        $arrNum = [];
-        $arrKeyVal = [];
-                $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
-        echo '<form method="post" action="/monthly_update">';
+    echo '<div class="container">';
+        if (isset($json_vals)) {
+            $user_id = Auth::user()->id;
+            $arrCell = json_decode($json, true);
+            $arrAddRow = array_flip(json_decode($addRowArr, true));
+            ksort($arrAddRow);
+            $sum =  json_decode($json_func,true);
+            $vals =  json_decode($json_vals,true);
+            $colnum = 1;
+            $arrCol = [];
+            $arrNum = [];
+            $arrKeyVal = [];
+                    $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
+            echo '<form method="post" action="/monthly_update">';
 @endphp
 @csrf
 @php
@@ -116,11 +117,13 @@
         echo '<input class="btn-submit-ae" type="submit">';
     }
     echo '</form>' . PHP_EOL;
-    echo '<a href="/export/' . $row_uuid . '">Экспорт</a>';
+    echo '<a href="/monthly_export/' . $table_uuid . '">Экспорт</a>';
+    echo '</div">';
 @endphp
 {{--Adding values--}}
 @php
     } else {
+   echo '<div class="container">';
    $user_role = Auth::user()->roles->first()->id;
     $user_id = Auth::user()->id;
     $arrCell = json_decode($json, true);
@@ -202,6 +205,8 @@ echo '<form method="post" action="/monthly_upload">';
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
     echo '</form>' . PHP_EOL;
+        echo '<a href="/monthly_export/' . $table_uuid . '">Экспорт</a>';
+echo '</div">';
     }
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
 @endphp

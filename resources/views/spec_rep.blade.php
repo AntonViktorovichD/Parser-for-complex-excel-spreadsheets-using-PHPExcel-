@@ -133,6 +133,7 @@
         echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
     }
     echo '</form>' . PHP_EOL;
+    echo '<a href="/export/' . $table_uuid . '">Экспорт</a>';
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
 @endphp
@@ -237,6 +238,7 @@ echo '<form method="post" action="/spec_reps_upload">';
         echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
     }
     echo '</form>' . PHP_EOL;
+            echo '<a href="/export/' . $table_uuid . '">Экспорт</a>';
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
 @endphp

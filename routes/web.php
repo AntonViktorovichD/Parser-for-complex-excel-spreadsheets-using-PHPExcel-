@@ -108,6 +108,9 @@ use App\Http\Controllers\ExportSheetController;
 
 Route::get('/export/{name}', [ExportSheetController::class, 'export'])->middleware('auth');
 Route::get('/quarterly_export/{name}', [ExportSheetController::class, 'export'])->middleware('auth');
+Route::get('/weekly_export/{name}', [ExportSheetController::class, 'export'])->middleware('auth');
+Route::get('/daily_export/{name}', [ExportSheetController::class, 'export'])->middleware('auth');
+Route::get('/monthly_export/{name}', [ExportSheetController::class, 'export'])->middleware('auth');
 
 use App\Http\Controllers\SendUsersController;
 

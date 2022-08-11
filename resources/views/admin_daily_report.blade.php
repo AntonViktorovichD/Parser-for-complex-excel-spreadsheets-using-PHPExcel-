@@ -51,6 +51,7 @@
 @php
     $rowSpan = $highest_row - 1;
     $table = [];
+    echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table>' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
@@ -73,9 +74,10 @@
         $arrCol[$qw] = $colnum;
     }
     unset($arrCol[0]);
+    $counter = 0;
     foreach ($values as $count) {
         echo '<tr>' . PHP_EOL;
-        echo '<td>' . $dep . '</td>' . PHP_EOL;
+        echo '<td>' . $dep[$counter] . '</td>' . PHP_EOL;
         foreach ($sum as $key => $val) {
             if (isset($vals[$key])) {
                 if (isset($val)) {
@@ -91,7 +93,7 @@
                         echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
                     }
                 } else {
-                    echo '<td><input type="text"  id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+                    echo '<td><input type="text"  id="' . $key . '" pattern="' . $pattern . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
                 }
             } else {
                 if (isset($val)) {
@@ -107,7 +109,7 @@
                         echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
                     }
                 } else {
-                    echo '<td><input type="text"  id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                    echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
                 }
             }
         }
@@ -119,18 +121,32 @@
             }
         }
         echo '</tr>' . PHP_EOL;
+        $counter++;
     }
-    $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $user_dep;
+    $table_info = $name . ' + ' . $table_uuid;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+    echo '<br />' . PHP_EOL;
+    echo '</div>' . PHP_EOL;
     echo '<input class="btn-submit-ae" type="submit">';
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a href="/admin_export/' . $row_uuid . '">Экспорт</a>';
+    echo '<a href="/daily_export/' . $table_uuid . '">Экспорт таблицы</a>';
 echo '</div>';
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
-
+<script>
+    window.onload = () => {
+        let highest_column_index = <?php echo $highest_column_index ?>;
+        let sum = Array(highest_column_index + 1).fill(0);
+        for (let input of document.querySelectorAll('input')) {
+            if (input.type === 'text') {
+                sum[input.id] += Number(input.value);
+            }
+        }
+        
+    }
+</script>
 @include('layouts.footer')

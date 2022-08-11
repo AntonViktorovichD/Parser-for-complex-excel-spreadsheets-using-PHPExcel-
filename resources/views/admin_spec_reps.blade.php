@@ -126,7 +126,7 @@
     echo '<input class="btn-submit-ae" type="submit">';
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a href="/admin_export/' . $row_uuid . '">Экспорт</a>';
+    echo '<a href="/export/' . $table_uuid . '">Экспорт таблицы</a>';
 echo '</div>';
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
