@@ -172,10 +172,10 @@
             @endphp
         @endforeach
     </table>
-
+    {{ $pages->links() }}
     @php
         if($user_role == 1 || $user_role == 4) {
-        echo '<h6>Справка по типам учреждений:</h6><br />';
+        echo '<h6 style="margin-top: 50px !important;">Справка по типам учреждений:</h6><br />';
             foreach ($arr_orgs as $org) {
             echo '<div class="align-self-center" style="margin-bottom: 10px;"><span  class="marker ' . $org[0] . '">' . $org[1] . '</span>' . $org[2] . '</span></div>';
         }
@@ -193,7 +193,6 @@
     echo '</ul>';
         echo '</div>';
     @endphp
-    {{ $pages->links() }}
 
 
     <script>

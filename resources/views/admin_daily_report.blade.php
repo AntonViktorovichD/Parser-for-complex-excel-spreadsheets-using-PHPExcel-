@@ -1,6 +1,10 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
+    .sum {
+        width: 150px !important;
+    }
+
     .table-responsive {
         width: 100% !important
     }
@@ -22,11 +26,6 @@
         height: 100%;
         padding: 0 !important;
         margin: 0 !important;
-    }
-
-    .btn {
-        width: 100px;
-        height: 35px;
     }
 
     .regex {
@@ -133,49 +132,60 @@
     $table_info = $name . ' + ' . $table_uuid;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
-    echo '<tr id="parent">' . PHP_EOL;
+    echo '<tr id="parent" hidden>' . PHP_EOL;
     echo '<td >Сумма</td>' . PHP_EOL;
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     echo '<br />' . PHP_EOL;
-    echo '</div>' . PHP_EOL;
     //    echo '<input class="btn-submit-ae" type="submit">';
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a href="/daily_export/' . $table_uuid . '">Экспорт таблицы</a>';
-    echo '</div>';
 
+
+    echo '</div>';
+    echo '<button type="button" class="sum btn btn-outline-danger" style="margin-right:100px" id="sum">Сумма</button>';
+echo '<a href="/daily_export/' . $table_uuid . '">Экспорт таблицы</a>';
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
 <script>
     window.onload = () => {
         let highest_column_index = <?php echo $highest_column_index ?>;
-        let sum = Array(highest_column_index + 1).fill(0);
-        for (let input of document.querySelectorAll('input')) {
-            if (input.type === 'text') {
-                sum[input.id] += Number(input.value);
-            }
-        }
-        let parent = document.querySelector('#parent');
-        for (let i = 1; i < highest_column_index; i++) {
-            if (document.getElementById(i) !== null) {
-                if (document.getElementById(i).dataset.colspan > 0) {
-                    cell = document.createElement('td');
-                    cell.setAttribute('colspan', document.getElementById(i).dataset.colspan)
-                } else {
-                    cell = document.createElement('td');
+        let sum_btn = document.getElementById('sum');
+        sum_btn.addEventListener('click', e => {
+            if (document.getElementById('parent').hidden) {
+                alert('Внимание!!! Суммы в таблице и значения при автосумме в Excel могут отличаться. Отличие может возникнуть при сложении дробных чисел. Стоит учитывать, что Excel корректно суммирует числа, где разделитель запятая, мониторинг суммирует и выгружает с точкой.')
+                if (alert) {
+                    document.getElementById('parent').hidden = false;
+                    let sum = Array(highest_column_index + 1).fill(0);
+                    for (let input of document.querySelectorAll('input')) {
+                        if (input.type === 'text') {
+                            sum[input.id] += Number(input.value);
+                        }
+                    }
+                    let parent = document.querySelector('#parent');
+                    for (let i = 1; i < highest_column_index; i++) {
+                        if (document.getElementById(i) !== null) {
+                            if (document.getElementById(i).dataset.colspan > 0) {
+                                cell = document.createElement('td');
+                                cell.setAttribute('colspan', document.getElementById(i).dataset.colspan)
+                            } else {
+                                cell = document.createElement('td');
+                            }
+                            cell.className = i;
+                            parent.appendChild(cell);
+                        }
+                    }
+                    for (let k = 1; k <= highest_column_index; k++) {
+                        if (document.getElementsByClassName(k)[0] !== undefined) {
+                            document.getElementsByClassName(k)[0].innerHTML = sum[k].toFixed(2);
+                        }
+                    }
                 }
-                cell.className = i;
-                parent.appendChild(cell);
+            } else {
+                document.getElementById('parent').hidden = true;
             }
-        }
-        for (let k = 1; k <= highest_column_index; k++) {
-            // console.log(document.getElementsByClassName(k));
-            if (document.getElementsByClassName(k)[0] !== undefined) {
-                 document.getElementsByClassName(k)[0].innerHTML = sum[k];
-            }
-        }
+        })
     }
 </script>
 @include('layouts.footer')
