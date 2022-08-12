@@ -23,7 +23,7 @@ Route::get('/admin_reports', [AdminReportsController::class, 'admin_reports'])->
 use App\Http\Controllers\AdminDailyReportController;
 
 Route::get('/admin_daily_report/{name}', [AdminDailyReportController::class, 'admin_daily_report'])->middleware('checkAdmin');
-Route::post('/admin_daily_update', [AdminDailyReportController::class, 'admin_daily_update'])->middleware('checkAdmin');
+Route::post('/admin_daily_report_date', [AdminDailyReportController::class, 'admin_daily_report_date'])->middleware('checkAdmin');
 
 use App\Http\Controllers\AdminWeeklyReportController;
 

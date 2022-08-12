@@ -285,6 +285,7 @@
     //
     jQuery.datetimepicker.setLocale('ru');
     jQuery('#datetimepicker-s, #datetimepicker-f').datetimepicker({
+        dayOfWeekStart: 1,
         defaultDate: new Date(),
         timepicker: true,
         format: 'Y-m-d H:i:s',
