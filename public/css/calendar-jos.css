@@ -11,11 +11,11 @@ div.calendar {
 }
 
 .calendar, .calendar table {
-    border: 1px solid #cccccc;
+    /*border: 1px solid #cccccc;*/
     font-size: 11px;
     color: #000;
     cursor: default;
-    background: #efefef;
+    /*background: #efefef;*/
     font-family: arial,verdana,sans-serif;
 }
 

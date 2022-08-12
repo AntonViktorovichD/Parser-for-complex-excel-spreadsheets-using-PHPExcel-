@@ -5,6 +5,10 @@
 <script src="/js/jquery.datetimepicker.full.js"></script>
 <style>
 
+    a:hover {
+        color: #000000;
+    }
+
     .sum {
         width: 150px !important;
     }
@@ -24,8 +28,6 @@
     }
 
     input {
-        outline: none;
-        border: none;
         width: 100%;
         height: 100%;
         padding: 0 !important;
@@ -35,6 +37,51 @@
     .regex {
         border: none !important;
     }
+
+    input, button[type="button"], select {
+        border: 2px solid rgba(150, 150, 150, 0.15) !important;
+        outline: none !important;
+    }
+
+    .btn {
+        padding: 0 12px !important;
+        width: auto !important;
+        font-size: 14px;
+        height: 35px !important;
+        margin-top: -3px !important;
+    }
+
+    #datetimepicker {
+        width: 100px !important;
+        text-align: center;
+        margin-top: 30px !important;
+        height: 35px !important;
+        margin-right: 5px !important;
+    }
+
+    .export {
+        display: inline-block;
+        text-decoration: none;
+        outline: none !important;
+        font-size: 14px;
+        padding-top: 6px;
+        padding-left: 12px;
+        padding-right: 12px;
+        text-transform: uppercase;
+        border: 2px solid rgba(150, 150, 150, 0.15);
+        margin-right: 5px !important;
+        color: #000000;
+        height: 35px !important;
+    }
+
+    .btn-submit {
+        padding: 4px 12px !important;
+        text-transform : uppercase;
+        width: 200px !important;
+        font-size: 14px;
+        background-color: #ffffff;
+    }
+
 </style>
 @php
     date_default_timezone_set('Europe/Moscow');
@@ -58,7 +105,6 @@
 @endphp
 @csrf
 @php
-
     $rowSpan = $highest_row - 1;
     $table = [];
     echo '<div class="table-responsive">' . PHP_EOL;
@@ -144,12 +190,12 @@
     echo '<br />' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
     echo '</div>';
-    echo '<button type="button" class="sum btn btn-outline-danger" style="margin-right:100px" id="sum">Сумма</button>';
-    echo '<input name="created_at" id="datetimepicker" style="width:100px; text-align:center;" placeholder="' . date('d.m.Y') . '"';
-      echo '<a href="/daily_export/' . $table_uuid . ' ">Экспорт таблицы</a>';
-      echo '<input class="btn-submit-ae" type="submit" value="Выгрузить данные">';
+    echo '<button type="button" class="sum btn btn-outline-danger" style="margin-right:5px" id="sum"><i class="fa fa-calculator" aria-hidden="true"></i></button>';
+    echo '<a class="export" href="/daily_export/' . $table_uuid . ' ">Экспорт таблицы</a>';
+    echo '<span class="calendar"><input name="created_at" id="datetimepicker" placeholder="' . date('d.m.Y') . '"></span>';
+     echo '<input class="btn-submit" type="submit" value="Выгрузить данные">';
       echo '</form>' . PHP_EOL;
-
+ echo '</div>' . PHP_EOL;
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>

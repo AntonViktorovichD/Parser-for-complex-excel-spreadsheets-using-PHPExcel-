@@ -228,6 +228,7 @@ label, input, button, select, textarea {
     font-size: 14px;
     font-weight: normal;
     line-height: 24px;
+    outline: none !important;
     /*margin-left: 20px !important;*/
 }
 
