@@ -3,12 +3,10 @@
 <style>
     table {
         border-collapse: collapse;
-        border: 1px solid black;
     }
 
-    th, td {
+    .table tr, .table th, .table td {
         border: 1px solid black;
-        padding: 10px;
     }
 
     input {
@@ -18,31 +16,63 @@
         height: 100%;
     }
 
-    .btn {
-        width: 100px;
+    .btn_back {
         height: 35px;
+        margin-top: 100px;
+        margin-bottom: 20px;
+    }
+
+    .colors .colorcell {
+        width: 25px !important;
+        height: 25px !important;
+    }
+
+    .colors {
+        margin-bottom: 50px !important;
     }
 </style>
 @php
-echo '<div class="container-flex">';
-    $user_id = Auth::user()->id;
-    $arrCell = json_decode($json, true);
-    $arrAddRow = array_flip(json_decode($addRowArr, true));
-    ksort($arrAddRow);
-    $sum =  json_decode($json_func,true);
-    $vals =  json_decode($json_vals,true);
-    $values = json_decode($report_value, true);
-    $colnum = 1;
-    $arrCol = [];
-    $arrNum = [];
-    $arrKeyVal = [];
-    echo '<form method="post" action="/user_upgrade">';
+    echo '<div class="container-flex">';
+
+        $user_id = Auth::user()->id;
+        $arrCell = json_decode($json, true);
+        $arrAddRow = array_flip(json_decode($addRowArr, true));
+        ksort($arrAddRow);
+        $sum =  json_decode($json_func,true);
+        $vals =  json_decode($json_vals,true);
+        $values = json_decode($report_value, true);
+        $colnum = 1;
+        $arrCol = [];
+        $arrNum = [];
+        $arrKeyVal = [];
+            echo '<a href="/json" class=" btn_back btn btn_mon btn-outline-danger">Вернуться к списку таблиц</a>';
+    echo '<table class="colors">';
+        echo '<tbody><tr>';
+            echo '<td class="red_cell colorcell"></td>';
+            echo '<td>- Нет данных</td>';
+        echo '</tr>';
+        echo '<tr>';
+            echo '<td class="gray_cell colorcell"></td>';
+            echo '<td>- Данные частично заполнены</td>';
+        echo '</tr>';
+        echo '<tr>';
+            echo '<td class="blue_cell colorcell"></td>';
+            echo '<td>- Данные полностью заполнены</td>';
+        echo '</tr>';
+        echo '<tr>';
+            echo '<td class="lightblue_cell colorcell"></td>';
+            echo '<td>- Данные приняты</td>';
+        echo '</tr>';
+    echo '</tbody>';
+    echo '</table>';
+        echo '<form method="post" action="/user_upgrade">';
 @endphp
 @csrf
 @php
+
     $rowSpan = $highest_row - 1;
 echo '<div class="table-responsive">' . PHP_EOL;
-    echo '<table>' . PHP_EOL;
+    echo '<table class="table">' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
     echo '</tr>';

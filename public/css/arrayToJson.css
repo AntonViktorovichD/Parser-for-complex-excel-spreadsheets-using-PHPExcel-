@@ -1,13 +1,10 @@
 .envelope {
-    margin-left: 30px;
     margin-top: 20px;
 }
 
 a, a:hover, a:active, span {
     text-decoration: none;
-    font-size: 17px;
     color: black;
-    /*margin-bottom: 10px;*/
 }
 
 table {
@@ -49,7 +46,8 @@ table tbody tr:hover {
 }
 
 [data-change='disabled'] {
-    border: 2px solid green;
+    border: 2px solid #0088cc;
+
 }
 
 [data-change='enabled'] {
@@ -57,12 +55,12 @@ table tbody tr:hover {
 }
 
 [data-change='disabled']:hover {
-    background: green !important;
-    border: 2px solid green;
+    background: #0088cc !important;
+    border: 2px solid #0088cc;
 }
 
 progress[value]::-webkit-progress-value, progress[value]::-moz-progress-bar {
-    background: #e43d3c;
+    background: #0088cc;
 }
 
 .pagination {
@@ -74,15 +72,15 @@ progress[value]::-webkit-progress-value, progress[value]::-moz-progress-bar {
 }
 
 .progress {
-    width: 150px;
-    height: 20px !important;
+    width: 150px !important;
 }
 
 .progress-bar {
-    background: #e43d3c;
+    background: #0088cc;
 }
 
 .progress-bar-zero {
-    background: #e43d3c;
+    background: #0088cc;
     color: black;
+    text-align: center !important;
 }

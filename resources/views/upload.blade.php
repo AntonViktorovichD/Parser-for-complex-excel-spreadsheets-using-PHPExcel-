@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="/css/jquery.datetimepicker.min.css">
 <script src="/js/jquery.js"></script>
 <script src="/js/jquery.datetimepicker.full.js"></script>
-<div class="container-flex px-4 ">
+<div class="container-flex">
     <h1 class="title_h1">Создание запроса данных</h1>
     {{ $ulerror }}
     <form method="post" id="form" action="/ul" enctype="multipart/form-data">
@@ -69,7 +69,7 @@
             }
             echo '<input type="radio" name="reg_func" value="v_text">&nbsp Текст';
             echo '<input type="radio" name="reg_func" value="v_int">&nbsp Целые числа';
-            echo '<input type="radio" name="reg_func" value="v_float">&nbsp Числа с плавающим разделителем';
+            echo '<input type="radio" name="reg_func" value="v_float">&nbsp Числа с плавающей точкой';
             echo '<input type="radio" name="reg_func" value="v_all">&nbsp Текст и числа';
             echo '<div class="row  row_info">';
             echo '<div class="col-1 text-nowrap info_headers">';

@@ -10,10 +10,7 @@
     .title {
         margin-bottom: 30px;
         font-size: 20px;
-    }
-
-    table {
-        width: auto !important;
+        text-align: center !important;
     }
 
 </style>
@@ -21,7 +18,7 @@
 <div class="container-flex">
     <h1>Квартальный отчёт</h1>
     <legend class="legend">СПИСОК КВАРТАЛЬНЫХ ОТЧЕТОВ</legend>
-    <h5 class="title" style="margin-left: 30%">Название квартального отчета</h5>
+    <h5 class="title">Название квартального отчета</h5>
 @php
     $arrs = json_decode($arr, true);
 

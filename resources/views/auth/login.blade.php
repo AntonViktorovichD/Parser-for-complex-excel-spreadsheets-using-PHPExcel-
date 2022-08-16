@@ -90,6 +90,7 @@
     .btn {
         margin-top: 50px !important;
         margin-bottom: 30px !important;
+        width: 90px !important;
     }
 </style>
 <body class="header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden login-page">

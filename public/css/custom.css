@@ -1,3 +1,7 @@
+a {
+    text-decoration: none !important;
+}
+
 @font-face {
     font-family: "Fa-solid-900";
     src: url("../fonts/fa-solid-900.woff2") format("truetype");
@@ -141,7 +145,6 @@ table.dataTable thead .sorting_desc {
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
     padding: 4px 12px !important;
-    max-width: 100px !important;
     color: black !important;
     border: 2px solid #e43d3c !important;
 }

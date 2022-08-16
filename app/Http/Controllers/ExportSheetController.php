@@ -87,6 +87,10 @@ class ExportSheetController extends Controller {
             $arrKeys = array_slice($arrKeys, 0, $highest_column_index);
             if ($user_role == 2 || $user_role == 3) {
 
+              foreach ($report_values as $value) {
+                 var_dump($value);
+              }
+
                foreach (array_combine($arrKeys, $report_values) as $k => $json_val) {
                   $json_vals[$k . $highest_row] = $json_val;
                }
