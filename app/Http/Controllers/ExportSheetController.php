@@ -15,6 +15,9 @@ use PHPExcel_Writer_Excel2007;
 class ExportSheetController extends Controller {
    public function export($table_uuid) {
       try {
+         if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
          date_default_timezone_set('Europe/Moscow');
          $path = preg_replace('#/' . $table_uuid . '#', '', preg_replace('#http://xn----jtbtwdc.xn--h1aakcdgusz.xn--p1ai/#', '', url()->current()));
          $departs = [];

@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\DB;
 class JsonController extends Controller {
    public function arrayToJson() {
       try {
+         if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
          $user_role = Auth::user()->roles->first()->id;
          $user_names = [];
          $user_phones = [];
@@ -60,6 +63,9 @@ class JsonController extends Controller {
    }
 
    public function tables($table_uuid) {
+           if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
       $table = DB::table('tables')->where('status', 0)->where('table_uuid', $table_uuid)->get();
       $json = $table[0]->json_val;
       $highest_column_index = $table[0]->highest_column_index;
@@ -69,6 +75,9 @@ class JsonController extends Controller {
    }
 
    public function handler(Request $request) {
+           if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
       DB::table('tables')->where('table_uuid', '=', $request->target)->update(['read_only' => $request->changer]);
    }
 }

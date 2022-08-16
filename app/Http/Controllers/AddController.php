@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 class AddController extends Controller {
     public function add($table_uuid) {
         try {
+           if(empty(Auth::id())) {
+              return redirect()->route('login');
+           }
             DB::connection()->getPdo();
             $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
             $json = $table[0]->json_val;

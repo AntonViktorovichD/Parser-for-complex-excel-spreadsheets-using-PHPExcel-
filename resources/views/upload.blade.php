@@ -67,10 +67,10 @@
             } else {
                echo '<input type="hidden" name="periodicity" value="0">';
             }
-            echo '<input type="radio" name="reg_func" value="v_text">&nbsp text';
-            echo '<input type="radio" name="reg_func" value="v_int">&nbsp int';
-            echo '<input type="radio" name="reg_func" value="v_float">&nbsp float';
-            echo '<input type="radio" name="reg_func" value="v_all">&nbsp all';
+            echo '<input type="radio" name="reg_func" value="v_text">&nbsp Текст';
+            echo '<input type="radio" name="reg_func" value="v_int">&nbsp Целые числа';
+            echo '<input type="radio" name="reg_func" value="v_float">&nbsp Числа с плавающим разделителем';
+            echo '<input type="radio" name="reg_func" value="v_all">&nbsp Текст и числа';
             echo '<div class="row  row_info">';
             echo '<div class="col-1 text-nowrap info_headers">';
             echo '<label for="created_at">

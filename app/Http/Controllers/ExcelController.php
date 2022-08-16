@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +17,9 @@ use function Symfony\Component\String\b;
 class ExcelController extends Controller {
 
     public function excelToArray() {
+       if(empty(Auth::id())) {
+          return redirect()->route('login');
+       }
         try {
             date_default_timezone_set('Europe/Moscow');
             $excel = PHPExcel_IOFactory::load(base_path() . $filename);

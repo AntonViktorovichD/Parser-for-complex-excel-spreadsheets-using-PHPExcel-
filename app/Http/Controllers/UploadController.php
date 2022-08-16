@@ -14,6 +14,9 @@ use PHPExcel_IOFactory;
 class UploadController extends Controller {
 
    public function form() {
+      if (empty(Auth::id())) {
+         return redirect()->route('login');
+      }
       if (Auth::user()->getRoleNames()[0] != 'user') {
          return view('upload', ['ulerror' => '']);
       } else {
@@ -22,6 +25,9 @@ class UploadController extends Controller {
    }
 
    public function upload(Request $request) {
+      if (empty(Auth::id())) {
+         return redirect()->route('login');
+      }
 
       date_default_timezone_set('Europe/Moscow');
       $date = date('Y_m_d_H_i_s_');

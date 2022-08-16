@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 class DailyReportsController extends Controller {
    public function daily_reports() {
       try {
+         if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
          $user_names = [];
          $tables_arr = [];
          $fill_arrs = [];

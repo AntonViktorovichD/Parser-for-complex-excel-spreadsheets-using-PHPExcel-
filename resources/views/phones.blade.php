@@ -16,17 +16,14 @@
             <th scope="col">Контактный телефон</th>
         </tr>
         </thead>
+        <tbody>
         @foreach($elev_users as $key => $elev_user)
-            <tbody>
-
-            @php
-                echo '<tr>';
-             echo '<td>' . $users[$key][0]["name"] .'</td>';
-echo '<td>' . $users[$key][0]["city_phone"] .'</td>';
-             echo '</tr>';
-            @endphp
-            </tbody>
+            <tr>
+                <td>{{$users[$key][0]["name"]}}</td>
+                <td>{{$users[$key][0]["city_phone"]}}</td>
+            </tr>
         @endforeach
+        </tbody>
     </table>
 </div>
 

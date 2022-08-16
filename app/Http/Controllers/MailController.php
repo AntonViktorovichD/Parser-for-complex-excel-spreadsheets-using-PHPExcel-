@@ -6,11 +6,15 @@ use App\Mail\Email;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller {
     public function send_mail(Request $request) {
+       if(empty(Auth::id())) {
+          return redirect()->route('login');
+       }
         date_default_timezone_set('Europe/Moscow');
         try {
             $notification_rights = DB::table('notification_rights')->where('id', 1)->get()[0];

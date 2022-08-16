@@ -48,6 +48,7 @@
     echo '<h5 class="text-center text-wrap"> Отчет об осуществлении выплат стимулирующего характера за особые условия труда и дополнительную нагрузку работникам стационарных организаций социального обслуживания, стационарных отделений, созданных не в стационарных организациях социального обслуживания </h5>';
     echo '<h6 class="text-center text-wrap" style="margin-top: 30px;">Таблица 1 (размеры выплат в случае невыявленния новой коронавирусной инфекции) </h5>';
     echo '<h5 class="text-center text-wrap" style="color: red; margin: 30px 0;"> данные вносятся с нарастающим итогом </h5>';
+   echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table>' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
@@ -75,6 +76,7 @@
         echo '</tr>' . PHP_EOL;
     }
     echo '</table>' . PHP_EOL;
+    echo '</div>';
     echo '</div>';
 @endphp
 

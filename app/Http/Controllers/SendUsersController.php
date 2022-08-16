@@ -9,6 +9,9 @@ use Illuminate\Database\QueryException;
 
 class SendUsersController extends Controller {
     public function send() {
+                if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
         try {
             $orgs = json_decode(DB::table('org_helper')->orderBy('distr_id', 'asc')->orderBy('depart_id', 'asc')->get(), true);
             $districts = DB::table('distr_helper')->orderBy('id', 'asc')->get();
@@ -32,6 +35,9 @@ class SendUsersController extends Controller {
     }
 
     public function get_options(Request $request) {
+                if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
         try {
             $arr_checked = [];
             $alinements = $request->except('_token', 'global_email', 'global_sms', 'global_time');

@@ -21,6 +21,7 @@ class HomeController extends Controller {
         $counter = 0;
         $user_role = Auth::user()->roles->first()->id;
 
+
         $user_id = Auth::id();
 //        if ($user_role == 3) {
             $user_dep = DB::table('users')->where('id', $user_id)->value('department');

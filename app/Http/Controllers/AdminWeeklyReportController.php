@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests;
-use Illuminate\Http\Request;
 
 class AdminWeeklyReportController extends Controller {
    public function admin_weekly_report($table_uuid) {
       try {
+         if (empty(Auth::id())) {
+            return redirect()->route('login');
+         }
          $table = DB::table('tables')->where('table_uuid', $table_uuid)->where('status', 0)->get();
          $json = $table[0]->json_val;
          $name = $table[0]->table_name;
@@ -89,6 +92,9 @@ class AdminWeeklyReportController extends Controller {
    }
 
    public function admin_weekly_update(Request $request) {
+      if (empty(Auth::id())) {
+         return redirect()->route('login');
+      }
       date_default_timezone_set('Europe/Moscow');
       $created_at = date('Y-m-d, H:i:s');
       try {

@@ -52,6 +52,7 @@
 @php
     $rowSpan = $highest_row - 1;
     $table = [];
+    echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table>' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
@@ -125,10 +126,10 @@
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
-    echo '<input class="btn-submit-ae" type="submit">';
+    echo '</div>' . PHP_EOL;
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a href="/export/' . $table_uuid . '">Экспорт таблицы</a>';
+    echo '<a class="export" href="/export/' . $table_uuid . '">Экспорт таблицы</a>';
 echo '</div>' . PHP_EOL;
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>

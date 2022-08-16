@@ -45,6 +45,7 @@
     $rowSpan = $highest_row - 1;
     $table = [];
     echo '<div class="container-flex">';
+    echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table>' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
@@ -57,7 +58,8 @@
         echo '</tr>' . PHP_EOL;
     }
     echo '</table>' . PHP_EOL;
-    echo '<a href="/export/' . $table_uuid . '">Экспорт таблицы</a>';
+    echo '</div>' . PHP_EOL;
+    echo '<a  class="export" href="/export/' . $table_uuid . '">Экспорт таблицы</a>';
     echo '</div>';
 @endphp
 

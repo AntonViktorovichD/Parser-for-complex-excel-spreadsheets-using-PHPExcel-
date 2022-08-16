@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 class AdminSpecializedReportsController extends Controller {
    public function admin_spec_reps_view($table_uuid) {
       try {
+         if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
          $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
          $json = $table[0]->json_val;
          $name = $table[0]->table_name;

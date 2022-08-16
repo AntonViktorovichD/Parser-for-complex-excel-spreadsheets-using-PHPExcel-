@@ -42,6 +42,7 @@
 @csrf
 @php
     $rowSpan = $highest_row - 1;
+echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table>' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
@@ -113,6 +114,7 @@
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+    echo '</div>' . PHP_EOL;
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="submit">';
     }
@@ -137,6 +139,7 @@ echo '<form method="post" action="/monthly_upload">';
 @csrf
 @php
     $rowSpan = $highest_row - 1;
+echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table>' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
@@ -201,11 +204,12 @@ echo '<form method="post" action="/monthly_upload">';
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+    echo '</div>' . PHP_EOL;
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
     echo '</form>' . PHP_EOL;
-        echo '<a href="/monthly_export/' . $table_uuid . '">Экспорт</a>';
+        echo '<a class="export" href="/monthly_export/' . $table_uuid . '">Экспорт</a>';
 echo '</div">';
     }
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;

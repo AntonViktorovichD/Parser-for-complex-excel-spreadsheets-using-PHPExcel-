@@ -118,10 +118,10 @@
         echo '<br />' . PHP_EOL;
     echo '</div>' . PHP_EOL;
     if ($read_only == 'disabled') {
-        echo '<input class="btn-submit-ae" type="submit">';
+        echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
     }
     echo '</form>' . PHP_EOL;
-        echo '<a href="/daily_export/' . $table_uuid . '">Экспорт таблицы</a>';
+        echo '<a class="export" href="/daily_export/' . $table_uuid . '">Экспорт таблицы</a>';
     echo '</div>' . PHP_EOL;
 @endphp
 {{--Adding values--}}
@@ -215,7 +215,7 @@ echo '<form method="post" action="/daily_upload">';
 
     }
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
-    echo '<a href="/daily_export/' . $table_uuid . '">Экспорт таблицы</a>';
+echo '</div>' . PHP_EOL;
 echo '</div>' . PHP_EOL;
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>

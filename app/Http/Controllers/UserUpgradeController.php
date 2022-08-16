@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserUpgradeController extends Controller {
     public function user_upgrade(Request $request) {
+       if(empty(Auth::id())) {
+          return redirect()->route('login');
+       }
         date_default_timezone_set('Europe/Moscow');
         $created_at = date('Y-m-d, H:i:s');
         try {

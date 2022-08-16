@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PhonesController extends Controller {
    public function phones() {
+      if(empty(Auth::id())) {
+         return redirect()->route('login');
+      }
       $user = [];
       $elev_users = DB::table('model_has_roles')->where('role_id', 2)->paginate(20);
       foreach ($elev_users as $key => $elev_user) {

@@ -41,6 +41,7 @@ echo '<div class="container-flex">';
 @csrf
 @php
     $rowSpan = $highest_row - 1;
+echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table>' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
@@ -113,12 +114,13 @@ echo '<div class="container-flex">';
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+    echo '</div>' . PHP_EOL;
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
     }
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a href="/export/' . $table_uuid . '">Экспорт таблицы</a>';
+    echo '<a class="export" href="/export/' . $table_uuid . '">Экспорт таблицы</a>';
     echo '</div>';
 
 @endphp

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 
 class QuarterlyReportsController extends Controller {
    public function quarterly_reports() {
+               if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
       try {
          $rv_ja = [];
          $user_names = [];
@@ -25,13 +28,16 @@ class QuarterlyReportsController extends Controller {
          $arr = json_encode($arrs);
          $table_user = json_encode($user_names);
          $arr_rows = json_encode(DB::select('select * from report_values'));
-         return view('quarterly_reports', ['arr' => $arr, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => 'user_role', 'table_user' => $table_user, 'pages' => $arrs]);
+         return view('quarterly_reports', ['arr' => $arr, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role, 'table_user' => $table_user, 'pages' => $arrs]);
       } catch (QueryException $e) {
          echo 'Ошибка: ' . $e->getMessage();
       }
    }
 
    public function quarterly_report($name, $year) {
+               if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
       $user_id = Auth::id();
       $user_dep = Auth::user()->department;
       $table = DB::table('tables')->where('status', 0)->where('table_uuid', '=', $name)->get();
@@ -47,6 +53,9 @@ class QuarterlyReportsController extends Controller {
    }
 
    public function quarterly_user_report($table_uuid, $year, $quarter, $department) {
+               if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
       $user_dep = Auth::user()->department;
       $table = DB::table('tables')->where('status', 0)->where('table_uuid', $table_uuid)->get();
       $quarterly_reports = DB::table('quarterly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('quarter', $quarter)->where('year', $year)->get();
@@ -108,6 +117,9 @@ class QuarterlyReportsController extends Controller {
    }
 
    public function quarterly_upload(Request $request) {
+               if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
       try {
          date_default_timezone_set('Europe/Moscow');
          $date = date('Y-m-d H:i:s');
@@ -123,6 +135,9 @@ class QuarterlyReportsController extends Controller {
    }
 
    public function quarterly_update(Request $request) {
+               if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
       try {
          date_default_timezone_set('Europe/Moscow');
          $date = date('Y-m-d H:i:s');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +11,9 @@ use Illuminate\Support\Facades\DB;
 class AdminDailyReportController extends Controller {
    public function admin_daily_report($table_uuid) {
       try {
+         if (empty(Auth::id())) {
+            return redirect()->route('login');
+         }
          date_default_timezone_set('Europe/Moscow');
          $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
          $json = $table[0]->json_val;
@@ -93,6 +97,9 @@ class AdminDailyReportController extends Controller {
 
    public function admin_daily_report_date(Request $request) {
       try {
+         if (empty(Auth::id())) {
+            return redirect()->route('login');
+         }
          date_default_timezone_set('Europe/Moscow');
          $table_uuid = $request->input('table_information');
          $input = $request->input('created_at');
@@ -104,7 +111,7 @@ class AdminDailyReportController extends Controller {
          $radio = $table[0]->radio;
          $read_only = $table[0]->read_only;
          $json_func = $table[0]->json_func;
-         $daily_reports = DB::table('daily_reports')->where('table_uuid', $table_uuid)->where([['created_at', '>=', $input . ' 00:00:00'],['created_at', '<=', $input . ' 23:59:59']])->get();
+         $daily_reports = DB::table('daily_reports')->where('table_uuid', $table_uuid)->where([['created_at', '>=', $input . ' 00:00:00'], ['created_at', '<=', $input . ' 23:59:59']])->get();
          $row_uuid = [];
          $user_dep = [];
          $dep = [];

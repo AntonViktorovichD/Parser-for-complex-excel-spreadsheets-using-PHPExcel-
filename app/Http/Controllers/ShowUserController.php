@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ShowUserController extends Controller {
     public function showUser() {
+       if(empty(Auth::id())) {
+          return redirect()->route('login');
+       }
         DB::connection()->getPdo();
         $id = Auth::user()->id;
         $user = DB::table('users')->where('id', '$id')->first();

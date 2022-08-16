@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 
 class MonthlyReportsController extends Controller {
     public function monthly_report($name, $year) {
+                if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
         $user_id = Auth::id();
         $user_dep = Auth::user()->department;
         $table = DB::table('tables')->where('status', 0)->where('table_uuid', '=', $name)->get();
@@ -24,6 +27,9 @@ class MonthlyReportsController extends Controller {
         return view('monthly_report', compact('table', 'departments', 'name', 'year'));
     }
     public function monthly_user_report($table_uuid, $year, $month, $department) {
+                if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
         $user_dep = Auth::user()->department;
         $table = DB::table('tables')->where('status', 0)->where('table_uuid', $table_uuid)->get();
         $monthly_reports = DB::table('monthly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('month', $month)->where('year', $year)->get();
@@ -84,6 +90,9 @@ class MonthlyReportsController extends Controller {
         }
     }
     public function monthly_upload(Request $request) {
+                if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
         try {
             date_default_timezone_set('Europe/Moscow');
             $date = date('Y-m-d H:i:s');
@@ -99,6 +108,9 @@ class MonthlyReportsController extends Controller {
     }
 
     public function monthly_update(Request $request) {
+                if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
         try {
             date_default_timezone_set('Europe/Moscow');
             $date = date('Y-m-d H:i:s');

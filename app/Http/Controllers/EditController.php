@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class EditController extends Controller {
    public function edit($table_uuid) {
+      if (empty(Auth::id())) {
+         return redirect()->route('login');
+      }
       try {
          $table = DB::table('tables')->where('table_uuid', $table_uuid)->where('status', 0)->get();
          $json = $table[0]->json_val;

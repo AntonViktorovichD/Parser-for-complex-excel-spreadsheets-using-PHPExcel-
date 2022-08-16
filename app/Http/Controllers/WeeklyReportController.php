@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 
 class WeeklyReportController extends Controller {
     public function weekly_report($table_uuid) {
+                if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
         $department = Auth::user()->department;
         $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
         $weekly_reports = DB::table('weekly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->get();
@@ -71,6 +74,9 @@ class WeeklyReportController extends Controller {
     }
 
     public function weekly_upload(Request $request) {
+                if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
         try {
             date_default_timezone_set('Europe/Moscow');
             $date = date('Y-m-d H:i:s');
@@ -86,6 +92,9 @@ class WeeklyReportController extends Controller {
     }
 
     public function weekly_update(Request $request) {
+                if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
         try {
             date_default_timezone_set('Europe/Moscow');
             $date = date('Y-m-d H:i:s');

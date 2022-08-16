@@ -42,8 +42,9 @@
 @csrf
 @php
     $rowSpan = $highest_row - 1;
+echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table>' . PHP_EOL;
-    echo '<tr>';
+        echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
     echo '</tr>';
     for ($i = 1; $i < $highest_row - 1; $i++) {
@@ -113,11 +114,14 @@
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+    echo '</div>' . PHP_EOL;
+    if ($user_role == 2 || $user_role == 3) {
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="submit">';
     }
+    }
     echo '</form>' . PHP_EOL;
-    echo '<a href="/quarterly_export/' . $row_uuid . '">Экспорт таблицы</a>';
+    echo '<a class="export" href="/quarterly_export/' . $row_uuid . '">Экспорт таблицы</a>';
        echo '</div>';
 @endphp
 {{--Adding values--}}
@@ -137,6 +141,7 @@ echo '<form method="post" action="/daily_upload">';
 @csrf
 @php
     $rowSpan = $highest_row - 1;
+echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table>' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
@@ -201,12 +206,15 @@ echo '<form method="post" action="/daily_upload">';
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+    echo '</div>' . PHP_EOL;
+     if ($user_role == 2 || $user_role == 3) {
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
+    }
     echo '</form>' . PHP_EOL;
     }
-     echo '<a href="/quarterly_export/' . $table_uuid . '">Экспорт таблицы</a>';
+    echo '<a class="export" href="/quarterly_export/' . $table_uuid . '">Экспорт таблицы</a>';
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
         echo '</div>';
 

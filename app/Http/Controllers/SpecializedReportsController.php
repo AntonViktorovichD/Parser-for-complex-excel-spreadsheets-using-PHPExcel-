@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 
 class SpecializedReportsController extends Controller {
    public function spec_reps($table_uuid) {
+               if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
       $row_uuid = [];
       $json_vals = [];
       $department = Auth::user()->department;
@@ -77,6 +80,9 @@ class SpecializedReportsController extends Controller {
    }
 
    public function spec_reps_upload(Request $request) {
+               if(empty(Auth::id())) {
+            return redirect()->route('login');
+         }
       try {
          date_default_timezone_set('Europe/Moscow');
          $date = date('Y-m-d H:i:s');

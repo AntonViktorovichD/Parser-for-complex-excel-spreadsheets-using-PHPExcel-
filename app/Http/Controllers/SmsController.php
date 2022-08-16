@@ -6,11 +6,15 @@ use CooperAV\SmsAero\SmsAero;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class SmsController extends Controller {
     public function send_sms(Request $request) {
+       if(empty(Auth::id())) {
+          return redirect()->route('login');
+       }
         date_default_timezone_set('Europe/Moscow');
         try {
             $SMSAero = new SmsAero('email', 'api_key');
