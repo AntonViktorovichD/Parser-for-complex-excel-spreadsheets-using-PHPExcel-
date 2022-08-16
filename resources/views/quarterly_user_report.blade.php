@@ -4,11 +4,13 @@
     table {
         border-collapse: collapse;
         border: 1px solid black;
+        margin-bottom: 10px !important;
     }
 
     th, td {
         border: 1px solid black;
         padding: 10px;
+        vertical-align: middle !important;
     }
 
     input {
@@ -36,6 +38,7 @@
         $arrNum = [];
         $arrKeyVal = [];
         echo '<div class="container-flex">';
+        echo '<a href="/quarterly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
         $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
         echo '<form method="post" action="/daily_update">';
 @endphp
@@ -136,6 +139,7 @@ echo '<div class="table-responsive">' . PHP_EOL;
     $sum =  json_decode($json_func,true);
     echo '<div class="container-flex">';
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
+    echo '<a href="/quarterly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
 echo '<form method="post" action="/daily_upload">';
 @endphp
 @csrf

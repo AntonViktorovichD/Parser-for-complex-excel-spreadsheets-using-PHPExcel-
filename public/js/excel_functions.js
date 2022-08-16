@@ -6,6 +6,7 @@ window.onload = () => {
     for (const [key, value] of json_sum) {
         keys_arr[key] = value;
     }
+document.addEventListener('input', (e) => {
     for (let i = 0; i < sum_target_cells.length; i++) {
         for (let k = 0; k < sum_target_cells[i].innerHTML.split(',').length; k++) {
             for (let j = 0; j < sum_target_cells[i].dataset.target.length; j++) {
@@ -36,7 +37,7 @@ window.onload = () => {
             }
         }
     }
-
+})
     function crease(value, keys_arr, e) {
         if (value.includes(e.target.id)) {
             let target = document.getElementById(keys_arr.indexOf(value));

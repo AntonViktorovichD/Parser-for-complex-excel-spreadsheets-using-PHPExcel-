@@ -11,7 +11,7 @@
         echo '<a id="'. $i .'" href="/quarterly_report/' . $name . '/' . $i . '" class="btn btn-outline-danger">' . $i . ' ГОД</a>';
     }
     echo '</div>';
-    echo '<table class="table table-striped table-hover table-borderless">';
+    echo '<table class="table table-striped table-hover table-borderless align-middle">';
     echo '<thead>';
     echo '<tr>';
     echo '<th>Учреждение</th>';

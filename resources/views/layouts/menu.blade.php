@@ -1,5 +1,5 @@
-<nav class="nav">
-    <ul class="uk-navbar-nav">
+<nav class="nav" >
+    <ul class="uk-navbar-nav" style="width: 100vw !important">
         <li class="nav-item"><a id="nav" class="nav-link" href="/home">Начало
                 работы</a></li>
         <li class="nav-item"><a id="nav" class="nav-link" href="/user_add">Создать

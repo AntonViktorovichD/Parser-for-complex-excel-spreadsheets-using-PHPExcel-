@@ -1,12 +1,18 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
+
+    a {
+        text-decoration: none !important;
+    }
+
     table {
         border-collapse: collapse;
     }
 
     .table tr, .table th, .table td {
         border: 1px solid black;
+        vertical-align: middle;
     }
 
     input {
@@ -30,6 +36,10 @@
     .colors {
         margin-bottom: 50px !important;
     }
+
+    /*.btn-submit-ae {*/
+    /*    width: 150px !important;*/
+    /*}*/
 </style>
 @php
     echo '<div class="container-flex">';
@@ -45,27 +55,7 @@
         $arrCol = [];
         $arrNum = [];
         $arrKeyVal = [];
-            echo '<a href="/json" class=" btn_back btn btn_mon btn-outline-danger">Вернуться к списку таблиц</a>';
-    echo '<table class="colors">';
-        echo '<tbody><tr>';
-            echo '<td class="red_cell colorcell"></td>';
-            echo '<td>- Нет данных</td>';
-        echo '</tr>';
-        echo '<tr>';
-            echo '<td class="gray_cell colorcell"></td>';
-            echo '<td>- Данные частично заполнены</td>';
-        echo '</tr>';
-        echo '<tr>';
-            echo '<td class="blue_cell colorcell"></td>';
-            echo '<td>- Данные полностью заполнены</td>';
-        echo '</tr>';
-        echo '<tr>';
-            echo '<td class="lightblue_cell colorcell"></td>';
-            echo '<td>- Данные приняты</td>';
-        echo '</tr>';
-    echo '</tbody>';
-    echo '</table>';
-        echo '<form method="post" action="/user_upgrade">';
+        echo '<a href="/json" class="btn-back">Вернуться к списку таблиц</a>';
 @endphp
 @csrf
 @php
@@ -150,7 +140,7 @@ echo '<div class="table-responsive">' . PHP_EOL;
     }
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a class="export" href="/export/' . $table_uuid . '">Экспорт таблицы</a>';
+   // echo '<a class="export" href="/export/' . $table_uuid . '">Экспорт таблицы</a>';
     echo '</div>';
 
 @endphp

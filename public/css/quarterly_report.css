@@ -31,10 +31,10 @@ hr {
 }
 
 .year a {
-    margin: 20px 10px;
+    margin: 10px 5px;
 }
 .year a:first-child {
-    margin: 20px 10px 20px 0;
+    margin: 10px 0 10px 0;
 }
 
 .quarter, .month {
@@ -62,10 +62,6 @@ hr {
     margin-left: 35px !important;
 }
 
-table {
-    width: auto !important;
-}
-
-.qr_link {
+tr {
     text-align: center !important;
 }

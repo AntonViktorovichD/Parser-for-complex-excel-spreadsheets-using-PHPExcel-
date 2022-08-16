@@ -1,15 +1,15 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
-
-    table {
-        width: auto !important;
-    }
+table {
+    margin-top: 50px !important;
+    text-align: center !important;
+}
 </style>
 <div class="container-flex">
 
     <h1>Справочник телефонов специалистов</h1>
-    <table class="table table-striped table-borderless ">
+    <table class="table table-striped table-borderless align-middle">
         <thead>
         <tr>
             <th scope="col">ФИО ответственного специалиста</th>

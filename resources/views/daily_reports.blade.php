@@ -36,8 +36,6 @@
 
     table {
         margin: 50px 0 !important;
-        width: auto !important;
-        max-width: calc(90vw - 90px) !important;
     }
 
     .uszn {
@@ -121,7 +119,7 @@
         <thead>
         <tr>
             <th>Отчет</th>
-            <th>Заполнения</th>
+            <th style="text-align: center">Заполнения</th>
             @php
                 if ($user_role == 1 || $user_role == 4) {
                 echo '<th>Тип учреждений</th>';

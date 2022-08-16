@@ -37,6 +37,7 @@
             $arrNum = [];
             $arrKeyVal = [];
                     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
+                    echo '<a href="/monthly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
             echo '<form method="post" action="/monthly_update">';
 @endphp
 @csrf
@@ -134,6 +135,7 @@ echo '<div class="table-responsive">' . PHP_EOL;
     $arrCol = [];
     $sum =  json_decode($json_func,true);
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
+    echo '<a href="/monthly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
 echo '<form method="post" action="/monthly_upload">';
 @endphp
 @csrf

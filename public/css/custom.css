@@ -320,3 +320,28 @@ table input {
 .btn-submit-ae {
     margin-top: 30px !important;
 }
+
+.btn-back {
+    margin-top: 100px;
+    margin-bottom: 30px !important;
+    text-shadow: none;
+    background: #fff;
+    border: 2px solid #e43d3c !important;
+    color: #000000;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 5px 15px !important;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    max-width: 300px;
+}
+
+.btn-back:hover {
+    color: #fff !important;
+    background-color: #e43d3c !important;
+}
