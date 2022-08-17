@@ -35,6 +35,12 @@
     .regex {
         border: none !important;
     }
+
+    #datetimepicker {
+        border: none !important;
+        border: 2px solid rgba(150, 150, 150, 0.15) !important;
+        outline: none !important;
+    }
 </style>
 @php
     date_default_timezone_set('Europe/Moscow');

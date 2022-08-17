@@ -170,6 +170,19 @@ table.dataTable thead .sorting_desc {
     margin-bottom: 30px !important;
 }
 
+.uk-navbar-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-right: 30px !important;
+}
+
+.uk-navbar-nav > li {
+    float: left;
+    display: table-cell;
+    text-align: center;
+}
+
 .uk-navbar-nav > li > a {
     display: block;
     box-sizing: border-box;
@@ -301,22 +314,6 @@ table input {
     border: 0 !important;
 }
 
-.export {
-    margin-top: 30px !important;
-    display: inline-block;
-    text-decoration: none;
-    outline: none !important;
-    font-size: 14px;
-    padding-top: 6px;
-    padding-left: 12px;
-    padding-right: 12px;
-    text-transform: uppercase;
-    border: 2px solid rgba(150, 150, 150, 0.15);
-    margin-right: 5px !important;
-    color: #000000;
-    height: 35px !important;
-}
-
 .btn-submit-ae {
     margin-top: 30px !important;
 }
@@ -346,3 +343,38 @@ table input {
     background-color: #e43d3c !important;
 }
 
+.btns-block {
+    display: inline !important;
+}
+
+.btn-submit-date {
+    width: 150px !important;
+}
+
+.export:hover, .export:focus, .btn-submit-date:hover, .btn-submit-date:focus, #datetimepicker:hover, #datetimepicker:focus {
+    background-position: 0 0;
+    -webkit-transition: none;
+    transition: none;
+    background-color: #ffffff;
+    color: #1f1e20;
+    border-color: rgba(0, 0, 0, 0);
+    box-shadow: 2px 6px 19px 0 rgba(0, 0, 0, 0.1);
+    transform: none;
+}
+
+.export, .btn-submit-date {
+    margin-top: 30px !important;
+    display: inline-block;
+    text-decoration: none;
+    outline: none !important;
+    font-size: 14px;
+    padding-top: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+    text-transform: uppercase;
+    border: 2px solid rgba(150, 150, 150, 0.15) !important;
+    background: #ffffff;
+    margin-right: 5px !important;
+    color: #000000;
+    height: 35px !important;
+}

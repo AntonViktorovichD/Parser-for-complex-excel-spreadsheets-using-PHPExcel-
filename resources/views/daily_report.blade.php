@@ -212,7 +212,7 @@ echo '<form method="post" action="/daily_upload">';
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
     echo '</form>' . PHP_EOL;
-
+echo '<a class="export" href="/daily_export/' . $table_uuid . '">Экспорт в Excel</a>';
     }
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
 echo '</div>' . PHP_EOL;

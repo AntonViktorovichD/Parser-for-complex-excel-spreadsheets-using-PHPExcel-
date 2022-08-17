@@ -1,5 +1,8 @@
 @include('header')
 @include('layouts.menu')
+<link rel="stylesheet" href="/css/jquery.datetimepicker.min.css">
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.datetimepicker.full.js"></script>
 <style>
 
     table {
@@ -24,6 +27,20 @@
         width: 100px;
         height: 35px;
     }
+    .btn-submit-ae, .export, .btn-submit-date {
+        margin-top: 0 !important;
+        margin-left: 5px !important;
+    }
+
+    .btn-submit-date {
+        width: 200px !important;
+    }
+
+    #datetimepicker {
+        border: none !important;
+        border: 2px solid rgba(150, 150, 150, 0.15) !important;
+        outline: none !important;
+    }
 </style>
 @php
     if (isset($json_vals)) {
@@ -39,6 +56,8 @@
         $arrKeyVal = [];
                 $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
                 echo '<div class="container-flex">';
+                echo '<a href="/daily_reports" class="btn-back">Вернуться к списку таблиц</a>';
+echo '<h5 style="text-align:center">' . $name . '</h5>';
         echo '<form method="post" action="/weekly_update">';
 @endphp
 @csrf
@@ -117,12 +136,16 @@ echo '<div class="table-responsive">' . PHP_EOL;
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
-
+ echo '<div class="nav">';
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
     }
     echo '</form>' . PHP_EOL;
-//        echo '<a class="export" href="/weekly_export/' . $table_uuid . '">Экспорт</a>';
+
+        echo '<a class="export" href="/weekly_export/' . $table_uuid . '">Экспорт в Excel</a>';
+            echo '<span class="calendar"><input name="created_at" id="datetimepicker" placeholder="' . date('d.m.Y') . '"></span>';
+     echo '<input class="btn-submit-date" type="submit" value="Выгрузить данные">';
+     echo '</div>';
     echo '</div>' . PHP_EOL;
 @endphp
 
@@ -141,6 +164,8 @@ echo '<div class="table-responsive">' . PHP_EOL;
     $sum =  json_decode($json_func,true);
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
      echo '<div class="container-flex">';
+                     echo '<a href="/daily_reports" class="btn-back">Вернуться к списку таблиц</a>';
+echo '<h5 style="text-align:center">' . $name . '</h5>';
 echo '<form method="post" action="/weekly_upload">';
 @endphp
 @csrf
@@ -212,11 +237,15 @@ echo '<div class="table-responsive">' . PHP_EOL;
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
+     echo '<div class="nav">';
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
     echo '</form>' . PHP_EOL;
-//    echo '<a class="export" href="/weekly_export/' . $table_uuid . '">Экспорт</a>';
+    echo '<a class="export" href="/weekly_export/' . $table_uuid . '">Экспорт в Excel</a>';
+        echo '<span class="calendar"><input name="created_at" id="datetimepicker" placeholder="' . date('d.m.Y') . '"></span>';
+     echo '<input class="btn-submit-date" type="submit" value="Выгрузить данные">';
+     echo '</div>';
      echo '</div>';
     }
 
@@ -226,3 +255,14 @@ echo '<div class="table-responsive">' . PHP_EOL;
 <script src="/js/excel_functions.js" type="text/javascript"></script>
 
 @include('layouts.footer')
+<script>
+    jQuery.datetimepicker.setLocale('ru');
+    jQuery('#datetimepicker').datetimepicker({
+        dayOfWeekStart: 1,
+        defaultDate: new Date(),
+        timepicker: false,
+        format: 'Y-m-d',
+        lang: 'ru',
+        maxDate: '+1970/01/01',
+    });
+</script>

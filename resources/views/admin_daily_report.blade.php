@@ -191,9 +191,11 @@
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
     echo '</div>';
     echo '<button type="button" class="sum btn btn-outline-danger" style="margin-right:5px" id="sum"><i class="fa fa-calculator" aria-hidden="true"></i></button>';
+    echo '<div class="nav">';
     echo '<a class="export" href="/daily_export/' . $table_uuid . ' ">Экспорт таблицы</a>';
     echo '<span class="calendar"><input name="created_at" id="datetimepicker" placeholder="' . date('d.m.Y') . '"></span>';
      echo '<input class="btn-submit" type="submit" value="Выгрузить данные">';
+      echo '</div>';
       echo '</form>' . PHP_EOL;
  echo '</div>' . PHP_EOL;
 @endphp
