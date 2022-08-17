@@ -117,7 +117,7 @@
     }
     echo '</form>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a href="/export/' . $row_uuid . '">Экспорт</a>';
+    echo '<a class="export" href="/export/' . $row_uuid . '">Экспорт</a>';
     echo '</div>';
 
 @endphp

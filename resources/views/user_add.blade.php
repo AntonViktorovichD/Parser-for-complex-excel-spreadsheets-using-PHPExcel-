@@ -31,6 +31,8 @@
     $arrCol = [];
     $sum =  json_decode($json_func,true);
 echo '<div class="container-flex">';
+echo '<a href="/json" class="btn-back">Вернуться к списку таблиц</a>';
+echo '<h5 style="text-align:center">' . $name . '</h5>';
 echo '<form method="post" action="/user_upload">';
 @endphp
 @csrf

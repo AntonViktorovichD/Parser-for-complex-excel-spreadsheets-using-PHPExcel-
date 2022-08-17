@@ -3,6 +3,7 @@
 <link href="/css/quarterly_report.css" rel="stylesheet" type="text/css">
 @php
     echo '<div class="container-flex">';
+    echo '<h5 style="text-align:center">' . $name . '</h5>';
     echo '<h1>КВАРТАЛЬНЫЙ ОТЧЁТ</h1>';
     echo '<legend class="legend">' . $table[0]->table_name . '</legend>';
     echo '<a href="/quarterly_reports" class="btn btn-outline-danger">Вернуться к списку отчетов</a>';

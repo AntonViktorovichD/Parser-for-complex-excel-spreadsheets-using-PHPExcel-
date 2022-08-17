@@ -5,6 +5,7 @@
     table {
         border-collapse: collapse;
         border: 1px solid black;
+        margin-bottom: 10px !important;
     }
 
     th, td {
@@ -121,7 +122,7 @@ echo '<div class="table-responsive">' . PHP_EOL;
         echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
     }
     echo '</form>' . PHP_EOL;
-        echo '<a class="export" href="/weekly_export/' . $table_uuid . '">Экспорт</a>';
+//        echo '<a class="export" href="/weekly_export/' . $table_uuid . '">Экспорт</a>';
     echo '</div>' . PHP_EOL;
 @endphp
 
@@ -215,7 +216,7 @@ echo '<div class="table-responsive">' . PHP_EOL;
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
     echo '</form>' . PHP_EOL;
-    echo '<a class="export" href="/weekly_export/' . $table_uuid . '">Экспорт</a>';
+//    echo '<a class="export" href="/weekly_export/' . $table_uuid . '">Экспорт</a>';
      echo '</div>';
     }
 

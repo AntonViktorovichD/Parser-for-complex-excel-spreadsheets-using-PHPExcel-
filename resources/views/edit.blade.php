@@ -43,7 +43,8 @@
 </style>
 @php
     echo '<div class="container-flex">';
-
+echo '<a href="/json" class="btn-back">Вернуться к списку таблиц</a>';
+echo '<h5 style="text-align:center">' . $name . '</h5>';
         $user_id = Auth::user()->id;
         $arrCell = json_decode($json, true);
         $arrAddRow = array_flip(json_decode($addRowArr, true));
@@ -55,7 +56,7 @@
         $arrCol = [];
         $arrNum = [];
         $arrKeyVal = [];
-        echo '<a href="/json" class="btn-back">Вернуться к списку таблиц</a>';
+
 @endphp
 @csrf
 @php

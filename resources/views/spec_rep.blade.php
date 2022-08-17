@@ -25,10 +25,6 @@
         margin: 0 !important;
     }
 
-    .btn-submit-ae {
-        margin-top: 75px !important;
-    }
-
     .regex {
         border: none !important;
     }
@@ -130,10 +126,10 @@
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     if ($read_only == 'disabled') {
-        echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
+        echo '<input class="btn-submit-ae" type="submit" value="Отправить"><br />';
     }
     echo '</form>' . PHP_EOL;
-    echo '<a href="/export/' . $table_uuid . '">Экспорт</a>';
+    echo '<a class="export" href="/export/' . $table_uuid . '">Экспорт в Excel</a>';
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
 @endphp
@@ -235,10 +231,10 @@ echo '<form method="post" action="/spec_reps_upload">';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     if ($read_only == 'disabled') {
-        echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
+        echo '<input class="btn-submit-ae" type="submit" value="Отправить"><br />';
     }
     echo '</form>' . PHP_EOL;
-            echo '<a href="/export/' . $table_uuid . '">Экспорт</a>';
+            echo '<a class="export" href="/export/' . $table_uuid . '">Экспорт в Excel</a>';
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
 @endphp

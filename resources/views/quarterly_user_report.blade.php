@@ -39,6 +39,7 @@
         $arrKeyVal = [];
         echo '<div class="container-flex">';
         echo '<a href="/quarterly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
+            echo '<h5 style="text-align:center">' . $name . '</h5>';
         $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
         echo '<form method="post" action="/daily_update">';
 @endphp
@@ -138,8 +139,10 @@ echo '<div class="table-responsive">' . PHP_EOL;
     $arrCol = [];
     $sum =  json_decode($json_func,true);
     echo '<div class="container-flex">';
+
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
     echo '<a href="/quarterly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
+    echo '<h5 style="text-align:center">' . $name . '</h5>';
 echo '<form method="post" action="/daily_upload">';
 @endphp
 @csrf

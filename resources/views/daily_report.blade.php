@@ -121,7 +121,7 @@
         echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
     }
     echo '</form>' . PHP_EOL;
-        echo '<a class="export" href="/daily_export/' . $table_uuid . '">Экспорт таблицы</a>';
+        echo '<a class="export" href="/daily_export/' . $table_uuid . '">Экспорт в Excel</a>';
     echo '</div>' . PHP_EOL;
 @endphp
 {{--Adding values--}}
