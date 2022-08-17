@@ -45,6 +45,8 @@
     $rowSpan = $highest_row - 1;
     $table = [];
     echo '<div class="container-flex">';
+    echo '<a href="/json" class="btn-back">Вернуться к списку таблиц</a>';
+echo '<h5 style="text-align:center">' . $name . '</h5>';
     echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table>' . PHP_EOL;
     echo '<tr>';

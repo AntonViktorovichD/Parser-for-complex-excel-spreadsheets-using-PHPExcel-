@@ -378,3 +378,18 @@ table input {
     color: #000000;
     height: 36px !important;
 }
+
+.colors > td {
+    text-align: left !important;
+    border: none !important;
+}
+
+.colorcell {
+    border: 1px solid black;
+    width: 25px !important;
+    height: 25px !important;
+}
+
+footer {
+    margin-top: 150px !important;
+}

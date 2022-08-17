@@ -571,18 +571,6 @@ p {
     text-align: center;
 }
 
-
-.colors td {
-    text-align: left !important;
-    border: none;
-}
-
-.colors .colorcell {
-    border: 1px solid black;
-    width: 25px;
-    height: 25px;
-}
-
 .insteadField {
     display: inline-block;
     margin-left: 30px;

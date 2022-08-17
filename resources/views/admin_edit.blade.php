@@ -1,14 +1,17 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
-    table {
-        border-collapse: collapse;
-        border: 1px solid black;
+
+    td input[type="checkbox"] {
+        display: inline;
     }
 
-    th, td {
-        border: 1px solid black;
+    .table > th, .table > td {
         padding: 10px;
+    }
+
+    .table {
+        vertical-align: middle !important;
     }
 
     input {
@@ -28,6 +31,19 @@
     .regex {
         border: none !important;
     }
+
+    .btns-group {
+        margin-left: 0 !important;
+    }
+
+    .btn-back {
+        margin: 0 0 0 5px !important;
+    }
+
+    .btn-back:first-child {
+        margin: 0 !important;
+    }
+
 </style>
 @php
     $user_id = Auth::user()->id;
@@ -43,99 +59,147 @@
     $arrKeyVal = [];
     $table_info = [];
     echo '<div class="container-flex">';
+    echo '<a href="/json" class="btn-back" style="margin-bottom: 30px !important">Вернуться к списку таблиц</a>';
+
     echo '<form method="post" action="/admin_user_upgrade">';
 @endphp
+<table class="colors">
+    <tbody>
+    <tr>
+        <td class="red_cell colorcell"></td>
+        <td>- Нет данных</td>
+    </tr>
+    <tr>
+        <td class="gray_cell colorcell"></td>
+        <td>- Данные частично заполнены</td>
+    </tr>
+    <tr>
+        <td class="blue_cell colorcell"></td>
+        <td>- Данные полностью заполнены</td>
+    </tr>
+    <tr>
+        <td class="lightblue_cell colorcell"></td>
+        <td>- Данные приняты</td>
+    </tr>
+    </tbody>
+</table>
 @csrf
+
 @php
-    $rowSpan = $highest_row - 1;
-    $table = [];
-    echo '<div class="table-responsive">' . PHP_EOL;
-    echo '<table class="table">' . PHP_EOL;
-    echo '<tr>';
-    echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
-    echo '</tr>';
-    for ($i = 1; $i < $highest_row - 1; $i++) {
-        echo '<tr>' . PHP_EOL;
-        for ($k = 0; $k < $highest_column_index; $k++) {
-            echo $arrCell[$i][$k]['cell'];
-        }
-        echo '</tr>' . PHP_EOL;
-    }
-    $qw = 0;
-    for ($k = 1; $k < $highest_column_index; $k++) {
-        $colnum++;
-        if (isset($arrAddRow[$k])) {
-            $colnum = 1;
-            $qw = $k;
-            $arrNum[] = $qw;
-        }
-        $arrCol[$qw] = $colnum;
-    }
-    unset($arrCol[0]);
-    $counter = 0;
-    foreach ($values as $count) {
-        echo '<tr>' . PHP_EOL;
-        echo '<td>' . $dep[$counter] . '</td>' . PHP_EOL;
-
-        foreach ($sum as $key => $val) {
-            if (isset($vals[$key])) {
-                if (isset($val)) {
-                    if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
-                        $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
-                        echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
-                    } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
-                        echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
-                    } elseif (str_contains($val, 'colspan')) {
-                        $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
-                        echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
-                    } elseif (is_numeric($val)) {
-                        echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
-                    }
-                } else {
-                    echo '<td><input type="text"  id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+    echo '<div class="nav btns-group">';
+echo '<button class="btn-back">Очистить данные</button>';
+echo '<button class="btn-back">Принять данные</button>';
+echo '<button class="btn-back">Отклонить данные</button>';
+echo '</div>';
+        echo '<h5 style="text-align:center">' . $name . '</h5>';
+            $rowSpan = $highest_row - 1;
+            $table = [];
+            echo '<div class="table-responsive">' . PHP_EOL;
+            echo '<table class="table table-bordered border-dark">' . PHP_EOL;
+            echo '<tr>';
+            echo '<td rowspan="' . $rowSpan . '"><label for="Учреждение">Учреждение</label><input type="checkbox" id="deps_chckr" name="Учреждение"></td>';
+            echo '</tr>';
+            for ($i = 1; $i < $highest_row - 1; $i++) {
+                echo '<tr>' . PHP_EOL;
+                for ($k = 0; $k < $highest_column_index; $k++) {
+                    echo $arrCell[$i][$k]['cell'];
                 }
-            } else {
-                if (isset($val)) {
-                    if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
-                        $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
-                        echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
-                    } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
-                        echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
-                    } elseif (str_contains($val, 'colspan')) {
-                        $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
-                        echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
-                    } elseif (is_numeric($val)) {
-                        echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
-                    }
-                } else {
-                    echo '<td><input type="text"  id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                echo '</tr>' . PHP_EOL;
+            }
+            $qw = 0;
+            for ($k = 1; $k < $highest_column_index; $k++) {
+                $colnum++;
+                if (isset($arrAddRow[$k])) {
+                    $colnum = 1;
+                    $qw = $k;
+                    $arrNum[] = $qw;
                 }
+                $arrCol[$qw] = $colnum;
             }
-        }
-        for ($i = 1; $i <= $highest_column_index; $i++) {
-            if (isset($sum[$i])) {
-                echo '<td hidden><span class="sum_cell" data-target="' . $i . '">' . $sum[$i] . '</span></td>' . PHP_EOL;
-            } else {
-                echo '<td hidden></td>' . PHP_EOL;
+            unset($arrCol[0]);
+            $counter = 0;
+            foreach ($values as $count) {
+                echo '<tr>' . PHP_EOL;
+                echo '<td><label for="' . $user_dep[$counter] . '">' . $dep[$counter] . '</label><input type="checkbox" class="row_selector" id="' . $user_dep[$counter] . '" name="' .  $row_uuid[$counter] . '"></td>' . PHP_EOL;
+                foreach ($sum as $key => $val) {
+                    if (isset($vals[$key])) {
+                        if (isset($val)) {
+                            if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
+                                $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                                echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+                            } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
+                                echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+                            } elseif (str_contains($val, 'colspan')) {
+                                $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                                echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+                            } elseif (is_numeric($val)) {
+                                echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+                            }
+                        } else {
+                            echo '<td><input type="text"  id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $count[$key] . '"></td>' . PHP_EOL;
+                        }
+                    } else {
+                        if (isset($val)) {
+                            if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
+                                $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                                echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                            } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
+                                echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                            } elseif (str_contains($val, 'colspan')) {
+                                $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                                echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                            } elseif (is_numeric($val)) {
+                                echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                            }
+                        } else {
+                            echo '<td><input type="text"  id="' . $key . '" name="' . $key . '"  class="visible_cell"></td>' . PHP_EOL;
+                        }
+                    }
+                }
+                for ($i = 1; $i <= $highest_column_index; $i++) {
+                    if (isset($sum[$i])) {
+                        echo '<td hidden><span class="sum_cell" data-target="' . $i . '">' . $sum[$i] . '</span></td>' . PHP_EOL;
+                    } else {
+                        echo '<td hidden></td>' . PHP_EOL;
+                    }
+                }
+                echo '<br/>';
+                $table_info[$counter] = $name . ' + ' . $table_uuid . ' + ' . $row_uuid[$counter];
+            $counter++;
             }
-        }
-        echo '<br/>';
-        $table_info[$counter] = $name . ' + ' . $table_uuid . ' + ' . $row_uuid[$counter];
-    $counter++;
-    }
 
-    echo '<input type="hidden" name="table_information" value="' . json_encode($table_info, JSON_UNESCAPED_UNICODE) . '"';
-    echo '</tr>' . PHP_EOL;
-    echo '</table>' . PHP_EOL;
-    echo '</div>' . PHP_EOL;
-//        echo '<input class="btn-submit-ae" type="submit">';
-    echo '</form>' . PHP_EOL;
-    echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
-    echo '<a class="export" href="/export/' . $table_uuid . '">Экспорт таблицы</a>';
-    echo '</div>';
+//            echo '<input type="hidden" name="table_information" value="' . json_encode($table_info, JSON_UNESCAPED_UNICODE) . '"';
+            echo '<input type="hidden" id="rows_information" name="rows_information" value="">';
+            echo '</tr>' . PHP_EOL;
+            echo '</table>' . PHP_EOL;
+            echo '</div>' . PHP_EOL;
+            echo '</form>' . PHP_EOL;
+            echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
+            echo '</div>';
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
+<script>
+    window.onload = () => {
+        deps_chckr.addEventListener('input', (f) => {
+            for (let row of document.querySelectorAll('.row_selector')) {
+                row.checked = f.target.checked;
+            }
+        })
+        let rows = [];
+        document.addEventListener('input', (e) => {
+            if (e.target.className === 'row_selector') {
+                for (let row of document.querySelectorAll('.row_selector')) {
+                    if (row.checked) {
+                        rows.push(row.name);
+                    }
+                }
+                rows_information.value = rows;
+                rows = [];
+            }
+        })
+    }
+</script>
 
 @include('layouts.footer')
 
