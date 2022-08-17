@@ -53,6 +53,8 @@
 </style>
 
 @php
+
+
     if (isset($json_vals)) {
         $user_id = Auth::user()->id;
         $arrCell = json_decode($json, true);
@@ -253,6 +255,7 @@ echo '<form method="post" action="/daily_upload">';
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
 echo '</div>' . PHP_EOL;
 echo '</div>' . PHP_EOL;
+echo '<input type="hidden" id="table_uuid" value="' . $table_uuid . '">';
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
@@ -265,6 +268,14 @@ echo '</div>' . PHP_EOL;
         format: 'Y-m-d',
         lang: 'ru',
         maxDate: '+1970/01/01',
+        value: window.location.pathname.replace('\/daily_report\/' + table_uuid.value + '/', ''),
     });
+
+    if (window.location.pathname.replace('\/daily_report\/' + table_uuid.value + '/', '')) {
+        for (let input of document.querySelectorAll('.visible_cell')) {
+            input.disabled = true;
+        }
+        document.querySelector('.btn-submit-ae').hidden = true;
+    }
 </script>
 @include('layouts.footer')
