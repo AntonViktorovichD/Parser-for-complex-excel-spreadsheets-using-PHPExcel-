@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\report_value;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -43,6 +44,7 @@ class EditController extends Controller {
             $dep = DB::table('org_helper')->where('id', Auth::user()->department)->value('title');
             $json_vals = $report_values[0]->json_val;
          }
+
          $pattern = '';
          $reg_arr = [
             'v_text' => '[A-Za-zА-Яа-яЁё\s,.:;-]+',
@@ -95,6 +97,7 @@ class EditController extends Controller {
                   $rep_value[] = $val;
                }
                $report_value = (json_encode(array_combine($rep_key, $rep_value)));
+
                return view('admin_edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'report_value', 'user_dep', 'pattern', 'json_func', 'json_vals', 'dep'));
             } else {
                return view('admin_view', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid'));
@@ -107,5 +110,17 @@ class EditController extends Controller {
       (QueryException $e) {
          echo 'Ошибка: ' . $e->getMessage();
       }
+   }
+
+   public function clear(Request $request) {
+      foreach (explode(',', $request->input('rows_information')) as $truncated) {
+         var_dump($truncated);
+//         DB::table('report_values')->where('row_uuid', $truncated)->truncate();
+      }
+   }
+
+   public function accept(Request $request) {
+      var_dump();
+         DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'enabled');
    }
 }

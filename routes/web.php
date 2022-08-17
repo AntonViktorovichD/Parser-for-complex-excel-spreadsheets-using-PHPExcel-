@@ -92,6 +92,9 @@ use App\Http\Controllers\EditController;
 Route::get('/edit/{name}', [EditController::class, 'edit'])->middleware('auth');
 Route::get('/admin_edit/{name}', [EditController::class, 'edit'])->middleware('checkAdmin');
 Route::get('/admin_view/{name}', [EditController::class, 'edit'])->middleware('checkAdmin');
+Route::post('/admin_clear/', [EditController::class, 'clear'])->middleware('checkAdmin');
+Route::post('/admin_accept/', [EditController::class, 'accept'])->middleware('checkAdmin');
+Route::post('/admin_revalid/', [EditController::class, 'revalid'])->middleware('checkAdmin');
 
 use App\Http\Controllers\UserUploadController;
 
