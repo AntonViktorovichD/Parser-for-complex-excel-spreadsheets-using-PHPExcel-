@@ -1,8 +1,6 @@
 @include('header')
 @include('layouts.menu')
-<link rel="stylesheet" href="/css/jquery.datetimepicker.min.css">
-<script src="/js/jquery.js"></script>
-<script src="/js/jquery.datetimepicker.full.js"></script>
+
 <style>
 
     table {
@@ -40,6 +38,10 @@
         border: none !important;
         border: 2px solid rgba(150, 150, 150, 0.15) !important;
         outline: none !important;
+    }
+
+    .btns-group {
+        margin-left: 0 !important;
     }
 </style>
 @php
@@ -136,15 +138,15 @@ echo '<div class="table-responsive">' . PHP_EOL;
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
- echo '<div class="nav">';
+ echo '<div class="nav btns-group">';
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
     }
     echo '</form>' . PHP_EOL;
 
         echo '<a class="export" href="/weekly_export/' . $table_uuid . '">Экспорт в Excel</a>';
-            echo '<span class="calendar"><input name="created_at" id="datetimepicker" placeholder="' . date('d.m.Y') . '"></span>';
-     echo '<input class="btn-submit-date" type="submit" value="Выгрузить данные">';
+//            echo '<span class="calendar"><input name="created_at" id="datetimepicker" placeholder="' . date('d.m.Y') . '"></span>';
+//     echo '<input class="btn-submit-date" type="submit" value="Выгрузить данные">';
      echo '</div>';
     echo '</div>' . PHP_EOL;
 @endphp
@@ -237,14 +239,14 @@ echo '<div class="table-responsive">' . PHP_EOL;
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
-     echo '<div class="nav">';
+     echo '<div class="nav btns-group">';
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
     echo '</form>' . PHP_EOL;
     echo '<a class="export" href="/weekly_export/' . $table_uuid . '">Экспорт в Excel</a>';
-        echo '<span class="calendar"><input name="created_at" id="datetimepicker" placeholder="' . date('d.m.Y') . '"></span>';
-     echo '<input class="btn-submit-date" type="submit" value="Выгрузить данные">';
+//        echo '<span class="calendar"><input name="created_at" id="datetimepicker" placeholder="' . date('d.m.Y') . '"></span>';
+//     echo '<input class="btn-submit-date" type="submit" value="Выгрузить данные">';
      echo '</div>';
      echo '</div>';
     }
@@ -255,14 +257,4 @@ echo '<div class="table-responsive">' . PHP_EOL;
 <script src="/js/excel_functions.js" type="text/javascript"></script>
 
 @include('layouts.footer')
-<script>
-    jQuery.datetimepicker.setLocale('ru');
-    jQuery('#datetimepicker').datetimepicker({
-        dayOfWeekStart: 1,
-        defaultDate: new Date(),
-        timepicker: false,
-        format: 'Y-m-d',
-        lang: 'ru',
-        maxDate: '+1970/01/01',
-    });
-</script>
+

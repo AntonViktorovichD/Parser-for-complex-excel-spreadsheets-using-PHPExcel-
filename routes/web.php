@@ -37,6 +37,7 @@ Route::get('/daily_reports', [DailyReportsController::class, 'daily_reports'])->
 use App\Http\Controllers\DailyReportController;
 
 Route::get('/daily_report/{name}', [DailyReportController::class, 'daily_report'])->middleware('auth');
+Route::get('/daily_report/{name}/{date}', [DailyReportController::class, 'daily_report_date'])->middleware('auth');
 Route::post('/daily_upload', [DailyReportController::class, 'daily_upload'])->middleware('auth');
 Route::post('/daily_update', [DailyReportController::class, 'daily_update'])->middleware('auth');
 

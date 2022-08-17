@@ -1,5 +1,8 @@
 @include('header')
 @include('layouts.menu')
+<link rel="stylesheet" href="/css/jquery.datetimepicker.min.css">
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.datetimepicker.full.js"></script>
 <style>
     table {
         border-collapse: collapse;
@@ -21,6 +24,31 @@
     .btn {
         width: 100px;
         height: 35px;
+    }
+
+    .btn {
+        width: 100px;
+        height: 35px;
+    }
+
+    .btn-submit-ae, .export, .btn-submit-date {
+        margin-top: 0 !important;
+        margin-left: 5px !important;
+    }
+
+    .btn-submit-date {
+        width: auto !important;
+    }
+
+    #datetimepicker {
+        border: none !important;
+        border: 2px solid rgba(150, 150, 150, 0.15) !important;
+        outline: none !important;
+        text-align: center !important;
+    }
+
+    .btns-group {
+        margin-left: 0 !important;
     }
 </style>
 
@@ -117,11 +145,15 @@
     echo '</table>' . PHP_EOL;
         echo '<br />' . PHP_EOL;
     echo '</div>' . PHP_EOL;
+     echo '<div class="nav btns-group">';
     if ($read_only == 'disabled') {
-        echo '<input class="btn-submit-ae" type="submit" value="Отправить">';
+        echo '<input class="btn-submit-ae" type="submit" value="Отправить" onclick="this.parentNode.submit();">';
     }
     echo '</form>' . PHP_EOL;
-        echo '<a class="export" href="/daily_export/' . $table_uuid . '">Экспорт в Excel</a>';
+    echo '<a class="export" href="/daily_export/' . $table_uuid . '">Экспорт в Excel</a>';
+        echo '<span class="calendar"><input name="created_at" id="datetimepicker" placeholder="' . date('d.m.Y') . '"></span>';
+     echo '<a id="dtp_btn" onclick="dtp_btn.href = dtp_btn.href + datetimepicker.value;" class="btn-submit-date" href="/daily_report/' . $table_uuid . '/">Выгрузить данные</a>';
+     echo '</div>';
     echo '</div>' . PHP_EOL;
 @endphp
 {{--Adding values--}}
@@ -208,18 +240,31 @@ echo '<form method="post" action="/daily_upload">';
     echo '</table>' . PHP_EOL;
     echo '<br />' . PHP_EOL;
     echo '</div>' . PHP_EOL;
+     echo '<div class="nav btns-group">';
     if ($read_only == 'disabled') {
-        echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
+        echo '<input class="btn-submit-ae" type="submit" value="Отправить" onclick="this.parentNode.submit();">';
     }
     echo '</form>' . PHP_EOL;
-echo '<a class="export" href="/daily_export/' . $table_uuid . '">Экспорт в Excel</a>';
-    }
+    echo '<a class="export" href="/daily_export/' . $table_uuid . '">Экспорт в Excel</a>';
+        echo '<span class="calendar"><input name="created_at" id="datetimepicker" placeholder="' . date('d.m.Y') . '"></span>';
+     echo '<a id="dtp_btn" onclick="dtp_btn.href = dtp_btn.href + datetimepicker.value;" class="btn-submit-date" href="/daily_report/' . $table_uuid . '/">Выгрузить данные</a>';
+     echo '</div>';
+     }
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
 echo '</div>' . PHP_EOL;
 echo '</div>' . PHP_EOL;
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
-
-
+<script>
+    jQuery.datetimepicker.setLocale('ru');
+    jQuery('#datetimepicker').datetimepicker({
+        dayOfWeekStart: 1,
+        defaultDate: new Date(),
+        timepicker: false,
+        format: 'Y-m-d',
+        lang: 'ru',
+        maxDate: '+1970/01/01',
+    });
+</script>
 @include('layouts.footer')
