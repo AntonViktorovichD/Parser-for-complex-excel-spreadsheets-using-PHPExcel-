@@ -68,7 +68,9 @@
         $arrKeyVal = [];
                 $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
                 echo '<div class="container-flex">';
+                                echo '<a href="/daily_reports" class="btn-back">Вернуться к списку таблиц</a>';
         echo '<form method="post" action="/daily_update">';
+        echo '<h5 style="text-align:center">' . $name . '</h5>';
 @endphp
 @csrf
 @php
@@ -170,6 +172,8 @@
     $sum =  json_decode($json_func,true);
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
     echo '<div class="container-flex">';
+                    echo '<a href="/daily_reports" class="btn-back">Вернуться к списку таблиц</a>';
+                    echo '<h5 style="text-align:center">' . $name . '</h5>';
 echo '<form method="post" action="/daily_upload">';
 @endphp
 @csrf
