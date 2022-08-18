@@ -140,7 +140,7 @@
             echo '<textarea type="text" name="comment" cols="40" rows="6" style="width: 100% !important; margin-bottom:30px;"></textarea>';
             echo '<input id="sms" type="text" name="sms" hidden>';
             echo '<input id="checked" type="text" name="checked" value="" hidden>';
-            echo '<input style="border: 2px solid #e43d3c !important;" class="btn btn-primary btn-submit-second button" id="cnfrm" @click="check" value="Отправить запрос">';
+            echo '<input class="btn btn-outline-danger" id="cnfrm" @click="check" value="Отправить запрос">';
         @endphp
     </form>
 </div>

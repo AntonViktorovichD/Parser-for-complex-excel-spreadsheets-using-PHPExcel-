@@ -152,6 +152,7 @@ table.dataTable thead .sorting_desc {
 .btn-outline-danger {
     border: 2px solid #e43d3c !important;
     color: black !important;
+    padding: 3px !important;
 }
 
 .btn-outline-danger:hover {
@@ -435,4 +436,10 @@ input {
 
 .accept {
     background: #5ccccc !important;
+}
+
+.btn-submit-second {
+    color: white !important;
+    padding: 3px !important;
+    border: 2px solid #0d6efd !important;
 }
