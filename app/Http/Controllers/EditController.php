@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests;
+use App\Mail\Email;
 use App\Models\report_value;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class EditController extends Controller {
    public function edit($table_uuid) {
@@ -112,10 +115,34 @@ class EditController extends Controller {
    }
 
    public function clear(Request $request) {
-      var_dump($request->input('rows_information'));
-//      foreach (explode(',', $request->input('rows_information')) as $truncated) {
-//         DB::table('report_values')->where('row_uuid', $truncated)->truncate();
-//      }
+      $rows_information = explode(',', $request->input('rows_information'));
+      foreach ($rows_information as $truncated) {
+         DB::table('report_values')->where('row_uuid', $truncated)->truncate();
+      }
+      $notification_rights = DB::table('notification_rights')->where('id', 1)->get()[0];
+      $notifications = [];
+      $departments = [];
+      if ($notification_rights->e_mail != 0) {
+         foreach ($rows_information as $row) {
+            $departments[] = DB::table('report_values')->where('row_uuid', $row)->value('user_dep');
+         }
+         $table_name = DB::table('report_values')->where('row_uuid', $rows_information[0])->value('table_name');
+      }
+      foreach ($departments as $department) {
+         $notification = DB::table('user_noifications')->where('org_id', $department)->get()[0];
+         $notifications[$department]['e_mail'] = $notification->e_mail;
+      }
+      $objDemo = new \stdClass();
+      $objDemo->table_name = $table_name;
+      foreach ($notifications as $key => $notification) {
+         if ($notification['e_mail'] == 1) {
+            $mail = DB::table('users')->where('department', $key)->value('email');
+            if (isset($mail)) {
+               Mail::to($mail)->send(new Email($objDemo));
+            }
+         }
+      }
+      return redirect()->action([JsonController::class, 'arrayToJson']);
    }
 
    public function accept(Request $request) {
@@ -126,7 +153,32 @@ class EditController extends Controller {
          DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'disabled');
       }
    }
+
    public function revalid(Request $request) {
-var_dump($request->input('rows_information'));
+      $rows_information = explode(',', $request->input('rows_information'));
+      $notification_rights = DB::table('notification_rights')->where('id', 1)->get()[0];
+      $notifications = [];
+      $departments = [];
+      if ($notification_rights->e_mail != 0) {
+         foreach ($rows_information as $row) {
+           $departments[] = DB::table('report_values')->where('row_uuid', $row)->value('user_dep');
+         }
+         $table_name = DB::table('report_values')->where('row_uuid', $rows_information[0])->value('table_name');
+      }
+      foreach ($departments as $department) {
+         $notification = DB::table('user_noifications')->where('org_id', $department)->get()[0];
+         $notifications[$department]['e_mail'] = $notification->e_mail;
+      }
+      $objDemo = new \stdClass();
+      $objDemo->table_name = $table_name;
+      foreach ($notifications as $key => $notification) {
+         if ($notification['e_mail'] == 1) {
+            $mail = DB::table('users')->where('department', $key)->value('email');
+            if (isset($mail)) {
+               Mail::to($mail)->send(new Email($objDemo));
+            }
+         }
+      }
+      return redirect()->action([JsonController::class, 'arrayToJson']);
    }
 }

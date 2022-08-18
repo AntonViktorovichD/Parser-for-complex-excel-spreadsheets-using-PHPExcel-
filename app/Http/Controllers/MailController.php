@@ -21,13 +21,13 @@ class MailController extends Controller {
             $notifications = [];
             if ($notification_rights->e_mail != 0 || $notification_rights->mobile_phone != 0) {
                 $table_uuid = $request->get('table_uuid');
-                $table = DB::table('tables')->where('status', 0)->where('table_uuid', '=', $table_uuid)->get();
+                $table = DB::table('tables')->where('status', 0)->where('table_uuid', $table_uuid)->get();
                 $table_name = $table[0]->table_name;
                 $updated_at = $table[0]->updated_at;
                 $table_creator = DB::table('users')->where('id', '=', $table[0]->user_id)->value('name');
                 $departments = json_decode($table[0]->departments, true);
                 foreach ($departments as $department) {
-                    $notification = DB::table('user_noifications')->where('org_id', '=', $department)->get()[0];
+                    $notification = DB::table('user_noifications')->where('org_id', $department)->get()[0];
                     $notifications[$department]['e_mail'] = $notification->e_mail;
                     $notifications[$department]['specialist_mobile_phone'] = $notification->specialist_mobile_phone;
                     $notifications[$department]['directors_mobile_phone'] = $notification->directors_mobile_phone;
