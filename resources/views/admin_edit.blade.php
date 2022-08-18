@@ -1,34 +1,24 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
-    td input[type="checkbox"] {
-        display: inline;
-    }
-    .table > th, .table > td {
-        padding: 10px;
-    }
-    .table {
-        vertical-align: middle !important;
-    }
-    input {
-        outline: none;
-        border: none;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
+
     .btn {
         width: 100px;
         height: 35px;
     }
+
     .regex {
         border: none !important;
     }
+
     .btns-group {
         margin-left: 0 !important;
     }
+
     .btn-back {
         margin: 0 0 0 5px !important;
     }
+
     .btn-back:first-child {
         margin: 0 !important;
     }
@@ -167,59 +157,6 @@ echo '</div>';
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
-<script>
-    window.onload = () => {
-        let rows = [];
-        deps_chckr.addEventListener('input', (f) => {
-            for (let row of document.querySelectorAll('.row_selector')) {
-                row.checked = f.target.checked;
-                if (row.checked) {
-                    rows.push(row.name);
-                }
-            }
-            rows_information.value = rows;
-            rows = [];
-        })
-        document.addEventListener('input', (e) => {
-            if (e.target.className === 'row_selector') {
-                for (let row of document.querySelectorAll('.row_selector')) {
-                    if (row.checked) {
-                        rows.push(row.name);
-                    }
-                }
-
-                rows_information.value = rows;
-                rows = [];
-            }
-        })
-        let form = document.querySelector('form');
-        let path = window.location.protocol + '//' + window.location.hostname;
-        clear.addEventListener('click', (e) => {
-            form.action = path + '/admin_clear';
-            if (!rows_information.value.length) {
-                alert('Нет выбранных элементов');
-                e.preventDefault();
-            } else {
-                if (!confirm('Очистить выделеные строки?')) {
-                    e.preventDefault();
-                }
-            }
-        });
-        accept.addEventListener('click', (e) => {
-            form.action = path + '/admin_accept';
-            if (!rows_information.value.length) {
-                alert('Нет выбранных элементов');
-                e.preventDefault();
-            }
-        });
-        revalid.addEventListener('click', (e) => {
-            form.action = path + '/admin_revalid';
-            if (!rows_information.value.length) {
-                alert('Нет выбранных элементов');
-                e.preventDefault();
-            }
-        });
-    }
-</script>
+<script src="/js/tools.js" type="text/javascript"></script>
 
 @include('layouts.footer')

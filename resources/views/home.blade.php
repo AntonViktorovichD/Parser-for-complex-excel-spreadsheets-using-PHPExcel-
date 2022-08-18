@@ -1,13 +1,20 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
+
     body {
         max-width: 95vw !important;
+        position: relative;
     }
 
-    table {
-        height: 600px !important;
-        overflow-y: auto !important;
+    thead, tbody {
+        display: block;
+    }
+
+    tbody {
+        height: 75vh !important;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     .btn_pos {
@@ -49,15 +56,23 @@
             </div>
             <div class="instruction">
                 <h3>Инструкция для пользователей от 8.05.2018</h3>
-                <a class="linktofile" download href="{{ URL::to('/')}}/{{Storage::disk('local')->url('files/Instruction(user)(08.05.2018).pdf')}}">Скачать инструкцию
+                <a class="linktofile" download
+                   href="{{ URL::to('/')}}/{{Storage::disk('local')->url('files/Instruction(user)(08.05.2018).pdf')}}">Скачать
+                    инструкцию
                     для пользователей</a>
                 <h3>Инструкция для администраторов от 8.05.2018</h3>
-                <a class="linktofile" download href="{{ URL::to('/')}}/{{Storage::disk('local')->url('files/Instruction(admin)(08.05.2018).pdf')}}">Скачать инструкцию
+                <a class="linktofile" download
+                   href="{{ URL::to('/')}}/{{Storage::disk('local')->url('files/Instruction(admin)(08.05.2018).pdf')}}">Скачать
+                    инструкцию
                     для администраторов</a>
                 <h3>Шаблон Excel файла</h3>
-                <a class="linktofile" download href="{{ URL::to('/')}}/{{Storage::disk('local')->url('files/ExcelFileTemplate.xls')}}">Скачать шаблон Excel файла</a>
+                <a class="linktofile" download
+                   href="{{ URL::to('/')}}/{{Storage::disk('local')->url('files/ExcelFileTemplate.xls')}}">Скачать
+                    шаблон Excel файла</a>
                 <h3>Приказ №2 от 09.01.2017</h3>
-                <a class="linktofile" download href={{ URL::to('/')}}/{{Storage::disk('local')->url('files/Prikaz N2 ot 09.01.2017.pdf')}}">Скачать Приказ №2 от
+                <a class="linktofile" download
+                   href={{ URL::to('/')}}/{{Storage::disk('local')->url('files/Prikaz N2 ot 09.01.2017.pdf')}}">Скачать
+                    Приказ №2 от
                     09.01.2017</a>
             </div>
             <div class="logout">
@@ -74,17 +89,25 @@
             @php
                 //            if ($user_role == 3) {
                                 echo '<table class="table">';
+                                echo '<thead>';
                                 echo '<tr>';
                                 echo '<th scope="col">Ежедневные отчеты, требующие заполнения</th>';
                                 echo '</tr>';
                                 echo '<td id="nothing" hidden><i class="cmpl uk-icon-times" style="color: #e43d3c;"></i> Нет отчетов для заполнения</td>';
+                                echo '</thead>';
+                                echo '<tbody>';
                                 foreach (json_decode($arrs, true) as $arr) {
                                         echo '<tr class="tables_daily" id="' . $arr['fill'] . '">';
                                         echo '<td>';
-                                        echo '<a  href="#">' . $arr['table_name'] . '</a>';
+                                        if ($arr['edit']) {
+                                           echo '<a href="edit/' . $arr['table_uuid'] . '">' . $arr['table_name'] . '</a>';
+                                        } else {
+                                           echo '<a href="add/' . $arr['table_uuid'] . '">' . $arr['table_name'] . '</a>';
+                                        }
                                         echo '</td>';
                                         echo '</tr>';
                                 }
+                                echo '</tbody>';
                                 echo '</table>';
                 //                }
             @endphp
