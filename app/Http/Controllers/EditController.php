@@ -25,6 +25,7 @@ class EditController extends Controller {
          $radio = $table[0]->radio;
          $read_only = $table[0]->read_only;
          $json_func = $table[0]->json_func;
+         $comment = $table[0]->comment;
          $user_role = Auth::user()->roles->first()->id;
          if ($user_role == 1 || $user_role == 4) {
             $report_values = DB::table('report_values')->where('table_uuid', $table_uuid)->get();
@@ -65,6 +66,7 @@ class EditController extends Controller {
          $rep_value = [];
          $rep_key = [];
          $report_value = [];
+         $fill = [];
 
          for ($i = 1; $i < $highest_row; $i++) {
             for ($k = 0; $k < $highest_column_index; $k++) {
@@ -91,6 +93,12 @@ class EditController extends Controller {
             if (count($report_values) > 0) {
                foreach ($report_values as $i => $value) {
                   $val = json_decode($report_values[$i]['json_val'], true);
+                  for ($j = 1; $j <= count($val); $j++) {
+                     if(empty($val[$j])) {
+                        $fill[$i][] = $val[$j];
+                     }
+                  }
+
                   $key = explode('+', $report_values[$i]['row_uuid'] . '+');
                   unset($key[1]);
                   foreach ($key as $k => $item) {
@@ -100,13 +108,13 @@ class EditController extends Controller {
                }
                $report_value = (json_encode(array_combine($rep_key, $rep_value)));
 
-               return view('admin_edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'report_value', 'user_dep', 'pattern', 'json_func', 'json_vals', 'dep'));
+               return view('admin_edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'report_value', 'user_dep', 'pattern', 'json_func', 'json_vals', 'dep', 'fill', 'read_only', 'comment'));
             } else {
                return view('admin_view', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid'));
             }
          } else {
             $report_value = json_encode(DB::table('report_values')->where('table_uuid', $table_uuid)->where('user_id', $user_id)->value('json_val'));
-            return view('edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'row_uuid', 'user_id', 'report_value', 'user_dep', 'pattern', 'read_only', 'json_func', 'json_vals', 'dep'));
+            return view('edit', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'row_uuid', 'user_id', 'report_value', 'user_dep', 'pattern', 'read_only', 'json_func', 'json_vals', 'dep', 'comment'));
          }
       } catch
       (QueryException $e) {
@@ -161,7 +169,7 @@ class EditController extends Controller {
       $departments = [];
       if ($notification_rights->e_mail != 0) {
          foreach ($rows_information as $row) {
-           $departments[] = DB::table('report_values')->where('row_uuid', $row)->value('user_dep');
+            $departments[] = DB::table('report_values')->where('row_uuid', $row)->value('user_dep');
          }
          $table_name = DB::table('report_values')->where('row_uuid', $rows_information[0])->value('table_name');
       }

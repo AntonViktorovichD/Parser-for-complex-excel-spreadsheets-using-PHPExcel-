@@ -414,6 +414,38 @@ class UploadController extends Controller {
 
             unlink($tmpPath);
 
+            $mapArray = array(
+               1 => '01',
+               2 => '01',
+               3 => '01',
+               4 => '02',
+               5 => '02',
+               6 => '02',
+               7 => '03',
+               8 => '03',
+               9 => '03',
+               10 => '04',
+               11 => '04',
+               12 => '04'
+            );
+
+            foreach ($checkboxes as $key => $checkbox) {
+               $row_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
+               $user_id = DB::table('users')->where('department', $checkbox)->value('id');
+
+               if($periodicity == 0) {
+                  DB::table('report_values')->insert(['table_name' => $filename, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'user_dep' => $checkbox]);
+               } elseif($periodicity == 1) {
+                  DB::table('daily_reports')->insert(['table_name' => $filename, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'user_dep' => $checkbox]);
+               } elseif($periodicity == 2) {
+                  DB::table('weekly_reports')->insert(['table_name' => $filename, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'user_dep' => $checkbox]);
+               } elseif($periodicity == 3) {
+                  DB::table('monthly_reports')->insert(['table_name' => $filename, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'user_dep' => $checkbox, 'month' => date('n'), 'year' => date('Y')]);
+               } elseif($periodicity == 4) {
+                  DB::table('quarterly_reports')->insert(['table_name' => $filename, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'user_dep' => $checkbox, 'quarter' => $mapArray(date('n')), 'year' => date('Y')]);
+               }
+
+            }
             if ($sms == 'yes') {
                return redirect()->action([SmsController::class, 'send_sms'], ['table_uuid' => $table_uuid]);
             } else {

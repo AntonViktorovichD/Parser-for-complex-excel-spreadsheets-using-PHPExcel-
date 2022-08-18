@@ -2,6 +2,15 @@
 @include('layouts.menu')
 <style>
 
+    .card-body, .card-title {
+        display: block;
+    }
+
+    .card-body {
+        overflow-y: auto !important;
+        height: 230px;
+    }
+
     .btn {
         width: 100px;
         height: 35px;
@@ -38,8 +47,11 @@
     $table_info = [];
     $user_deps = json_encode($user_dep, JSON_UNESCAPED_UNICODE);
     echo '<div class="container-flex">';
-    echo '<a href="/json" class="btn-back" style="margin-bottom: 30px !important">Вернуться к списку таблиц</a>';
     echo '<form method="post" action="/">';
+    echo '<div class="row align-items-start">';
+    echo '<div class="col">';
+    echo '<a href="/json" class="btn-back" style="margin-bottom: 30px !important">Вернуться к списку таблиц</a>';
+
 @endphp
 <table class="colors">
     <tbody>
@@ -68,6 +80,18 @@
 echo '<button id="clear" class="btn-back">Очистить данные</button>';
 echo '<button id="accept" class="btn-back">Принять данные</button>';
 echo '<button id="revalid" class="btn-back">Отклонить данные</button>';
+echo '</div>';
+echo '</div>';
+echo '<div class="col">';
+if ($comment) {
+  echo '<div class="card">';
+  echo '<div class="card-body">';
+  echo '<h5 class="card-title">Комментарий</h5>';
+    echo '<p class="card-text">' . $comment . '</p>';
+  echo '</div>';
+echo '</div>';
+}
+echo '</div>';
 echo '</div>';
         echo '<h5 style="text-align:center">' . $name . '</h5>';
             $rowSpan = $highest_row - 1;
@@ -99,7 +123,7 @@ echo '</div>';
             $counter = 0;
             foreach ($values as $count) {
                 echo '<tr>' . PHP_EOL;
-                echo '<td><input type="checkbox" class="row_selector" id="' . $user_dep[$counter] . '" name="' .  $row_uuid[$counter] . '"></td>' . PHP_EOL;
+                echo '<td><input type="checkbox" data-fill="' . count($fill[$counter]) .'" class="row_selector" id="' . $user_dep[$counter] . '" name="' .  $row_uuid[$counter] . '"></td>' . PHP_EOL;
                 echo '<td><label for="' . $user_dep[$counter] . '">' . $dep[$counter] . '</label></td>' . PHP_EOL;
                 foreach ($sum as $key => $val) {
                     if (isset($vals[$key])) {
@@ -158,5 +182,35 @@ echo '</div>';
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
 <script src="/js/tools.js" type="text/javascript"></script>
+<script>
+    let read_only = '<?= $read_only ?>';
+    let visible_cells = document.querySelectorAll('.visible_cell');
+    if (read_only === 'disabled') {
+        let fill = document.querySelectorAll('.row_selector');
+        for (let i = 0; i < fill.length; i++) {
+            if (fill[i].dataset.fill) {
+                for (let input of visible_cells) {
+                    if (input.dataset.org === fill[i].id) {
+                        input.parentNode.className = 'half-filled';
+                        input.className = input.className + ' half-filled';
+                    }
+                }
+            } else {
+                for (let input of visible_cells) {
+                    if (input.dataset.org === fill[i].id) {
+                        input.parentNode.className = 'filled';
+                        input.className = input.className + ' filled';
+                    }
+                }
+            }
+        }
+    } else {
+        for (let visible_cell of visible_cells) {
+            visible_cell.parentNode.className = 'accept';
+            visible_cell.className = visible_cell.className + ' accept';
+        }
+    }
 
+</script>
 @include('layouts.footer')
+

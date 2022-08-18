@@ -20,6 +20,10 @@
     .container-flex {
         margin-right: 35px !important;
     }
+
+    .radio_info {
+        margin-left: 20px;
+    }
 </style>
 <link rel="stylesheet" href="/css/jquery.datetimepicker.min.css">
 <script src="/js/jquery.js"></script>
@@ -67,11 +71,13 @@
             } else {
                echo '<input type="hidden" name="periodicity" value="0">';
             }
-            echo '<input type="radio" name="reg_func" value="v_text">&nbsp Текст';
-            echo '<input type="radio" name="reg_func" value="v_int">&nbsp Целые числа';
-            echo '<input type="radio" name="reg_func" value="v_float">&nbsp Числа с плавающей точкой';
-            echo '<input type="radio" name="reg_func" value="v_all">&nbsp Текст и числа';
-            echo '<div class="row  row_info">';
+            echo '<div class="radio_info">';
+            echo '<input type="radio" name="reg_func" value="v_text">&nbsp Текст &nbsp';
+            echo '<input type="radio" name="reg_func" value="v_int">&nbsp Целые числа &nbsp';
+            echo '<input type="radio" name="reg_func" value="v_float">&nbsp Числа с плавающей точкой &nbsp';
+            echo '<input type="radio" name="reg_func" value="v_all">&nbsp Текст и числа &nbsp';
+            echo '</div>';
+            echo '<div class="row row_info">';
             echo '<div class="col-1 text-nowrap info_headers">';
             echo '<label for="created_at">
                             Начало сбора данных</label>';

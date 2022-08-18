@@ -424,3 +424,15 @@ input {
     padding: 0 !important;
     margin: 0 !important;
 }
+
+.half-filled {
+    background: #c9c9c9 !important;
+}
+
+.filled {
+    background: #3e97d1 !important;
+}
+
+.accept {
+    background: #5ccccc !important;
+}
