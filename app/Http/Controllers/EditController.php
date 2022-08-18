@@ -112,9 +112,10 @@ class EditController extends Controller {
    }
 
    public function clear(Request $request) {
-      foreach (explode(',', $request->input('rows_information')) as $truncated) {
-         DB::table('report_values')->where('row_uuid', $truncated)->truncate();
-      }
+      var_dump($request->input('rows_information'));
+//      foreach (explode(',', $request->input('rows_information')) as $truncated) {
+//         DB::table('report_values')->where('row_uuid', $truncated)->truncate();
+//      }
    }
 
    public function accept(Request $request) {
@@ -124,5 +125,8 @@ class EditController extends Controller {
       } else {
          DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'disabled');
       }
+   }
+   public function revalid(Request $request) {
+var_dump($request->input('rows_information'));
    }
 }

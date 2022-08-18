@@ -85,7 +85,7 @@ echo '</div>';
             echo '<div class="table-responsive">' . PHP_EOL;
             echo '<table class="table table-bordered border-dark">' . PHP_EOL;
             echo '<tr>';
-            echo '<td rowspan="' . $rowSpan . '" ><input type="checkbox" id="deps_chckr" name="Учреждение"></td>';
+            echo '<td rowspan="' . $rowSpan . '"><input type="checkbox" id="deps_chckr" name="Учреждение"></td>';
             echo '<td rowspan="' . $rowSpan . '"><label for="Учреждение">Учреждение</label></td>';
             echo '</tr>';
             for ($i = 1; $i < $highest_row - 1; $i++) {
@@ -156,11 +156,11 @@ echo '</div>';
                 echo '<br/>';
             $counter++;
             }
-            echo '<input type="hidden" id="table_information" name="table_information" value="' . $table_uuid . '"';
-            echo '<input type="hidden" id="rows_information" name="rows_information" value="">';
             echo '</tr>' . PHP_EOL;
             echo '</table>' . PHP_EOL;
             echo '</div>' . PHP_EOL;
+            echo '<input type="hidden" id="table_information" name="table_information" value="' . $table_uuid . '"<br />';
+            echo '<input type="hidden" id="rows_information" name="rows_information" value="">';
             echo '</form>' . PHP_EOL;
             echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
             echo '</div>';
@@ -187,6 +187,7 @@ echo '</div>';
                         rows.push(row.name);
                     }
                 }
+
                 rows_information.value = rows;
                 rows = [];
             }
@@ -204,12 +205,19 @@ echo '</div>';
                 }
             }
         });
-        console.log(table_information.value);
-        accept.addEventListener('click', () => {
+        accept.addEventListener('click', (e) => {
             form.action = path + '/admin_accept';
+            if (!rows_information.value.length) {
+                alert('Нет выбранных элементов');
+                e.preventDefault();
+            }
         });
-        revalid.addEventListener('click', () => {
+        revalid.addEventListener('click', (e) => {
             form.action = path + '/admin_revalid';
+            if (!rows_information.value.length) {
+                alert('Нет выбранных элементов');
+                e.preventDefault();
+            }
         });
     }
 </script>
