@@ -22,7 +22,6 @@ class EditController extends Controller {
          $radio = $table[0]->radio;
          $read_only = $table[0]->read_only;
          $json_func = $table[0]->json_func;
-
          $user_role = Auth::user()->roles->first()->id;
          if ($user_role == 1 || $user_role == 4) {
             $report_values = DB::table('report_values')->where('table_uuid', $table_uuid)->get();
@@ -114,13 +113,16 @@ class EditController extends Controller {
 
    public function clear(Request $request) {
       foreach (explode(',', $request->input('rows_information')) as $truncated) {
-         var_dump($truncated);
-//         DB::table('report_values')->where('row_uuid', $truncated)->truncate();
+         DB::table('report_values')->where('row_uuid', $truncated)->truncate();
       }
    }
 
    public function accept(Request $request) {
-      var_dump();
+      $read_only = DB::table('tables')->where('table_uuid', $request->input('table_information'))->value('read_only');
+      if ($read_only === 'disabled') {
          DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'enabled');
+      } else {
+         DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'disabled');
+      }
    }
 }

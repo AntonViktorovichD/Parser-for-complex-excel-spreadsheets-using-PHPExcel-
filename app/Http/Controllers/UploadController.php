@@ -339,7 +339,6 @@ class UploadController extends Controller {
             foreach ($mCells as $key => $mCell) {
                $strMCells[] = preg_replace('#\d+#', '', $mCell . '|');
             }
-
             $strMC = implode($strMCells);
 
             for ($i = 0; $i < strlen($strMC); $i++) {

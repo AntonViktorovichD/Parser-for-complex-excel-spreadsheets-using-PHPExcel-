@@ -1,49 +1,37 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
-
     td input[type="checkbox"] {
         display: inline;
     }
-
     .table > th, .table > td {
         padding: 10px;
     }
-
     .table {
         vertical-align: middle !important;
     }
-
     input {
         outline: none;
         border: none;
-        width: 100%;
-        height: 100%;
         padding: 0 !important;
         margin: 0 !important;
     }
-
     .btn {
         width: 100px;
         height: 35px;
     }
-
     .regex {
         border: none !important;
     }
-
     .btns-group {
         margin-left: 0 !important;
     }
-
     .btn-back {
         margin: 0 0 0 5px !important;
     }
-
     .btn-back:first-child {
         margin: 0 !important;
     }
-
 </style>
 @php
     $user_id = Auth::user()->id;
@@ -61,7 +49,6 @@
     $user_deps = json_encode($user_dep, JSON_UNESCAPED_UNICODE);
     echo '<div class="container-flex">';
     echo '<a href="/json" class="btn-back" style="margin-bottom: 30px !important">Вернуться к списку таблиц</a>';
-
     echo '<form method="post" action="/">';
 @endphp
 <table class="colors">
@@ -98,7 +85,8 @@ echo '</div>';
             echo '<div class="table-responsive">' . PHP_EOL;
             echo '<table class="table table-bordered border-dark">' . PHP_EOL;
             echo '<tr>';
-            echo '<td rowspan="' . $rowSpan . '"><label for="Учреждение">Учреждение</label><input type="checkbox" id="deps_chckr" name="Учреждение"></td>';
+            echo '<td rowspan="' . $rowSpan . '" ><input type="checkbox" id="deps_chckr" name="Учреждение"></td>';
+            echo '<td rowspan="' . $rowSpan . '"><label for="Учреждение">Учреждение</label></td>';
             echo '</tr>';
             for ($i = 1; $i < $highest_row - 1; $i++) {
                 echo '<tr>' . PHP_EOL;
@@ -121,7 +109,8 @@ echo '</div>';
             $counter = 0;
             foreach ($values as $count) {
                 echo '<tr>' . PHP_EOL;
-                echo '<td><label for="' . $user_dep[$counter] . '">' . $dep[$counter] . '</label><input type="checkbox" class="row_selector" id="' . $user_dep[$counter] . '" name="' .  $row_uuid[$counter] . '"></td>' . PHP_EOL;
+                echo '<td><input type="checkbox" class="row_selector" id="' . $user_dep[$counter] . '" name="' .  $row_uuid[$counter] . '"></td>' . PHP_EOL;
+                echo '<td><label for="' . $user_dep[$counter] . '">' . $dep[$counter] . '</label></td>' . PHP_EOL;
                 foreach ($sum as $key => $val) {
                     if (isset($vals[$key])) {
                         if (isset($val)) {
@@ -167,7 +156,6 @@ echo '</div>';
                 echo '<br/>';
             $counter++;
             }
-
             echo '<input type="hidden" id="table_information" name="table_information" value="' . $table_uuid . '"';
             echo '<input type="hidden" id="rows_information" name="rows_information" value="">';
             echo '</tr>' . PHP_EOL;
@@ -180,7 +168,6 @@ echo '</div>';
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
 <script>
-
     window.onload = () => {
         let rows = [];
         deps_chckr.addEventListener('input', (f) => {
@@ -193,7 +180,6 @@ echo '</div>';
             rows_information.value = rows;
             rows = [];
         })
-
         document.addEventListener('input', (e) => {
             if (e.target.className === 'row_selector') {
                 for (let row of document.querySelectorAll('.row_selector')) {
@@ -205,10 +191,8 @@ echo '</div>';
                 rows = [];
             }
         })
-
         let form = document.querySelector('form');
         let path = window.location.protocol + '//' + window.location.hostname;
-
         clear.addEventListener('click', (e) => {
             form.action = path + '/admin_clear';
             if (!rows_information.value.length) {
@@ -222,7 +206,6 @@ echo '</div>';
         });
         console.log(table_information.value);
         accept.addEventListener('click', () => {
-
             form.action = path + '/admin_accept';
         });
         revalid.addEventListener('click', () => {

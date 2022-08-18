@@ -51,7 +51,7 @@ echo '<h5 style="text-align:center">' . $name . '</h5>';
         ksort($arrAddRow);
         $sum =  json_decode($json_func,true);
         $vals =  json_decode($json_vals,true);
-        $values = json_decode($report_value, true);
+        $values = $report_value;
         $colnum = 1;
         $arrCol = [];
         $arrNum = [];
@@ -78,10 +78,13 @@ echo '<div class="table-responsive">' . PHP_EOL;
     echo '<td>' . $dep . '</td>' . PHP_EOL;
     if ($read_only == 'disabled') {
         foreach ($sum as $key => $val) {
+
             if (isset($vals[$key])) {
                 if (isset($val)) {
+
                     if (str_contains($val, 'colspan') && ((str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')))) {
                         $colspan = preg_replace('#[a-z\s]#', '', explode('|', $val)[0]);
+                        var_dump($colspan);
                         echo '<td colspan="' . $colspan . '"><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $vals[$key] . '"></td>' . PHP_EOL;
                     } elseif (str_contains($val, 'rate') || str_contains($val, 'crease') || str_contains($val, 'sum') || str_contains($val, 'diff') || str_contains($val, 'prod') || str_contains($val, 'divide')) {
                         echo '<td><input type="text" pattern="' . $pattern . '" id="' . $key . '" name="' . $key . '"  class="visible_cell" value="' . $vals[$key] . '"></td>' . PHP_EOL;

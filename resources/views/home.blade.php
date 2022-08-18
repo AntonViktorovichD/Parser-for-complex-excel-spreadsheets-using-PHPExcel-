@@ -10,10 +10,6 @@
         overflow-y: auto !important;
     }
 
-    .uk-navbar-nav {
-        margin-left: 30px !important;
-    }
-
     .btn_pos {
         position: relative !important;
     }
@@ -30,7 +26,7 @@
         font-weight: normal;
     }
 </style>
-<div class="container px-5">
+<div class="container">
     <div class="row justify-content-between">
         <div class="bg_info btn_pos col-9">
             <div class="warning_text">

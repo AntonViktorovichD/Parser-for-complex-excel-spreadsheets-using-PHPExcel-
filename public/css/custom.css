@@ -171,9 +171,9 @@ table.dataTable thead .sorting_desc {
 }
 
 .uk-navbar-nav {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*width: 100%;*/
     margin-right: 30px !important;
 }
 

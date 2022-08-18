@@ -250,18 +250,21 @@
         )
     }
     //
-    periodicity.addEventListener('input', (e) => {
-        let start = document.getElementById("datetimepicker-s");
-        let finish = document.getElementById("datetimepicker-f");
-        if (e.target.value > 0) {
-            start.disabled = true;
-            start.hidden = true;
-            finish.disabled = true;
-            finish.hidden = true;
-            dtp_s.hidden = true;
-            dtp_f.hidden = true;
-        }
-    })
+    let periodicity = document.getElementById("periodicity");
+    if (periodicity !== null) {
+        periodicity.addEventListener('input', (e) => {
+            let start = document.getElementById("datetimepicker-s");
+            let finish = document.getElementById("datetimepicker-f");
+            if (e.target.value > 0) {
+                start.disabled = true;
+                start.hidden = true;
+                finish.disabled = true;
+                finish.hidden = true;
+                dtp_s.hidden = true;
+                dtp_f.hidden = true;
+            }
+        })
+    }
     //
     let success = document.getElementById("prev");
     let sms = document.getElementById("sms");
