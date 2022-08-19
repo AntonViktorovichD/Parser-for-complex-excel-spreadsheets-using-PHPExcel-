@@ -33,6 +33,7 @@
     }
 </style>
 @php
+
     $user_id = Auth::user()->id;
     $arrCell = json_decode($json, true);
     $arrAddRow = array_flip(json_decode($addRowArr, true));
@@ -46,6 +47,8 @@
     $arrKeyVal = [];
     $table_info = [];
     $user_deps = json_encode($user_dep, JSON_UNESCAPED_UNICODE);
+
+$user_deps = implode('|', $user_dep);
     echo '<div class="container-flex">';
     echo '<form method="post" action="/">';
     echo '<div class="row align-items-start">';
@@ -184,18 +187,28 @@ echo '</div>';
 <script src="/js/tools.js" type="text/javascript"></script>
 <script>
     let read_only = '<?= $read_only ?>';
+    let counter = 0;
+    let user_deps = '<?= $user_deps ?>'.split('|');
     let visible_cells = document.querySelectorAll('.visible_cell');
     if (read_only === 'disabled') {
         let fill = document.querySelectorAll('.row_selector');
+        for (let cell of visible_cells) {
+            if (cell.dataset.org === user_deps[0]) {
+                counter++;
+            }
+        }
+
         for (let i = 0; i < fill.length; i++) {
-            if (fill[i].dataset.fill) {
+            if(fill[i].dataset.fill === counter) {
+
+            } else if (fill[i].dataset.fill < counter && fill[i].dataset.fill > 0) {
                 for (let input of visible_cells) {
                     if (input.dataset.org === fill[i].id) {
                         input.parentNode.className = 'half-filled';
                         input.className = input.className + ' half-filled';
                     }
                 }
-            } else {
+            } else if (fill[i].dataset.fill === 0) {
                 for (let input of visible_cells) {
                     if (input.dataset.org === fill[i].id) {
                         input.parentNode.className = 'filled';

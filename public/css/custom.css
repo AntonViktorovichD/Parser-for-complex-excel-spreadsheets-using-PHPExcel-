@@ -438,6 +438,10 @@ input {
     background: #5ccccc !important;
 }
 
+.empty-filled {
+    background: #e43d3c !important;
+}
+
 .btn-submit-second {
     color: white !important;
     padding: 3px !important;
