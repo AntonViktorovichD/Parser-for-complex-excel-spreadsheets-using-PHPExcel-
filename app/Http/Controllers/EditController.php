@@ -127,7 +127,7 @@ class EditController extends Controller {
       foreach ($rows_information as $truncated) {
          DB::table('report_values')->where('row_uuid', $truncated)->truncate();
       }
-      $notification_rights = DB::table('notification_rights')->where('id', 1)->get()[0];
+      $notification_rights = DB::table('noification_rights')->where('id', 1)->get()[0];
       $notifications = [];
       $departments = [];
       if ($notification_rights->e_mail != 0) {
@@ -164,7 +164,7 @@ class EditController extends Controller {
 
    public function revalid(Request $request) {
       $rows_information = explode(',', $request->input('rows_information'));
-      $notification_rights = DB::table('notification_rights')->where('id', 1)->get()[0];
+      $notification_rights = DB::table('noification_rights')->where('id', 1)->get()[0];
       $notifications = [];
       $departments = [];
       if ($notification_rights->e_mail != 0) {

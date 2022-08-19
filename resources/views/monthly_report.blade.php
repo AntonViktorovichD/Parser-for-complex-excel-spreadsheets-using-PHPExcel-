@@ -32,7 +32,6 @@
         echo '</tr>';
     }
     echo '</table>';
-    echo '<a class="export" href="/monthly_export/' . $table_uuid . '">Экспорт</a>';
     echo '</div>';
     echo '</div>';
 

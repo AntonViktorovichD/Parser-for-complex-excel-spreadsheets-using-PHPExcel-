@@ -139,12 +139,15 @@
         }
         echo '</tr>' . PHP_EOL;
         $table_info = $table_uuid . ' + ' . $row_uuid;
-        echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
+        echo '<input type="hidden" name="table_information" value="' . $table_info . '"<br />';
+        echo '<input type="hidden" name="rows_information" value="' . $row_uuid . '"';
         echo '</tr>' . PHP_EOL;
         echo '</table>' . PHP_EOL;
         echo '</div>' . PHP_EOL;
+        if($user_role == 2 || $user_role == 3) {
         if ($read_only == 'disabled') {
             echo '<input class="btn-submit-ae" type="submit">';
+        }
         }
         echo '</form>' . PHP_EOL;
         echo '<a class="export" href="/quarterly_export/' . $row_uuid . '">Экспорт таблицы</a>';
@@ -261,12 +264,15 @@ echo '<h5 style="text-align:center">' . $name . '</h5>';
     echo '</tr>' . PHP_EOL;
 
     $table_info = $name . ' + ' . $table_uuid . ' + ' . $row_uuid . ' + ' . $user_id . ' + ' . $department . ' + ' . $quarter . ' + ' . $year;
-    echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
+    echo '<input type="hidden" name="table_information" value="' . $table_info . '"<br />';
+    echo '<input type="hidden" name="rows_information" value="' . $row_uuid . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
+    if($user_role == 2 || $user_role == 3) {
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
+    }
     }
     echo '</form>' . PHP_EOL;
     }
@@ -277,6 +283,46 @@ echo '<h5 style="text-align:center">' . $name . '</h5>';
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
-<script src="/js/tools.js" type="text/javascript"></script>
+{{--<script src="/js/tools.js" type="text/javascript"></script>--}}
+<script>
+    window.onload = () => {
+        let read_only = '<?= $read_only ?>';
+        let visible_cells = document.querySelectorAll('.visible_cell');
+        for (let input of visible_cells) {
+            if (read_only === 'disabled') {
+                if (!input.value.length) {
+                    input.parentNode.className = 'empty-filled';
+                    input.className = input.className + ' empty-filled';
+                } else if (input.value.length < visible_cells.length) {
+                    input.parentNode.className = 'half-filled';
+                    input.className = input.className + ' half-filled';
+                } else if (input.value.length === visible_cells.length) {
+                    input.parentNode.className = 'filled';
+                    input.className = input.className + ' filled';
+                }
+            } else {
+                input.parentNode.className = 'accept';
+                input.className = input.className + ' accept';
+            }
+        }
 
+        let form = document.querySelector('form');
+        let path = window.location.protocol + '//' + window.location.hostname;
+        clear.addEventListener('click', (e) => {
+            form.action = path + '/admin_quarterly_clear';
+            if (!confirm('Очистить выделеные строки?')) {
+                e.preventDefault();
+            }
+            form.submit();
+        });
+        accept.addEventListener('click', () => {
+            form.action = path + '/admin_quarterly_accept';
+            form.submit();
+        });
+        revalid.addEventListener('click', () => {
+            form.action = path + '/admin_quarterly_revalid';
+            form.submit();
+        });
+    }
+</script>
 @include('layouts.footer')

@@ -13,18 +13,19 @@ class MonthlyReportsController extends Controller {
                 if(empty(Auth::id())) {
             return redirect()->route('login');
          }
+       $table_uuid = $name;
         $user_id = Auth::id();
         $user_dep = Auth::user()->department;
-        $table = DB::table('tables')->where('status', 0)->where('table_uuid', '=', $name)->get();
+        $table = DB::table('tables')->where('status', 0)->where('table_uuid', $name)->get();
         if (Auth::user()->roles->first()->id == 1 || Auth::user()->roles->first()->id == 4) {
             $departments = [];
             foreach (json_decode($table[0]->departments, true) as $department) {
-                $departments[$department] = DB::table('org_helper')->where('id', '=', $department)->value('title');
+                $departments[$department] = DB::table('org_helper')->where('id', $department)->value('title');
             }
         } else {
             $departments[$user_dep] = DB::table('org_helper')->where('id', $user_dep)->value('title');
         }
-        return view('monthly_report', compact('table', 'departments', 'name', 'year'));
+        return view('monthly_report', compact('table', 'departments', 'name', 'year', 'table_uuid'));
     }
     public function monthly_user_report($table_uuid, $year, $month, $department) {
                 if(empty(Auth::id())) {

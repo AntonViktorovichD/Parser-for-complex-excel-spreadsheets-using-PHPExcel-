@@ -53,6 +53,9 @@ Route::get('/quarterly_report/{name}/{year}', [QuarterlyReportsController::class
 Route::get('/quarterly_user_report/{name}/{year}/{quarter}/{department}', [QuarterlyReportsController::class, 'quarterly_user_report'])->middleware('auth');
 Route::post('/quarterly_upload', [QuarterlyReportsController::class, 'quarterly_upload'])->middleware('auth');
 Route::post('/quarterly_update', [QuarterlyReportsController::class, 'quarterly_update'])->middleware('auth');
+Route::post('/admin_quarterly_clear/', [QuarterlyReportsController::class, 'clear'])->middleware('checkAdmin');
+Route::post('/admin_quarterly_accept/', [QuarterlyReportsController::class, 'accept'])->middleware('checkAdmin');
+Route::post('/admin_quarterly_revalid/', [QuarterlyReportsController::class, 'revalid'])->middleware('checkAdmin');
 
 use App\Http\Controllers\TestController;
 

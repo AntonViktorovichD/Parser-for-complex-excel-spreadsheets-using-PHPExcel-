@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Mail\Email;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class QuarterlyReportsController extends Controller {
    public function quarterly_reports() {
-               if(empty(Auth::id())) {
-            return redirect()->route('login');
-         }
+      if (empty(Auth::id())) {
+         return redirect()->route('login');
+      }
       try {
          $rv_ja = [];
          $user_names = [];
@@ -34,9 +36,9 @@ class QuarterlyReportsController extends Controller {
    }
 
    public function quarterly_report($name, $year) {
-               if(empty(Auth::id())) {
-            return redirect()->route('login');
-         }
+      if (empty(Auth::id())) {
+         return redirect()->route('login');
+      }
       $user_id = Auth::id();
       $user_dep = Auth::user()->department;
       $table = DB::table('tables')->where('status', 0)->where('table_uuid', '=', $name)->get();
@@ -52,9 +54,9 @@ class QuarterlyReportsController extends Controller {
    }
 
    public function quarterly_user_report($table_uuid, $year, $quarter, $department) {
-               if(empty(Auth::id())) {
-            return redirect()->route('login');
-         }
+      if (empty(Auth::id())) {
+         return redirect()->route('login');
+      }
       $user_dep = Auth::user()->department;
       $table = DB::table('tables')->where('status', 0)->where('table_uuid', $table_uuid)->get();
       $quarterly_reports = DB::table('quarterly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('quarter', $quarter)->where('year', $year)->get();
@@ -116,9 +118,9 @@ class QuarterlyReportsController extends Controller {
    }
 
    public function quarterly_upload(Request $request) {
-               if(empty(Auth::id())) {
-            return redirect()->route('login');
-         }
+      if (empty(Auth::id())) {
+         return redirect()->route('login');
+      }
       try {
          date_default_timezone_set('Europe/Moscow');
          $date = date('Y-m-d H:i:s');
@@ -134,9 +136,9 @@ class QuarterlyReportsController extends Controller {
    }
 
    public function quarterly_update(Request $request) {
-               if(empty(Auth::id())) {
-            return redirect()->route('login');
-         }
+      if (empty(Auth::id())) {
+         return redirect()->route('login');
+      }
       try {
          date_default_timezone_set('Europe/Moscow');
          $date = date('Y-m-d H:i:s');
@@ -151,5 +153,53 @@ class QuarterlyReportsController extends Controller {
       } catch (QueryException $e) {
          echo 'Ошибка: ' . $e->getMessage();
       }
+   }
+
+   public function clear(Request $request) {
+      $rows_information = $request->input('rows_information');
+      DB::table('quarterly_reports')->where('row_uuid',)->truncate();
+      $notification_rights = DB::table('notification_rights')->where('id', 1)->value('e_mail');
+      if ($notification_rights != 0) {
+         $department = DB::table('quarterly_reports')->where('row_uuid', $rows_information)->value('user_dep');
+         $table_name = DB::table('quarterly_reports')->where('row_uuid', $rows_information)->value('table_name');
+      }
+      $notification = DB::table('user_noifications')->where('org_id', $department)->value('e_mail');
+      $objDemo = new \stdClass();
+      $objDemo->table_name = $table_name;
+      if ($notification == 1) {
+         $mail = DB::table('users')->where('department', $key)->value('email');
+         if (isset($mail)) {
+            Mail::to($mail)->send(new Email($objDemo));
+         }
+      }
+      return redirect()->action([QuarterlyReportsController::class, 'quarterly_reports']);
+   }
+
+   public function accept(Request $request) {
+      $read_only = DB::table('tables')->where('table_uuid', $request->input('table_information'))->value('read_only');
+      if ($read_only === 'disabled') {
+         DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'enabled');
+      } else {
+         DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'disabled');
+      }
+   }
+
+   public function revalid(Request $request) {
+      $rows_information = $request->input('rows_information');
+      $notification_rights = DB::table('notification_rights')->where('id', 1)->value('e_mail');
+      if ($notification_rights != 0) {
+         $department = DB::table('quarterly_reports')->where('row_uuid', $rows_information)->value('user_dep');
+         $table_name = DB::table('quarterly_reports')->where('row_uuid', $rows_information)->value('table_name');
+      }
+      $notification = DB::table('user_noifications')->where('org_id', $department)->value('e_mail');
+      $objDemo = new \stdClass();
+      $objDemo->table_name = $table_name;
+      if ($notification == 1) {
+         $mail = DB::table('users')->where('department', $key)->value('email');
+         if (isset($mail)) {
+            Mail::to($mail)->send(new Email($objDemo));
+         }
+      }
+      return redirect()->action([QuarterlyReportsController::class, 'quarterly_reports']);
    }
 }

@@ -65,3 +65,7 @@ hr {
 tr {
     text-align: center !important;
 }
+
+.btn-primary {
+    background: #e43d3c !important;;
+}
