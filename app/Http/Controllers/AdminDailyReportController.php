@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Mail\Email;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AdminDailyReportController extends Controller {
    public function admin_daily_report($table_uuid) {
@@ -190,6 +192,53 @@ class AdminDailyReportController extends Controller {
       }
    }
 
+   public function clear(Request $request) {
+      $rows_information = $request->input('rows_information');
+      DB::table('daily_reports')->where('row_uuid',)->truncate();
+      $notification_rights = DB::table('notification_rights')->where('id', 1)->value('e_mail');
+      if ($notification_rights != 0) {
+         $department = DB::table('daily_reports')->where('row_uuid', $rows_information)->value('user_dep');
+         $table_name = DB::table('daily_reports')->where('row_uuid', $rows_information)->value('table_name');
+      }
+      $notification = DB::table('user_noifications')->where('org_id', $department)->value('e_mail');
+      $objDemo = new \stdClass();
+      $objDemo->table_name = $table_name;
+      if ($notification == 1) {
+         $mail = DB::table('users')->where('department', $key)->value('email');
+         if (isset($mail)) {
+            Mail::to($mail)->send(new Email($objDemo));
+         }
+      }
+      return redirect()->action([DailyReportsController::class, 'daily_reports']);
+   }
+
+   public function accept(Request $request) {
+      $read_only = DB::table('tables')->where('table_uuid', $request->input('table_information'))->value('read_only');
+      if ($read_only === 'disabled') {
+         DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'enabled');
+      } else {
+         DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'disabled');
+      }
+   }
+
+   public function revalid(Request $request) {
+      $rows_information = $request->input('rows_information');
+      $notification_rights = DB::table('notification_rights')->where('id', 1)->value('e_mail');
+      if ($notification_rights != 0) {
+         $department = DB::table('daily_reports')->where('row_uuid', $rows_information)->value('user_dep');
+         $table_name = DB::table('daily_reports')->where('row_uuid', $rows_information)->value('table_name');
+      }
+      $notification = DB::table('user_noifications')->where('org_id', $department)->value('e_mail');
+      $objDemo = new \stdClass();
+      $objDemo->table_name = $table_name;
+      if ($notification == 1) {
+         $mail = DB::table('users')->where('department', $key)->value('email');
+         if (isset($mail)) {
+            Mail::to($mail)->send(new Email($objDemo));
+         }
+      }
+      return redirect()->action([DailyReportsController::class, 'daily_reports']);
+   }
 
 //   public function admin_daily_update(Request $request) {
 //      date_default_timezone_set('Europe/Moscow');

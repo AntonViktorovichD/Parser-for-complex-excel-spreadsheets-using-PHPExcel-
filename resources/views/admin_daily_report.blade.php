@@ -237,7 +237,6 @@ echo '</div>';
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
-<script src="/js/tools.js" type="text/javascript"></script>
 
 <script>
     window.onload = () => {
@@ -297,10 +296,9 @@ echo '</div>';
                     counter++;
                 }
             }
-console.log(user_deps[0]);
+
             for (let i = 0; i < fill.length; i++) {
-                console.log(counter);
-                if(fill[i].dataset.fill >= counter) {
+                if (fill[i].dataset.fill >= counter) {
                     for (let input of visible_cells) {
                         if (input.dataset.org === fill[i].id) {
                             input.parentNode.className = 'empty-filled';
@@ -329,6 +327,34 @@ console.log(user_deps[0]);
                 visible_cell.className = visible_cell.className + ' accept';
             }
         }
-        }
+
+        let form = document.querySelector('form');
+        let path = window.location.protocol + '//' + window.location.hostname;
+        clear.addEventListener('click', (e) => {
+            form.action = path + '/admin_daily_clear';
+            // if (!rows_information.value.length) {
+            //     alert('Нет выбранных элементов');
+            //     e.preventDefault();
+            // } else {
+                if (!confirm('Очистить выделеные строки?')) {
+                    e.preventDefault();
+                }
+            // }
+        });
+        accept.addEventListener('click', (e) => {
+            form.action = path + '/admin_daily_accept';
+            // if (!rows_information.value.length) {
+            //     alert('Нет выбранных элементов');
+            //     e.preventDefault();
+            // }
+        });
+        revalid.addEventListener('click', (e) => {
+            form.action = path + '/admin_daily_revalid';
+            // if (!rows_information.value.length) {
+            //     alert('Нет выбранных элементов');
+            //     e.preventDefault();
+            // }
+        });
+    }
 </script>
 @include('layouts.footer')
