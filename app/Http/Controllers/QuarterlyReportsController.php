@@ -24,7 +24,6 @@ class QuarterlyReportsController extends Controller {
                $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('name');
             }
          }
-
          $arr = json_encode($arrs);
          $table_user = json_encode($user_names);
          $arr_rows = json_encode(DB::select('select * from report_values'));

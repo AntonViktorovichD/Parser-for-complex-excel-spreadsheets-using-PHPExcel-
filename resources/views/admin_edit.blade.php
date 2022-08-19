@@ -200,7 +200,12 @@ echo '</div>';
 
         for (let i = 0; i < fill.length; i++) {
             if(fill[i].dataset.fill === counter) {
-
+                for (let input of visible_cells) {
+                    if (input.dataset.org === fill[i].id) {
+                        input.parentNode.className = 'empty-filled';
+                        input.className = input.className + ' empty-filled';
+                    }
+                }
             } else if (fill[i].dataset.fill < counter && fill[i].dataset.fill > 0) {
                 for (let input of visible_cells) {
                     if (input.dataset.org === fill[i].id) {
