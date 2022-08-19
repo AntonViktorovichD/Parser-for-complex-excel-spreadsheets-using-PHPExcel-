@@ -101,6 +101,10 @@
         color: #e43d3c;
     }
 
+    h1 {
+        margin-bottom: 30px;
+    }
+
 </style>
 <link rel="stylesheet" href="/css/arrayToJson.css">
 <div class="container-flex">
@@ -115,6 +119,8 @@
 
     @endphp
     <h1>Ежедневные отчеты</h1>
+    <input type="checkbox" id="daily" checked><label for="daily">Ежедневные отчеты &nbsp</label>
+    <input type="checkbox" id="weekly" checked><label for="weekly">Еженедельные отчеты</label>
     <table class="table">
         <thead>
         <tr>
@@ -132,7 +138,7 @@
             @php
                 if (in_array($user_dep, json_decode($page->departments, true)) || $user_role == 1 || $user_role == 4) {
                    if ($page->table_uuid != 'd7011723-8363-4c80-ba88-7e06ddb6856e' && $page->table_uuid != '09fdb928-b36a-4c5b-8979-8c5e9a62fe63' && $page->table_uuid != '7cb61534-3de1-44c7-8869-092d69165a92' && $page->table_uuid != 'f337ab33-f5b8-4471-814d-fdcde751c9aa' && $page->table_uuid != 'a43be089-0281-4956-983e-82f477b56b83') {
-                      echo '<tr id="tr" data-status="' . $page->status . '">';
+                      echo '<tr class="periodicity" id="'. $page->periodicity .'" id="tr" data-status="' . $page->status . '">';
                       if ($page->periodicity == 1) {
                          if ($user_role == 1 || $user_role == 4) {
                             echo '<td><a href="/admin_daily_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
@@ -148,7 +154,6 @@
                          }
                          echo '</td>';
                       } elseif ($page->periodicity == 2) {
-
                          if ($user_role == 1 || $user_role == 4) {
                             echo '<td><a href="/admin_weekly_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
@@ -165,7 +170,6 @@
                       }
                       echo '</tr>';
                    }
-
                   }
             @endphp
         @endforeach
@@ -195,11 +199,21 @@
 
     <script>
         window.onload = () => {
-            let del_tables = document.querySelectorAll('#tr');
-            for (let del_table of del_tables) {
-                if (del_table.dataset.status === 1) {
-                    del_table.classList.add('stat');
-                }
+            for (let input of document.querySelectorAll('.periodicity')) {
+                document.addEventListener('input', (a) => {
+                    if (a.target.id === 'weekly' && +input.id === 2) {
+                        console.log(input);
+                        input.hidden = !weekly.checked;
+                    } else if (a.target.id === 'daily' && +input.id === 1) {
+                        input.hidden = !daily.checked;
+                    }
+                })
+            }
+        }
+        let del_tables = document.querySelectorAll('#tr');
+        for (let del_table of del_tables) {
+            if (del_table.dataset.status === 1) {
+                del_table.classList.add('stat');
             }
         }
     </script>

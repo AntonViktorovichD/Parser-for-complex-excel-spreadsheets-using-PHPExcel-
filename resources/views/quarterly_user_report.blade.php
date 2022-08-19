@@ -35,6 +35,8 @@
         $arrNum = [];
         $arrKeyVal = [];
         echo '<div class="container-flex">';
+            echo '<div class="row align-items-start">';
+    echo '<div class="col">';
         echo '<a href="/quarterly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
         $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
         echo '<form method="post" action="/daily_update">';
@@ -68,6 +70,18 @@
     echo '<button id="revalid" class="btn-back">Отклонить данные</button>';
     echo '</div>';
     }
+    echo '</div>';
+echo '<div class="col">';
+if ($comment) {
+  echo '<div class="card">';
+  echo '<div class="card-body">';
+  echo '<h5 class="card-title">Комментарий</h5>';
+    echo '<p class="card-text">' . $comment . '</p>';
+  echo '</div>';
+echo '</div>';
+}
+echo '</div>';
+echo '</div>';
     echo '<h5 style="text-align:center">' . $name . '</h5>';
         $rowSpan = $highest_row - 1;
                 echo '<div class="table-responsive">' . PHP_EOL;
@@ -166,6 +180,8 @@
     echo '<div class="container-flex">';
 
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
+                echo '<div class="row align-items-start">';
+    echo '<div class="col">';
     echo '<a href="/quarterly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
         if($user_role == 1 || $user_role == 4) {
            echo '<div class="nav btns-group">';
@@ -199,7 +215,18 @@ echo '<form method="post" action="/daily_upload">';
 </table>
 @csrf
 @php
-
+    echo '</div>';
+echo '<div class="col">';
+if ($comment) {
+  echo '<div class="card">';
+  echo '<div class="card-body">';
+  echo '<h5 class="card-title">Комментарий</h5>';
+    echo '<p class="card-text">' . $comment . '</p>';
+  echo '</div>';
+echo '</div>';
+}
+echo '</div>';
+echo '</div>';
     $rowSpan = $highest_row - 1;
 echo '<h5 style="text-align:center">' . $name . '</h5>';
         echo '<div class="table-responsive">' . PHP_EOL;
@@ -283,7 +310,6 @@ echo '<h5 style="text-align:center">' . $name . '</h5>';
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
-{{--<script src="/js/tools.js" type="text/javascript"></script>--}}
 <script>
     window.onload = () => {
         let read_only = '<?= $read_only ?>';

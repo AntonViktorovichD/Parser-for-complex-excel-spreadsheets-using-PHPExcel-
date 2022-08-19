@@ -6,10 +6,10 @@
     echo '<div class="container">';
     echo '<h2>ЕЖЕМЕСЯЧНЫЙ ОТЧЁТ</h2>';
     echo '<legend class="legend">' . $table[0]->table_name . '</legend>';
-    echo '<a href="/quarterly_reports" class="btn btn-dl btn-primary">Вернуться к списку отчетов</a>';
+    echo '<a href="/quarterly_reports" class="btn btn-dl btn-outline-danger">Вернуться к списку отчетов</a>';
     echo '<div class="year">';
     for ($i = 2017; $i <= date("Y"); $i++) {
-        echo '<a id="' . $i . '" href="/monthly_report/' . $name . '/' . $i . '" class="btn btn-dl btn-primary">' . $i . ' ГОД</a>';
+        echo '<a id="' . $i . '" href="/monthly_report/' . $name . '/' . $i . '" class="btn btn-dl btn-outline-danger">' . $i . ' ГОД</a>';
     }
     echo '</div>';
     echo '<div class="table-responsive">';

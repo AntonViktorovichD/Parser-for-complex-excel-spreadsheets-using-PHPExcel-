@@ -3,12 +3,6 @@
 <style>
     table {
         border-collapse: collapse;
-        border: 1px solid black;
-    }
-
-    th, td {
-        border: 1px solid black;
-        padding: 10px;
     }
 
     input {
@@ -24,7 +18,7 @@
     }
 </style>
 @php
-    echo '<div class="container">';
+    echo '<div class="container-flex">';
         if (isset($json_vals)) {
             $user_id = Auth::user()->id;
             $arrCell = json_decode($json, true);
@@ -37,15 +31,57 @@
             $arrNum = [];
             $arrKeyVal = [];
                     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
+                                    echo '<div class="row align-items-start">';
+    echo '<div class="col">';
                     echo '<a href="/monthly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
-                    echo '<h5 style="text-align:center">' . $name . '</h5>';
             echo '<form method="post" action="/monthly_update">';
+            if($user_role == 1 || $user_role == 4) {
+       echo '<div class="nav btns-group">';
+echo '<button id="clear" class="btn-back">Очистить данные</button>';
+echo '<button id="accept" class="btn-back">Принять данные</button>';
+echo '<button id="revalid" class="btn-back">Отклонить данные</button>';
+echo '</div>';
+   }
 @endphp
+<table class="colors">
+    <tbody>
+    <tr>
+        <td class="red_cell colorcell"></td>
+        <td>&nbsp- Нет данных</td>
+    </tr>
+    <tr>
+        <td class="gray_cell colorcell"></td>
+        <td>&nbsp- Данные частично заполнены</td>
+    </tr>
+    <tr>
+        <td class="blue_cell colorcell"></td>
+        <td>&nbsp- Данные полностью заполнены</td>
+    </tr>
+    <tr>
+        <td class="lightblue_cell colorcell"></td>
+        <td>&nbsp- Данные приняты</td>
+    </tr>
+    </tbody>
+</table>
 @csrf
 @php
     $rowSpan = $highest_row - 1;
+
+    echo '</div>';
+echo '<div class="col">';
+if ($comment) {
+  echo '<div class="card">';
+  echo '<div class="card-body">';
+  echo '<h5 class="card-title">Комментарий</h5>';
+    echo '<p class="card-text">' . $comment . '</p>';
+  echo '</div>';
+echo '</div>';
+}
+echo '</div>';
+echo '</div>';
+echo '<h5 style="text-align:center">' . $name . '</h5>';
 echo '<div class="table-responsive">' . PHP_EOL;
-    echo '<table>' . PHP_EOL;
+    echo '<table class="table table-bordered border-dark">' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
     echo '</tr>';
@@ -117,17 +153,18 @@ echo '<div class="table-responsive">' . PHP_EOL;
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
+    if($user_role == 2 || $user_role == 3) {
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="submit">';
     }
+    }
     echo '</form>' . PHP_EOL;
-    echo '<a href="/monthly_export/' . $table_uuid . '">Экспорт</a>';
-    echo '</div">';
+    echo '<a class="export" href="/monthly_export/' . $table_uuid . '">Экспорт таблицы</a>';
+    echo '</div>';
 @endphp
 {{--Adding values--}}
 @php
     } else {
-   echo '<div class="container">';
    $user_role = Auth::user()->roles->first()->id;
     $user_id = Auth::user()->id;
     $arrCell = json_decode($json, true);
@@ -136,15 +173,56 @@ echo '<div class="table-responsive">' . PHP_EOL;
     $arrCol = [];
     $sum =  json_decode($json_func,true);
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
+                    echo '<div class="row align-items-start">';
+    echo '<div class="col">';
     echo '<a href="/monthly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
-    echo '<h5 style="text-align:center">' . $name . '</h5>';
 echo '<form method="post" action="/monthly_upload">';
+if($user_role == 1 || $user_role == 4) {
+       echo '<div class="nav btns-group">';
+echo '<button id="clear" class="btn-back">Очистить данные</button>';
+echo '<button id="accept" class="btn-back">Принять данные</button>';
+echo '<button id="revalid" class="btn-back">Отклонить данные</button>';
+echo '</div>';
+   }
 @endphp
+<table class="colors">
+    <tbody>
+    <tr>
+        <td class="red_cell colorcell"></td>
+        <td>&nbsp- Нет данных</td>
+    </tr>
+    <tr>
+        <td class="gray_cell colorcell"></td>
+        <td>&nbsp- Данные частично заполнены</td>
+    </tr>
+    <tr>
+        <td class="blue_cell colorcell"></td>
+        <td>&nbsp- Данные полностью заполнены</td>
+    </tr>
+    <tr>
+        <td class="lightblue_cell colorcell"></td>
+        <td>&nbsp- Данные приняты</td>
+    </tr>
+    </tbody>
+</table>
 @csrf
 @php
     $rowSpan = $highest_row - 1;
+    echo '</div>';
+echo '<div class="col">';
+if ($comment) {
+  echo '<div class="card">';
+  echo '<div class="card-body">';
+  echo '<h5 class="card-title">Комментарий</h5>';
+    echo '<p class="card-text">' . $comment . '</p>';
+  echo '</div>';
+echo '</div>';
+}
+echo '</div>';
+echo '</div>';
+echo '<h5 style="text-align:center">' . $name . '</h5>';
 echo '<div class="table-responsive">' . PHP_EOL;
-    echo '<table>' . PHP_EOL;
+    echo '<table class="table table-bordered border-dark">' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
     echo '</tr>';
@@ -209,16 +287,59 @@ echo '<div class="table-responsive">' . PHP_EOL;
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
+    if($user_role == 2 || $user_role == 3) {
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
+    }
     echo '</form>' . PHP_EOL;
-        echo '<a class="export" href="/monthly_export/' . $table_uuid . '">Экспорт</a>';
+        echo '<a class="export" href="/monthly_export/' . $table_uuid . '">Экспорт таблицы</a>';
 echo '</div">';
     }
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>' . PHP_EOL;
 @endphp
 <script src="/js/regexp.js" type="text/javascript"></script>
 <script src="/js/excel_functions.js" type="text/javascript"></script>
+<script>
+    window.onload = () => {
+        let read_only = '<?= $read_only ?>';
+        let visible_cells = document.querySelectorAll('.visible_cell');
+        for (let input of visible_cells) {
+            if (read_only === 'disabled') {
+                if (!input.value.length) {
+                    input.parentNode.className = 'empty-filled';
+                    input.className = input.className + ' empty-filled';
+                } else if (input.value.length < visible_cells.length) {
+                    input.parentNode.className = 'half-filled';
+                    input.className = input.className + ' half-filled';
+                } else if (input.value.length === visible_cells.length) {
+                    input.parentNode.className = 'filled';
+                    input.className = input.className + ' filled';
+                }
+            } else {
+                input.parentNode.className = 'accept';
+                input.className = input.className + ' accept';
+            }
+        }
+
+        let form = document.querySelector('form');
+        let path = window.location.protocol + '//' + window.location.hostname;
+        clear.addEventListener('click', (e) => {
+            form.action = path + '/admin_monthly_clear';
+            if (!confirm('Очистить выделеные строки?')) {
+                e.preventDefault();
+            }
+            form.submit();
+        });
+        accept.addEventListener('click', () => {
+            form.action = path + '/admin_monthly_accept';
+            form.submit();
+        });
+        revalid.addEventListener('click', () => {
+            form.action = path + '/admin_monthly_revalid';
+            form.submit();
+        });
+    }
+</script>
 
 @include('layouts.footer')

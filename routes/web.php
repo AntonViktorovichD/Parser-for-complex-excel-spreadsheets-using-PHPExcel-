@@ -15,6 +15,9 @@ Route::get('/monthly_report/{name}/{year}', [MonthlyReportsController::class, 'm
 Route::get('/monthly_user_report/{name}/{year}/{quarter}/{department}', [MonthlyReportsController::class, 'monthly_user_report'])->middleware('auth');
 Route::post('/monthly_upload', [MonthlyReportsController::class, 'monthly_upload'])->middleware('auth');
 Route::post('/monthly_update', [MonthlyReportsController::class, 'monthly_update'])->middleware('auth');
+Route::post('/admin_monthly_clear/', [MonthlyReportsController::class, 'clear'])->middleware('checkAdmin');
+Route::post('/admin_monthly_accept/', [MonthlyReportsController::class, 'accept'])->middleware('checkAdmin');
+Route::post('/admin_monthly_revalid/', [MonthlyReportsController::class, 'revalid'])->middleware('checkAdmin');
 
 use App\Http\Controllers\AdminReportsController;
 

@@ -19,18 +19,6 @@
     .regex {
         border: none !important;
     }
-
-    .btns-group {
-        margin-left: 0 !important;
-    }
-
-    .btn-back {
-        margin: 0 0 0 5px !important;
-    }
-
-    .btn-back:first-child {
-        margin: 0 !important;
-    }
 </style>
 @php
 
@@ -54,7 +42,11 @@ $user_deps = implode('|', $user_dep);
     echo '<div class="row align-items-start">';
     echo '<div class="col">';
     echo '<a href="/json" class="btn-back" style="margin-bottom: 30px !important">Вернуться к списку таблиц</a>';
-
+    echo '<div class="nav btns-group">';
+echo '<button id="clear" class="btn-back">Очистить данные</button>';
+echo '<button id="accept" class="btn-back">Принять данные</button>';
+echo '<button id="revalid" class="btn-back">Отклонить данные</button>';
+echo '</div>';
 @endphp
 <table class="colors">
     <tbody>
@@ -79,11 +71,7 @@ $user_deps = implode('|', $user_dep);
 @csrf
 
 @php
-    echo '<div class="nav btns-group">';
-echo '<button id="clear" class="btn-back">Очистить данные</button>';
-echo '<button id="accept" class="btn-back">Принять данные</button>';
-echo '<button id="revalid" class="btn-back">Отклонить данные</button>';
-echo '</div>';
+
 echo '</div>';
 echo '<div class="col">';
 if ($comment) {

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AdminDailyReportController extends Controller {
@@ -18,6 +18,7 @@ class AdminDailyReportController extends Controller {
          $table = DB::table('tables')->where('table_uuid', $table_uuid)->get();
          $json = $table[0]->json_val;
          $name = $table[0]->table_name;
+         $comment = $table[0]->comment;
          $highest_column_index = $table[0]->highest_column_index;
          $highest_row = $table[0]->highest_row;
          $radio = $table[0]->radio;
@@ -52,7 +53,7 @@ class AdminDailyReportController extends Controller {
          $rep_value = [];
          $rep_key = [];
          $daily_report = [];
-
+         $fill = [];
          for ($i = 1; $i < $highest_row; $i++) {
             for ($k = 0; $k < $highest_column_index; $k++) {
                if ($arrCell[$i][$k]['rowEndView'] == $highest_row - 2) {
@@ -77,6 +78,11 @@ class AdminDailyReportController extends Controller {
          if (count($daily_reports) > 0) {
             foreach ($daily_reports as $i => $value) {
                $val = json_decode($daily_reports[$i]['json_val'], true);
+               foreach ($val as $key => $item) {
+                  if (empty($item)) {
+                     $fill[$i][] = $item;
+                  }
+               }
                $key = explode('+', $daily_reports[$i]['row_uuid'] . '+');
                unset($key[1]);
                foreach ($key as $k => $item) {
@@ -85,9 +91,9 @@ class AdminDailyReportController extends Controller {
                $rep_value[] = $val;
             }
             $daily_report = (json_encode(array_combine($rep_key, $rep_value)));
-            return view('admin_daily_report', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'daily_report', 'user_dep', 'pattern', 'json_func', 'json_vals', 'dep'));
+            return view('admin_daily_report', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'daily_report', 'user_dep', 'pattern', 'json_func', 'json_vals', 'dep', 'comment', 'read_only', 'fill'));
          } else {
-            return view('admin_view', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid'));
+            return view('admin_view', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'comment'));
          }
       } catch
       (QueryException $e) {

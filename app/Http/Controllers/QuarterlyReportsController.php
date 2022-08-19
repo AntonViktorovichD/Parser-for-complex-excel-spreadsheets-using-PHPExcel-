@@ -62,6 +62,7 @@ class QuarterlyReportsController extends Controller {
       $quarterly_reports = DB::table('quarterly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('quarter', $quarter)->where('year', $year)->get();
       $json = $table[0]->json_val;
       $name = $table[0]->table_name;
+      $comment = $table[0]->comment;
       $arrCell = json_decode($json, true);
       $highest_column_index = $table[0]->highest_column_index;
       $highest_row = $table[0]->highest_row;
@@ -111,9 +112,9 @@ class QuarterlyReportsController extends Controller {
       if (count($quarterly_reports) > 0) {
          $row_uuid = $quarterly_reports[0]->row_uuid;
          $json_vals = $quarterly_reports[0]->json_val;
-         return view('quarterly_user_report', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter'));
+         return view('quarterly_user_report', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter', 'comment'));
       } else {
-         return view('quarterly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter'));
+         return view('quarterly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'quarter', 'comment'));
       }
    }
 

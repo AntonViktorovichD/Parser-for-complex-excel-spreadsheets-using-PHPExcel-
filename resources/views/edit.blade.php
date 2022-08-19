@@ -43,6 +43,8 @@
 </style>
 @php
     echo '<div class="container-flex">';
+                echo '<div class="row align-items-start">';
+    echo '<div class="col">';
 echo '<a href="/json" class="btn-back">Вернуться к списку таблиц</a>';
 echo '<h5 style="text-align:center">' . $name . '</h5>';
         $user_id = Auth::user()->id;
@@ -60,7 +62,18 @@ echo '<h5 style="text-align:center">' . $name . '</h5>';
 @endphp
 @csrf
 @php
-
+    echo '</div>';
+echo '<div class="col">';
+if ($comment) {
+  echo '<div class="card">';
+  echo '<div class="card-body">';
+  echo '<h5 class="card-title">Комментарий</h5>';
+    echo '<p class="card-text">' . $comment . '</p>';
+  echo '</div>';
+echo '</div>';
+}
+echo '</div>';
+echo '</div>';
     $rowSpan = $highest_row - 1;
 echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table class="table">' . PHP_EOL;

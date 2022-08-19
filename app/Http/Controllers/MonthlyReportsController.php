@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Email;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class MonthlyReportsController extends Controller {
     public function monthly_report($name, $year) {
@@ -31,6 +33,7 @@ class MonthlyReportsController extends Controller {
                 if(empty(Auth::id())) {
             return redirect()->route('login');
          }
+       $user_role = Auth::user()->roles->first()->id;
         $user_dep = Auth::user()->department;
         $table = DB::table('tables')->where('status', 0)->where('table_uuid', $table_uuid)->get();
         $monthly_reports = DB::table('monthly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('month', $month)->where('year', $year)->get();
@@ -85,9 +88,9 @@ class MonthlyReportsController extends Controller {
         if (count($monthly_reports) > 0) {
             $row_uuid = $monthly_reports[0]->row_uuid;
             $json_vals = $monthly_reports[0]->json_val;
-            return view('monthly_user_report', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'month'));
+            return view('monthly_user_report', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'month', 'user_role'));
         } else {
-            return view('monthly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'month'));
+            return view('monthly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'month', 'user_role'));
         }
     }
     public function monthly_upload(Request $request) {
@@ -102,7 +105,7 @@ class MonthlyReportsController extends Controller {
             unset($info['table_information']);
             $json = json_encode($info, JSON_UNESCAPED_UNICODE);
             DB::table('monthly_reports')->insert(['table_name' => $name, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'user_dep' => $department, 'json_val' => $json, 'month' => $month, 'created_at' => $date, 'year' => $year]);
-            return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/quarterly_reports']);
+            return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/monthly_reports']);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }
@@ -122,9 +125,57 @@ class MonthlyReportsController extends Controller {
             unset($info['table_information']);
             $json = json_encode($info, JSON_UNESCAPED_UNICODE);
             DB::table('monthly_reports')->where('table_uuid', $table_uuid)->where('row_uuid', $row_uuid)->update(['json_val' => $json]);
-            return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/quarterly_reports']);
+            return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/monthly_reports']);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }
     }
+
+   public function clear(Request $request) {
+      $rows_information = $request->input('rows_information');
+      DB::table('monthly_reports')->where('row_uuid',)->truncate();
+      $notification_rights = DB::table('notification_rights')->where('id', 1)->value('e_mail');
+      if ($notification_rights != 0) {
+         $department = DB::table('monthly_reports')->where('row_uuid', $rows_information)->value('user_dep');
+         $table_name = DB::table('monthly_reports')->where('row_uuid', $rows_information)->value('table_name');
+      }
+      $notification = DB::table('user_noifications')->where('org_id', $department)->value('e_mail');
+      $objDemo = new \stdClass();
+      $objDemo->table_name = $table_name;
+      if ($notification == 1) {
+         $mail = DB::table('users')->where('department', $key)->value('email');
+         if (isset($mail)) {
+            Mail::to($mail)->send(new Email($objDemo));
+         }
+      }
+      return redirect()->action([QuarterlyReportsController::class, 'quarterly_reports']);
+   }
+
+   public function accept(Request $request) {
+      $read_only = DB::table('tables')->where('table_uuid', $request->input('table_information'))->value('read_only');
+      if ($read_only === 'disabled') {
+         DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'enabled');
+      } else {
+         DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'disabled');
+      }
+   }
+
+   public function revalid(Request $request) {
+      $rows_information = $request->input('rows_information');
+      $notification_rights = DB::table('notification_rights')->where('id', 1)->value('e_mail');
+      if ($notification_rights != 0) {
+         $department = DB::table('monthly_reports')->where('row_uuid', $rows_information)->value('user_dep');
+         $table_name = DB::table('monthly_reports')->where('row_uuid', $rows_information)->value('table_name');
+      }
+      $notification = DB::table('user_noifications')->where('org_id', $department)->value('e_mail');
+      $objDemo = new \stdClass();
+      $objDemo->table_name = $table_name;
+      if ($notification == 1) {
+         $mail = DB::table('users')->where('department', $key)->value('email');
+         if (isset($mail)) {
+            Mail::to($mail)->send(new Email($objDemo));
+         }
+      }
+      return redirect()->action([QuarterlyReportsController::class, 'quarterly_reports']);
+   }
 }
