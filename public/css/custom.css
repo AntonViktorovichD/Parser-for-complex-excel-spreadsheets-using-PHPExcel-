@@ -316,8 +316,8 @@ table input {
 }
 
 .btn-back {
-    margin-top: 100px;
-    margin-bottom: 30px !important;
+    margin-bottom: 10px !important;
+    margin-right: 5px !important;
     text-shadow: none;
     background: #fff;
     border: 2px solid #e43d3c !important;
@@ -451,4 +451,8 @@ input {
 
 h5 {
     margin: 25px 0 !important;
+}
+
+.btn-submit-ae {
+    margin-top: 30px !important;
 }

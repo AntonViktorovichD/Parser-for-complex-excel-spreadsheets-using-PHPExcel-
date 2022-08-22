@@ -64,7 +64,7 @@
 @csrf
 @php
     if($user_role == 1 || $user_role == 4) {
-           echo '<div class="nav btns-group">';
+           echo '<div class="btns-group">';
     echo '<button id="clear" class="btn-back">Очистить данные</button>';
     echo '<button id="accept" class="btn-back">Принять данные</button>';
     echo '<button id="revalid" class="btn-back">Отклонить данные</button>';
@@ -185,7 +185,7 @@ echo '</div>';
     echo '<div class="col">';
     echo '<a href="/quarterly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
         if($user_role == 1 || $user_role == 4) {
-           echo '<div class="nav btns-group">';
+           echo '<div class="btns-group">';
     echo '<button id="clear" class="btn-back">Очистить данные</button>';
     echo '<button id="accept" class="btn-back">Принять данные</button>';
     echo '<button id="revalid" class="btn-back">Отклонить данные</button>';

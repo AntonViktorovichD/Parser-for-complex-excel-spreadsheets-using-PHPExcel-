@@ -38,7 +38,8 @@ echo '<form method="post" action="/user_upload">';
 @csrf
 @php
     $rowSpan = $highest_row - 1;
-    echo '<table>' . PHP_EOL;
+echo '<div class="table-responsive">' . PHP_EOL;
+    echo '<table class="table">' . PHP_EOL;
     echo '<tr>';
     echo '<td rowspan="' . $rowSpan . '" > ' . 'Учреждение' . '</td>';
     echo '</tr>';
@@ -101,9 +102,13 @@ echo '<form method="post" action="/user_upload">';
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+    echo '</br>' . PHP_EOL;
+            echo '</div>' . PHP_EOL;
+
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="button" value="Отправить" onclick="this.parentNode.submit();">';
     }
+
     echo '</form>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
     echo '<textarea disabled hidden id="json_sum">' . $json_func .'</textarea>';

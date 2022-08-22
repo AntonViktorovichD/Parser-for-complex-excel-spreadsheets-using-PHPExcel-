@@ -46,7 +46,7 @@
                 echo '<div class="row align-items-start">';
     echo '<div class="col">';
 echo '<a href="/json" class="btn-back">Вернуться к списку таблиц</a>';
-echo '<h5 style="text-align:center">' . $name . '</h5>';
+
         $user_id = Auth::user()->id;
         $arrCell = json_decode($json, true);
         $arrAddRow = array_flip(json_decode($addRowArr, true));
@@ -74,6 +74,7 @@ echo '</div>';
 }
 echo '</div>';
 echo '</div>';
+echo '<h5 style="text-align:center">' . $name . '</h5>';
     $rowSpan = $highest_row - 1;
 echo '<div class="table-responsive">' . PHP_EOL;
     echo '<table class="table">' . PHP_EOL;
@@ -151,6 +152,7 @@ echo '<div class="table-responsive">' . PHP_EOL;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+    echo '</br>' . PHP_EOL;
     echo '</div>' . PHP_EOL;
     if ($read_only == 'disabled') {
         echo '<input class="btn-submit-ae" type="submit" value="Отправить">';

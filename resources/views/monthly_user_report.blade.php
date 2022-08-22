@@ -33,10 +33,10 @@
                     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
                                     echo '<div class="row align-items-start">';
     echo '<div class="col">';
-                    echo '<a href="/monthly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
+                    echo '<a href="/monthly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору месяца</a>';
             echo '<form method="post" action="/monthly_update">';
             if($user_role == 1 || $user_role == 4) {
-       echo '<div class="nav btns-group">';
+       echo '<div class="btns-group">';
 echo '<button id="clear" class="btn-back">Очистить данные</button>';
 echo '<button id="accept" class="btn-back">Принять данные</button>';
 echo '<button id="revalid" class="btn-back">Отклонить данные</button>';
@@ -152,6 +152,7 @@ echo '<div class="table-responsive">' . PHP_EOL;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+    echo '<br />' . PHP_EOL;
     echo '</div>' . PHP_EOL;
     if($user_role == 2 || $user_role == 3) {
     if ($read_only == 'disabled') {
@@ -159,7 +160,6 @@ echo '<div class="table-responsive">' . PHP_EOL;
     }
     }
     echo '</form>' . PHP_EOL;
-    echo '<br />' . PHP_EOL;
     echo '<a class="export" href="/monthly_export/' . $table_uuid . '">Экспорт таблицы</a>';
     echo '</div>';
 @endphp
@@ -176,10 +176,10 @@ echo '<div class="table-responsive">' . PHP_EOL;
     $dep_name = DB::table('org_helper')->where('id', $department)->value('title');
                     echo '<div class="row align-items-start">';
     echo '<div class="col">';
-    echo '<a href="/monthly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору квартала</a>';
+    echo '<a href="/monthly_report/' . $table_uuid . '/' . date("Y") . '" class="btn-back">Вернуться к выбору месяца</a>';
 echo '<form method="post" action="/monthly_upload">';
 if($user_role == 1 || $user_role == 4) {
-       echo '<div class="nav btns-group">';
+       echo '<div class="btns-group">';
 echo '<button id="clear" class="btn-back">Очистить данные</button>';
 echo '<button id="accept" class="btn-back">Принять данные</button>';
 echo '<button id="revalid" class="btn-back">Отклонить данные</button>';
