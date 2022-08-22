@@ -90,7 +90,7 @@
   echo '<input type="checkbox" id="daily" checked><label for="daily">Ежедневные отчеты &nbsp</label>';
     echo '<input type="checkbox" id="weekly" checked><label for="weekly">Еженедельные отчеты &nbsp</label>';
     echo '<a id="check_link" class="btn btn-outline-danger" href="/daily_reports">Выгрузить</a>';
-        echo '<table class="table">';
+        echo '<table class="table table-striped">';
         echo '<thead>';
         echo '<tr>';
         echo '<th class="col-7">Отчет</th>';
@@ -136,13 +136,12 @@
                   echo '</td>';
                }
                echo '</tr>';
-               echo '</tbody>';
             }
-
         @endphp
     @endforeach
     @php
-        echo '</table>';
+        echo '</tbody>';
+            echo '</table>';
     @endphp
     {{ $arrs->links() }}
     @php

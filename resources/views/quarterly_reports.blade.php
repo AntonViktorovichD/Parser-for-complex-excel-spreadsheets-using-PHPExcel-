@@ -28,17 +28,25 @@
         $arrs = json_decode($arr, true);
 
     echo '<table class="table table-borderless table-striped">';
-
+    echo '<thead>';
+echo '<tr>';
+echo '<th class="col-10">Отчет</th>';
+echo '<th class="col-2" style="text-align: center">Тип отчета</th>';
+echo '</tr>';
+echo '</thead>';
+        echo '<tbody>';
     foreach ($arrs['data'] as $key => $arr) {
        echo '<tr>';
            if($arr['periodicity'] == 4){
               echo '<td><a class="periodicity" id="' . $arr['periodicity'] . '" href="/quarterly_report/' . $arr['table_uuid'] . '/'. date("Y") . '">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
+              echo '<td style="text-align: center;">Ежеквартальный отчет</td>' . PHP_EOL;
            } elseif ($arr['periodicity'] == 3) {
               echo '<td><a class="periodicity" id="' . $arr['periodicity'] . '" href="/monthly_report/' . $arr['table_uuid'] . '/'. date("Y") . '">' . $arr['table_name'] . '</a></td>' . PHP_EOL;
+              echo '<td style="text-align: center;">Ежемесячный отчет</td>' . PHP_EOL;
            }
     echo '</tr>';
     }
-
+echo '</tbody>';
     echo '</table>';
 
     @endphp

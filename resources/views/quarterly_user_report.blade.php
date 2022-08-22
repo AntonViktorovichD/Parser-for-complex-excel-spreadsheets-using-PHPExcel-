@@ -157,6 +157,7 @@ echo '</div>';
         echo '<input type="hidden" name="rows_information" value="' . $row_uuid . '"';
         echo '</tr>' . PHP_EOL;
         echo '</table>' . PHP_EOL;
+        echo '<br />' . PHP_EOL;
         echo '</div>' . PHP_EOL;
         if($user_role == 2 || $user_role == 3) {
         if ($read_only == 'disabled') {
@@ -295,6 +296,7 @@ echo '<h5 style="text-align:center">' . $name . '</h5>';
     echo '<input type="hidden" name="rows_information" value="' . $row_uuid . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+    echo '<br />' . PHP_EOL;
     echo '</div>' . PHP_EOL;
     if($user_role == 2 || $user_role == 3) {
     if ($read_only == 'disabled') {

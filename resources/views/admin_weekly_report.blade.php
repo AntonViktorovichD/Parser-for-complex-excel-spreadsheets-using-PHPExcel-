@@ -11,9 +11,9 @@
         margin: 0 !important;
     }
 
-    .btn {
-        width: 100px;
-        height: 35px;
+    input, button[type="button"], select {
+        border: 2px solid rgba(150, 150, 150, 0.15) !important;
+        outline: none !important;
     }
 
     .regex {
@@ -169,7 +169,7 @@ echo '</div>';
         echo '<textarea disabled hidden id="json_sum">' . $json_func . '</textarea>';
         echo '</div>';
         echo '<div class="nav-btns">';
-//        echo '<button type="button" class="sum btn btn-outline-danger" style="margin-right:5px" id="sum"><i class="fa fa-calculator" aria-hidden="true"></i></button>';
+        echo '<button type="button" class="sum btn btn-outline-danger" style="margin-right:5px" id="sum"><i class="fa fa-calculator" aria-hidden="true"></i></button>';
 
         echo '<a class="export" href="/daily_export/' . $table_uuid . ' ">Экспорт таблицы</a>';
           echo '</div>';
@@ -181,6 +181,41 @@ echo '</div>';
 <script>
     window.onload = () => {
         let highest_column_index = <?php echo $highest_column_index ?>;
+        let sum_btn = document.getElementById('sum');
+        sum_btn.addEventListener('click', e => {
+            if (document.getElementById('parent').hidden) {
+                alert('Внимание!!! Суммы в таблице и значения при автосумме в Excel могут отличаться. Отличие может возникнуть при сложении дробных чисел. Стоит учитывать, что Excel корректно суммирует числа, где разделитель запятая, мониторинг суммирует и выгружает с точкой.')
+                if (alert) {
+                    document.getElementById('parent').hidden = false;
+                    let sum = Array(highest_column_index + 1).fill(0);
+                    for (let input of document.querySelectorAll('input')) {
+                        if (input.type === 'text') {
+                            sum[input.id] += Number(input.value);
+                        }
+                    }
+                    let parent = document.querySelector('#parent');
+                    for (let i = 1; i < highest_column_index; i++) {
+                        if (document.getElementById(i) !== null) {
+                            if (document.getElementById(i).dataset.colspan > 0) {
+                                cell = document.createElement('td');
+                                cell.setAttribute('colspan', document.getElementById(i).dataset.colspan)
+                            } else {
+                                cell = document.createElement('td');
+                            }
+                            cell.className = i;
+                            parent.appendChild(cell);
+                        }
+                    }
+                    for (let k = 1; k <= highest_column_index; k++) {
+                        if (document.getElementsByClassName(k)[0] !== undefined) {
+                            document.getElementsByClassName(k)[0].innerHTML = sum[k].toFixed(2);
+                        }
+                    }
+                }
+            } else {
+                document.getElementById('parent').hidden = true;
+            }
+        })
         let read_only = '<?= $read_only ?>';
         let counter = 0;
         let user_deps = '<?= $user_deps ?>'.split('|');

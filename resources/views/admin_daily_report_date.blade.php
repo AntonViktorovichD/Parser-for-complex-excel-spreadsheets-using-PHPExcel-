@@ -52,7 +52,7 @@
             ksort($arrAddRow);
             $sum =  json_decode($json_func,true);
             $vals =  json_decode($json_vals,true);
-            $dep_name = DB::table('org_helper')->where('id', '=', $dep)->value('title');
+            $dep_name = DB::table('org_helper')->where('id', $dep)->value('title');
             $values = json_decode($daily_report, true);
             $colnum = 1;
             $arrCol = [];

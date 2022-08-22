@@ -125,8 +125,15 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th class="col-8">Отчет</th>
-            <th class="col-1" style="text-align: center">Тип отчета</th>
+            @php
+            if ($user_role == 1 || $user_role == 4) {
+                echo '<th class="col-8">Отчет</th>';
+} else {
+   echo '<th class="col-9">Отчет</th>';
+}
+                    @endphp
+
+            <th class="col-1" style="text-align: center;">Тип отчета</th>
             <th class="col-1" style="text-align: center">Заполнения</th>
             @php
                 if ($user_role == 1 || $user_role == 4) {
@@ -154,7 +161,6 @@
                             echo '<td><a href="/daily_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
                             echo '<td style="text-align: center;">Ежедневный отчет</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
-                            echo '<td style="text-align: center;">';
                          }
                          echo '</td>';
                       } elseif ($page->periodicity == 2) {
@@ -170,7 +176,6 @@
                             echo '<td><a href="/weekly_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
                             echo '<td style="text-align: center;">Ежеднедельный отчет</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
-                            echo '<td style="text-align: center;">';
                          }
                          echo '</td>';
                       }

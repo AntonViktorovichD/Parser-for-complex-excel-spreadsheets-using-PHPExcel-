@@ -39,6 +39,7 @@ class MonthlyReportsController extends Controller {
         $monthly_reports = DB::table('monthly_reports')->where('table_uuid', $table_uuid)->where('user_dep', $department)->where('month', $month)->where('year', $year)->get();
         $json = $table[0]->json_val;
         $name = $table[0]->table_name;
+        $comment = $table[0]->comment;
         $arrCell = json_decode($json, true);
         $highest_column_index = $table[0]->highest_column_index;
         $highest_row = $table[0]->highest_row;
@@ -88,9 +89,9 @@ class MonthlyReportsController extends Controller {
         if (count($monthly_reports) > 0) {
             $row_uuid = $monthly_reports[0]->row_uuid;
             $json_vals = $monthly_reports[0]->json_val;
-            return view('monthly_user_report', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'month', 'user_role'));
+            return view('monthly_user_report', compact('json', 'json_vals', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'month', 'user_role', 'comment'));
         } else {
-            return view('monthly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'month', 'user_role'));
+            return view('monthly_user_report', compact('json', 'json_func', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'row_uuid', 'table_uuid', 'pattern', 'read_only', 'department', 'year', 'month', 'user_role', 'comment'));
         }
     }
     public function monthly_upload(Request $request) {

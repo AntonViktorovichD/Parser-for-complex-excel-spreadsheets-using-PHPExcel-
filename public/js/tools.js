@@ -1,4 +1,3 @@
-window.onload = () => {
     let rows = [];
     deps_chckr.addEventListener('input', (f) => {
         for (let row of document.querySelectorAll('.row_selector')) {
@@ -50,5 +49,4 @@ window.onload = () => {
         }
     });
 
-
-}
+    

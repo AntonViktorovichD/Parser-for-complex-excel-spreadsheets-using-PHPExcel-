@@ -159,6 +159,7 @@ echo '<div class="table-responsive">' . PHP_EOL;
     }
     }
     echo '</form>' . PHP_EOL;
+    echo '<br />' . PHP_EOL;
     echo '<a class="export" href="/monthly_export/' . $table_uuid . '">Экспорт таблицы</a>';
     echo '</div>';
 @endphp
@@ -286,6 +287,7 @@ echo '<div class="table-responsive">' . PHP_EOL;
     echo '<input type="hidden" name="table_information" value="' . $table_info . '"';
     echo '</tr>' . PHP_EOL;
     echo '</table>' . PHP_EOL;
+            echo '<br />' . PHP_EOL;
     echo '</div>' . PHP_EOL;
     if($user_role == 2 || $user_role == 3) {
     if ($read_only == 'disabled') {

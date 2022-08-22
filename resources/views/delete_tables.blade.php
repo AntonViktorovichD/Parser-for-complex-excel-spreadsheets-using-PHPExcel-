@@ -4,7 +4,6 @@
 <style>
     table {
         margin-bottom: 50px !important;
-        width: auto !important;
     }
 
     .legend {
@@ -32,8 +31,8 @@
     <h5 class="text-center title">Название отчета</h5>
     @php
         echo '<table class="table table-striped table-borderless">';
-echo '<th>Отчет</th>';
-echo '<th>Удаление</th>';
+echo '<th class="col-10">Отчет</th>';
+echo '<th class="col-1">Удаление</th>';
 foreach ( $tables as $table ){
        echo '<tr>';
        if($table->status == 0) {

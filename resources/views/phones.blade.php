@@ -3,17 +3,16 @@
 <style>
 table {
     margin-top: 50px !important;
-    text-align: center !important;
 }
 </style>
 <div class="container-flex">
 
     <h1>Справочник телефонов специалистов</h1>
-    <table class="table table-striped table-borderless align-middle">
+    <table class="table table-striped table-borderless">
         <thead>
         <tr>
-            <th scope="col">ФИО ответственного специалиста</th>
-            <th scope="col">Контактный телефон</th>
+            <th class="col-10">ФИО ответственного специалиста</th>
+            <th class="col-1">Контактный телефон</th>
         </tr>
         </thead>
         <tbody>

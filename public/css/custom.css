@@ -315,10 +315,6 @@ table input {
     border: 0 !important;
 }
 
-.btn-submit-ae {
-    margin-top: 30px !important;
-}
-
 .btn-back {
     margin-top: 100px;
     margin-bottom: 30px !important;
@@ -399,14 +395,6 @@ footer {
     margin-left: 0 !important;
 }
 
-.btn-back {
-    margin: 0 0 0 5px !important;
-}
-
-.btn-back:first-child {
-    margin: 0 !important;
-}
-
 td input[type="checkbox"] {
     display: inline;
 }
@@ -453,12 +441,8 @@ input {
     margin-left: 0 !important;
 }
 
-.btn-back {
-    margin: 0 0 0 5px !important;
-}
-
 .btn-back:first-child {
-    margin: 0 !important;
+    margin-left: 0 !important;
 }
 
 .btn-outline-danger {
@@ -466,5 +450,5 @@ input {
 }
 
 h5 {
-    margin: 25px !important;
+    margin: 25px 0 !important;
 }
