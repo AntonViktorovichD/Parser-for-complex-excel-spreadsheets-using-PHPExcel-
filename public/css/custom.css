@@ -417,6 +417,7 @@ td input[type="checkbox"] {
 
 .table {
     vertical-align: middle !important;
+    margin-bottom: 0 !important;
 }
 
 input {

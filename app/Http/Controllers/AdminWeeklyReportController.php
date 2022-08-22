@@ -20,14 +20,25 @@ class AdminWeeklyReportController extends Controller {
          $highest_column_index = $table[0]->highest_column_index;
          $highest_row = $table[0]->highest_row;
          $radio = $table[0]->radio;
+         $comment = $table[0]->comment;
          $read_only = $table[0]->read_only;
          $json_func = $table[0]->json_func;
          $weekly_reports = DB::table('weekly_reports')->where('table_uuid', $table_uuid)->get();
-         if (count($weekly_reports) > 0) {
-            $row_uuid = $weekly_reports[0]->row_uuid;
-            $user_id = $weekly_reports[0]->user_id;
-            $user_dep = DB::table('users')->where('id', $user_id)->value('department');
-            $dep = DB::table('org_helper')->where('id', $user_dep)->value('title');
+         $row_uuid = [];
+         $user_dep = [];
+         $dep = [];
+//         if (count($weekly_reports) > 0) {
+//            $row_uuid = $weekly_reports[0]->row_uuid;
+//            $user_id = $weekly_reports[0]->user_id;
+//            $user_dep = DB::table('users')->where('id', $user_id)->value('department');
+//            $dep = DB::table('org_helper')->where('id', $user_dep)->value('title');
+//            $json_vals = $weekly_reports[0]->json_val;
+//         }
+         foreach ($weekly_reports as $key => $report_value) {
+            $row_uuid[$key] = $report_value->row_uuid;
+            $user_id[$key] = $report_value->user_id;
+            $user_dep[$key] = DB::table('users')->where('id', $user_id[$key])->value('department');
+            $dep[$key] = DB::table('org_helper')->where('id', $user_dep[$key])->value('title');
             $json_vals = $weekly_reports[0]->json_val;
          }
          $pattern = '';
@@ -70,9 +81,15 @@ class AdminWeeklyReportController extends Controller {
          asort($arrLR);
          $addRowArr = json_encode($arrLR, JSON_UNESCAPED_UNICODE);
          $weekly_reports = json_decode(DB::table('weekly_reports')->where('table_uuid', $table_uuid)->get(), true);
+         $fill = [];
          if (count($weekly_reports) > 0) {
             foreach ($weekly_reports as $i => $value) {
                $val = json_decode($weekly_reports[$i]['json_val'], true);
+               foreach ($val as $key => $item) {
+                  if (empty($item)) {
+                     $fill[$i][] = $item;
+                  }
+               }
                $key = explode('+', $weekly_reports[$i]['row_uuid'] . '+');
                unset($key[1]);
                foreach ($key as $k => $item) {
@@ -81,7 +98,7 @@ class AdminWeeklyReportController extends Controller {
                $rep_value[] = $val;
             }
             $weekly_report = (json_encode(array_combine($rep_key, $rep_value)));
-            return view('admin_weekly_report', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'weekly_report', 'user_dep', 'pattern', 'json_func', 'json_vals', 'dep'));
+            return view('admin_weekly_report', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid', 'user_id', 'row_uuid', 'weekly_report', 'user_dep', 'pattern', 'json_func', 'json_vals', 'dep', 'read_only', 'comment', 'fill'));
          } else {
             return view('admin_view', compact('json', 'highest_row', 'highest_column_index', 'addRowArr', 'name', 'table_uuid'));
          }

@@ -84,9 +84,11 @@
         width: 300px !important;
         margin-top: 40px !important;
         font-size: 14px !important;
-        line-height: 2.75 !important;
+        /*line-height: 2.75 !important;*/
     }
-
+    .input-group > input {
+        padding: 5px 10px !important;
+    }
     .btn {
         margin-top: 50px !important;
         margin-bottom: 30px !important;
@@ -115,7 +117,7 @@
                                         области
                                     </h1>
                                     <div class="input-group">
-                                        <label for="login">Логин * &nbsp&nbsp&nbsp&nbsp</label>
+                                        <label for="login">Логин * &nbsp&nbsp&nbsp</label>
                                         <input name="login" type="text"
                                                class="form-control {{ $errors->has('login') ? ' is-invalid' : '' }}"
                                                required

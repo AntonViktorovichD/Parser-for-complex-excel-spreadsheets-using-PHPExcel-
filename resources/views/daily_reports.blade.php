@@ -120,7 +120,8 @@
     @endphp
     <h1>Ежедневные отчеты</h1>
     <input type="checkbox" id="daily" checked><label for="daily">Ежедневные отчеты &nbsp</label>
-    <input type="checkbox" id="weekly" checked><label for="weekly">Еженедельные отчеты</label>
+    <input type="checkbox" id="weekly" checked><label for="weekly">Еженедельные отчеты &nbsp</label>
+    <a id="check_link" class="btn btn-outline-danger" href="/daily_reports">Выгрузить</a>
     <table class="table">
         <thead>
         <tr>
@@ -196,25 +197,28 @@
         echo '</div>';
     @endphp
 
-
     <script>
         window.onload = () => {
-            for (let input of document.querySelectorAll('.periodicity')) {
-                document.addEventListener('input', (a) => {
-                    if (a.target.id === 'weekly' && +input.id === 2) {
-                        console.log(input);
-                        input.hidden = !weekly.checked;
-                    } else if (a.target.id === 'daily' && +input.id === 1) {
-                        input.hidden = !daily.checked;
+            let inputs = document.querySelectorAll('input');
+            if (window.location.pathname.replace(/\/daily_reports/g, '') === '/weekly') {
+                daily.checked = false;
+            } else if (window.location.pathname.replace(/\/daily_reports/g, '') === '/daily') {
+                weekly.checked = false;
+            }
+
+            check_link.addEventListener('click', (a) => {
+                for (let input of inputs) {
+                    if (input.checked) {
+                        if (input.id === 'daily') {
+                            check_link.href = '/daily_reports/daily';
+                        } else if (input.id === 'weekly') {
+                            check_link.href = '/daily_reports/weekly';
+                        } else {
+                            a.preventDefault();
+                        }
                     }
-                })
-            }
-        }
-        let del_tables = document.querySelectorAll('#tr');
-        for (let del_table of del_tables) {
-            if (del_table.dataset.status === 1) {
-                del_table.classList.add('stat');
-            }
+                }
+            })
         }
     </script>
 @include('layouts.footer')
