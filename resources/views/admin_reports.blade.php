@@ -94,8 +94,8 @@
         echo '<thead>';
         echo '<tr>';
         echo '<th class="col-7">Отчет</th>';
-        echo '<th class="col-1" style="text-align: center">Тип отчета</th>';
         echo '<th class="col-1" style="text-align: center">Статус</th>';
+        echo '<th class="col-1" style="text-align: center">Тип отчета</th>';
         echo '<th class="col-1" style="text-align: center">Заполнения</th>';
         echo '<th class="col-1" style="text-align: center">Тип учреждений</th>';
         echo '</tr>';

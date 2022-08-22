@@ -35,6 +35,36 @@ class QuarterlyReportsController extends Controller {
       }
    }
 
+   public function quarter_reports_check($name) {
+      if (empty(Auth::id())) {
+         return redirect()->route('login');
+      }
+      try {
+
+         if ($name === 'monthly') {
+            $periodicity = 4;
+         } elseif ($name === 'quarterly') {
+            $periodicity = 3;
+         }
+         $rv_ja = [];
+         $user_names = [];
+         $user_role = Auth::user()->roles->first()->id;
+         $user_id = Auth::id();
+         $arrs = DB::table('tables')->where('status', 0)->where('periodicity', $periodicity)->orderBy('id', 'desc')->paginate(20);
+         if ($user_role == 1 || $user_role == 4) {
+            foreach (DB::table('tables')->orderBy('id', 'desc')->pluck('user_id') as $user) {
+               $user_names[] = DB::table('users')->orderBy('id', 'desc')->where('id', $user)->value('name');
+            }
+         }
+         $arr = json_encode($arrs);
+         $table_user = json_encode($user_names);
+         $arr_rows = json_encode(DB::select('select * from report_values'));
+         return view('quarterly_reports', ['arr' => $arr, 'tableload' => '', 'arr_rows' => $arr_rows, 'user_id' => $user_id, 'user_role' => $user_role, 'table_user' => $table_user, 'pages' => $arrs]);
+      } catch (QueryException $e) {
+         echo 'Ошибка: ' . $e->getMessage();
+      }
+   }
+
    public function quarterly_report($name, $year) {
       if (empty(Auth::id())) {
          return redirect()->route('login');

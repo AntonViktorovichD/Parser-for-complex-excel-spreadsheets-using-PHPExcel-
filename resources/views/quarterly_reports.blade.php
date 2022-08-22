@@ -18,8 +18,10 @@
 <div class="container-flex">
     <h1>Квартальный отчёт</h1>
     <legend class="legend">СПИСОК КВАРТАЛЬНЫХ ОТЧЕТОВ</legend>
-    <input type="checkbox" id="monthly" checked><label for="monthly">Ежемесячные отчеты &nbsp</label>
-    <input type="checkbox" id="quarterly" checked><label for="quarterly">Ежеквартальные отчеты</label>
+    <input type="checkbox" id="quarterly" checked><label for="quarterly">Ежемесячные отчеты &nbsp</label>
+    <input type="checkbox" id="monthly" checked><label for="monthly">Ежеквартальные отчеты</label>
+    <a id="check_link" class="btn btn-outline-danger" href="/daily_reports">Выгрузить</a>
+
     <h5 class="title">Название квартального отчета</h5>
 
     @php
@@ -43,15 +45,26 @@
     {{ $pages->links() }}
     <script>
         window.onload = () => {
-            for (let input of document.querySelectorAll('.periodicity')) {
-                document.addEventListener('input', (a) => {
-                    if (a.target.id === 'quarterly' && +input.id === 4) {
-                        input.hidden = !quarterly.checked;
-                    } else if (a.target.id === 'monthly' && +input.id === 3) {
-                        input.hidden = !monthly.checked;
-                    }
-                })
+            let inputs = document.querySelectorAll('input');
+            if (window.location.pathname.replace(/\/quarterly_reports/g, '') === '/monthly') {
+                quarterly.checked = false;
+            } else if (window.location.pathname.replace(/\/quarterly_reports/g, '') === '/quarterly') {
+                monthly.checked = false;
             }
+
+            check_link.addEventListener('click', (a) => {
+                for (let input of inputs) {
+                    if (input.checked) {
+                        if (input.id === 'monthly') {
+                            check_link.href = '/quarterly_reports/monthly';
+                        } else if (input.id === 'quarterly') {
+                            check_link.href = '/quarterly_reports/quarterly';
+                        } else {
+                            a.preventDefault();
+                        }
+                    }
+                }
+            })
         }
     </script>
 @include('layouts.footer')
