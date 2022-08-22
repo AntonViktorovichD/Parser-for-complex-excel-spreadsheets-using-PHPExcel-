@@ -22,6 +22,8 @@ Route::post('/admin_monthly_revalid/', [MonthlyReportsController::class, 'revali
 use App\Http\Controllers\AdminReportsController;
 
 Route::get('/admin_reports', [AdminReportsController::class, 'admin_reports'])->middleware('checkAdmin');
+Route::get('/admin_reports/{name}', [AdminReportsController::class, 'admin_reports_check'])->middleware('auth');
+
 
 use App\Http\Controllers\AdminDailyReportController;
 
@@ -35,6 +37,9 @@ use App\Http\Controllers\AdminWeeklyReportController;
 
 Route::get('/admin_weekly_report/{name}', [AdminWeeklyReportController::class, 'admin_weekly_report'])->middleware('checkAdmin');
 Route::post('/admin_weekly_update', [AdminWeeklyReportController::class, 'admin_weekly_update'])->middleware('checkAdmin');
+Route::post('/admin_daily_clear', [AdminWeeklyReportController::class, 'clear'])->middleware('checkAdmin');
+Route::post('/admin_daily_accept', [AdminWeeklyReportController::class, 'accept'])->middleware('checkAdmin');
+Route::post('/admin_daily_revalid', [AdminWeeklyReportController::class, 'revalid'])->middleware('checkAdmin');
 
 use App\Http\Controllers\DailyReportsController;
 

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Email;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class WeeklyReportController extends Controller {
     public function weekly_report($table_uuid) {
@@ -85,7 +87,7 @@ class WeeklyReportController extends Controller {
             unset($info['table_information']);
             $json = json_encode($info, JSON_UNESCAPED_UNICODE);
             DB::table('weekly_reports')->insert(['table_name' => $name, 'table_uuid' => $table_uuid, 'row_uuid' => $row_uuid, 'user_id' => $user_id, 'user_dep' => $department, 'json_val' => $json, 'created_at' => $date]);
-            return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/daily_reports']);
+            return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/weekly_reports']);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }
@@ -103,9 +105,57 @@ class WeeklyReportController extends Controller {
             unset($info['table_information']);
             $json = json_encode($info, JSON_UNESCAPED_UNICODE);
             DB::table('weekly_reports')->where('table_uuid', $table_uuid)->where('row_uuid', $row_uuid)->update(['json_val' => $json]);
-            return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/daily_reports']);
+            return view('router', ['alert' => 'Запись успешно добавлена', 'route' => '/weekly_reports']);
         } catch (QueryException $e) {
             echo 'Ошибка: ' . $e->getMessage();
         }
     }
+
+   public function clear(Request $request) {
+      $rows_information = $request->input('rows_information');
+      DB::table('weekly_reports')->where('row_uuid',)->truncate();
+      $notification_rights = DB::table('notification_rights')->where('id', 1)->value('e_mail');
+      if ($notification_rights != 0) {
+         $department = DB::table('weekly_reports')->where('row_uuid', $rows_information)->value('user_dep');
+         $table_name = DB::table('weekly_reports')->where('row_uuid', $rows_information)->value('table_name');
+      }
+      $notification = DB::table('user_noifications')->where('org_id', $department)->value('e_mail');
+      $objDemo = new \stdClass();
+      $objDemo->table_name = $table_name;
+      if ($notification == 1) {
+         $mail = DB::table('users')->where('department', $key)->value('email');
+         if (isset($mail)) {
+            Mail::to($mail)->send(new Email($objDemo));
+         }
+      }
+      return redirect()->action([AdminReportsController::class, 'admin_reports']);
+   }
+
+   public function accept(Request $request) {
+      $read_only = DB::table('tables')->where('table_uuid', $request->input('table_information'))->value('read_only');
+      if ($read_only === 'disabled') {
+         DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'enabled');
+      } else {
+         DB::table('tables')->where('table_uuid', $request->input('table_information'))->upload('read_only', 'disabled');
+      }
+   }
+
+   public function revalid(Request $request) {
+      $rows_information = $request->input('rows_information');
+      $notification_rights = DB::table('notification_rights')->where('id', 1)->value('e_mail');
+      if ($notification_rights != 0) {
+         $department = DB::table('weekly_reports')->where('row_uuid', $rows_information)->value('user_dep');
+         $table_name = DB::table('weekly_reports')->where('row_uuid', $rows_information)->value('table_name');
+      }
+      $notification = DB::table('user_noifications')->where('org_id', $department)->value('e_mail');
+      $objDemo = new \stdClass();
+      $objDemo->table_name = $table_name;
+      if ($notification == 1) {
+         $mail = DB::table('users')->where('department', $key)->value('email');
+         if (isset($mail)) {
+            Mail::to($mail)->send(new Email($objDemo));
+         }
+      }
+      return redirect()->action([AdminReportsController::class, 'admin_reports']);
+   }
 }

@@ -122,14 +122,15 @@
     <input type="checkbox" id="daily" checked><label for="daily">Ежедневные отчеты &nbsp</label>
     <input type="checkbox" id="weekly" checked><label for="weekly">Еженедельные отчеты &nbsp</label>
     <a id="check_link" class="btn btn-outline-danger" href="/daily_reports">Выгрузить</a>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
         <tr>
-            <th>Отчет</th>
-            <th style="text-align: center">Заполнения</th>
+            <th class="col-8">Отчет</th>
+            <th class="col-1" style="text-align: center">Тип отчета</th>
+            <th class="col-1" style="text-align: center">Заполнения</th>
             @php
                 if ($user_role == 1 || $user_role == 4) {
-                echo '<th>Тип учреждений</th>';
+                echo '<th class="col-1" style="text-align: center">Тип учреждений</th>';
                 }
             @endphp
         </tr>
@@ -143,6 +144,7 @@
                       if ($page->periodicity == 1) {
                          if ($user_role == 1 || $user_role == 4) {
                             echo '<td><a href="/admin_daily_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">Ежедневный отчет</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">';
                               foreach ($arr[$key]['type'] as $type) {
@@ -150,6 +152,7 @@
                             }
                          } else {
                             echo '<td><a href="/daily_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">Ежедневный отчет</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">';
                          }
@@ -157,6 +160,7 @@
                       } elseif ($page->periodicity == 2) {
                          if ($user_role == 1 || $user_role == 4) {
                             echo '<td><a href="/admin_weekly_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">Еженедельный отчет</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">';
                               foreach ($arr[$key]['type'] as $type) {
@@ -164,6 +168,7 @@
                             }
                          } else {
                             echo '<td><a href="/weekly_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                            echo '<td style="text-align: center;">Ежеднедельный отчет</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">';
                          }

@@ -1,10 +1,12 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
+    h1 {
+        margin-bottom: 30px;
+    }
+
     table {
         margin-top: 50px !important;
-        width: auto !important;
-        max-width: calc(100vw - 700px) !important;
     }
 
     .pagination {
@@ -85,14 +87,17 @@
                      3 => ['stac', 'C', 'Учреждения стационарного типа'],
                      4 => ['det', 'Д', 'Детские учреждении'],
                      5 => ['othr', 'О', 'Остальные учреждения']];
-
+  echo '<input type="checkbox" id="daily" checked><label for="daily">Ежедневные отчеты &nbsp</label>';
+    echo '<input type="checkbox" id="weekly" checked><label for="weekly">Еженедельные отчеты &nbsp</label>';
+    echo '<a id="check_link" class="btn btn-outline-danger" href="/daily_reports">Выгрузить</a>';
         echo '<table class="table">';
         echo '<thead>';
         echo '<tr>';
-        echo '<th>Отчет</th>';
-        echo '<th>Статус</th>';
-        echo '<th>Заполнения</th>';
-        echo '<th>Тип учреждений</th>';
+        echo '<th class="col-7">Отчет</th>';
+        echo '<th class="col-1" style="text-align: center">Тип отчета</th>';
+        echo '<th class="col-1" style="text-align: center">Статус</th>';
+        echo '<th class="col-1" style="text-align: center">Заполнения</th>';
+        echo '<th class="col-1" style="text-align: center">Тип учреждений</th>';
         echo '</tr>';
         echo '</thead>';
         echo '<tbody>';
@@ -108,6 +113,7 @@
                   } else {
                      echo '<td style="text-align: center;"><i class="uk-icon-check-circle" title="Опубликован"></i></td>' . PHP_EOL;
                   }
+                   echo '<td style="text-align: center;">Ежедневный отчет</td>' . PHP_EOL;
                   echo '<td style="text-align: center;">' . $table_arr[$key]['fill'] . '%</td>' . PHP_EOL;
                   echo '<td style="text-align: center;">';
                   foreach ($table_arr[$key]['type'] as $type) {
@@ -121,6 +127,7 @@
                   } else {
                      echo '<td style="text-align: center;"><i class="uk-icon-check-circle" title="Опубликован"></i></td>' . PHP_EOL;
                   }
+                  echo '<td style="text-align: center;">Еженедельный отчет</td>' . PHP_EOL;
                   echo '<td style="text-align: center;">' . $table_arr[$key]['fill'] . '%</td>' . PHP_EOL;
                   echo '<td style="text-align: center;">';
                   foreach ($table_arr[$key]['type'] as $type) {
@@ -134,16 +141,16 @@
 
         @endphp
     @endforeach
-      @php
-          echo '</table>';
+    @php
+        echo '</table>';
     @endphp
     {{ $arrs->links() }}
     @php
 
-         echo '<h6>Справка по типам учреждений:</h6><br />';
-         foreach ($arr_orgs as $org) {
-           echo '<div class="align-self-center" style="margin-bottom: 10px;"><span  class="marker ' . $org[0] . '">' . $org[1] . '</span>' . $org[2] . '</span></div>';
-        }
+        echo '<h6>Справка по типам учреждений:</h6><br />';
+        foreach ($arr_orgs as $org) {
+          echo '<div class="align-self-center" style="margin-bottom: 10px;"><span  class="marker ' . $org[0] . '">' . $org[1] . '</span>' . $org[2] . '</span></div>';
+       }
     @endphp
 
 </div>
@@ -156,6 +163,27 @@
                 del_table.classList.add('stat');
             }
         }
+
+        let inputs = document.querySelectorAll('input');
+        if (window.location.pathname.replace(/\/admin_reports/g, '') === '/weekly') {
+            daily.checked = false;
+        } else if (window.location.pathname.replace(/\/admin_reports/g, '') === '/daily') {
+            weekly.checked = false;
+        }
+
+        check_link.addEventListener('click', (a) => {
+            for (let input of inputs) {
+                if (input.checked) {
+                    if (input.id === 'daily') {
+                        check_link.href = '/admin_reports/daily';
+                    } else if (input.id === 'weekly') {
+                        check_link.href = '/admin_reports/weekly';
+                    } else {
+                        a.preventDefault();
+                    }
+                }
+            }
+        })
     }
 </script>
 @include('layouts.footer')

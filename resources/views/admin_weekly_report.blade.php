@@ -1,15 +1,6 @@
 @include('layouts.header')
 @include('layouts.menu')
 <style>
-    table {
-        border-collapse: collapse;
-        border: 1px solid black;
-    }
-
-    th, td {
-        border: 1px solid black;
-        padding: 10px;
-    }
 
     input {
         outline: none;
@@ -48,34 +39,34 @@
          echo '<form method="post" action="/admin_daily_report_date">';
                 echo '<div class="row align-items-start">';
     echo '<div class="col">';
-    echo '<a href="/daily_reports" class="btn-back" style="margin-bottom: 30px !important">Вернуться к списку таблиц</a>';
-    //echo '<div class="nav btns-group">';
-//echo '<button id="clear" class="btn-back">Очистить данные</button>';
-//echo '<button id="accept" class="btn-back">Принять данные</button>';
-//echo '<button id="revalid" class="btn-back">Отклонить данные</button>';
-//echo '</div>';
+    echo '<a href="/admin_reports" class="btn-back" style="margin-bottom: 30px !important">Вернуться к списку таблиц</a>';
+    echo '<div class="nav btns-group">';
+echo '<button id="clear" class="btn-back">Очистить данные</button>';
+echo '<button id="accept" class="btn-back">Принять данные</button>';
+echo '<button id="revalid" class="btn-back">Отклонить данные</button>';
+echo '</div>';
 @endphp
 @csrf
-{{--<table class="colors">--}}
-{{--    <tbody>--}}
-{{--    <tr>--}}
-{{--        <td class="red_cell colorcell"></td>--}}
-{{--        <td>&nbsp- Нет данных</td>--}}
-{{--    </tr>--}}
-{{--    <tr>--}}
-{{--        <td class="gray_cell colorcell"></td>--}}
-{{--        <td>&nbsp- Данные частично заполнены</td>--}}
-{{--    </tr>--}}
-{{--    <tr>--}}
-{{--        <td class="blue_cell colorcell"></td>--}}
-{{--        <td>&nbsp- Данные полностью заполнены</td>--}}
-{{--    </tr>--}}
-{{--    <tr>--}}
-{{--        <td class="lightblue_cell colorcell"></td>--}}
-{{--        <td>&nbsp- Данные приняты</td>--}}
-{{--    </tr>--}}
-{{--    </tbody>--}}
-{{--</table>--}}
+<table class="colors">
+    <tbody>
+    <tr>
+        <td class="red_cell colorcell"></td>
+        <td>&nbsp- Нет данных</td>
+    </tr>
+    <tr>
+        <td class="gray_cell colorcell"></td>
+        <td>&nbsp- Данные частично заполнены</td>
+    </tr>
+    <tr>
+        <td class="blue_cell colorcell"></td>
+        <td>&nbsp- Данные полностью заполнены</td>
+    </tr>
+    <tr>
+        <td class="lightblue_cell colorcell"></td>
+        <td>&nbsp- Данные приняты</td>
+    </tr>
+    </tbody>
+</table>
 @php
     echo '</div>';
     echo '<div class="col">';
