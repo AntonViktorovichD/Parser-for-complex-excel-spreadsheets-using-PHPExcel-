@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', 'home');
-Route::get('/home', 'HomeController@index');
+//Route::redirect('/', 'index');
+Route::get('/', 'HomeController@index');
 
 use App\Http\Controllers\PhonesController;
 
@@ -78,7 +78,7 @@ Route::post('/testul', [TestController::class, 'ultest']);
 
 use App\Http\Controllers\UploadController;
 
-Route::get('/user_add', [UploadController::class, 'form'])->middleware('auth');
+Route::get('/add', [UploadController::class, 'form'])->middleware('auth');
 Route::post('/ul', [UploadController::class, 'upload'])->middleware('auth');
 
 use App\Http\Controllers\DeleteTablesController;
@@ -96,7 +96,7 @@ Route::get('/id', [AddDBController::class, 'edit'])->middleware('auth');
 
 use App\Http\Controllers\JsonController;
 
-Route::get('/json', [JsonController::class, 'arrayToJson'])->middleware('auth');
+Route::get('/list', [JsonController::class, 'arrayToJson'])->middleware('auth');
 Route::get('/tables/{name}', [JsonController::class, 'tables'])->middleware('auth');
 Route::post('/handler', array(JsonController::class, 'handler'))->middleware('auth');
 

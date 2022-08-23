@@ -126,13 +126,13 @@
         <thead>
         <tr>
             @php
-            if ($user_role == 1 || $user_role == 4) {
-                echo '<th class="col-8">Отчет</th>';
-} else {
-   echo '<th class="col-9">Отчет</th>';
-}
-                    @endphp
-
+                if ($user_role == 1 || $user_role == 4) {
+                    echo '<th class="col-7">Отчет</th>';
+    } else {
+       echo '<th class="col-8">Отчет</th>';
+    }
+            @endphp
+            <th class="col-1" style="text-align: center;">Комментарий</th>
             <th class="col-1" style="text-align: center;">Тип отчета</th>
             <th class="col-1" style="text-align: center">Заполнения</th>
             @php
@@ -151,6 +151,27 @@
                       if ($page->periodicity == 1) {
                          if ($user_role == 1 || $user_role == 4) {
                             echo '<td><a href="/admin_daily_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                                        if(isset($arr['comment'])) {
+            echo '<td class="align-middle"><span><i data-toggle="modal" data-target="#' . $arr['table_uuid'] . '" id="comment" class="fa fa-commenting-o" aria-hidden="true"></i>';
+                           echo '<div class="modal fade" id="' . $arr['table_uuid'] . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+        <i style="font-size: 20px; margin-top: 15px !important;"class="fa fa-times close-btn" aria-hidden="true" data-dismiss="modal"></i>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Комментарий</h5>
+            </div>
+            <div class="modal-body">
+                '. $arr['comment'] .'
+            </div>
+                 <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-outline-danger modal-btn" data-dismiss="modal">Закрыть</button>
+      </div>
+        </div>
+    </div>
+</div><span></td>';
+            } else {
+               echo '<td class="align-middle"></td>';
+            }
                             echo '<td style="text-align: center;">Ежедневный отчет</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">';
@@ -159,6 +180,27 @@
                             }
                          } else {
                             echo '<td><a href="/daily_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                                        if(isset($arr['comment'])) {
+            echo '<td class="align-middle"><span><i data-toggle="modal" data-target="#' . $arr['table_uuid'] . '" id="comment" class="fa fa-commenting-o" aria-hidden="true"></i>';
+                           echo '<div class="modal fade" id="' . $arr['table_uuid'] . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+        <i style="font-size: 20px; margin-top: 15px !important;"class="fa fa-times close-btn" aria-hidden="true" data-dismiss="modal"></i>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Комментарий</h5>
+            </div>
+            <div class="modal-body">
+                '. $arr['comment'] .'
+            </div>
+                 <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-outline-danger modal-btn" data-dismiss="modal">Закрыть</button>
+      </div>
+        </div>
+    </div>
+</div><span></td>';
+            } else {
+               echo '<td class="align-middle"></td>';
+            }
                             echo '<td style="text-align: center;">Ежедневный отчет</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
                          }
@@ -166,6 +208,27 @@
                       } elseif ($page->periodicity == 2) {
                          if ($user_role == 1 || $user_role == 4) {
                             echo '<td><a href="/admin_weekly_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                                        if(isset($arr['comment'])) {
+            echo '<td class="align-middle"><span><i data-toggle="modal" data-target="#' . $arr['table_uuid'] . '" id="comment" class="fa fa-commenting-o" aria-hidden="true"></i>';
+                           echo '<div class="modal fade" id="' . $arr['table_uuid'] . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+        <i style="font-size: 20px; margin-top: 15px !important;"class="fa fa-times close-btn" aria-hidden="true" data-dismiss="modal"></i>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Комментарий</h5>
+            </div>
+            <div class="modal-body">
+                '. $arr['comment'] .'
+            </div>
+                 <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-outline-danger modal-btn" data-dismiss="modal">Закрыть</button>
+      </div>
+        </div>
+    </div>
+</div><span></td>';
+            } else {
+               echo '<td class="align-middle"></td>';
+            }
                             echo '<td style="text-align: center;">Еженедельный отчет</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">';
@@ -174,6 +237,27 @@
                             }
                          } else {
                             echo '<td><a href="/weekly_report/' . $page->table_uuid . '/">' . $page->table_name . '</a></td>' . PHP_EOL;
+                                        if(isset($arr['comment'])) {
+            echo '<td class="align-middle"><span><i data-toggle="modal" data-target="#' . $arr['table_uuid'] . '" id="comment" class="fa fa-commenting-o" aria-hidden="true"></i>';
+                           echo '<div class="modal fade" id="' . $arr['table_uuid'] . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+        <i style="font-size: 20px; margin-top: 15px !important;"class="fa fa-times close-btn" aria-hidden="true" data-dismiss="modal"></i>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Комментарий</h5>
+            </div>
+            <div class="modal-body">
+                '. $arr['comment'] .'
+            </div>
+                 <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-outline-danger modal-btn" data-dismiss="modal">Закрыть</button>
+      </div>
+        </div>
+    </div>
+</div><span></td>';
+            } else {
+               echo '<td class="align-middle"></td>';
+            }
                             echo '<td style="text-align: center;">Ежеднедельный отчет</td>' . PHP_EOL;
                             echo '<td style="text-align: center;">' . $arr[$key]['fill'] . '%</td>' . PHP_EOL;
                          }

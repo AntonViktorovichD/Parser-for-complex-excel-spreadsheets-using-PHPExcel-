@@ -13,7 +13,6 @@
     .end_val {
         background: red !important;
         color: white !important;
-        font-size: 17px;
     }
 
     table {
@@ -63,10 +62,11 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
           echo '<tr>' . PHP_EOL;
           echo '<th class="col-1">Номер запроса</th>' . PHP_EOL;
           echo '<th class="col">Название запроса</th>' . PHP_EOL;
-          echo '<th class="col" style="width: 60px !important">Комментарий</th>' . PHP_EOL;
+
           echo '<th class="col-1">Ответственный</th>' . PHP_EOL;
           echo '<th class="col-1">Начало сбора</th>' . PHP_EOL;
-          echo '<th class="col-1"  style="width:170px !important">Конец сбора</th>' . PHP_EOL;
+          echo '<th class="col-1">Конец сбора</th>' . PHP_EOL;
+          echo '<th class="col" style="width: 60px !important">Комментарий</th>' . PHP_EOL;
           echo '<th class="col-1">Таблицы</th>' . PHP_EOL;
            echo '<th class="col-1"></th>' . PHP_EOL;
           echo '<th class="col-1"></th>' . PHP_EOL;
@@ -105,13 +105,23 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
             echo '<tr>' . PHP_EOL;
             echo '<td class="align-middle"><span>' . $arr['id'] . '</span></td>';
             echo '<td class="align-middle"><span>' . $arr['table_name'] . '</span></td>';
-            if(isset($arr['comment'])) {
+            echo '<td class="align-middle"><span>' . $table_user[$key] . '</span><br /><span>' . $user_phones[$key] . '</span></td>';
+            echo '<td class="align-middle"><span>' . $strt_day . '</span></td>';
+            if ($target_day > $today) {
+               echo '<td class="align-middle"><span>' . $finish_day . '</span></td>';
+            } else {
+               if (isset($arr['updated_at'])) {
+                  echo '<td class="align-middle end_val">' . $finish_day . '</td>';
+               } else {
+                  echo '<td></td>';
+               }
+            }
+                        if(isset($arr['comment'])) {
             echo '<td class="align-middle"><span><i data-toggle="modal" data-target="#' . $arr['table_uuid'] . '" id="comment" class="fa fa-commenting-o" aria-hidden="true"></i>';
-
                            echo '<div class="modal fade" id="' . $arr['table_uuid'] . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
-        <i style="font-size: 20px; margin-top: 15px !important; margin-right: -750px !important"class="fa fa-times" aria-hidden="true" data-dismiss="modal"></i>
+        <i style="font-size: 20px; margin-top: 15px !important;"class="fa fa-times close-btn" aria-hidden="true" data-dismiss="modal"></i>
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Комментарий</h5>
             </div>
@@ -126,19 +136,6 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
 </div><span></td>';
             } else {
                echo '<td class="align-middle"></td>';
-            }
-
-
-            echo '<td class="align-middle"><span>' . $table_user[$key] . '</span><br /><span>' . $user_phones[$key] . '</span></td>';
-            echo '<td class="align-middle"><span>' . $strt_day . '</span></td>';
-            if ($target_day > $today) {
-               echo '<td class="align-middle"><span>' . $finish_day . '</span></td>';
-            } else {
-               if (isset($arr['updated_at'])) {
-                  echo '<td class="align-middle end_val">' . $finish_day . '</td>';
-               } else {
-                  echo '<td></td>';
-               }
             }
             for ($i = 0; $i < count($arr); $i++) {
                if ($user_role == 1 || $user_role == 4) {
@@ -217,13 +214,6 @@ $today = mktime($hour, $minute, $second, $month, $day, $year);
                     .then((text) => {
                         console.log(text);
                     });
-            }
-        })
-        document.addEventListener('click', (e) => {
-            if (e.target.id === 'comment') {
-                if (e.target.nextElementSibling.value.length > 0) {
-                    alert(e.target.nextElementSibling.value);
-                }
             }
         })
     }

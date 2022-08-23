@@ -1,10 +1,10 @@
 <nav class="nav" >
     <ul class="uk-navbar-nav " style="width: 100vw !important">
-        <li class="nav-item"><a id="nav" class="nav-link" href="/home">Начало
+        <li class="nav-item"><a id="nav" class="nav-link" href="/">Начало
                 работы</a></li>
-        <li class="nav-item"><a id="nav" class="nav-link" href="/user_add">Создать
+        <li class="nav-item"><a id="nav" class="nav-link" href="/add">Создать
                 запрос из таблицы excel</a></li>
-        <li class="nav-item"><a id="nav" class="nav-link" href="/json">Результаты
+        <li class="nav-item"><a id="nav" class="nav-link" href="/list">Результаты
                 заполнения запросов</a></li>
         <li class="nav-item"><a id="nav" class="nav-link" href="/quarterly_reports">Квартальный
                 отчёт</a></li>
