@@ -456,3 +456,19 @@ h5 {
 .btn-submit-ae {
     margin-top: 30px !important;
 }
+
+.fa-commenting-o {
+font-size: 20px !important;
+}
+
+.modal-btn {
+    width: auto !important;
+    background: #fff;
+    border: 2px solid #e43d3c !important;
+    color: #000000;
+}
+
+.modal-footer {
+    display: flex !important;
+    justify-content: center !important;
+}

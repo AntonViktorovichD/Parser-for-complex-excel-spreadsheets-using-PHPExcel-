@@ -34,7 +34,7 @@ body td {
 
 input, button[type="button"], select {
     color: #000 !important;
-    border: 1px solid #ccc !important;
+    /*border: 1px solid #ccc !important;*/
     max-height: 35px !important;
     padding: 5px 10px !important;
     font-size: 15px !important;

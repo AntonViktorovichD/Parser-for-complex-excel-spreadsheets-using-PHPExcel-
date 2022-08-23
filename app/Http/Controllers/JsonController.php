@@ -25,7 +25,6 @@ class JsonController extends Controller {
          }
          $user_dep = DB::table('users')->where('id', $user_id)->value('department');
          $arr_rows = json_encode(DB::table('report_values')->get(), JSON_UNESCAPED_UNICODE);
-
          $arr_values_count = [];
          foreach ($arrs as $arr) {
             if ($user_role == 1 || $user_role == 4) {
