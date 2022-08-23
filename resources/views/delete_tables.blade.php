@@ -31,8 +31,11 @@
     <h5 class="text-center title">Название отчета</h5>
     @php
         echo '<table class="table table-striped table-borderless">';
+        echo '<thead>';
 echo '<th class="col-10">Отчет</th>';
 echo '<th class="col-1">Удаление</th>';
+echo '</thead>';
+echo '<tbody>';
 foreach ( $tables as $table ){
        echo '<tr>';
        if($table->status == 0) {
@@ -43,7 +46,9 @@ foreach ( $tables as $table ){
             echo '<td><a id="cnfrm" href="/delete_table/' . $table->table_uuid . '/' . $table->status . '">Восстановить</a></td>' . PHP_EOL;
        }
     echo '</tr>';
+
 }
+echo '<tbody>';
 echo '</table>';
     @endphp
 
